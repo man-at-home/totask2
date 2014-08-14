@@ -1,0 +1,18 @@
+= my {project-name} experience
+:numbered:
+:icons: font
+manfred (me) <manfred@domainIsNotShownHere.org>
+{project-version}, 2014	
+
+Time tracking demo app with spring mvc.
+
+== The motivation (why it exists)
+
+{project-name} is primarily written as an *excuse* to explore a completely arbitrary chosen 
+development stack (that looked attractive to me at some point). Intended as *learning* experience.
+
+== Last Words
+
+not anything usefulle here yet. 
+
+

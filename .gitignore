@@ -3,3 +3,5 @@
 /.gradle/
 /.settings/
 /gradlew.bat
+/totask2.logback.log
+/build/

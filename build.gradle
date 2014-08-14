@@ -1,7 +1,15 @@
-	apply plugin: 'java'
-apply plugin: 'eclipse'
+apply plugin: 'java'
 apply plugin: 'spring-boot'
+
+apply plugin: 'eclipse'
+
 apply plugin: 'checkstyle'
+//apply plugin: 'findbugs'  // not yet ready for java8
+apply plugin: 'pmd'
+apply plugin: 'build-dashboard'
+apply plugin: "jacoco"
+
+apply plugin: 'org.asciidoctor.gradle.asciidoctor'
 
 repositories {
         maven { url "http://repo.spring.io/libs-release" }
@@ -14,9 +22,11 @@ buildscript {
         maven { url "http://repo.spring.io/libs-release" }
         mavenLocal()
         mavenCentral()
+        jcenter()
     }
     dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.1.5.RELEASE")
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.1.5.RELEASE")   
+	    classpath 'org.asciidoctor:asciidoctor-gradle-plugin:0.7.3'
     }
 }
 dependencies {
@@ -27,3 +37,16 @@ dependencies {
 	
     testCompile "junit:junit"	
 }
+
+jacocoTestReport {
+    reports {
+        xml.enabled false
+        csv.enabled false
+        html.destination "${buildDir}/reports/jacoco"
+    }
+}
+
+asciidoctor {
+    outputDir = new File("$buildDir/docs/asciidoc")
+    logDocuments = true
+} 

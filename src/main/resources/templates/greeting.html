@@ -1,11 +1,58 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Getting Started: Serving Web Content</title>
+    <title>totask2: Serving Web Content</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    
+    <link rel="stylesheet" type="text/css" href="css/totask2.css"/>
 </head>
 <body>
-    <h1>sample</h1>
+	<script type="text/javascript" src="js/jquery-1.11.1.js"></script>
+	
+	<script type="text/javascript" th:inline="javascript">
+    /*<![CDATA[*/
+    	
+	    /** register all callback javascript events. */
+		$(document).ready(function(){           
+	
+		        $('input').each(function() {
+	
+			    	$(this).keypress(function(e) 
+			    	{
+			    		return restrictInput(e);
+				    });
+		        });
+	
+		    });
+	
+	
+		/** only numeric input please */
+	    function restrictInput(e)
+	    {
+		     if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57) && e.which != 46 /* . */) 
+		     {	        
+		        $("#errmsg").html("Digits Only").show().fadeOut("slow");	//display error message
+		        return false;
+		     }
+	    }
+  /*]]>*/	
+  </script>	
+	
+	
+    <h1 class="doc">sample</h1>
+    
+    <b>.<span id="errmsg">hints..</span></b>
+    
     <p th:text="'Hello you are, ' + ${name} + '!'">hello</p>
+    
+    <form>
+    
+    	<input name="inputHour" placeholder="hh" size="2" maxlength="2"  min="0" max="12" />
+    	
+    </form>
+    
+    <p>
+    	<img src="images/man_logo.png" alt="man"/>
+    </p>
 </body>
 </html>

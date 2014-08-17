@@ -1,0 +1,17 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: manfred
+      changes:
+        - insert:
+            tableName: tt_user
+            columns:
+              - column:
+                  name: displayname
+                  value: luser1
+              - column:
+                  name: username
+                  value: liquibase1
+              - column:
+                  name: active
+                  value: true

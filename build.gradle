@@ -32,10 +32,17 @@ buildscript {
 dependencies {
     compile 'org.slf4j:slf4j-api:1.7.7'
     compile 'ch.qos.logback:logback-classic'
+    
     compile "org.springframework:spring-context:4.0.6.RELEASE"
-    compile("org.springframework.boot:spring-boot-starter-thymeleaf")
-	
-    testCompile "junit:junit"	
+    compile("org.springframework.boot:spring-boot-starter-thymeleaf:1.1.5.RELEASE")
+	compile("org.springframework.boot:spring-boot-starter-web:1.1.5.RELEASE")
+    compile("org.springframework.boot:spring-boot-starter-data-jpa:1.1.5.RELEASE")
+    
+    compile("com.h2database:h2")
+    
+  /*  compile("org.liquibase:liquibase-core") */
+        	
+    testCompile("org.springframework.boot:spring-boot-starter-test:1.1.5.RELEASE")    
 }
 
 jacocoTestReport {

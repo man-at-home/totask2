@@ -22,5 +22,14 @@ public class InfoController {
         model.addAttribute("name", name);
         return "greeting";
     }
+    
+    @RequestMapping("/dbinfo")
+    public String dbinfo(final Model model) {
+        
+        int n = 0;
+        LOG.debug("dbinfo");
+        model.addAttribute("count", n);
+        return "";
+    }    
 
 }// class

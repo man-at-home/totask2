@@ -2,10 +2,16 @@ package org.regele.totask2.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /** a working task of a project that needs to be worked on. */
 @Entity
@@ -13,18 +19,44 @@ import javax.persistence.Table;
 public class Task {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)    
+    @GeneratedValue(strategy = GenerationType.AUTO)  
+    @Column(name = "ID")
     private long     id;    
-    
-    @Column(nullable = false)
+
+    @Size(min = 2, max = 250)
+    @NotNull
+    @Column(name = "NAME", nullable = false, length = 250)
     private String  name;
     
-    /** display name of this task. */
-    public String getName() {
-        return name;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "PROJECT_ID", referencedColumnName = "ID",
+                foreignKey = @ForeignKey(name = "FK_TT_TASK_OWNING_PARENT") 
+    )
+    private Project project;
+    
+    
+    public Task() {}
+    
+    public Task(Project project) {
+        this();
+        setProject(project);
     }
-    public void setName(String name) {
-        this.name = name;
+    
+    /** display name of this task. */
+    public String getName() { return name; }
+    public void setName(String name) { this.name = name; }  
+    
+    /* pk. */
+    public long getId() { return id; }
+    protected void setId(long id) { this.id = id; }
+    
+    /** project owning this task. */
+    public Project getProject() { return project; }
+    private void setProject(Project project) {
+        this.project = project;
+        if (this.project != null) {
+            this.project.addTask(this);
+        }
     }
     
     /** debug. */

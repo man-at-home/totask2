@@ -1,18 +1,30 @@
-package org.regele.totask2;
+package org.regele.totask2.controller;
 
+import org.regele.totask2.model.ProjectRepository;
+import org.regele.totask2.model.TaskRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-/** web controller. */
+/** admin/info web controller. */
 @Controller
 public class InfoController {
     
     private static final Logger LOG = LoggerFactory.getLogger(InfoController.class);
+    
+    /** project repository under test. */
+    @Autowired
+    private ProjectRepository projectRepository;
+ 
+    /** task repository under test. */
+    @Autowired
+    private TaskRepository taskRepository;
 
+    /** simple hello world. */
     @RequestMapping("/greeting")
     public String greeting(
             @RequestParam(value = "name", required = false, defaultValue = "World") String name,
@@ -23,13 +35,20 @@ public class InfoController {
         return "greeting";
     }
     
+    
+    /** showing actual db contents. */
     @RequestMapping("/dbinfo")
     public String dbinfo(final Model model) {
-        
-        int n = 0;
+       
         LOG.debug("dbinfo");
-        model.addAttribute("count", n);
-        return "";
+        
+        long projectCount = projectRepository.count();
+        long taskCount    = taskRepository.count();
+                
+        
+        model.addAttribute("projectCount", projectCount);
+        model.addAttribute("taskCount", taskCount);
+        return "dbinfo";
     }    
 
 }// class

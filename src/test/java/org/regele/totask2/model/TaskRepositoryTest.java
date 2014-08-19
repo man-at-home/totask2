@@ -25,7 +25,7 @@ public class TaskRepositoryTest {
 
     private static final Logger LOG = LoggerFactory.getLogger(TaskRepositoryTest.class);
     
-    /** user repository under test. */
+    /** task repository under test. */
     @Autowired
     private TaskRepository taskRepository;
     

@@ -25,7 +25,7 @@ public class ProjectRepositoryTest {
 
     private static final Logger LOG = LoggerFactory.getLogger(ProjectRepositoryTest.class);
     
-    /** user repository under test. */
+    /** project repository under test. */
     @Autowired
     private ProjectRepository projectRepository;
     

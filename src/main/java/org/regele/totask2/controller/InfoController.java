@@ -16,11 +16,11 @@ public class InfoController {
     
     private static final Logger LOG = LoggerFactory.getLogger(InfoController.class);
     
-    /** project repository under test. */
+    /** project repository. */
     @Autowired
     private ProjectRepository projectRepository;
  
-    /** task repository under test. */
+    /** task repository. */
     @Autowired
     private TaskRepository taskRepository;
 

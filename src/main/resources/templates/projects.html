@@ -1,0 +1,36 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>totask2: projects</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />	
+	<link rel="stylesheet" type="text/css" href="css/totask2.css" />
+</head>
+<body>
+
+	<h1>currently known projects</h1>
+
+	<p>
+		<b><span id="errmsg"></span></b>
+	</p>
+
+	<form action="#" th:action="@{/projects}" method="post">
+		<table>
+			<thead>
+				<tr>
+					<th th:text="#{totask2.project.id.label}">id</th>
+					<th th:text="#{totask2.project.name.label}">name</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="project : ${projects}">
+					<td th:text="${project.id}">17</td>
+					<td th:text="${project.name}">project name</td>
+					<td>
+					  <button type="submit" name="editProject" th:value="${project.id}" th:text="#{totask2.project.action.edit}">edit..</button>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</form>
+</body>
+</html>

@@ -1,3 +1,5 @@
 /* stylesheet totask2 project */
 
-.doc { background-color:#EEFFFF; }
+.doc 			{ background-color:#EEFFFF; }
+.fieldError 	{ background-color:red; 	}
+.readonly       { background-color:gray;	}

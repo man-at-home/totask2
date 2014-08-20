@@ -14,12 +14,19 @@
 	</p>
 
 	<form action="#" th:action="@{/editProject}" th:object="${project}" method="post">
-		<label th:for="${#ids.next('id')}" th:text="#{totask2.project.id.label}">Id</label>:
-		<input type="text" th:field="*{id}" />
+	
+		<ul th:if="${#fields.hasAnyErrors()}">
+		  <li class="fieldError" th:each="err : ${#fields.allErrors()}" th:text="${err}">...</li>
+		</ul>
+		<label th:for="id" th:text="#{totask2.project.id.label}">Id</label>:
+		<input readonly="readonly" type="text" th:field="*{id}" class="readonly"  th:errorclass="fieldError"/>
 		<br />
-		<label th:for="${#ids.next('name')}" th:text="#{totask2.project.name.label}">Name</label>:
-		<input type="text" th:field="*{name}" />
+		<label th:for="name" th:text="#{totask2.project.name.label}">Name</label>:
+		<input type="text" th:field="*{name}" th:errorclass="fieldError"/>
+		<span th:if="${#fields.hasErrors('name')}" class="fieldError" th:errors="*{name}">Name is invalid</span>
 		<br />
+		<button type="submit" name="saveProject" th:value="${project.id}" th:text="#{totask2.project.action.save}">save</button>
+		
 	</form>
 	
 </body>

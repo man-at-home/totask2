@@ -31,11 +31,12 @@ public class Project {
     @Column(name = "NAME", nullable = false, length = 250)
     private String name;
    
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "project")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "project")
     private Collection<Task> tasks = new ArrayList<Task>();    
 
     /** pk. */
     public long getId() { return this.id; }
+    public void setId(long id) { this.id = id; }
     
     /** all tasks belonging to this project. */
     public Stream<Task> getTasks() { return this.tasks.stream(); }
@@ -54,7 +55,7 @@ public class Project {
     /** debug.*/
     @Override
     public String toString() {
-        return "Project [name=" + name + "]";
+        return "Project [" + this.id  + ", name=" + this.name + "]";
     }
 
 

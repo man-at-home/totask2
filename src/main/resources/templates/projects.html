@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-	<title>totask2: projects</title>
+	<title>totask2: list projects</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />	
 	<link rel="stylesheet" type="text/css" href="css/totask2.css" />
 </head>
@@ -13,7 +13,7 @@
 		<b><span id="errmsg"></span></b>
 	</p>
 
-	<form action="#" th:action="@{/projects}" method="post">
+	<form action="#" th:action="@{/editProject}" method="get">
 		<table>
 			<thead>
 				<tr>
@@ -32,5 +32,8 @@
 			</tbody>
 		</table>
 	</form>
+	<form action="#" th:action="@{/newProject}" method="get">
+		<button type="submit" name="newProject" th:value="0" th:text="#{totask2.project.action.new}">new..</button>
+	</form>	
 </body>
 </html>

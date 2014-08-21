@@ -54,9 +54,9 @@ public class TaskRepositoryTest {
         project = projectRepository.saveAndFlush(project);
         LOG.debug("saved  project " + project + " id:" + project.getId());
 
-        Task t1 = new Task(project);
+        Task t1 = project.createTask();
         t1.setName("junit task 1");
-        Task t2 = new Task(project);
+        Task t2 = project.createTask();
         t2.setName("junit task 2");
         
         assertEquals("project " + project + " has both tasks", 2, project.getTasks().count());

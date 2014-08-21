@@ -41,12 +41,13 @@ public class Project {
     /** all tasks belonging to this project. */
     public Stream<Task> getTasks() { return this.tasks.stream(); }
     
-    public void addTask(Task task) {
-        if (task.getProject() != this) {
-            throw new IllegalStateException("task " + task + " not for project " + this);
-        }
-        this.tasks.add(task);
-    }    
+    /** create new task in project. */
+    public Task createTask() {
+        Task t = new Task(this);
+        this.tasks.add(t);
+        return t;
+    }
+        
 
     /** display name of this project. */
     public String getName() { return name; }
@@ -57,6 +58,6 @@ public class Project {
     public String toString() {
         return "Project [" + this.id  + ", name=" + this.name + "]";
     }
-
+    
 
 }

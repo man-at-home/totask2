@@ -34,7 +34,7 @@ public class ProjectController {
     private ProjectRepository projectRepository;
     
   
-    /** simple hello world. */
+    /** list all projects. */
     @RequestMapping("/projects")
     public String projects(Model model) {
         
@@ -73,6 +73,7 @@ public class ProjectController {
         LOG.debug("will edit new " + project);
         return "editProject";
     }
+    
     /** save edited project. POST. */
     @RequestMapping(value = "/editProject", method = RequestMethod.POST)
     public String editProjectSave(@Valid final Project project, final BindingResult bindingResult, final ModelMap model) {        

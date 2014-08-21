@@ -33,13 +33,13 @@ public class Task {
                 foreignKey = @ForeignKey(name = "FK_TT_TASK_OWNING_PARENT") 
     )
     private Project project;
-    
-    
+      
     public Task() {}
     
-    public Task(Project project) {
+    /** create new task. */
+    Task(Project project) {
         this();
-        setProject(project);
+        this.project = project;
     }
     
     /** display name of this task. */
@@ -48,20 +48,16 @@ public class Task {
     
     /* pk. */
     public long getId() { return id; }
-    protected void setId(long id) { this.id = id; }
+    public void setId(long id) { this.id = id; }
     
     /** project owning this task. */
     public Project getProject() { return project; }
-    private void setProject(Project project) {
-        this.project = project;
-        if (this.project != null) {
-            this.project.addTask(this);
-        }
-    }
+    public void setProject(Project project) { this.project = project; }
+
     
     /** debug. */
     @Override
     public String toString() {
-        return "Task [name=" + name + "]";
+        return "Task[" + id + ", name:" + name + "]";
     }
 }

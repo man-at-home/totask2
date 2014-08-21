@@ -1,0 +1,40 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>totask2: list tasks for project</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />	
+	<link rel="stylesheet" type="text/css" href="css/totask2.css" />
+</head>
+<body>
+
+	<h1>tasks in project</h1>
+
+	<p>
+		<b><span id="errmsg"></span></b>
+	</p>
+
+	<form action="#" th:action="@{/editTask}" method="get">
+		<table>
+			<thead>
+				<tr>
+					<th th:text="#{totask2.task.id.label}">id</th>
+					<th th:text="#{totask2.task.name.label}">name</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="task : ${tasks}">
+					<td th:text="${task.id}">17</td>
+					<td th:text="${task.name}">task name</td>
+					<td>
+					  <button type="submit" name="editTask" th:value="${task.id}" th:text="#{totask2.task.action.edit}">edit..</button>
+					  <button type="submit" name="deleteTask" th:value="${task.id}" th:text="#{totask2.task.action.delete}">delete</button>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</form>
+	<form action="#" th:action="@{/newTask}" method="get">
+		<button type="submit" name="projectId" th:value="${projectId}" th:text="#{totask2.task.action.new}">new..</button>
+	</form>	
+</body>
+</html>

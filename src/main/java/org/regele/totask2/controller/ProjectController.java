@@ -2,11 +2,11 @@ package org.regele.totask2.controller;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.regele.totask2.model.Project;
 import org.regele.totask2.model.ProjectRepository;
+import org.regele.totask2.util.ProjectNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -45,25 +46,25 @@ public class ProjectController {
         
         LOG.debug("serving " + projects.size() + " projects.");
         return "projects";
-    }
-
+    }    
     
     /** show edit page for an existing project. GET. */
-    @RequestMapping(value = "/editProject", params = {"editProject"}, method = RequestMethod.GET)
-    public String editProject(final Model model, final HttpServletRequest req) {
+    @RequestMapping(value = "/project/{id}", method = RequestMethod.GET)
+    public String showProject(@PathVariable final long id, final Model model) {
         
-        LOG.debug("edit project");
+        LOG.debug("show project " + id);
         
-        long projectId = Long.parseLong( req.getParameter("editProject") );
-        Project project = projectRepository.getOne( projectId );
+        Project project = projectRepository.findOne(id);
+        if( project == null)
+            throw new ProjectNotFoundException("project " + id + " not found to show.");
         model.addAttribute("project", project);        
         
-        LOG.debug("will edit " + project);
+        LOG.debug("will show " + project);
         return "editProject";
-    }
+    }    
     
     /** show edit page for a new project. GET. */
-    @RequestMapping(value = "/newProject", method = RequestMethod.GET)
+    @RequestMapping(value = "/project/new", method = RequestMethod.GET)
     public String newProject(final Model model) {       
         LOG.debug("new project");
         
@@ -75,9 +76,9 @@ public class ProjectController {
     }
     
     /** save edited project. POST. */
-    @RequestMapping(value = "/editProject", method = RequestMethod.POST)
-    public String editProjectSave(@Valid final Project project, final BindingResult bindingResult, final ModelMap model) {        
-        LOG.debug("editProjectSave(" + project +  ")");
+    @RequestMapping(value = "/project/save", method = RequestMethod.POST)
+    public String saveProject(@Valid final Project project, final BindingResult bindingResult, final ModelMap model) {        
+        LOG.debug("saveProject(" + project +  ")");
         
         if (bindingResult.hasErrors()) {
             return "editProject";

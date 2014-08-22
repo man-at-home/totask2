@@ -26,14 +26,14 @@
 					<td th:text="${project.id}">17</td>
 					<td th:text="${project.name}">project name</td>
 					<td>
-					  <button type="submit" name="editProject" th:value="${project.id}" th:text="#{totask2.project.action.edit}">edit..</button>
+					  <a th:href="@{/project/{id}(id=${project.id})}" th:text="#{totask2.project.action.edit}">edit..</a> 
 					</td>
 				</tr>
 			</tbody>
 		</table>
 	</form>
-	<form action="#" th:action="@{/newProject}" method="get">
-		<button type="submit" name="newProject" th:value="0" th:text="#{totask2.project.action.new}">new..</button>
-	</form>	
+	<p>
+		<a th:href="@{/project/new}" th:text="#{totask2.project.action.new}">new..</a>
+	</p>
 </body>
 </html>

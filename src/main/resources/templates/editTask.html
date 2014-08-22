@@ -3,7 +3,7 @@
 <head>
 	<title>totask2: edit task</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />	
-	<link rel="stylesheet" type="text/css" href="css/totask2.css" />
+	<link rel="stylesheet" type="text/css" href="/css/totask2.css" />
 </head>
 <body>
 
@@ -13,7 +13,7 @@
 		<b><span id="errmsg"></span></b>
 	</p>
 
-	<form action="#" th:action="@{/editTask}" th:object="${task}" method="post">
+	<form action="#" th:action="@{/task/save}" th:object="${task}" method="post">
 	
 		<ul th:if="${#fields.hasAnyErrors()}">
 		  <li class="fieldError" th:each="err : ${#fields.allErrors()}" th:text="${err}">...</li>

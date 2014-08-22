@@ -5,5 +5,6 @@ insert into tt_user(USER_NAME, DISPLAY_NAME, ACTIVE, VERSION) values('init-data'
 insert into tt_project (id, name) values (1, 'totask2');
 insert into tt_project (id, name) values (2, 'demo-project');
 
-insert into tt_task(name, project_id) values('develop', 1);
-insert into tt_task(name, project_id) values('support', 1);
+insert into tt_task(id, name, project_id) values(1, 'develop', 1);
+insert into tt_task(id, name, project_id) values(2, 'support', 1);
+insert into tt_task(id, name, project_id) values(3, 'document', 1);

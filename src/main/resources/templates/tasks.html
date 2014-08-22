@@ -13,7 +13,7 @@
 		<b><span id="errmsg"></span></b>
 	</p>
 
-	<form action="#" th:action="@{/editTask}" method="get">
+	<form action="#" th:action="@{/task/delete}" method="post">
 		<table>
 			<thead>
 				<tr>
@@ -26,15 +26,15 @@
 					<td th:text="${task.id}">17</td>
 					<td th:text="${task.name}">task name</td>
 					<td>
-					  <button type="submit" name="editTask" th:value="${task.id}" th:text="#{totask2.task.action.edit}">edit..</button>
-					  <button type="submit" name="deleteTask" th:value="${task.id}" th:text="#{totask2.task.action.delete}">delete</button>
+					  <a th:href="@{/task/{id}(id=${task.id})}" th:text="#{totask2.task.action.edit}">edit..</a> 
+					  <button type="submit" name="id" th:value="${task.id}" th:text="#{totask2.task.action.delete}">delete</button>
 					</td>
 				</tr>
 			</tbody>
 		</table>
 	</form>
-	<form action="#" th:action="@{/newTask}" method="get">
-		<button type="submit" name="projectId" th:value="${projectId}" th:text="#{totask2.task.action.new}">new..</button>
-	</form>	
+	
+	<p> <a th:href="@{/project/{id}/task/new(id=${projectId})}" th:text="#{totask2.task.action.new}">new..</a> </p>
+	
 </body>
 </html>

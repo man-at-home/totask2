@@ -3,7 +3,7 @@
 <head>
 	<title>totask2: edit project</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />	
-	<link rel="stylesheet" type="text/css" href="css/totask2.css" />
+	<link rel="stylesheet" type="text/css" href="/css/totask2.css" />
 </head>
 <body>
 
@@ -13,7 +13,7 @@
 		<b><span id="errmsg"></span></b>
 	</p>
 
-	<form action="#" th:action="@{/editProject}" th:object="${project}" method="post">
+	<form action="#" th:action="@{/project/save}" th:object="${project}" method="post">
 	
 		<ul th:if="${#fields.hasAnyErrors()}">
 		  <li class="fieldError" th:each="err : ${#fields.allErrors()}" th:text="${err}">...</li>
@@ -28,11 +28,8 @@
 		<button type="submit" name="saveProject" th:value="${project.id}" th:text="#{totask2.project.action.save}">save</button>
 		
 	</form>
-	
-	<form action="#" th:action="@{/tasks}" method="get">
-		<button type="submit" name="tasksByProject" th:value="${project.id}" th:text="#{totask2.project.action.tasks}">tasks..</button>
-	</form>
-	
+	     
+	<p><a th:href="@{/project/{id}/tasks(id=${project.id})}" th:text="#{totask2.project.action.tasks}">tasks..</a></p>
 	
 </body>
 </html>

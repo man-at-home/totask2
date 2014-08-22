@@ -2,6 +2,7 @@ package org.regele.totask2.controller;
 
 import static org.hamcrest.Matchers.containsString;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -22,18 +23,19 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 /**
- * testing basic spring mvc ProjectController.
+ * testing basic spring mvc TaskController.
  * @author Manfred
+ * @since 2014-08-22
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = Application.class)
 @WebAppConfiguration
-public class ProjectControllerTest {
+public class TaskControllerTest {
 
-    private static final Logger LOG = LoggerFactory.getLogger(ProjectControllerTest.class);
+    private static final Logger LOG = LoggerFactory.getLogger(TaskControllerTest.class);
 
     @Autowired
-    private ProjectController projectController;
+    private ProjectController taskController;
         
 
     @Autowired
@@ -47,46 +49,47 @@ public class ProjectControllerTest {
         this.mockMvc = MockMvcBuilders.webAppContextSetup(wac).build(); // setup spring test in web mode (same config as spring-boot)
     }
    
-    /** testing /projects. */
+    /** testing /project/1/tasks. */
     @Test
-    public void testGetProjects() throws Exception {
+    public void testGetTasksForProject1() throws Exception {
         
-        LOG.debug("request /projects");
+        LOG.debug("request /project/1/tasks");
         
         MvcResult result =
-        this.mockMvc.perform(get("/projects"))
+        this.mockMvc.perform(get("/project/1/tasks"))
         .andExpect(status().isOk())
-        .andExpect(content().string(containsString("totask2")))
-        .andExpect(content().string(containsString("demo-project")))
+        .andExpect(content().string(containsString("develop")))
+        .andExpect(content().string(containsString("support")))
+        .andExpect(content().string(containsString("document")))
         .andReturn();
         
         LOG.debug("response:" + result.getResponse().getContentAsString().replaceAll("\\r|\\n", ""));
     }
     
-    /** testing /project/1. */
+    /** testing /task/3 */
     @Test
     public void testGetEditProject() throws Exception {
         
-        LOG.debug("request /project/1");
+        LOG.debug("request /task/3");
         
         MvcResult result =
-        this.mockMvc.perform(get("/project/1"))
+        this.mockMvc.perform(get("/task/3"))
         .andExpect(status().isOk())
-        .andExpect(content().string(containsString("totask2")))
-        .andExpect(content().string(containsString("1")))
+        .andExpect(content().string(containsString("document")))
+        .andExpect(content().string(containsString("3")))
         .andReturn();
         
         LOG.debug("response:" + result.getResponse().getContentAsString().replaceAll("\\r|\\n", ""));
     }
     
-    /** testing /project/new. */
+    /** testing /project/1/new. */
     @Test
-    public void testGetNewProject() throws Exception {
+    public void testGetNewTaskForProject() throws Exception {
         
-        LOG.debug("request /project/new");
+        LOG.debug("request /project/1/task/new");
         
         MvcResult result =
-        this.mockMvc.perform(get("/project/new"))
+        this.mockMvc.perform(get("/project/1/task/new"))
         .andExpect(status().isOk())
         .andExpect(content().string(containsString("readonly")))
         .andExpect(content().string(containsString("0")))
@@ -95,4 +98,32 @@ public class ProjectControllerTest {
         LOG.debug("response:" + result.getResponse().getContentAsString().replaceAll("\\r|\\n", ""));
     }    
 
+    /** testing /project/999/new (non existing project). */
+    @Test
+    public void testGetNewTaskOnWrongProject() throws Exception {
+        
+        LOG.debug("request /project/999/task/new");
+        
+        MvcResult result =
+        this.mockMvc.perform(get("/project/999/task/new"))
+        .andExpect(status().isNotFound())
+        .andReturn();
+        
+        LOG.debug("response:" + result.getResponse().getContentAsString().replaceAll("\\r|\\n", ""));
+    }
+    
+    /** testing /task/delete not existing task 99999. */
+    @Test
+    public void testDeleteTask() throws Exception {
+        
+        LOG.debug("request /task/delete");
+        
+        MvcResult result =
+        this.mockMvc.perform(post("/task/delete").param("id", "99999"))
+        .andExpect(status().isNotFound())
+        .andReturn();
+        
+        LOG.debug("response:" + result.getResponse().getContentAsString().replaceAll("\\r|\\n", ""));
+    }      
+    
 }

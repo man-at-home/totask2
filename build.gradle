@@ -1,15 +1,16 @@
-apply plugin: 'java'
-apply plugin: 'spring-boot'
+apply plugin: "java"
+apply plugin: "spring-boot"
 
-apply plugin: 'eclipse'
+apply plugin: "eclipse"
 
-apply plugin: 'checkstyle'
-//apply plugin: 'findbugs'  // not yet ready for java8
-apply plugin: 'pmd'
-apply plugin: 'build-dashboard'
+apply plugin: "checkstyle"   // not yet ready for closures
+// apply plugin: "findbugs"     // not yet ready for java8
+apply plugin: "pmd"
 apply plugin: "jacoco"
+apply plugin: "jdepend"
 
-apply plugin: 'org.asciidoctor.gradle.asciidoctor'
+apply plugin: "build-dashboard"
+apply plugin: "org.asciidoctor.gradle.asciidoctor"
 
 repositories {
         maven { url "http://repo.spring.io/libs-release" }
@@ -43,6 +44,24 @@ dependencies {
   /*  compile("org.liquibase:liquibase-core") */
         	
     testCompile("org.springframework.boot:spring-boot-starter-test:1.1.5.RELEASE")    
+}
+
+
+jdependMain {
+   reports {
+      xml.enabled  false
+      text.enabled true
+   }
+}
+jdependTest {
+   reports {
+      xml.enabled  false
+      text.enabled true
+   }
+}
+
+checkstyle {
+   ignoreFailures = true
 }
 
 jacocoTestReport {

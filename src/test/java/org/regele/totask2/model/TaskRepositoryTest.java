@@ -81,7 +81,7 @@ public class TaskRepositoryTest {
     @Test   
     public void testReadTasksInProject() {
         Project totask2Project = projectRepository.findByName("totask2").get(0);
-        assertEquals("all tasks in project ", 2,  totask2Project.getTasks().count());
+        assertEquals("all tasks in project ", 3,  totask2Project.getTasks().count());
         totask2Project.getTasks().allMatch( t -> t.getProject().getName().equals("develop") || t.getProject().getName().equals("support"));
     
         assertEquals("support task not found" , 1, taskRepository.findByName("support").size());

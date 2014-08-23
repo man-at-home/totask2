@@ -1,9 +1,5 @@
 package org.regele.totask2.controller;
 
-import java.util.List;
-
-import javax.validation.Valid;
-
 import org.regele.totask2.model.Project;
 import org.regele.totask2.model.ProjectRepository;
 import org.regele.totask2.model.Task;
@@ -21,6 +17,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.List;
+import javax.validation.Valid;
+
 
 
 /** 
@@ -81,8 +81,9 @@ public class TaskController {
         LOG.debug("delete task " + id);
         
         Task taskToDelete = taskRepository.findOne(id);
-        if( taskToDelete == null)
+        if (taskToDelete == null) {
             throw new TaskNotFoundException("task " + id + " not found for deletion.");
+        }
         
         long projectId = taskToDelete.getProject().getId();
         
@@ -99,8 +100,9 @@ public class TaskController {
         LOG.debug("new task for project " + projectId);
         
         Project project = this.projectRepository.findOne(projectId);
-        if( project == null)
+        if (project == null) {
             throw new ProjectNotFoundException("project " + projectId + " not found creating new task.");
+        }
         Task task = project.createTask();
         model.addAttribute("task", task);        
         

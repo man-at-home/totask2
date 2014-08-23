@@ -66,7 +66,7 @@ public class TaskControllerTest {
         LOG.debug("response:" + result.getResponse().getContentAsString().replaceAll("\\r|\\n", ""));
     }
     
-    /** testing /task/3 */
+    /** testing /task/3. */
     @Test
     public void testGetEditProject() throws Exception {
         
@@ -124,6 +124,25 @@ public class TaskControllerTest {
         .andReturn();
         
         LOG.debug("response:" + result.getResponse().getContentAsString().replaceAll("\\r|\\n", ""));
-    }      
+    }  
+    
+    /** testing (invalid) /task/save POST. */
+    @Test
+    public void testInvalidSaveTask() throws Exception {
+        
+        LOG.debug("request /task/save");
+        
+        MvcResult result =
+        this.mockMvc.perform(
+                post("/task/save")
+                .param("id", "0")
+                .param("name", "x") // to short
+                )
+        .andExpect(status().isOk())
+        .andExpect(content().string(containsString("size must be between 2 and 250")))
+        .andReturn();
+        
+        LOG.debug("response:" + result.getResponse().getContentAsString().replaceAll("\\r|\\n", ""));
+    }     
     
 }

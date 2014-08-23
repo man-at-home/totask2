@@ -1,5 +1,6 @@
 package org.regele.totask2.util;
 
+/** base class. */
 public abstract class ToTaskExceptionBase extends RuntimeException {
 
     private static final long serialVersionUID = 1L;

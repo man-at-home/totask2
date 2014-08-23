@@ -12,6 +12,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.time.format.FormatStyle;
 import java.time.temporal.TemporalAdjusters;
+import java.util.Date;
 
 
 /**
@@ -49,6 +50,19 @@ public class DateHandlingTest {
         LocalDate dt = LocalDate.parse("2014-08-14");
         assertTrue("correct date parsed " + ref , dt.compareTo(ref) == 0);
     }
+    
+    @Test
+    public void testLocalDateConversion() {
+        LocalDate ref = LocalDate.of(2014, Month.AUGUST, 14);  
+        Date d = LocalDateConverter.toDate(ref);
+        
+        LocalDate ld = LocalDateConverter.toLocalDate(new Date(d.getTime()));       
+        assertEquals("conversion ok", ref.toEpochDay(), ld.toEpochDay());
+        
+        ref = LocalDate.now();
+        assertTrue("today before now",   new Date().after(LocalDateConverter.toDate(ref)));
+        assertTrue("tomorrow after now", new Date().before(LocalDateConverter.toDate(ref.plusDays(1))));       
+    }    
 
     @Test(expected = DateTimeParseException.class)
     public void testInvalidParsing() {

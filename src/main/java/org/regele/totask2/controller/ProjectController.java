@@ -1,12 +1,9 @@
 package org.regele.totask2.controller;
 
-import java.util.List;
-
-import javax.validation.Valid;
-
 import org.regele.totask2.model.Project;
 import org.regele.totask2.model.ProjectRepository;
 import org.regele.totask2.util.ProjectNotFoundException;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +14,10 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import java.util.List;
+import javax.validation.Valid;
+
 
 /** admin ui projects.
  * - add project
@@ -55,8 +56,9 @@ public class ProjectController {
         LOG.debug("show project " + id);
         
         Project project = projectRepository.findOne(id);
-        if( project == null)
+        if (project == null) {
             throw new ProjectNotFoundException("project " + id + " not found to show.");
+        }
         model.addAttribute("project", project);        
         
         LOG.debug("will show " + project);

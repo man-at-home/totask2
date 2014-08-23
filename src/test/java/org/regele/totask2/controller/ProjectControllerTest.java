@@ -2,6 +2,7 @@ package org.regele.totask2.controller;
 
 import static org.hamcrest.Matchers.containsString;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -93,6 +94,25 @@ public class ProjectControllerTest {
         .andReturn();
         
         LOG.debug("response:" + result.getResponse().getContentAsString().replaceAll("\\r|\\n", ""));
-    }    
-
+    } 
+    
+    /** testing (invalid) /project/save POST. */
+    @Test
+    public void testInvalidSaveProject() throws Exception {
+        
+        LOG.debug("request /project/save");
+        
+        MvcResult result =
+        this.mockMvc.perform(
+                post("/project/save")
+                .param("id", "0")
+                .param("name", "x") // to short
+                )
+        .andExpect(status().isOk())
+        .andExpect(content().string(containsString("size must be between 2 and 250")))
+        .andReturn();
+        
+        LOG.debug("response:" + result.getResponse().getContentAsString().replaceAll("\\r|\\n", ""));
+    } 
+    
 }

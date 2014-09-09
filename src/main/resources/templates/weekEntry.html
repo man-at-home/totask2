@@ -1,0 +1,55 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>totask2: log your work here...</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />	
+	<link rel="stylesheet" type="text/css" href="css/totask2.css" />
+</head>
+<body>
+
+	<h1>edit this week</h1>
+
+	<p>
+		<b><span id="errmsg"></span></b>
+	</p>
+
+	<form action="#" th:action="@{/weekEntry}" method="get">
+		<table>
+			<colgroup>
+				<col /><col /><col /><col /><col /><col /><col />
+			</colgroup>		
+			<thead>
+				<tr>
+					<th th:text="#{totask2.weekEntry.monday.label}">Mo</th>
+					<th th:text="#{totask2.weekEntry.tuesday.label}">Tue</th>
+					<th th:text="#{totask2.weekEntry.wednesday.label}">Wed</th>
+					<th th:text="#{totask2.weekEntry.thursday.label}">Thu</th>
+					<th th:text="#{totask2.weekEntry.friday.label}">Fri</th>
+					<th th:text="#{totask2.weekEntry.taskTotal.label}">total</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="taskInWeek : ${tasksInWeek}">
+					<td th:text="${taskInWeek.task.name}">clearquest development</td>
+					<td th:text="${project.name}">project name</td>
+					<td th:each="dailyEntry : ${taskInWeek.dailyEntries}">
+						<input type="number" th:field="*{duration}" th:errorclass="fieldError" size="2" maxlength="5"/>
+					</td>
+					<td id="taskTotal">0</td>					
+				</tr>
+			</tbody>
+			<tfoot>
+					<th><span id="day.0.total">3</span></th>
+					<th><span id="day.1.total">3</span></th>
+					<th><span id="day.2.total">3</span></th>
+					<th><span id="day.3.total">3</span></th>
+					<th><span id="day.4.total">3</span></th>
+					<th><span id="weekTotal">15.0</span></th>
+			</tfoot>
+		</table>
+	</form>
+	<p>
+		<a th:href="@{/project/new}" th:text="#{totask2.project.action.new}">new..</a>
+	</p>
+</body>
+</html>

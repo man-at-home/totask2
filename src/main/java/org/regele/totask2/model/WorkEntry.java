@@ -43,6 +43,11 @@ public class WorkEntry {
         this.task = task;
     }
     
+    public WorkEntry(User user, Task task, LocalDate dt) {
+        this(user, task);
+        this.setAtDate(dt);
+    }    
+    
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)  
@@ -115,5 +120,13 @@ public class WorkEntry {
 
     /** duration of the logged work in hours. */
     public float getDuration() { return duration; }
-    public void setDuration(final float duration) { this.duration = duration; }    
+    public void setDuration(final float duration) { this.duration = duration; }
+
+
+    @Override
+    public String toString() {
+        return "WorkEntry [at=" + at + ", duration=" + duration + "]";
+    }    
+    
+    
 }

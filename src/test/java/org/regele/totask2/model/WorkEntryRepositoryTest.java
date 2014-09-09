@@ -7,6 +7,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.regele.totask2.Application;
 import org.regele.totask2.util.LocalDateConverter;
+import org.regele.totask2.util.TestConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,7 +54,7 @@ public class WorkEntryRepositoryTest {
     @Test   
     public void testStoreEntry() {
         
-        User user = userRepository.getOne(1L);
+        User user = userRepository.getOne(TestConstants.AdminUser);
         Task task = taskRepository.getOne(1L);
  
         WorkEntry workEntry = new WorkEntry(user, task);
@@ -77,7 +78,7 @@ public class WorkEntryRepositoryTest {
     /** save, delete, findOne. */
     @Test   
     public void testStoreAndDeleteUser() {
-        User user = userRepository.getOne(1L);
+        User user = userRepository.getOne(TestConstants.AdminUser);
         Task task = taskRepository.getOne(1L);
  
         WorkEntry workEntry = new WorkEntry(user, task);
@@ -101,14 +102,14 @@ public class WorkEntryRepositoryTest {
         
         Date dt = LocalDateConverter.toDate(LocalDate.now());
         LOG.debug("retrieving entries for user 2L and date " + dt);
-        List<WorkEntry> entries = workEntryRepository.findForUserAndDay(2L, dt);
+        List<WorkEntry> entries = workEntryRepository.findForUserAndDay(TestConstants.TestUser, dt);
         
         assertTrue("no entries found: " + entries.size(), entries.size() >= 3);
         
         assertTrue(" entry 1 found", entries.stream().anyMatch( we -> we.getId() == 1L && we.getComment().equals("entry 1") ));
         assertTrue(" entry 3 found", entries.stream().anyMatch( we -> we.getId() == 3L && we.getComment().equals("entry 3") ));
         
-        assertTrue(" all of user 2", entries.stream().allMatch( we -> we.getUser().getId() == 2L));
+        assertTrue(" all of user 2", entries.stream().allMatch( we -> we.getUser().getId() == TestConstants.TestUser));
         assertTrue(" entries task 4 or 5", 
                 entries.stream().allMatch( we -> we.getTask().getId() == 4L || we.getTask().getId() == 5L));
     }   

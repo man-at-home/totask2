@@ -1,0 +1,55 @@
+package org.regele.totask2.model;
+
+/**
+ * Holder, one week of workEntries for a specific task.
+ * 
+ * @author Manfred
+ */
+public class TaskInWeek {
+
+    /** all working hours for this task. */
+    private Task task = null;
+
+    /** max seven slots a week for a given task. */
+    private WorkEntry[] dailyEntries = null;
+
+    public TaskInWeek(Task task) {
+        this.task = task;
+        this.dailyEntries = new WorkEntry[5];
+    }    
+    
+    public Task getTask() {
+        return task;
+    }
+
+    public void setTask(Task task) {
+        this.task = task;
+    }
+
+    public WorkEntry[] getDailyEntries() {
+        return dailyEntries;
+    }
+
+    public void setDailyEntries(WorkEntry[] dailyEntries) {
+        this.dailyEntries = dailyEntries;
+    }
+    
+    public double getDuration() {
+        if( this.dailyEntries == null )
+            return 0;
+        else
+        {
+           double sum = 0;
+           for(WorkEntry we : this.dailyEntries) {
+               sum += we.getDuration();
+           }
+           return sum;        
+        }
+    }
+    
+
+    @Override
+    public String toString() {
+        return "TaskInWeek [task=" + task + "]";
+    }
+}

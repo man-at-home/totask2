@@ -3,8 +3,10 @@ totask2
 
 port of totask to spring mvc
 
+- java 8
 - hibernate
 - spring mvc
+- thymeleaf
 - logback
 - jquery
 - checkstyle, pmd, asciidoc

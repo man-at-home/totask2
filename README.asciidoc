@@ -1,0 +1,11 @@
+totask2
+=======
+
+port of totask to spring mvc
+
+- hibernate
+- spring mvc
+- logback
+- jquery
+- checkstyle, pmd, asciidoc
+

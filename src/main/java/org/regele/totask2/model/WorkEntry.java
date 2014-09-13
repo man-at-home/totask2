@@ -26,7 +26,7 @@ import javax.validation.constraints.Size;
  * logged working hours for one user for a given task.
  * 
  * @author Manfred
- * @since  2014-08-23
+ * @since  2014-08-23 
  */
 @Entity
 @Table(name = "TT_WORKENTRY")

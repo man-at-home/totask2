@@ -25,7 +25,8 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 
-/** testing db access and data cummulation for one week of work. */
+/** testing db access and data cummulation for one week of work. 
+ */
 @Transactional
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = { Application.class })
@@ -73,7 +74,7 @@ public class WeekEntryServiceTest {
         {
            assertNotNull(tiw.getTask());
            assertNotNull(tiw.getDailyEntries());
-           assertEquals("5 workdays for task", 5, tiw.getDailyEntries().length);
+           assertEquals("7 workdays for task", 7, tiw.getDailyEntries().length);
            assertFalse("some entries null", Arrays.stream(tiw.getDailyEntries()).anyMatch( we -> we == null));
            assertFalse("some entries.task null", Arrays.stream(tiw.getDailyEntries()).anyMatch( we -> we.getTask() == null));
            assertFalse("some entries.user null", Arrays.stream(tiw.getDailyEntries()).anyMatch( we -> we.getUser() == null));

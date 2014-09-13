@@ -8,10 +8,17 @@ import java.util.Date;
 import java.util.List;
 
 
-/** data access layer for work entries. */
+/** data access layer for work entries. 
+ * 
+ * @author Manfred
+ * */
 public interface WorkEntryRepository extends JpaRepository<WorkEntry, Long>  {
 
-    /** find all tasks for the given project. */
+    /** find all tasks for the given project and day. */
     @Query("select we from WorkEntry we where we.user.id = :userId and we.at = :at order by we.task.id asc, we.id desc")
-    List<WorkEntry> findForUserAndDay(@Param("userId") long userId, @Param("at") Date at);    
+    List<WorkEntry> findForUserAndDay(@Param("userId") long userId, @Param("at") Date at);   
+    
+    /** find all tasks for the given project duration. */
+    @Query("select we from WorkEntry we where we.user.id = :userId and we.at >= :from and we.at <= :until order by we.task.id asc, we.at asc")
+    List<WorkEntry> findForUserAndTimespan(@Param("userId") long userId, @Param("from") Date from, @Param("until") Date until);      
 }

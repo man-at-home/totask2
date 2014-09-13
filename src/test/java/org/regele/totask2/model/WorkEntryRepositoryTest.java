@@ -104,14 +104,12 @@ public class WorkEntryRepositoryTest {
         LOG.debug("retrieving entries for user 2L and date " + dt);
         List<WorkEntry> entries = workEntryRepository.findForUserAndDay(TestConstants.TestUser, dt);
         
-        assertTrue("no entries found: " + entries.size(), entries.size() >= 3);
+        entries.stream().forEach( e -> LOG.debug("entry: " + e));
         
-        assertTrue(" entry 1 found", entries.stream().anyMatch( we -> we.getId() == 1L && we.getComment().equals("entry 1") ));
-        assertTrue(" entry 3 found", entries.stream().anyMatch( we -> we.getId() == 3L && we.getComment().equals("entry 3") ));
+        assertTrue("not enough entries found: " + entries.size(), entries.size() >= 2);
         
-        assertTrue(" all of user 2", entries.stream().allMatch( we -> we.getUser().getId() == TestConstants.TestUser));
-        assertTrue(" entries task 4 or 5", 
-                entries.stream().allMatch( we -> we.getTask().getId() == 4L || we.getTask().getId() == 5L));
+        assertTrue(" entry 1 found", entries.stream().anyMatch( we -> we.getId() == 1L && we.getComment().equals("entry 4.0 dev") ));
+        assertTrue(" entry 10 found", entries.stream().anyMatch( we -> we.getId() == 10L && we.getComment().equals("entry 5.0 test") ));        
     }   
     
 }

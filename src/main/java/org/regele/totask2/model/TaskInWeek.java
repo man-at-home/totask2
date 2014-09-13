@@ -3,9 +3,37 @@ package org.regele.totask2.model;
 /**
  * Holder, one week of workEntries for a specific task.
  * 
- * @author Manfred
+ * @author Manfred 
  */
 public class TaskInWeek {
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((task == null) ? 0 : new Long(task.getId()).hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        TaskInWeek other = (TaskInWeek) obj;
+        if (task == null) {
+            if (other.task != null)
+                return false;
+        } else if( task.getId() != other.task.getId())
+            return false;
+        return true;
+        
+        // TBD: compare date ranges
+    }
+
 
     /** all working hours for this task. */
     private Task task = null;
@@ -15,7 +43,7 @@ public class TaskInWeek {
 
     public TaskInWeek(Task task) {
         this.task = task;
-        this.dailyEntries = new WorkEntry[5];
+        this.dailyEntries = new WorkEntry[7];
     }    
     
     public Task getTask() {

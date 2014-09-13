@@ -1,0 +1,24 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>totask2</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />	
+	<link rel="stylesheet" type="text/css" href="css/totask2.css" />
+</head>
+<body>
+
+	<h1>my totask2 sample application</h1>
+
+	<p>
+		<b><span id="errmsg"></span></b>
+	</p>
+	
+	<p>
+		<a href="/projects" th:href="@{/projects}" th:text="#{totask2.index.projects.link}">projects..</a>
+		<br /><br />
+		<a href="/weekEntry" th:href="@{/weekEntry}" th:text="#{totask2.index.weekEntry.link}">data entry for week..</a>
+		<br /><br />
+	</p>
+
+</body>
+</html>

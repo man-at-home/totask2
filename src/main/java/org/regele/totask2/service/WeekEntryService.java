@@ -1,5 +1,8 @@
 package org.regele.totask2.service;
 
+import static java.time.temporal.TemporalAdjusters.*;
+
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
@@ -28,22 +31,30 @@ public class WeekEntryService {
     private WorkEntryRepository workEntryRepository;    
 
     /** .ctor */
-    public WeekEntryService(WorkEntryRepository workEntryRepository) {
+    public WeekEntryService(final WorkEntryRepository workEntryRepository) {
         this.workEntryRepository = workEntryRepository;
     }
     
     /** all work done on a given week. */
-    public List<TaskInWeek> getWorkWeek(User user, LocalDate date) {
-
-        LOG.debug("retrieving entries for user date " + date);
+    public List<TaskInWeek> getWorkWeek(final User user, final LocalDate dt) {
         
-        Date dt = LocalDateConverter.toDate(date);
-        List<WorkEntry> entries = workEntryRepository.findForUserAndDay(user.getId(), dt);
+        if( dt == null)
+            throw new IllegalArgumentException("no date for WorkWeek retrieval");
+        
+        LocalDate date  = dt.with(previousOrSame(DayOfWeek.MONDAY));
+        
+        Date from  = LocalDateConverter.toDate(date);
+        Date until = LocalDateConverter.toDate(date.with(nextOrSame(DayOfWeek.SUNDAY)));
+        
+        LOG.debug("retrieving entries for user " + user + " between " + from + " - " + until);        
+        
+        List<WorkEntry> entries = workEntryRepository.findForUserAndTimespan(user.getId(), from, until); 
         
         // an entry for each task.
-        List<TaskInWeek> tasksInWeek = 
-                entries.stream()
+        List<TaskInWeek> tasksInWeek =        
+         entries.stream()
                 .map( we -> new TaskInWeek( we.getTask()) )
+                .distinct()
                 .collect( Collectors.toList() );
         
         LOG.debug("given week tasks count: " + tasksInWeek.size());
@@ -52,7 +63,7 @@ public class WeekEntryService {
         
         for( TaskInWeek tiw : tasksInWeek)
         {
-            for(int dayOffset = 0; dayOffset<=4 ;dayOffset++)
+            for(int dayOffset = 0; dayOffset<=6 ;dayOffset++)
             {
                 final long offset = dayOffset;
                 WorkEntry entryOfDay = entries.stream()

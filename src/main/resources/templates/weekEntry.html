@@ -7,49 +7,75 @@
 </head>
 <body>
 
-	<h1>edit this week</h1>
+    <!--/* 
+    	this is the main entry page, allowing logging all work for task for a given week and user.
+    	one row per task, one input per work day. 
+    */-->
+ 
+	<h1 th:text="#{totask2.weekEntry.header}">edit this week</h1>
 
 	<p>
 		<b><span id="errmsg"></span></b>
 	</p>
+	
 
 	<form action="#" th:action="@{/weekEntry}" method="get">
+	
+		<p>
+			<b><span id="date" th:text="${#dates.format(date, 'dd.MM.yyyy')}"></span></b>
+		</p>	
+	
 		<table>
 			<colgroup>
-				<col /><col /><col /><col /><col /><col /><col />
+				<col /><col /><col /><col /><col /><col /><col /><col /><col />
 			</colgroup>		
 			<thead>
 				<tr>
-					<th th:text="#{totask2.weekEntry.monday.label}">Mo</th>
-					<th th:text="#{totask2.weekEntry.tuesday.label}">Tue</th>
-					<th th:text="#{totask2.weekEntry.wednesday.label}">Wed</th>
-					<th th:text="#{totask2.weekEntry.thursday.label}">Thu</th>
-					<th th:text="#{totask2.weekEntry.friday.label}">Fri</th>
-					<th th:text="#{totask2.weekEntry.taskTotal.label}">total</th>
+				    <td />
+					<th th:text="#{totask2.weekEntry.monday.label}"		>Mo		</th>
+					<th th:text="#{totask2.weekEntry.tuesday.label}"	>Tue	</th>
+					<th th:text="#{totask2.weekEntry.wednesday.label}"	>Wed	</th>
+					<th th:text="#{totask2.weekEntry.thursday.label}"	>Thu	</th>
+					<th th:text="#{totask2.weekEntry.friday.label}"		>Fri	</th>
+					<th th:text="#{totask2.weekEntry.saturday.label}"	>Sat	</th>
+					<th th:text="#{totask2.weekEntry.sunday.label}"		>Sun	</th>
+					<th th:text="#{totask2.weekEntry.taskTotal.label}"	>total	</th>
 				</tr>
 			</thead>
 			<tbody>
-				<tr th:each="taskInWeek : ${tasksInWeek}">
-					<td th:text="${taskInWeek.task.name}">clearquest development</td>
-					<td th:text="${project.name}">project name</td>
-					<td th:each="dailyEntry : ${taskInWeek.dailyEntries}">
-						<input type="number" th:field="*{duration}" th:errorclass="fieldError" size="2" maxlength="5"/>
+				<tr id="taskRow_"  th:each="taskInWeek : ${tasksInWeek}" th:attrappend="id=${taskInWeek.task.id}">
+				
+					<td th:text="${taskInWeek.task.name}" th:title="${taskInWeek.task.id}">ClearQuest development</td>
+					
+					<td th:each="dailyEntry, iterationStatus : ${taskInWeek.dailyEntries}">
+					    <input 
+					    	type="number" 
+					    	name="workEntry_" 
+					    	th:attrappend="name=${taskInWeek.task.id} + '_' + ${iterationStatus.index} " 
+					    	th:classappend="'day_' + ${iterationStatus.index} + ' task_' + ${taskInWeek.task.id}"
+					    	th:value="${dailyEntry.duration}" 
+					    	th:title="${dailyEntry.id} + ' ' + ${dailyEntry.atDate} + ' ' + ${dailyEntry.comment}"
+					    	value="1" 
+					    	size="2" 
+					    	maxlength="5"/>
 					</td>
-					<td id="taskTotal">0</td>					
+
+					<td id="taskTotal_" th:attrappend="id=${taskInWeek.task.id}" th:text="${taskInWeek.duration}">13.3</td>					
 				</tr>
 			</tbody>
 			<tfoot>
-					<th><span id="day.0.total">3</span></th>
-					<th><span id="day.1.total">3</span></th>
-					<th><span id="day.2.total">3</span></th>
-					<th><span id="day.3.total">3</span></th>
-					<th><span id="day.4.total">3</span></th>
+					<th/>
+					<th><span id="dayTotal_0">3.0</span></th>
+					<th><span id="dayTotal_1">3.1</span></th>
+					<th><span id="dayTotal_2">3.2</span></th>
+					<th><span id="dayTotal_3">3.3</span></th>
+					<th><span id="dayTotal_4">3.4</span></th>
+					<th><span id="dayTotal_5">0.5</span></th>
+					<th><span id="dayTotal_6">0.6</span></th>
 					<th><span id="weekTotal">15.0</span></th>
 			</tfoot>
 		</table>
 	</form>
-	<p>
-		<a th:href="@{/project/new}" th:text="#{totask2.project.action.new}">new..</a>
-	</p>
+
 </body>
 </html>

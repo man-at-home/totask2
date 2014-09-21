@@ -6,11 +6,112 @@
 	<link rel="stylesheet" type="text/css" href="css/totask2.css" />
 </head>
 <body>
+	<script type="text/javascript" src="js/jquery-1.11.1.js"></script>
 
     <!--/* 
     	this is the main entry page, allowing logging all work for task for a given week and user.
     	one row per task, one input per work day. 
     */-->
+    
+    <script type="text/javascript">
+    /*<![CDATA[*/
+               
+        /* all css classnames for displayed tasks. */
+		var taskClassNames = {};                             
+               
+	    /** register all callback javascript events. */
+		$(document).ready(function()
+		{ 
+	        taskClassNames = findAllClassesForTasks();
+			
+	        $('input').each(function() {
+	            $(this).keyup(function(){   
+	                calculateTotal();	/* calculate if value may changed */
+	            })
+	        });	
+	        
+	        $('#weekForm').submit(function( event ) {
+       	  		if( ! validateFormBeforeSubmit())
+          		{
+       	  			event.preventDefault();
+          		}
+		    });    
+	        
+	        calculateTotal();  /* calculate on start */
+		});
+    
+	    /** find all css class names for displayed task input fields. */
+        function findAllClassesForTasks()
+        {
+	    	var taskRegEx = /task_\d*$/g;  /* matches task_123 */
+	    	var classes = {};
+	    	
+			$('input').each(function() {
+			    $($(this).attr('class').split(' ')).each(function() { 
+			        if (this !== '' && taskRegEx.test(this) ) {
+			            classes[this] = this;
+			        }    
+			    });
+			});
+			
+			return classes;
+        }
+	    
+		/** sum up all week entries in sum field */
+	    function calculateTotal() 
+	    {
+	    	for (className in taskClassNames) {
+				$('#' + className + '_total').html( sumOneTaskRow('.' + className).toFixed(1)); /* sum work hours for task ${taskInWeek.task.name} */
+	    	}
+	    	
+	    	var weekSum = 0;
+	    	for (i = 0; i <= 6; i++) { 
+	    		var daySum = sumOneTaskRow('.day_' + i);
+	    		weekSum   += daySum;
+	    		$('#day_' + i + '_total').html(daySum.toFixed(1));
+	    	}
+	    	$('#week_total').html(weekSum.toFixed(1));	
+	    }	    
+	    
+		/** sum all hours done for a task for complete week. */
+	    function sumOneTaskRow( cssClassOfTask )
+	    {
+	        var sum = 0;
+	        $(cssClassOfTask).each(function() {
+	            if(!isNaN(this.value) && this.value.length!=0) {
+	                sum += parseFloat(this.value);
+	            }
+	        });
+	        return sum;    	
+	    } 
+		
+		
+	    function validateFormBeforeSubmit()
+	    {
+	        var isValidForm = true;
+	        $('.validationDecimal').each(function() {
+	            if( ! validateDecimal( this.value ))
+	            {
+	            	this.focus();
+	            	this.select();
+	    	        $("#errmsg").html("not a valid duration: " + this.value).show().fadeOut("slow");	//display error message
+	        		isValidForm = false;
+	            }
+	        });
+	        return isValidForm;
+	    }
+
+		/** check on valid decimal for us. */
+	    function validateDecimal(value)    {
+	        var RE = /^\d*\.?\d{0,2}$/
+	        if(RE.test(value)){
+	           return true;
+	        }else{
+	           return false;
+	        }
+	    }		
+	/*]]>*/
+    </script>
  
 	<h1 th:text="#{totask2.weekEntry.header}">edit this week</h1>
 
@@ -19,11 +120,13 @@
 	</p>
 	
 
-	<form action="#" th:action="@{/weekEntry}" method="get">
+	<form id="weekForm" action="#" th:action="@{/weekEntry}" method="post">
 	
 		<p>
 			<b><span id="date" th:text="${#dates.format(date, 'dd.MM.yyyy')}"></span></b>
 		</p>	
+		
+		<p><input type="submit" th:value="#{totask2.weekEntry.save.label}" value="save week"></input></p>
 	
 		<table>
 			<colgroup>
@@ -31,7 +134,7 @@
 			</colgroup>		
 			<thead>
 				<tr>
-				    <td />
+				    <th />
 					<th th:text="#{totask2.weekEntry.monday.label}"		>Mo		</th>
 					<th th:text="#{totask2.weekEntry.tuesday.label}"	>Tue	</th>
 					<th th:text="#{totask2.weekEntry.wednesday.label}"	>Wed	</th>
@@ -60,19 +163,21 @@
 					    	maxlength="5"/>
 					</td>
 
-					<td id="taskTotal_" th:attrappend="id=${taskInWeek.task.id}" th:text="${taskInWeek.duration}">13.3</td>					
+					<td id="task_" th:attrappend="id=${taskInWeek.task.id} + '_total'" th:text="${taskInWeek.duration}">13.3</td>					
 				</tr>
 			</tbody>
 			<tfoot>
-					<th/>
-					<th><span id="dayTotal_0">3.0</span></th>
-					<th><span id="dayTotal_1">3.1</span></th>
-					<th><span id="dayTotal_2">3.2</span></th>
-					<th><span id="dayTotal_3">3.3</span></th>
-					<th><span id="dayTotal_4">3.4</span></th>
-					<th><span id="dayTotal_5">0.5</span></th>
-					<th><span id="dayTotal_6">0.6</span></th>
-					<th><span id="weekTotal">15.0</span></th>
+				<tr>
+					<td/>
+					<td><span id="day_0_total">3.0</span></td>
+					<td><span id="day_1_total">3.1</span></td>
+					<td><span id="day_2_total">3.2</span></td>
+					<td><span id="day_3_total">3.3</span></td>
+					<td><span id="day_4_total">3.4</span></td>
+					<td><span id="day_5_total">0.5</span></td>
+					<td><span id="day_6_total">0.6</span></td>
+					<td><span id="week_total">15.0</span></td>
+				</tr>
 			</tfoot>
 		</table>
 	</form>

@@ -2,10 +2,26 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 	<title>totask2: list projects</title>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />	
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<link rel="stylesheet" type="text/css" href="css/totask2.css" />
+	<link rel="stylesheet" type="text/css" href="css/jquery.dataTables.css" />
 </head>
+
 <body>
+	<script type="text/javascript" charset="utf8" src="js/jquery-1.11.1.js"></script>
+	<script type="text/javascript" charset="utf8"
+		src="js/jquery.dataTables.js"></script>
+
+	<script type="text/javascript">
+		/*<![CDATA[*/
+
+		$(document).ready(function() {
+			$('#tableProjects').dataTable();
+		});
+
+		/*]]>*/
+	</script>
+
 
 	<h1>currently known projects</h1>
 
@@ -14,23 +30,35 @@
 	</p>
 
 	<form action="#" th:action="@{/editProject}" method="get">
-		<table>
-			<thead>
+		<div style="width: 50%">
+>
+			<table id="tableProjects" class="display compact cell-border" cellspacing="0" width="100%">
+				<thead>
+					<tr>
+						<th th:text="#{totask2.project.id.label}" 	class="dt-center">id</th>
+						<th th:text="#{totask2.project.name.label}" class="dt-left">name</th>
+						<th th:text="#{totask2.project.link}" 		class="dt-left">action</th>
+					</tr>
+				</thead>
+
+				<tfoot>
 				<tr>
-					<th th:text="#{totask2.project.id.label}">id</th>
-					<th th:text="#{totask2.project.name.label}">name</th>
+					<th />
+					<th />
+					<th />
 				</tr>
-			</thead>
-			<tbody>
-				<tr th:each="project : ${projects}">
-					<td th:text="${project.id}">17</td>
-					<td th:text="${project.name}">project name</td>
-					<td>
-					  <a th:href="@{/project/{id}(id=${project.id})}" th:text="#{totask2.project.action.edit}">edit..</a> 
-					</td>
-				</tr>
-			</tbody>
-		</table>
+				</tfoot>
+				
+				<tbody>
+					<tr th:each="project : ${projects}">
+						<td class="dt-center"  th:text="${project.id}">17</td>
+						<td th:text="${project.name}" class="dt-left">project name</td>
+						<td class="dt-left"><a th:href="@{/project/{id}(id=${project.id})}"
+							th:text="#{totask2.project.action.edit}">edit..</a></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
 	</form>
 	<p>
 		<a th:href="@{/project/new}" th:text="#{totask2.project.action.new}">new..</a>

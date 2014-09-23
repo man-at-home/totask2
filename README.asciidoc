@@ -9,5 +9,6 @@ port of totask to spring mvc
 - thymeleaf
 - logback
 - jquery
+- datatable
 - checkstyle, pmd, asciidoc
 

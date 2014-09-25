@@ -16,6 +16,9 @@ repositories {
         maven { url "http://repo.spring.io/libs-release" }
         mavenLocal()
         mavenCentral()
+        
+        maven{url "http://jasperreports.sourceforge.net/maven2/"}
+        maven{url "http://jaspersoft.artifactoryonline.com/jaspersoft/third-party-ce-artifacts/"}
 }
 
 buildscript {
@@ -30,6 +33,7 @@ buildscript {
 	    classpath 'org.asciidoctor:asciidoctor-gradle-plugin:0.7.3'
     }
 }
+
 dependencies {
     compile 'org.slf4j:slf4j-api:1.7.7'
     compile 'ch.qos.logback:logback-classic'
@@ -43,9 +47,11 @@ dependencies {
     
   /*  compile("org.liquibase:liquibase-core") */
         	
-    testCompile("org.springframework.boot:spring-boot-starter-test:1.1.5.RELEASE")    
+    testCompile("org.springframework.boot:spring-boot-starter-test:1.1.5.RELEASE")  
+    
+    compile "net.sf.jasperreports:jasperreports:5.6.0"  
+    compile "org.apache.poi:poi:3.7"
 }
-
 
 jdependMain {
    reports {
@@ -76,3 +82,5 @@ asciidoctor {
     outputDir = new File("$buildDir/docs/asciidoc")
     logDocuments = true
 } 
+
+

@@ -115,4 +115,16 @@ public class ProjectControllerTest {
         LOG.debug("response:" + result.getResponse().getContentAsString().replaceAll("\\r|\\n", ""));
     } 
     
+    /** testing /projects/report jasper generated pdf. */
+    @Test
+    public void testProjectReport() throws Exception {
+        
+        LOG.debug("request /projects/report/pdf");
+        
+        this.mockMvc.perform(get("/projects/report/pdf"))
+        .andExpect(status().isOk())
+        .andExpect(content().string(containsString("%PDF")))
+        .andReturn();        
+    }
+    
 }

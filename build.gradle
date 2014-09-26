@@ -39,6 +39,7 @@ dependencies {
     compile 'ch.qos.logback:logback-classic'
     
     compile "org.springframework:spring-context:4.0.6.RELEASE"
+    compile "org.springframework:spring-context-support:4.0.6.RELEASE"
     compile("org.springframework.boot:spring-boot-starter-thymeleaf:1.1.5.RELEASE")
 	compile("org.springframework.boot:spring-boot-starter-web:1.1.5.RELEASE")
     compile("org.springframework.boot:spring-boot-starter-data-jpa:1.1.5.RELEASE")

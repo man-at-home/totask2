@@ -4,10 +4,19 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Map;
 
+import org.eclipse.jdt.internal.core.Assert;
 import org.regele.totask2.util.EnvironmentException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.jasperreports.AbstractJasperReportsSingleFormatView;
+import org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView;
+import org.springframework.web.servlet.view.jasperreports.JasperReportsXlsView;
 
 import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JRException;
@@ -18,7 +27,10 @@ import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import net.sf.jasperreports.engine.design.JasperDesign;
+import net.sf.jasperreports.engine.export.JRXlsExporter;
 import net.sf.jasperreports.engine.xml.JRXmlLoader;
+import net.sf.jasperreports.export.SimpleExporterInput;
+import net.sf.jasperreports.export.SimpleOutputStreamExporterOutput;
 
 
 /**
@@ -26,13 +38,28 @@ import net.sf.jasperreports.engine.xml.JRXmlLoader;
  * 
  * @author manfred
  * */
+@Service
 public class ReportGenerator {
 
-    private static final Logger LOG = LoggerFactory.getLogger(ReportGenerator.class);
+    public ReportGenerator()
+    {}
+    
+    public static enum ReportOutputFormat
+    {
+        excel,
+        pdf
+    }
+    
 
-    public void render(final Collection<?> pojoDataSource, OutputStream outputStream) throws EnvironmentException {
+    private static final Logger LOG = LoggerFactory.getLogger(ReportGenerator.class);
+    
+    @Autowired private ApplicationContext appContext;
+    
+    
+
+    public void render(final String reportTemplateName, final ReportOutputFormat outputFormat, final Collection<?> pojoDataSource, OutputStream outputStream) throws EnvironmentException {
         try {
-            String reportName = "/reports/emptyReport.jrxml";
+            String reportName = "/reports/" + reportTemplateName;
             
             HashMap<String, Object> reportParams = new HashMap<String, Object>();
             reportParams.put("reportTitle", "manfred User Report");
@@ -56,20 +83,25 @@ public class ReportGenerator {
             
             LOG.debug("exporting report.: " + jp.getName() );    
             
-            JasperExportManager.exportReportToPdfStream(jp, outputStream);
+            switch( outputFormat )
+            {
+               case excel:
+                   JRXlsExporter exporter = new JRXlsExporter();
+                   exporter.setExporterInput(new SimpleExporterInput(jp));
+                   exporter.setExporterOutput(new SimpleOutputStreamExporterOutput(outputStream));                  
+                   exporter.exportReport();
+                   break;
+               case pdf:
+                   JasperExportManager.exportReportToPdfStream(jp, outputStream);
+                   break;                 
+               default:
+                   throw new IllegalArgumentException("not a valid report output format: " + outputFormat);
+            }
+            
  
-      /*      JRXlsExporter exporter = new JRXlsExporter();
-            
-            JRPdfExporter exporter = new JRPdfExporter();
-            exporter.setExporterInput(new SimpleExporterInput(jp));
-            exporter.setExporterOutput(new SimpleOutputStreamExporterOutput(outputStream));
-            
-            exporter.exportReport();
-      */
         } catch (JRException jrex) {
             LOG.error("Error render Report", jrex);
-            throw new EnvironmentException("Error generation Report: "
-                    + jrex.getMessage(), jrex);
+            throw new EnvironmentException("Error generation Report: " + jrex.getMessage(), jrex);
         }
     }
 
@@ -83,5 +115,30 @@ public class ReportGenerator {
         LOG.debug("  DataSource[" + ds.getRecordCount() + "]");
         return ds;
     }
-
+    
+    /** creates a spring modelview with jasperreport report. 
+     * 
+     * @param reportName jasperReports template filename (example: reportGeneratorTestReport.jrxml)
+     * @param reportData pojo collection as datasource generating the report.
+     * */
+    public ModelAndView createReportModelView(final String reportName, final ReportOutputFormat reportOutputFormat, final Collection<?> reportData)
+    {
+        Assert.isNotNull(reportName, "reportName");
+        Assert.isNotNull(reportData, "reportData");
+        
+        AbstractJasperReportsSingleFormatView view = reportOutputFormat == ReportOutputFormat.excel ? 
+                    new JasperReportsXlsView(): 
+                    new JasperReportsPdfView();
+        
+        view.setUrl("classpath:reports/" + reportName);
+        view.setApplicationContext(appContext);
+        view.setReportDataKey("jasperReportsDataKey");
+        
+        Map<String, Object> params = new HashMap<>();
+        params.put("jasperReportsDataKey", reportData);
+    
+        LOG.debug("rendering " + reportOutputFormat + ":" + view.getUrl() + " with " + reportData.size() + " rows of data");
+    
+        return new ModelAndView(view, params);
+    }
 }

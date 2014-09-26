@@ -2,8 +2,9 @@ package org.regele.totask2.controller;
 
 import org.regele.totask2.model.Project;
 import org.regele.totask2.model.ProjectRepository;
+import org.regele.totask2.service.ReportGenerator;
+import org.regele.totask2.service.ReportGenerator.ReportOutputFormat;
 import org.regele.totask2.util.ProjectNotFoundException;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +15,10 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
+
 import javax.validation.Valid;
 
 
@@ -34,6 +37,9 @@ public class ProjectController {
     /** project repository. */
     @Autowired
     private ProjectRepository projectRepository;
+    
+    @Autowired
+    private ReportGenerator reportGenerator;
     
   
     /** list all projects. */
@@ -92,5 +98,22 @@ public class ProjectController {
         LOG.debug("saved " + project + ", now redirecting.");
         return "redirect:/projects";
     }    
+    
+   
+    /**  generate an pdf or excel report from project data */
+    @RequestMapping(value = "/projects/report/{reportFormat}", method = RequestMethod.GET)
+    public ModelAndView getProjectsReport(@PathVariable final String reportFormat) {
+        
+        LOG.debug("getProjectsReport()");
+        
+        List<Project> reportData = projectRepository.findAll();
+                       
+        return reportGenerator
+                .createReportModelView(
+                        "projectsReport.jrxml" , 
+                        reportFormat == null || reportFormat.contains("pdf") ? ReportOutputFormat.pdf : ReportOutputFormat.excel,
+                        reportData
+                        );
+    }
     
 }//class

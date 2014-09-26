@@ -3,12 +3,14 @@ totask2
 
 port of totask to spring mvc
 
-- java 8
-- hibernate
-- spring mvc
-- thymeleaf
-- logback
-- jquery
-- datatable
-- checkstyle, pmd, asciidoc
+- java 8 as language and runtime
+- hibernate jpa provider
+- h2 in-memory database
+- spring mvc as mvc web framework (server side)
+- thymeleaf as templating engine
+- logback for logging,
+- jquery, ajax
+- datatable, ui grid
+- checkstyle, pmd, asciidoc, dev tooling
+- jasperReports, reporting engine
 

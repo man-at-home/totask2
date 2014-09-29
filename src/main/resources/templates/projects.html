@@ -9,8 +9,7 @@
 
 <body>
 	<script type="text/javascript" charset="utf8" src="js/jquery-1.11.1.js"></script>
-	<script type="text/javascript" charset="utf8"
-		src="js/jquery.dataTables.js"></script>
+	<script type="text/javascript" charset="utf8" src="js/jquery.dataTables.js"></script>
 
 	<script type="text/javascript">
 		/*<![CDATA[*/
@@ -63,7 +62,7 @@
 	<p>
 		<a th:href="@{/project/new}" th:text="#{totask2.project.action.new}">new..</a>
 		<br /> <br />
-		<a th:href="@{/projects/report/pdf}" th:text="#{totask2.project.action.pdfReport}">pdf..</a>
+		<a download="excel.of.week.xls" th:href="@{/projects/report/pdf}" th:text="#{totask2.project.action.pdfReport}">pdf..</a>
 		
 	</p>
 </body>

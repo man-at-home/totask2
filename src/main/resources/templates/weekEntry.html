@@ -3,15 +3,18 @@
 <head>
 	<title>totask2: log your work here...</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />	
-	<link rel="stylesheet" type="text/css" href="css/totask2.css" />
+	<link rel="stylesheet" type="text/css" href="/css/totask2.css" />
+	<link rel="stylesheet" type="text/css" href="/css/jquery.dataTables.css" />
 </head>
 <body>
-	<script type="text/javascript" src="js/jquery-1.11.1.js"></script>
+	<script type="text/javascript" charset="utf8" src="/js/jquery-1.11.1.js"></script>
+	<script type="text/javascript" charset="utf8" src="/js/jquery.dataTables.js"></script>	
 
     <!--/* 
     	this is the main entry page, allowing logging all work for task for a given week and user.
     	one row per task, one input per work day. 
     */-->
+    
     
     <script type="text/javascript">
     /*<![CDATA[*/
@@ -22,6 +25,8 @@
 	    /** register all callback javascript events. */
 		$(document).ready(function()
 		{ 
+			$('#tableWeekEntry').dataTable();
+			
 	        taskClassNames = findAllClassesForTasks();
 			
 	        $('input').each(function() {
@@ -47,11 +52,14 @@
 	    	var classes = {};
 	    	
 			$('input').each(function() {
-			    $($(this).attr('class').split(' ')).each(function() { 
-			        if (this !== '' && taskRegEx.test(this) ) {
-			            classes[this] = this;
-			        }    
-			    });
+			  if($(this).attr('class') !== undefined ) {
+				  
+					    $($(this).attr('class').split(' ')).each(function() { 
+					        if (this !== '' && taskRegEx.test(this) ) {
+					            classes[this] = this;
+					        }    
+				    });
+			   }
 			});
 			
 			return classes;
@@ -118,31 +126,34 @@
 	<p>
 		<b><span id="errmsg"></span></b>
 	</p>
+
+	<p>
+			<a th:href="@{/weekEntry/} + ${previousWeek}" th:text="#{totask2.weekEntry.action.previousWeek}">&lt;-</a>		
+			<b><span id="date" th:text="${#dates.format(date, 'dd.MM.yyyy')}"></span></b>
+			<a th:href="@{/weekEntry/} + ${nextWeek}" th:text="#{totask2.weekEntry.action.nextWeek}">&gt;-</a>					
+	</p>	
 	
 
 	<form id="weekForm" action="#" th:action="@{/weekEntry}" method="post">
 	
-		<p>
-			<b><span id="date" th:text="${#dates.format(date, 'dd.MM.yyyy')}"></span></b>
-		</p>	
 		
 		<p><input type="submit" th:value="#{totask2.weekEntry.save.label}" value="save week"></input></p>
 	
-		<table>
+		<table id="tableWeekEntry"  class="display compact cell-border">
 			<colgroup>
 				<col /><col /><col /><col /><col /><col /><col /><col /><col />
 			</colgroup>		
 			<thead>
 				<tr>
 				    <th />
-					<th th:text="#{totask2.weekEntry.monday.label}"		>Mo		</th>
-					<th th:text="#{totask2.weekEntry.tuesday.label}"	>Tue	</th>
-					<th th:text="#{totask2.weekEntry.wednesday.label}"	>Wed	</th>
-					<th th:text="#{totask2.weekEntry.thursday.label}"	>Thu	</th>
-					<th th:text="#{totask2.weekEntry.friday.label}"		>Fri	</th>
-					<th th:text="#{totask2.weekEntry.saturday.label}"	>Sat	</th>
-					<th th:text="#{totask2.weekEntry.sunday.label}"		>Sun	</th>
-					<th th:text="#{totask2.weekEntry.taskTotal.label}"	>total	</th>
+					<th th:text="#{totask2.weekEntry.monday.label}"     class="dt-left">Mo</th>
+					<th th:text="#{totask2.weekEntry.tuesday.label}"    class="dt-left">Tue</th>
+					<th th:text="#{totask2.weekEntry.wednesday.label}"  class="dt-left">Wed</th>
+					<th th:text="#{totask2.weekEntry.thursday.label}"	class="dt-left">Thu</th>
+					<th th:text="#{totask2.weekEntry.friday.label}"		class="dt-left">Fri</th>
+					<th th:text="#{totask2.weekEntry.saturday.label}"	class="dt-left">Sat</th>
+					<th th:text="#{totask2.weekEntry.sunday.label}"		class="dt-left">Sun</th>
+					<th th:text="#{totask2.weekEntry.taskTotal.label}"	class="dt-left">total</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -159,8 +170,10 @@
 					    	th:value="${dailyEntry.duration}" 
 					    	th:title="${dailyEntry.id} + ' ' + ${dailyEntry.atDate} + ' ' + ${dailyEntry.comment}"
 					    	value="1" 
-					    	size="2" 
-					    	maxlength="5"/>
+					    	size="3"
+					    	min="0"
+					    	max="12"
+					    	maxlength="4"/>
 					</td>
 
 					<td id="task_" th:attrappend="id=${taskInWeek.task.id} + '_total'" th:text="${taskInWeek.duration}">13.3</td>					
@@ -181,6 +194,10 @@
 			</tfoot>
 		</table>
 	</form>
+	
+	<p>
+			<a th:href="@{/weekEntry/report/excel}" th:text="#{totask2.weekEntry.action.excelReport}">excel..</a>		
+	</p>
 
 </body>
 </html>

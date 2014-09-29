@@ -5,6 +5,7 @@ import java.io.OutputStream;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 
 import org.eclipse.jdt.internal.core.Assert;
 import org.regele.totask2.util.EnvironmentException;
@@ -133,6 +134,15 @@ public class ReportGenerator {
         view.setUrl("classpath:reports/" + reportName);
         view.setApplicationContext(appContext);
         view.setReportDataKey("jasperReportsDataKey");
+        
+        if( reportOutputFormat == ReportOutputFormat.excel ) {
+            view.setContentType("application/vnd.ms-excel");
+            
+            Properties headers = new Properties();
+            headers.setProperty("Content-Disposition", "attachment; filename=" + reportName + ".xls");
+            view.setHeaders(headers);
+        }
+       
         
         Map<String, Object> params = new HashMap<>();
         params.put("jasperReportsDataKey", reportData);

@@ -2,7 +2,7 @@ apply plugin: "java"
 apply plugin: "spring-boot"
 
 apply plugin: "eclipse"
-
+ 
 apply plugin: "checkstyle"   // not yet ready for closures
 apply plugin: "findbugs"     
 apply plugin: "pmd"
@@ -79,6 +79,7 @@ checkstyle {
    ignoreFailures = true      
 }
 
+<<<<<<< HEAD
 tasks.withType(FindBugs) {
     reports {
         xml.enabled = false
@@ -86,6 +87,8 @@ tasks.withType(FindBugs) {
     }
 }
 
+=======
+>>>>>>> branch 'master' of https://github.com/man-at-home/totask2.git
 
 jacocoTestReport {
     reports {

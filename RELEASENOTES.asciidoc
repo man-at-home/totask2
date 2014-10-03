@@ -13,3 +13,4 @@ totask2 releasenotes
 	
 2014-09-xx
 	- datatables integration
+	

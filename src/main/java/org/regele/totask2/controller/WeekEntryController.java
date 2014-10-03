@@ -88,7 +88,8 @@ public class WeekEntryController {
         
         LOG.debug("getProjectsReport(" + reportFormat + ", " +  dateString + ")"); 
         LocalDate dt   =  LocalDate.parse(dateString);
-        
+         
+         
         return reportGenerator
                 .createReportModelView(
                         "weekEntryReport.jrxml" , 

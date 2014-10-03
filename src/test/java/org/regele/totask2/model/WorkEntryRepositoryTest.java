@@ -54,7 +54,7 @@ public class WorkEntryRepositoryTest {
     @Test   
     public void testStoreEntry() {
         
-        User user = userRepository.getOne(TestConstants.AdminUser);
+        User user = userRepository.getOne(TestConstants.ADMIN_USER);
         Task task = taskRepository.getOne(1L);
  
         WorkEntry workEntry = new WorkEntry(user, task);
@@ -78,7 +78,7 @@ public class WorkEntryRepositoryTest {
     /** save, delete, findOne. */
     @Test   
     public void testStoreAndDeleteUser() {
-        User user = userRepository.getOne(TestConstants.AdminUser);
+        User user = userRepository.getOne(TestConstants.ADMIN_USER);
         Task task = taskRepository.getOne(1L);
  
         WorkEntry workEntry = new WorkEntry(user, task);
@@ -102,7 +102,7 @@ public class WorkEntryRepositoryTest {
         
         Date dt = LocalDateConverter.toDate(LocalDate.now());
         LOG.debug("retrieving entries for user 2L and date " + dt);
-        List<WorkEntry> entries = workEntryRepository.findForUserAndDay(TestConstants.TestUser, dt);
+        List<WorkEntry> entries = workEntryRepository.findForUserAndDay(TestConstants.TEST_USER, dt);
         
         entries.stream().forEach( e -> LOG.debug("entry: " + e));
         

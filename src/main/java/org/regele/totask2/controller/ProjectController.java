@@ -100,7 +100,7 @@ public class ProjectController {
     }    
     
    
-    /**  generate an pdf or excel report from project data */
+    /**  generate an pdf or excel report from project data. */
     @RequestMapping(value = "/projects/report/{reportFormat}", method = RequestMethod.GET)
     public ModelAndView getProjectsReport(@PathVariable final String reportFormat) {
         

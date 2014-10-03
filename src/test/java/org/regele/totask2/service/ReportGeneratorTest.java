@@ -2,12 +2,6 @@ package org.regele.totask2.service;
 
 import static org.junit.Assert.*;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
 
 import org.hamcrest.CoreMatchers;
 import org.junit.BeforeClass;
@@ -22,6 +16,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
+
 
 /** testing jasper report generation. */
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -39,8 +41,7 @@ public class ReportGeneratorTest {
     private static List<SampleData> reportData = null;
     
     @BeforeClass
-    public static void createTestData()
-    {       
+    public static void createTestData() {       
         reportData = new ArrayList<SampleData>();
         reportData.add(new SampleData());
         reportData.add(new SampleData());
@@ -59,7 +60,7 @@ public class ReportGeneratorTest {
 
             LOG.debug("creating test report: " + pdfReportResult.getAbsolutePath());       
 
-            rg.render(reportName,ReportOutputFormat.pdf , reportData, fileOutputStream);
+            rg.render(reportName, ReportOutputFormat.pdf, reportData, fileOutputStream);
             assertNotNull("output not generated", fileOutputStream);
 
             fileOutputStream.flush();
@@ -71,7 +72,7 @@ public class ReportGeneratorTest {
 
             LOG.debug("creating test report: " + pdfReportResult.getAbsolutePath());       
 
-            rg.render(reportName,ReportOutputFormat.excel , reportData, fileOutputStream);
+            rg.render(reportName, ReportOutputFormat.excel, reportData, fileOutputStream);
             assertNotNull("output not generated", fileOutputStream);
 
             fileOutputStream.flush();
@@ -82,15 +83,14 @@ public class ReportGeneratorTest {
         assertTrue("output pdf report file " + pdfReportResult.getName() + " does not exist ", pdfReportResult.exists());
         assertTrue("output pdf report with no content + " + pdfReportResult.length(), pdfReportResult.length() > 100);
         
-        String content = new String(Files.readAllBytes( Paths.get( pdfReportResult.getAbsolutePath() )));
-        assertThat("pdf content no matchtext", content, CoreMatchers.containsString( "%PDF" ));
-        assertThat("pdf content no matchtext eof", content, CoreMatchers.containsString( "%%EOF" ));
+        String content = new String(Files.readAllBytes(Paths.get(pdfReportResult.getAbsolutePath())));
+        assertThat("pdf content no matchtext", content, CoreMatchers.containsString("%PDF"));
+        assertThat("pdf content no matchtext eof", content, CoreMatchers.containsString("%%EOF"));
 
         assertTrue("output excel report with no content + " + xlsReportResult.length(), xlsReportResult.length() > 100);
-        content = new String(Files.readAllBytes( Paths.get( xlsReportResult.getAbsolutePath() )));
-        for(SampleData d : reportData)
-        {
-            assertThat("xls report has no matchtext age:" + d.getAge(), content, CoreMatchers.containsString( d.getAge().toString() ));            
+        content = new String(Files.readAllBytes(Paths.get(xlsReportResult.getAbsolutePath())));
+        for (SampleData d : reportData) {
+            assertThat("xls report has no matchtext age:" + d.getAge(), content, CoreMatchers.containsString(d.getAge().toString()));            
         }
         
         xlsReportResult.deleteOnExit();

@@ -17,18 +17,23 @@ public class TaskInWeek {
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj)
+        if (this == obj){       
             return true;
-        if (obj == null)
+        }
+        if (obj == null){ 
             return false;
-        if (getClass() != obj.getClass())
+        }    
+        if (getClass() != obj.getClass()){ 
             return false;
+        }
         TaskInWeek other = (TaskInWeek) obj;
         if (task == null) {
-            if (other.task != null)
+            if (other.task != null) {
                 return false;
-        } else if( task.getId() != other.task.getId())
+            }
+        } else if (task.getId() != other.task.getId()){
             return false;
+        }
         return true;
         
         // TBD: compare date ranges
@@ -63,12 +68,13 @@ public class TaskInWeek {
     }
     
     public double getDuration() {
-        if( this.dailyEntries == null )
-            return 0;
-        else
-        {
+        
+        if (this.dailyEntries == null) { 
+           return 0;       
+        }
+        else {
            double sum = 0;
-           for(WorkEntry we : this.dailyEntries) {
+           for (WorkEntry we : this.dailyEntries) {
                sum += we.getDuration();
            }
            return sum;        

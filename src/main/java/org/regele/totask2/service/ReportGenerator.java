@@ -1,23 +1,5 @@
 package org.regele.totask2.service;
 
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Properties;
-
-import org.eclipse.jdt.internal.core.Assert;
-import org.regele.totask2.util.EnvironmentException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import org.springframework.stereotype.Service;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.view.jasperreports.AbstractJasperReportsSingleFormatView;
-import org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView;
-import org.springframework.web.servlet.view.jasperreports.JasperReportsXlsView;
 
 import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JRException;
@@ -34,6 +16,26 @@ import net.sf.jasperreports.export.SimpleExporterInput;
 import net.sf.jasperreports.export.SimpleOutputStreamExporterOutput;
 
 
+import org.eclipse.jdt.internal.core.Assert;
+import org.regele.totask2.util.EnvironmentException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.jasperreports.AbstractJasperReportsSingleFormatView;
+import org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView;
+import org.springframework.web.servlet.view.jasperreports.JasperReportsXlsView;
+
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Properties;
+
+
 /**
  * report generation with jasper report.
  * 
@@ -45,8 +47,8 @@ public class ReportGenerator {
     public ReportGenerator()
     {}
     
-    public static enum ReportOutputFormat
-    {
+    /** output format of report. */
+    public static enum ReportOutputFormat {
         excel,
         pdf
     }
@@ -82,10 +84,9 @@ public class ReportGenerator {
             // source
             JasperPrint jp = JasperFillManager.fillReport(jr, reportParams, buildDataSource(pojoDataSource));
             
-            LOG.debug("exporting report.: " + jp.getName() );    
+            LOG.debug("exporting report.: " + jp.getName());    
             
-            switch( outputFormat )
-            {
+            switch(outputFormat) {
                case excel:
                    JRXlsExporter exporter = new JRXlsExporter();
                    exporter.setExporterInput(new SimpleExporterInput(jp));
@@ -107,7 +108,7 @@ public class ReportGenerator {
     }
 
     /**
-     * Returns a data source that's wrapped within {@link JRDataSource}
+     * Returns a data source that's wrapped within {@link JRDataSource}.
      * 
      * @return
      */
@@ -128,14 +129,14 @@ public class ReportGenerator {
         Assert.isNotNull(reportData, "reportData");
         
         AbstractJasperReportsSingleFormatView view = reportOutputFormat == ReportOutputFormat.excel ? 
-                    new JasperReportsXlsView(): 
+                    new JasperReportsXlsView() : 
                     new JasperReportsPdfView();
         
         view.setUrl("classpath:reports/" + reportName);
         view.setApplicationContext(appContext);
         view.setReportDataKey("jasperReportsDataKey");
         
-        if( reportOutputFormat == ReportOutputFormat.excel ) {
+        if (reportOutputFormat == ReportOutputFormat.excel) {
             view.setContentType("application/vnd.ms-excel");
             
             Properties headers = new Properties();

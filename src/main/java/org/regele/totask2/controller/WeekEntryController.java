@@ -1,18 +1,18 @@
 package org.regele.totask2.controller;
 
-import java.time.LocalDate;
-import java.util.List;
 
 import org.regele.totask2.model.TaskInWeek;
 import org.regele.totask2.model.User;
 import org.regele.totask2.model.UserRepository;
 import org.regele.totask2.model.WorkEntryRepository;
 import org.regele.totask2.service.ReportGenerator;
-import org.regele.totask2.service.WeekEntryService;
 import org.regele.totask2.service.ReportGenerator.ReportOutputFormat;
+import org.regele.totask2.service.WeekEntryService;
 import org.regele.totask2.util.LocalDateConverter;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,6 +20,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.time.LocalDate;
+import java.util.List;
 
 
 /** main entry page for uses.
@@ -44,7 +47,7 @@ public class WeekEntryController {
     private ReportGenerator reportGenerator;
     
     private WeekEntryService getService() {
-        return new WeekEntryService( this.workEntryRepository );
+        return new WeekEntryService(this.workEntryRepository);
     }
     
     /** list all projects. */
@@ -73,14 +76,14 @@ public class WeekEntryController {
     
     
     private List<TaskInWeek> getWeek(final LocalDate dt) {
-       User      user = userRepository.getOne( 2L /* TestConstants.TestUser */ );   // TBF current User.        
+       User      user = userRepository.getOne(2L /* TestConstants.TestUser */);   // TBF current User.        
        List<TaskInWeek> tasksInWeek = getService().getWorkWeek(user, dt);      
        return tasksInWeek;
     }
     
     
-    /**  generate an pdf or excel report from project data */
-    @RequestMapping(value = "/weekEntry/report/{reportFormat}", method = RequestMethod.GET, produces="application/vnd.ms-excel")
+    /**  generate an pdf or excel report from project data. */
+    @RequestMapping(value = "/weekEntry/report/{reportFormat}", method = RequestMethod.GET, produces = "application/vnd.ms-excel")
     public ModelAndView getWeekEntryReport(@PathVariable final String reportFormat) {
         
         LOG.debug("getProjectsReport()");

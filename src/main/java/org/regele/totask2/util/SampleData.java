@@ -1,5 +1,6 @@
 package org.regele.totask2.util;
 
+/** demo data testing report. */
 public class SampleData {
     
     private double random = Math.random();

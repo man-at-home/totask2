@@ -1,5 +1,6 @@
 package org.regele.totask2.util;
 
+/** runtime totask2 exception for base service errors. */
 public class EnvironmentException extends ToTaskExceptionBase {
 
     private static final long serialVersionUID = 1L;

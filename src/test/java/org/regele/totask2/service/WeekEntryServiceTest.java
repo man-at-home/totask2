@@ -58,7 +58,7 @@ public class WeekEntryServiceTest {
     public void testReadTestEntries() {
 
         LocalDate dt   = LocalDate.now();        
-        User      user = userRepository.getOne( TestConstants.TestUser );
+        User      user = userRepository.getOne( TestConstants.TEST_USER );
         
         WeekEntryService svc = new WeekEntryService(workEntryRepository);
         
@@ -84,4 +84,3 @@ public class WeekEntryServiceTest {
     }   
     
 }
-

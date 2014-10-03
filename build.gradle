@@ -4,7 +4,7 @@ apply plugin: "spring-boot"
 apply plugin: "eclipse"
 
 apply plugin: "checkstyle"   // not yet ready for closures
-// apply plugin: "findbugs"     // not yet ready for java8
+apply plugin: "findbugs"     
 apply plugin: "pmd"
 apply plugin: "jacoco"
 apply plugin: "jdepend"
@@ -29,7 +29,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.1.5.RELEASE")   
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.1.7.RELEASE")   
 	    classpath 'org.asciidoctor:asciidoctor-gradle-plugin:0.7.3'
     }
 }
@@ -38,17 +38,17 @@ dependencies {
     compile 'org.slf4j:slf4j-api:1.7.7'
     compile 'ch.qos.logback:logback-classic'
     
-    compile "org.springframework:spring-context:4.0.6.RELEASE"
-    compile "org.springframework:spring-context-support:4.0.6.RELEASE"
-    compile("org.springframework.boot:spring-boot-starter-thymeleaf:1.1.5.RELEASE")
-	compile("org.springframework.boot:spring-boot-starter-web:1.1.5.RELEASE")
-    compile("org.springframework.boot:spring-boot-starter-data-jpa:1.1.5.RELEASE")
+    compile "org.springframework:spring-context:4.1.1.RELEASE"
+    compile "org.springframework:spring-context-support:4.1.1.RELEASE"
+    compile("org.springframework.boot:spring-boot-starter-thymeleaf:1.1.7.RELEASE")
+	compile("org.springframework.boot:spring-boot-starter-web:1.1.7.RELEASE")
+    compile("org.springframework.boot:spring-boot-starter-data-jpa:1.1.7.RELEASE")
     
     compile("com.h2database:h2")
     
   /*  compile("org.liquibase:liquibase-core") */
         	
-    testCompile("org.springframework.boot:spring-boot-starter-test:1.1.5.RELEASE")  
+    testCompile("org.springframework.boot:spring-boot-starter-test:1.1.7.RELEASE")  
     
     compile "net.sf.jasperreports:jasperreports:5.6.0"  
     compile "org.apache.poi:poi:3.7"
@@ -66,6 +66,17 @@ jdependTest {
       text.enabled true
    }
 }
+
+findbugs {
+        toolVersion = "3.0.0"
+        sourceSets = [sourceSets.main]
+        ignoreFailures = true
+        effort = "max"
+        reportLevel = "high"
+        visitors = ["FindSqlInjection", "SwitchFallthrough"]
+        omitVisitors = ["FindNonShortCircuit"]
+}
+
 
 checkstyle {
    ignoreFailures = true

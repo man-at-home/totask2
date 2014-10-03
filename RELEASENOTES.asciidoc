@@ -1,0 +1,15 @@
+totask2 releasenotes
+====================
+
+2014-10-03
+	- build upgraded to gradle 2.1
+	- ingegrated findbugs
+	- upgraded spring to 4.1.1
+	- upgraded spring-boot to 1.1.7
+	- added this file (releasnotes)
+	
+2014-09-xx
+	- jasper reports integration
+	
+2014-09-xx
+	- datatables integration

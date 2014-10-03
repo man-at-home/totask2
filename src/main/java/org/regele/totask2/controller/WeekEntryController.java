@@ -83,12 +83,11 @@ public class WeekEntryController {
     
     
     /**  generate an pdf or excel report from project data. */
-    @RequestMapping(value = "/weekEntry/report/{reportFormat}", method = RequestMethod.GET, produces = "application/vnd.ms-excel")
-    public ModelAndView getWeekEntryReport(@PathVariable final String reportFormat) {
+    @RequestMapping(value = "/weekEntry/report/{reportFormat}/{dateString}", method = RequestMethod.GET, produces = "application/vnd.ms-excel")
+    public ModelAndView getWeekEntryReport(@PathVariable final String reportFormat, @PathVariable final String dateString) {
         
-        LOG.debug("getProjectsReport()");
- 
-        LocalDate dt   = LocalDate.now();        
+        LOG.debug("getProjectsReport(" + reportFormat + ", " +  dateString + ")"); 
+        LocalDate dt   =  LocalDate.parse(dateString);
         
         return reportGenerator
                 .createReportModelView(

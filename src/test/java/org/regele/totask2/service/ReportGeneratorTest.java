@@ -2,7 +2,6 @@ package org.regele.totask2.service;
 
 import static org.junit.Assert.*;
 
-
 import org.hamcrest.CoreMatchers;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -19,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -83,12 +83,12 @@ public class ReportGeneratorTest {
         assertTrue("output pdf report file " + pdfReportResult.getName() + " does not exist ", pdfReportResult.exists());
         assertTrue("output pdf report with no content + " + pdfReportResult.length(), pdfReportResult.length() > 100);
         
-        String content = new String(Files.readAllBytes(Paths.get(pdfReportResult.getAbsolutePath())));
+        String content = new String(Files.readAllBytes(Paths.get(pdfReportResult.getAbsolutePath())), Charset.forName("UTF-8"));
         assertThat("pdf content no matchtext", content, CoreMatchers.containsString("%PDF"));
         assertThat("pdf content no matchtext eof", content, CoreMatchers.containsString("%%EOF"));
 
         assertTrue("output excel report with no content + " + xlsReportResult.length(), xlsReportResult.length() > 100);
-        content = new String(Files.readAllBytes(Paths.get(xlsReportResult.getAbsolutePath())));
+        content = new String(Files.readAllBytes(Paths.get(xlsReportResult.getAbsolutePath())), Charset.forName("UTF-8"));
         for (SampleData d : reportData) {
             assertThat("xls report has no matchtext age:" + d.getAge(), content, CoreMatchers.containsString(d.getAge().toString()));            
         }

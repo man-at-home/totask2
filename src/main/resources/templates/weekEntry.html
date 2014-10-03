@@ -196,7 +196,7 @@
 	</form>
 	
 	<p>
-			<a th:href="@{/weekEntry/report/excel}" th:text="#{totask2.weekEntry.action.excelReport}">excel..</a>		
+			<a th:href="@{/weekEntry/report/excel} + '/' + ${currentWeek}" th:text="#{totask2.weekEntry.action.excelReport}">excel..</a>		
 	</p>
 
 </body>

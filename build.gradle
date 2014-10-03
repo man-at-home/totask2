@@ -54,6 +54,7 @@ dependencies {
     compile "org.apache.poi:poi:3.7"
 }
 
+
 jdependMain {
    reports {
       xml.enabled  false
@@ -62,25 +63,22 @@ jdependMain {
 }
 jdependTest {
    reports {
-      xml.enabled  false
+      xml.enabled  false  
       text.enabled true
    }
 }
 
 findbugs {
         toolVersion = "3.0.0"
-        sourceSets = [sourceSets.main]
         ignoreFailures = true
         effort = "max"
         reportLevel = "high"
-        visitors = ["FindSqlInjection", "SwitchFallthrough"]
-        omitVisitors = ["FindNonShortCircuit"]
 }
-
 
 checkstyle {
-   ignoreFailures = true
+   ignoreFailures = true      
 }
+
 
 jacocoTestReport {
     reports {

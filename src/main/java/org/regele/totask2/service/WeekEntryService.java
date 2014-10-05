@@ -12,6 +12,7 @@ import org.regele.totask2.model.TaskInWeek;
 import org.regele.totask2.model.User;
 import org.regele.totask2.model.WorkEntry;
 import org.regele.totask2.model.WorkEntryRepository;
+import org.regele.totask2.util.ApplicationAssert;
 import org.regele.totask2.util.LocalDateConverter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -76,6 +77,35 @@ public class WeekEntryService {
         }
         
         return tasksInWeek;
+    }
+
+    public int saveWeek(List<TaskInWeek> tasksInWeek) {
+        
+        int saveCount = 0;
+        
+        LOG.debug("saveWeek()");
+        ApplicationAssert.assertNotNull("tasksInWeek", tasksInWeek);
+        
+        for( TaskInWeek tiw : tasksInWeek)
+        {
+            if( tiw.isModifiedByUser() ) {
+                LOG.debug("saveWeek() Task " + tiw.getTask().getName());
+                for(int dayOffset = 0; dayOffset<=6 ;dayOffset++)
+                {
+                    WorkEntry we = tiw.getDailyEntries()[dayOffset];
+                    ApplicationAssert.assertNotNull("we", we);
+                    
+                    if( we.isModifiedByUser()) {
+                        LOG.debug("  save workEntry: " + we);
+                        we = this.workEntryRepository.save(we);
+                        tiw.getDailyEntries()[dayOffset] = we;
+                        saveCount++;
+                    }
+                }
+                this.workEntryRepository.flush();   // per task..
+            }
+        } 
+        return saveCount;
     }
 
 }

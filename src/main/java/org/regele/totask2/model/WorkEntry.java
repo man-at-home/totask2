@@ -1,6 +1,8 @@
 package org.regele.totask2.model;
 
 import org.regele.totask2.util.LocalDateConverter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.time.LocalDate;
 import java.util.Date;
@@ -17,6 +19,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -31,6 +34,8 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(name = "TT_WORKENTRY")
 public class WorkEntry {
+    
+    private static final Logger LOG = LoggerFactory.getLogger(WorkEntry.class);  
     
     public WorkEntry() {
         setAtDate(LocalDate.now());
@@ -82,6 +87,12 @@ public class WorkEntry {
     @NotNull
     @Column(name = "DURATION", nullable = false)
     private float duration;
+    
+    /** some fields (duration, comment) can be edited on screen by user. changes are marked here.
+     * NON-PERSISTANT! */
+    @Transient
+    private boolean isModifiedByUser = false;
+    
 
     /** pk. */
     public long getId() { return id; }
@@ -89,7 +100,12 @@ public class WorkEntry {
 
     /** optional comment (prose). */
     public String getComment() { return comment; }
-    public void setComment(String comment) { this.comment = comment; }
+    public void setComment(final String comment) { 
+        if( comment != this.comment) {
+            isModifiedByUser = true;
+        }
+        this.comment = comment; 
+    }
 
     /** employee working on a given task. */
     public User getUser() { return user; }
@@ -120,7 +136,14 @@ public class WorkEntry {
 
     /** duration of the logged work in hours. */
     public float getDuration() { return duration; }
-    public void setDuration(final float duration) { this.duration = duration; }
+    
+    public void setDuration(final float duration) { 
+        if( duration != this.duration) {
+            LOG.debug("change duration: " + this.duration + " ->" + duration);
+            isModifiedByUser = true;
+        }
+        this.duration = duration; 
+    }
 
 
     @Override
@@ -128,5 +151,8 @@ public class WorkEntry {
         return "WorkEntry [at=" + at + ", duration=" + duration + "]";
     }    
     
-    
+    public boolean isModifiedByUser()
+    {
+        return this.isModifiedByUser;
+    }
 }

@@ -1,5 +1,7 @@
 package org.regele.totask2.model;
 
+import java.util.Arrays;
+
 /**
  * Holder, one week of workEntries for a specific task.
  * 
@@ -79,6 +81,14 @@ public class TaskInWeek {
            }
            return sum;        
         }
+    }
+    
+    public boolean isModifiedByUser() {
+        
+        if( this.getDailyEntries() == null)
+            return false;
+        else
+            return Arrays.stream( this.getDailyEntries() ).anyMatch( de -> de.isModifiedByUser());
     }
     
 

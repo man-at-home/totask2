@@ -124,7 +124,9 @@
 	<h1 th:text="#{totask2.weekEntry.header}">edit this week</h1>
 
 	<p>
-		<b><span id="errmsg"></span></b>
+		<b><span id="errmsg"></span>
+		   <span id="flashMessage" th:text="${flashMessage}">flashMessage</span>
+		</b>
 	</p>
 
 	<p>
@@ -134,7 +136,7 @@
 	</p>	
 	
 
-	<form id="weekForm" action="#" th:action="@{/weekEntry}" method="post">
+	<form id="weekForm" action="#" th:action="@{/weekEntry/} + ${currentWeek}" method="post">
 	
 		
 		<p><input type="submit" th:value="#{totask2.weekEntry.save.label}" value="save week"></input></p>
@@ -170,6 +172,7 @@
 					    	th:value="${dailyEntry.duration}" 
 					    	th:title="${dailyEntry.id} + ' ' + ${dailyEntry.atDate} + ' ' + ${dailyEntry.comment}"
 					    	value="1" 
+					    	step="0.1"
 					    	size="3"
 					    	min="0"
 					    	max="12"

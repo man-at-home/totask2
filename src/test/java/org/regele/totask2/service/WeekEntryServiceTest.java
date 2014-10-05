@@ -53,7 +53,7 @@ public class WeekEntryServiceTest {
     }
 
     
-    /** find admin user inserted by data.sql. */
+    /** find week date test-user inserted by data.sql. */
     @Test   
     public void testReadTestEntries() {
 
@@ -83,4 +83,29 @@ public class WeekEntryServiceTest {
         }
     }   
     
+    
+    /** update */
+    @Test   
+    public void testUpdateTestEntries() {
+
+        LocalDate dt   = LocalDate.now();        
+        User      user = userRepository.getOne( TestConstants.TEST_USER );
+        
+        WeekEntryService svc = new WeekEntryService(workEntryRepository);
+        
+        List<TaskInWeek> tasksInWeek = svc.getWorkWeek(user, dt);
+        assertEquals("0 update", 0, svc.saveWeek(tasksInWeek));
+        
+        tasksInWeek.get(0).getDailyEntries()[0].setDuration(9.9f);
+        tasksInWeek.get(0).getDailyEntries()[1].setDuration(8.8f);
+        tasksInWeek.get(0).getDailyEntries()[2].setDuration(7.7f);
+        tasksInWeek.get(0).getDailyEntries()[3].setDuration(6.6f);
+        tasksInWeek.get(0).getDailyEntries()[4].setDuration(5.5f);
+        
+        assertEquals("5 update", 5, svc.saveWeek(tasksInWeek));
+        
+        List<TaskInWeek> tasksInWeekReread = svc.getWorkWeek(user, dt);
+        assertEquals("updated 9.9f", 9.9f, tasksInWeekReread.get(0).getDailyEntries()[0].getDuration(),0);   
+        assertEquals("updated 6.6f", 6.6f, tasksInWeekReread.get(0).getDailyEntries()[3].getDuration(),0);  
+    }
 }

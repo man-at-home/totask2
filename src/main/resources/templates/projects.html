@@ -1,15 +1,20 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-	<title>totask2: list projects</title>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	<link rel="stylesheet" type="text/css" href="css/totask2.css" />
-	<link rel="stylesheet" type="text/css" href="css/jquery.dataTables.css" />
+	<title th:text="#{totask2.appname}">totask2 projects</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />	
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<link rel="stylesheet" type="text/css" href="/css/totask2.css" />
+	<link rel="stylesheet" type="text/css" href="/bootstrap/css/bootstrap.min.css" />
+	<link rel="stylesheet" type="text/css" href="/bootstrap/css/bootstrap-theme.min.css" />
+	<link rel="stylesheet" type="text/css" href="/css/jquery.dataTables.css" />
 </head>
 
 <body>
-	<script type="text/javascript" charset="utf8" src="js/jquery-1.11.1.js"></script>
-	<script type="text/javascript" charset="utf8" src="js/jquery.dataTables.js"></script>
+	<script type="text/javascript" charset="utf8" src="/js/jquery-1.11.1.js"></script>
+	<script type="text/javascript" charset="utf8" src="/js/jquery.dataTables.js"></script>
+	<script type="text/javascript" charset="utf8" src="/bootstrap/js/bootstrap.min.js"></script>
 
 	<script type="text/javascript">
 		/*<![CDATA[*/
@@ -21,12 +26,19 @@
 		/*]]>*/
 	</script>
 
+<div class="container">
 
-	<h1>currently known projects</h1>
+	<div class="page-header">
+		<h1 th:text="#{totask2.projects.pageheader}">currently known projects</h1>
+	</div>
 
-	<p>
-		<b><span id="errmsg"></span></b>
-	</p>
+	<ul class="nav nav-tabs" role="tablist">
+	  <li><a th:href="@{/}" th:text="#{totask2.nav.home}">home</a></li>
+	  <li class="active"><a href="#" th:text="#{totask2.nav.projects}">projects</a></li>
+	  <li><a th:href="@{/weekEntry}" th:text="#{totask2.nav.weekEntry}">home</a></li>
+	</ul>
+
+	<div id="errsg" class="alert alert-danger" role="alert"></div>
 
 	<form action="#" th:action="@{/editProject}" method="get">
 		<div style="width: 50%">
@@ -52,18 +64,32 @@
 					<tr th:each="project : ${projects}">
 						<td class="dt-center"  th:text="${project.id}">17</td>
 						<td th:text="${project.name}" class="dt-left">project name</td>
-						<td class="dt-left"><a th:href="@{/project/{id}(id=${project.id})}"
-							th:text="#{totask2.project.action.edit}">edit..</a></td>
+						<td class="dt-left">
+							<a th:href="@{/project/{id}(id=${project.id})}" class="btn btn-default">
+								<span class="glyphicon glyphicon-pencil"></span>
+								<span th:text="#{totask2.project.action.edit}">edit..</span>
+							</a>
+						</td>
 					</tr>
 				</tbody>
 			</table>
 		</div>
 	</form>
+	
 	<p>
-		<a th:href="@{/project/new}" th:text="#{totask2.project.action.new}">new..</a>
+		<a th:href="@{/project/new}" class="btn btn-default">
+			<span class="glyphicon glyphicon-plus"></span>
+			<span th:text="#{totask2.project.action.new}">new..</span>
+		</a>
 		<br /> <br />
-		<a download="excel.of.week.xls" th:href="@{/projects/report/pdf}" th:text="#{totask2.project.action.pdfReport}">pdf..</a>
+		
+		<a download="excel.of.week.xls" th:href="@{/projects/report/pdf}" class="btn btn-default">
+			<span class="glyphicon glyphicon-save"></span>
+			<span th:text="#{totask2.project.action.pdfReport}">pdf..</span>
+		</a>
 		
 	</p>
+	
+</div>	
 </body>
 </html>

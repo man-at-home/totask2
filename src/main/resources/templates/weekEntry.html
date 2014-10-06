@@ -1,14 +1,19 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-	<title>totask2: log your work here...</title>
+	<title th:text="#{totask2.appname}">totask2 projects</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />	
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<link rel="stylesheet" type="text/css" href="/css/totask2.css" />
+	<link rel="stylesheet" type="text/css" href="/bootstrap/css/bootstrap.min.css" />
+	<link rel="stylesheet" type="text/css" href="/bootstrap/css/bootstrap-theme.min.css" />
 	<link rel="stylesheet" type="text/css" href="/css/jquery.dataTables.css" />
 </head>
 <body> 
 	<script type="text/javascript" charset="utf8" src="/js/jquery-1.11.1.js"></script>
 	<script type="text/javascript" charset="utf8" src="/js/jquery.dataTables.js"></script>	
+	<script type="text/javascript" charset="utf8" src="/bootstrap/js/bootstrap.min.js"></script>
 
     <!--/* 
     	this is the main entry page, allowing logging all work for task for a given week and user.
@@ -121,26 +126,43 @@
 	/*]]>*/
     </script>
  
-	<h1 th:text="#{totask2.weekEntry.header}">edit this week</h1>
+ <div class="container">
+ 	
+	<div class="page-header">
+		<h1 th:text="#{totask2.weekEntry.header}">edit this week</h1>
+	</div>
 
-	<p>
-		<b><span id="errmsg"></span>
-		   <span id="flashMessage" th:text="${flashMessage}">flashMessage</span>
-		</b>
-	</p>
+	<ul class="nav nav-tabs" role="tablist">
+	  <li><a th:href="@{/}" th:text="#{totask2.nav.home}">home</a></li>
+	  <li><a th:href="@{/projects}" th:text="#{totask2.nav.projects}">projects</a></li>
+	  <li class="active"><a href="#" th:text="#{totask2.nav.weekEntry}">home</a></li>
+	</ul>	
 
-	<p>
-			<a th:href="@{/weekEntry/} + ${previousWeek}" th:text="#{totask2.weekEntry.action.previousWeek}">&lt;-</a>		
+	<div id="errsg" class="alert alert-danger" role="alert">
+	</div>
+	<span id="flashMessage" th:text="${flashMessage}">flashMessage</span>
+
+
+	<div>
+			<a th:href="@{/weekEntry/} + ${previousWeek}" class="btn btn-default">			
+				<span class="glyphicon glyphicon-chevron-left"></span>
+				<span th:text="#{totask2.weekEntry.action.previousWeek}">&lt;</span>				
+			</a>		
 			<b><span id="date" th:text="${#dates.format(date, 'dd.MM.yyyy')}"></span></b>
-			<a th:href="@{/weekEntry/} + ${nextWeek}" th:text="#{totask2.weekEntry.action.nextWeek}">&gt;-</a>					
-	</p>	
+			
+			<a th:href="@{/weekEntry/} + ${nextWeek}" class="btn btn-default">			
+				<span class="glyphicon glyphicon-chevron-right"></span>
+				<span th:text="#{totask2.weekEntry.action.nextWeek}">&gt;</span>				
+			</a>			
+			
+			<br />
+			<br />
+	</div>	
 	
 
 	<form id="weekForm" action="#" th:action="@{/weekEntry/} + ${currentWeek}" method="post">
 	
 		
-		<p><input type="submit" th:value="#{totask2.weekEntry.save.label}" value="save week"></input></p>
-	
 		<table id="tableWeekEntry"  class="display compact cell-border">
 			<colgroup>
 				<col /><col /><col /><col /><col /><col /><col /><col /><col />
@@ -161,7 +183,11 @@
 			<tbody>
 				<tr id="taskRow_"  th:each="taskInWeek : ${tasksInWeek}" th:attrappend="id=${taskInWeek.task.id}">
 				
-					<td th:text="${taskInWeek.task.name}" th:title="${taskInWeek.task.id}">ClearQuest development</td>
+					<td th:title="${taskInWeek.task.id}">
+						<strong th:text="${taskInWeek.task.name}">
+							ClearQuest development
+						</strong>
+					</td>
 					
 					<td th:each="dailyEntry, iterationStatus : ${taskInWeek.dailyEntries}">
 					    <input 
@@ -179,28 +205,44 @@
 					    	maxlength="4"/>
 					</td>
 
-					<td id="task_" th:attrappend="id=${taskInWeek.task.id} + '_total'" th:text="${taskInWeek.duration}">13.3</td>					
+					<td>
+					<i>
+						<span id="task_" th:attrappend="id=${taskInWeek.task.id} + '_total'" th:text="${taskInWeek.duration}">13.3</span>
+					</i>
+					</td>					
 				</tr>
 			</tbody>
 			<tfoot>
 				<tr>
 					<td/>
-					<td><span id="day_0_total">3.0</span></td>
-					<td><span id="day_1_total">3.1</span></td>
-					<td><span id="day_2_total">3.2</span></td>
-					<td><span id="day_3_total">3.3</span></td>
-					<td><span id="day_4_total">3.4</span></td>
-					<td><span id="day_5_total">0.5</span></td>
-					<td><span id="day_6_total">0.6</span></td>
-					<td><span id="week_total">15.0</span></td>
+					<td><i><span id="day_0_total">3.0</span></i></td>
+					<td><i><span id="day_1_total">3.1</span></i></td>
+					<td><i><span id="day_2_total">3.2</span></i></td>
+					<td><i><span id="day_3_total">3.3</span></i></td>
+					<td><i><span id="day_4_total">3.4</span></i></td>
+					<td><i><span id="day_5_total">0.5</span></i></td>
+					<td><i><span id="day_6_total">0.6</span></i></td>
+					<td><i><span id="week_total">15.0</span></i></td>
 				</tr>
 			</tfoot>
 		</table>
+		
+		<p>
+			<input type="submit" class="btn btn-success btn-lg" th:value="#{totask2.weekEntry.save.label}" />
+			
+			&nbsp;&nbsp;
+						
+			<a th:href="@{/weekEntry/report/excel} + '/' + ${currentWeek}" class="btn btn-default">
+					<span class="glyphicon glyphicon-print"></span>
+					<span th:text="#{totask2.weekEntry.action.excelReport}">excel..</span>					
+			</a>		
+		</p>
+			
 	</form>
 	
 	<p>
-			<a th:href="@{/weekEntry/report/excel} + '/' + ${currentWeek}" th:text="#{totask2.weekEntry.action.excelReport}">excel..</a>		
 	</p>
 
+</div>
 </body>
 </html>

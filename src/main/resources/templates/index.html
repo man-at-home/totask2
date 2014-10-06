@@ -1,24 +1,55 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-	<title>totask2</title>
+	<title th:text="#{totask2.appname}">totask2</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />	
-	<link rel="stylesheet" type="text/css" href="css/totask2.css" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<link rel="stylesheet" type="text/css" href="/css/totask2.css" />
+	<link rel="stylesheet" type="text/css" href="/bootstrap/css/bootstrap.min.css" />
+	<link rel="stylesheet" type="text/css" href="/bootstrap/css/bootstrap-theme.min.css" />
 </head>
 <body>
+	<script type="text/javascript" charset="utf8" src="/js/jquery-1.11.1.js"></script>
+	<script type="text/javascript" charset="utf8" src="/bootstrap/js/bootstrap.min.js"></script>
 
-	<h1>my totask2 sample application</h1>
+<div class="container">
 
+	<div class="page-header">
+		<h1 th:text="#{totask2.index.pageheader}">my totask2 sample application</h1>
+	</div>
+	
 	<p>
 		<b><span id="errmsg"></span></b>
 	</p>
 	
 	<p>
-		<a href="/projects" th:href="@{/projects}" th:text="#{totask2.index.projects.link}">projects..</a>
-		<br /><br />
-		<a href="/weekEntry" th:href="@{/weekEntry}" th:text="#{totask2.index.weekEntry.link}">data entry for week..</a>
-		<br /><br />
+	
+	<ul class="nav nav-pills nav-stacked">
+	<li>	
+		<a 	href="/projects" 
+		 	class="btn btn-default btn-lg active"
+			th:href="@{/projects}">			
+			<span class="glyphicon glyphicon-tasks"></span>
+			<span th:text="#{totask2.index.projects.link}">projects</span>
+		</a>
+	</li>	
+	<li>&nbsp;</li>	
+	<li>	
+		<a 	href="/weekEntry" 
+			class="btn btn-primary btn-lg active" role="button"
+			th:href="@{/weekEntry}">
+			<span class="glyphicon glyphicon-pencil"></span>
+			<span th:text="#{totask2.index.weekEntry.link}">data entry for week..</span>
+		</a>							
+	</li>	
+	</ul>
+
+
 	</p>
+
+
+</div>
 
 </body>
 </html>

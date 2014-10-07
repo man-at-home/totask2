@@ -1,14 +1,19 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-	<title>totask2: list tasks for project</title>
+	<title th:text="#{totask2.appname}">totask2 project tasks</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />	
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<link rel="stylesheet" type="text/css" href="/css/totask2.css" />
+	<link rel="stylesheet" type="text/css" href="/bootstrap/css/bootstrap.min.css" />
+	<link rel="stylesheet" type="text/css" href="/bootstrap/css/bootstrap-theme.min.css" />
 	<link rel="stylesheet" type="text/css" href="/css/jquery.dataTables.css" />
 </head>
 <body>
 	<script type="text/javascript" charset="utf8" src="/js/jquery-1.11.1.js"></script>
 	<script type="text/javascript" charset="utf8" src="/js/jquery.dataTables.js"></script>
+	<script type="text/javascript" charset="utf8" src="/bootstrap/js/bootstrap.min.js"></script>
 
 	<script type="text/javascript">
 		/*<![CDATA[*/
@@ -19,12 +24,21 @@
 
 		/*]]>*/
 	</script>
-	
-	<h1>tasks in project</h1>
 
-	<p>
-		<b><span id="errmsg"></span></b>
-	</p>
+<div class="container">
+
+	<div class="page-header">
+		<h1 th:text="#{totask2.tasks.pageheader}">tasks in project</h1>
+	</div>	
+
+	<ul class="nav nav-tabs" role="tablist">
+	  <li><a th:href="@{/}" th:text="#{totask2.nav.home}">home</a></li>
+	  <li><a th:href="@{/project/} + ${projectId}" th:text="#{totask2.nav.project}">project</a></li>
+	  <li><a th:href="@{/weekEntry}" th:text="#{totask2.nav.weekEntry}">week entry</a></li>
+	</ul>
+
+	<div id="errsg" class="alert alert-danger" role="alert"></div>
+	<span id="flashMessage" th:text="${flashMessage}">flashMessage</span>
 
 	<div style="width: 50%">
 	
@@ -48,8 +62,16 @@
 					<td th:text="${task.id}">17</td>
 					<td th:text="${task.name}">task name</td>
 					<td class="dt-left">
-					  <a th:href="@{/task/{id}(id=${task.id})}" th:text="#{totask2.task.action.edit}">edit..</a> 
-					  <button type="submit" name="id" th:value="${task.id}" th:text="#{totask2.task.action.delete}">delete</button>
+					
+						<a th:href="@{/task/{id}(id=${task.id})}" class="btn btn-default">
+							<span class="glyphicon glyphicon-pencil"></span>
+							<span th:text="#{totask2.task.action.edit}">edit..</span>
+						</a>
+						<button class="btn btn-default" name="id" th:value="${task.id}">
+							<span class="glyphicon glyphicon-remove"></span>
+							<span th:text="#{totask2.task.action.delete}">delete</span>
+						</button>						
+					
 					</td>
 				</tr>
 			</tbody>
@@ -58,7 +80,13 @@
 	
 	</div>
 	
-	<p> <a th:href="@{/project/{id}/task/new(id=${projectId})}" th:text="#{totask2.task.action.new}">new..</a> </p>
-	
+	<p> 
+		<a th:href="@{/project/{id}/task/new(id=${projectId})}" class="btn btn-default">
+			<span class="glyphicon glyphicon-plus"></span>
+			<span th:text="#{totask2.task.action.new}">new..</span>
+		</a>
+	</p>
+
+</div>	
 </body>
 </html>

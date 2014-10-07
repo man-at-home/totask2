@@ -23,7 +23,7 @@
 	
 	<ul class="nav nav-tabs" role="tablist">
 	  <li><a th:href="@{/}" th:text="#{totask2.nav.home}">home</a></li>
-	  <li class="active"><a href="#" th:text="#{totask2.nav.projects}">projects</a></li>
+	  <li><a th:href="@{/projects}" th:text="#{totask2.nav.projects}">projects</a></li>
 	  <li><a th:href="@{/weekEntry}" th:text="#{totask2.nav.weekEntry}">home</a></li>
 	</ul>	
 
@@ -34,6 +34,8 @@
 		<ul th:if="${#fields.hasAnyErrors()}">
 		  <li class="fieldError" th:each="err : ${#fields.allErrors()}" th:text="${err}">...</li>
 		</ul>
+		<span id="flashMessage" th:text="${flashMessage}">flashMessage</span>
+		
 		
 		 <div class="form-group">
 			<label th:for="id" th:text="#{totask2.project.id.label}" class="col-sm-2 control-label">Id:</label>

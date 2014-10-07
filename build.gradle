@@ -79,16 +79,13 @@ checkstyle {
    ignoreFailures = true      
 }
 
-<<<<<<< HEAD
+
 tasks.withType(FindBugs) {
     reports {
         xml.enabled = false
         html.enabled = true
     }
 }
-
-=======
->>>>>>> branch 'master' of https://github.com/man-at-home/totask2.git
 
 jacocoTestReport {
     reports {

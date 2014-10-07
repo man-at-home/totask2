@@ -143,6 +143,13 @@ public class ReportGenerator {
             headers.setProperty("Content-Disposition", "attachment; filename=" + reportName + ".xls");
             view.setHeaders(headers);
         }
+        else
+        {
+            view.setContentType("application/pdf");
+            Properties headers = new Properties();
+            headers.setProperty("Content-Disposition", "attachment; filename=" + reportName + ".pdf");
+            view.setHeaders(headers);
+        }
        
         
         Map<String, Object> params = new HashMap<>();

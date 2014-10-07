@@ -9,9 +9,11 @@
 	<link rel="stylesheet" type="text/css" href="/bootstrap/css/bootstrap.min.css" />
 	<link rel="stylesheet" type="text/css" href="/bootstrap/css/bootstrap-theme.min.css" />
 	<link rel="stylesheet" type="text/css" href="/css/jquery.dataTables.css" />
+	<link rel="stylesheet" type="text/css" href="/css/jquery-ui.min.css" />
 </head>
 <body> 
 	<script type="text/javascript" charset="utf8" src="/js/jquery-1.11.1.js"></script>
+	<script type="text/javascript" charset="utf8" src="/js/jquery-ui.min.js"></script>
 	<script type="text/javascript" charset="utf8" src="/js/jquery.dataTables.js"></script>	
 	<script type="text/javascript" charset="utf8" src="/bootstrap/js/bootstrap.min.js"></script>
 
@@ -35,8 +37,8 @@
 	        taskClassNames = findAllClassesForTasks();
 			
 	        $('input').each(function() {
-	            $(this).keyup(function(){   
-	                calculateTotal();	/* calculate if value may changed */
+	            $(this).change(function(){   
+	                calculateTotal(false);	/* calculate if value may changed */
 	            })
 	        });	
 	        
@@ -47,7 +49,7 @@
           		}
 		    });    
 	        
-	        calculateTotal();  /* calculate on start */
+	        calculateTotal(true);  /* calculate on start */
 		});
     
 	    /** find all css class names for displayed task input fields. */
@@ -71,10 +73,22 @@
         }
 	    
 		/** sum up all week entries in sum field */
-	    function calculateTotal() 
+	    function calculateTotal( isFirstCalculation ) 
 	    {
 	    	for (className in taskClassNames) {
-				$('#' + className + '_total').html( sumOneTaskRow('.' + className).toFixed(1)); /* sum work hours for task ${taskInWeek.task.name} */
+	    		var sumOneTask = sumOneTaskRow('.' + className).toFixed(1);
+	    		var oldSum     = parseFloat($('#' + className + '_total').text());
+	    		
+	    		if( isFirstCalculation) {
+	    			$('#' + className + '_label').hide();	// initially modified marker are off
+	    		}
+	    		else if(sumOneTask != oldSum) {	    			
+	    			$('#' + className + '_label').show("slow"); // first change should trigger modified mark
+	    			$('#weekEntryReport').hide(); 
+	    			$("#weekEntrySave").switchClass("btn-default", "btn-primary");
+	    		}
+	    			
+				$('#' + className + '_total').html( sumOneTask ); /* sum work hours for task ${taskInWeek.task.name} */
 	    	}
 	    	
 	    	var weekSum = 0;
@@ -183,10 +197,11 @@
 			<tbody>
 				<tr id="taskRow_"  th:each="taskInWeek : ${tasksInWeek}" th:attrappend="id=${taskInWeek.task.id}">
 				
-					<td th:title="${taskInWeek.task.id}">
+					<td >
 						<strong th:text="${taskInWeek.task.name}">
 							ClearQuest development
 						</strong>
+						<span th:id="'task_' + ${taskInWeek.task.id} + '_label'" class="abel label-info" th:text="#{totask2.weekEntry.task.modifiedLabel}">not saved</span>
 					</td>
 					
 					<td th:each="dailyEntry, iterationStatus : ${taskInWeek.dailyEntries}">
@@ -228,11 +243,11 @@
 		</table>
 		
 		<p>
-			<input type="submit" class="btn btn-success btn-lg" th:value="#{totask2.weekEntry.save.label}" />
+			<input id="weekEntrySave" type="submit" class="btn btn-default btn-lg" th:value="#{totask2.weekEntry.save.label}" />
 			
 			&nbsp;&nbsp;
 						
-			<a th:href="@{/weekEntry/report/excel} + '/' + ${currentWeek}" class="btn btn-default">
+			<a id="weekEntryReport" th:href="@{/weekEntry/report/excel} + '/' + ${currentWeek}" class="btn btn-default">
 					<span class="glyphicon glyphicon-print"></span>
 					<span th:text="#{totask2.weekEntry.action.excelReport}">excel..</span>					
 			</a>		

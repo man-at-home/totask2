@@ -117,6 +117,7 @@ public class TaskController {
         LOG.debug("editTaskSave(" + task + ")");
         
         if (bindingResult.hasErrors()) {
+            model.addAttribute("task", task);        
             return "editTask";
         }
         

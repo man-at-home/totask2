@@ -6,7 +6,7 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.Date;
 
-/** LocalDate -> Date. */
+/** LocalDate to util.Date conversion. */
 public final class LocalDateConverter {
     
     public static Date toDate(LocalDate date) {

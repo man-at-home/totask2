@@ -10,12 +10,14 @@
 	<link rel="stylesheet" type="text/css" href="/bootstrap/css/bootstrap-theme.min.css" />
 	<link rel="stylesheet" type="text/css" href="/css/jquery.dataTables.css" />
 	<link rel="stylesheet" type="text/css" href="/css/jquery-ui.min.css" />
+	<link rel="stylesheet" type="text/css" href="/bootstrap/css/bootstrapValidator.min.css"/>		
 </head>
 <body> 
 	<script type="text/javascript" charset="utf8" src="/js/jquery-1.11.1.js"></script>
 	<script type="text/javascript" charset="utf8" src="/js/jquery-ui.min.js"></script>
 	<script type="text/javascript" charset="utf8" src="/js/jquery.dataTables.js"></script>	
 	<script type="text/javascript" charset="utf8" src="/bootstrap/js/bootstrap.min.js"></script>
+	<script type="text/javascript" charset="utf8" src="/bootstrap/js/bootstrapValidator.min.js"></script>
 
     <!--/* 
     	this is the main entry page, allowing logging all work for task for a given week and user.
@@ -32,7 +34,8 @@
 	    /** register all callback javascript events. */
 		$(document).ready(function()
 		{ 
-			$('#tableWeekEntry').dataTable();
+			$('#tableWeekEntry').dataTable();		
+		    $('#weekForm').bootstrapValidator();
 			
 	        taskClassNames = findAllClassesForTasks();
 			
@@ -40,14 +43,7 @@
 	            $(this).change(function(){   
 	                calculateTotal(false);	/* calculate if value may changed */
 	            })
-	        });	
-	        
-	        $('#weekForm').submit(function( event ) {
-       	  		if( ! validateFormBeforeSubmit())
-          		{
-       	  			event.preventDefault();
-          		}
-		    });    
+	        });	  
 	        
 	        calculateTotal(true);  /* calculate on start */
 		});
@@ -112,31 +108,7 @@
 	        return sum;    	
 	    } 
 		
-		
-	    function validateFormBeforeSubmit()
-	    {
-	        var isValidForm = true;
-	        $('.validationDecimal').each(function() {
-	            if( ! validateDecimal( this.value ))
-	            {
-	            	this.focus();
-	            	this.select();
-	    	        $("#errmsg").html("not a valid duration: " + this.value).show().fadeOut("slow");	//display error message
-	        		isValidForm = false;
-	            }
-	        });
-	        return isValidForm;
-	    }
-
-		/** check on valid decimal for us. */
-	    function validateDecimal(value)    {
-	        var RE = /^\d*\.?\d{0,2}$/
-	        if(RE.test(value)){
-	           return true;
-	        }else{
-	           return false;
-	        }
-	    }		
+	
 	/*]]>*/
     </script>
  
@@ -174,8 +146,11 @@
 	</div>	
 	
 
-	<form id="weekForm" action="#" th:action="@{/weekEntry/} + ${currentWeek}" method="post">
-	
+	<form id="weekForm" action="#" th:action="@{/weekEntry/} + ${currentWeek}" method="post" role="form"
+					data-bv-container="tooltip"
+	                data-bv-feedbackicons-valid="glyphicon glyphicon-ok"
+                    data-bv-feedbackicons-invalid="glyphicon glyphicon-remove"
+                    data-bv-feedbackicons-validating="glyphicon glyphicon-refresh">		
 		
 		<table id="tableWeekEntry"  class="display compact cell-border">
 			<colgroup>
@@ -205,9 +180,12 @@
 					</td>
 					
 					<td th:each="dailyEntry, iterationStatus : ${taskInWeek.dailyEntries}">
+						<div class="form-group">
+						<label for="workEntry_" th:attrappend="for=${taskInWeek.task.id} + '_' + ${iterationStatus.index} "></label>
 					    <input 
 					    	type="number" 
 					    	name="workEntry_" 
+					    	class="form-control"
 					    	th:attrappend="name=${taskInWeek.task.id} + '_' + ${iterationStatus.index} " 
 					    	th:classappend="'day_' + ${iterationStatus.index} + ' task_' + ${taskInWeek.task.id}"
 					    	th:value="${dailyEntry.duration}" 
@@ -217,7 +195,12 @@
 					    	size="3"
 					    	min="0"
 					    	max="12"
-					    	maxlength="4"/>
+					    	maxlength="4"
+					    	placeholder="hh,0" 
+					    	data-bv-numeric-separator=","
+							data-bv-numeric-message="must be numeric work hours" 
+					    	/>
+					    </div>
 					</td>
 
 					<td>

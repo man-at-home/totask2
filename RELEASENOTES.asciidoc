@@ -1,6 +1,9 @@
 totask2 releasenotes
 ====================
 
+2014-10-08
+	- bootstrapvalidator
+
 2014-10-03
 	- build upgraded to gradle 2.1
 	- ingegrated findbugs

@@ -9,8 +9,12 @@ port of totask to spring mvc
 - spring mvc as mvc web framework (server side)
 - thymeleaf as templating engine
 - logback for logging,
+
 - jquery, ajax
 - datatable, ui grid
+- bootstrap, css
+- bootstrapvalidator, validations
+
 - checkstyle, pmd, asciidoc, dev tooling
 - jasperReports, reporting engine
 

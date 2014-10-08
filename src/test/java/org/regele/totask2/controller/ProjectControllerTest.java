@@ -109,7 +109,7 @@ public class ProjectControllerTest {
                 .param("name", "x") // to short
                 )
         .andExpect(status().isOk())
-        .andExpect(content().string(containsString("size must be between 2 and 250")))
+        .andExpect(content().string(containsString("name must be between 2 and 250 characters")))
         .andReturn();
         
         LOG.debug("response:" + result.getResponse().getContentAsString().replaceAll("\\r|\\n", ""));

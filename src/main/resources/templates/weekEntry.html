@@ -112,7 +112,7 @@
 	/*]]>*/
     </script>
  
- <div class="container">
+ <div class="container paper-box">
  	
 	<div class="page-header">
 		<h1 th:text="#{totask2.weekEntry.header}">edit this week</h1>
@@ -124,9 +124,8 @@
 	  <li class="active"><a href="#" th:text="#{totask2.nav.weekEntry}">home</a></li>
 	</ul>	
 
-	<div id="errsg" class="alert alert-danger" role="alert">
-	</div>
-	<span id="flashMessage" th:text="${flashMessage}">flashMessage</span>
+	
+	<span id="flashMessage" th:unless="${#strings.isEmpty(flashMessage)}" th:text="${flashMessage}">flashMessage</span>
 
 
 	<div>

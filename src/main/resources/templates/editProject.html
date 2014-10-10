@@ -26,9 +26,7 @@
 		/*]]>*/
 	</script>
 	
-<div class="container">
-
-
+<div class="container paper-box" style="width:70%">
 
 
 	<div class="page-header">
@@ -41,7 +39,8 @@
 	  <li><a th:href="@{/weekEntry}" th:text="#{totask2.nav.weekEntry}">home</a></li>
 	</ul>	
 	
-	<br/>
+	<span id="flashMessage"  class="alert-warning" th:unless="${#strings.isEmpty(flashMessage)}"  th:text="${flashMessage}">flashMessage</span>
+	<br />
 
 	<form id="projectForm" action="#" method="post" class="form-horizontal" role="form"
 					th:action="@{/project/save}" 
@@ -53,8 +52,6 @@
 		<ul th:if="${#fields.hasAnyErrors()}">
 		  <li class="fieldError alert alert-danger" th:each="err : ${#fields.allErrors()}" th:text="${err}">...</li>
 		</ul>
-		<span id="flashMessage" th:text="${flashMessage}">flashMessage</span>
-	
 
 		
 		 <div class="form-group">

@@ -18,3 +18,5 @@ port of totask to spring mvc
 - checkstyle, pmd, asciidoc, dev tooling
 - jasperReports, reporting engine
 
+for more details:
+	https://github.com/man-at-home/totask2/blob/master/src/docs/totask2.article.asciidoc

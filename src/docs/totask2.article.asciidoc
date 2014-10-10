@@ -1,0 +1,95 @@
+= totask2
+:numbered:
+:icons: font
+manfred (me) <manfred@domainnotshownhere.org>
+v1.0, 2014-10-10
+
+eine rudimentäre Projektzeiterfassung 
+
+== die Motiviation
+
+totask2 (es existiert ein deutlich Feature-reicheres totask als Lernprojekt für grails/groovy) 
+ist eine "Ausrede" um einen wieder einmal willkürlich ausgewählten Software-Stack auszuprobieren. 
+
+== Beschreibung
+
+totask2 erlaubt eine Erfassung von (Arbeits-) Zeiten zu Projekttasks. Daher verwaltet das Programm
+Entitäten wie Projekt, Task und Arbeitszeit (WorkEntry).
+
+== Der Software Stack
+
+http://springmvc.org/[springmvc^] als serverseitiges _Web Framework_.
+
+SpringMVC Web Anwendungen werden natürlich in Java programmiert, im vorliegenden Fall bereits mit Java 8 - 
+ich wollte dabei closures ausprobieren https://java.com/de/[java]. Als Templating Engine dazu thymeleaf. 
+
+_Client Seitig_ benutze ich http://getbootstrap.com//[bootstrap^] für css, 
+http://bootstrapvalidator.com/[bootstrapvalidator^] für einige Client seitige Prüfungen, 
+http://jquery.com/[jquery^] als Java Script Libary, dazu http://www.datatables.net/[datatables^] als Datagrid.
+
+Zum _Reporting_ wird http://community.jaspersoft.com/project/jasperreports-library[JasperReports^] genutzt 
+um Excel und PDF zu generieren.
+
+_Versionierung_ ist mit git gelöst http://git-scm.com/[git^]. Das Repositoryist auf 
+ https://github.com/[github^] gehostet.
+ 
+_Datenhaltung_ wird mit der integrierten  http://www.h2database.com/[h2^] 
+in-memory Datenbank gelöst, zumindest während der Entwicklung.
+
+Dieser Artikel und das Readme als _Dokumentation_ sind mit http://asciidoctor.org/docs/asciidoc-writers-guide/[asciidoc^] 
+Markup erstellt. 
+
+Ein nettes Gimmick ist dass  github  asciidoc Documente "on the fly" direkt aus dem Repository im Browser als Html
+rendern kann, live zu sehen unter https://github.com/man-at-home/totask2/blob/master/src/docs/totask2.article.asciidoc
+
+Für das _Build_ Management nutze ich gradle, mit einigen Plugins wie 
+checkstyle, pmd, findbugs, asciidoc
+
+=== Anforderungen zum Entwickeln
+
+* java8 jdk and runtime
+* git versioning
+* gradle build system
+
+
+== Ergebnis
+
+[[img-startpage]]
+.Startseite
+image::images/totask2.startpage.png[screenshot1, 600, 300]
+
+[[img-projects]]
+.Projektübersicht
+image::images/totask2.projects.png[screenshot2, 600, 300]
+
+[[img-editProject]]
+.Projektbearbeitung
+image::images/totask2.editProject.png[screenshot3, 600, 400]
+
+
+[[img-weekEntry]]
+.Zeiterfassung
+image::images/totask2.weekEntry.png[screenshot4, 600, 400]
+
+[[img-weekEntryReporting]]
+.Zeiterfassung Client Funktionen
+image::images/totask2.weekEntry.clientLogic.png[screenshot5, 600, 400]
+
+
+[[img-weekEntryReporting]]
+.Zeiterfassung Reporting
+image::images/totask2.weekEntry.reporting.png[screenshot6, 600, 400]
+
+
+
+== Erfahrungen
+
+=== positiv
+
+* kein xml, einfach zu durchschauen, 
+* entwicklerfreundliche Bibliotheken
+* Datenbank und Datenmodell (it jpa) schlank
+
+=== negativ
+
+* bisher noch keine

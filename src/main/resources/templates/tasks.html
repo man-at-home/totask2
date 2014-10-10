@@ -25,7 +25,7 @@
 		/*]]>*/
 	</script>
 
-<div class="container">
+<div class="container paper-box" style="width:70%">
 
 	<div class="page-header">
 		<h1 th:text="#{totask2.tasks.pageheader}">tasks in project</h1>
@@ -37,11 +37,13 @@
 	  <li><a th:href="@{/weekEntry}" th:text="#{totask2.nav.weekEntry}">week entry</a></li>
 	</ul>
 
-	<span id="flashMessage"  class="alert alert-warning" th:text="${flashMessage}">flashMessage</span>
+	<span id="flashMessage"  class="alert-warning" th:unless="${#strings.isEmpty(flashMessage)}"  th:text="${flashMessage}">flashMessage</span>
 
-	<div style="width: 50%">
+	<div style="width: 80%">
 	
 	<form action="#" th:action="@{/task/delete}" method="post">
+	
+	<br />
 	
 		<table id="tableTasks" class="display compact cell-border">
 			<thead>

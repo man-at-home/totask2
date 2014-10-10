@@ -13,12 +13,16 @@
 	<script type="text/javascript" charset="utf8" src="/js/jquery-1.11.1.js"></script>
 	<script type="text/javascript" charset="utf8" src="/bootstrap/js/bootstrap.min.js"></script>
 
+
 <div class="container">
+
+<div class="paper-box">
 
 	<div class="page-header">
 		<h1 th:text="#{totask2.index.pageheader}">my totask2 sample application</h1>
 	</div>
 
+	<span id="flashMessage"  class="alert-warning" th:unless="${#strings.isEmpty(flashMessage)}"  th:text="${flashMessage}">flashMessage</span>
 	
 	<p>
 	
@@ -46,6 +50,7 @@
 	</p>
 
 
+</div>
 </div>
 
 </body>

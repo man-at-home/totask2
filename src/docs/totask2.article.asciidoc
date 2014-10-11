@@ -26,6 +26,7 @@ ich wollte dabei closures ausprobieren https://java.com/de/[java]. Als Templatin
 _Client Seitig_ benutze ich http://getbootstrap.com//[bootstrap^] für css, 
 http://bootstrapvalidator.com/[bootstrapvalidator^] für einige Client seitige Prüfungen, 
 http://jquery.com/[jquery^] als Java Script Libary, dazu http://www.datatables.net/[datatables^] als Datagrid.
+Ein Chart wird mit http://www.chartjs.org/[Charts.js^] clientseitig erstellt.
 
 Zum _Reporting_ wird http://community.jaspersoft.com/project/jasperreports-library[JasperReports^] genutzt 
 um Excel und PDF zu generieren.
@@ -42,7 +43,7 @@ Markup erstellt.
 Ein nettes Gimmick ist dass  github  asciidoc Documente "on the fly" direkt aus dem Repository im Browser als Html
 rendern kann, live zu sehen unter https://github.com/man-at-home/totask2/blob/master/src/docs/totask2.article.asciidoc
 
-Für das _Build_ Management nutze ich gradle, mit einigen Plugins wie 
+Für das _Build Management_ nutze ich http://www.gradle.org/[gradle^], mit einigen Plugins wie 
 checkstyle, pmd, findbugs, asciidoc
 
 === Anforderungen zum Entwickeln
@@ -71,7 +72,7 @@ image::images/totask2.editProject.png[screenshot3, 600, 400]
 .Zeiterfassung
 image::images/totask2.weekEntry.png[screenshot4, 600, 400]
 
-[[img-weekEntryReporting]]
+[[img-weekEntryClient]]
 .Zeiterfassung Client Funktionen
 image::images/totask2.weekEntry.clientLogic.png[screenshot5, 600, 400]
 
@@ -80,6 +81,10 @@ image::images/totask2.weekEntry.clientLogic.png[screenshot5, 600, 400]
 .Zeiterfassung Reporting
 image::images/totask2.weekEntry.reporting.png[screenshot6, 600, 400]
 
+
+[[img-weekEntryChart]]
+.Zeiterfassung Chart
+image::images/totask2.weekEntry.chart.png[screenshot7, 600, 400]
 
 
 == Erfahrungen

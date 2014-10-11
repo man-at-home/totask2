@@ -1,22 +1,14 @@
 totask2
 =======
+:Author: Manfred
+:Date:   2014-10-11	
 
-port of totask to spring mvc
+demo application, port of totask to spring mvc
 
-- java 8 as language and runtime
-- hibernate jpa provider
-- h2 in-memory database
-- spring mvc as mvc web framework (server side)
-- thymeleaf as templating engine
-- logback for logging,
+link:RELEASENOTES.asciidoc[releasenotes]
 
-- jquery, ajax
-- datatable, ui grid
-- bootstrap, css
-- bootstrapvalidator, validations
+link:src/docs/totask2.article.asciidoc[documentation]
 
-- checkstyle, pmd, asciidoc, dev tooling
-- jasperReports, reporting engine
+current documentation on github https://github.com/man-at-home/totask2/blob/master/src/docs/totask2.article.asciidoc
 
-for more details:
-	https://github.com/man-at-home/totask2/blob/master/src/docs/totask2.article.asciidoc
+TIP: https://github.com/man-at-home/totask/blob/master/src/docs/totask.article.asciidoc[totask], the ported application, base idea for this application.

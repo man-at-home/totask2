@@ -167,6 +167,15 @@
     </script>
  
  <div class="container paper-box">
+ 	 
+	 <div style="float: right;">
+		 <form th:action="@{/logout}" method="post">
+		 	<button type="submit" class="btn btn-sm btn-default" value="sign out" th:title="${#httpServletRequest.remoteUser}">
+		 				<span class="glyphicon glyphicon-off"></span>
+						<span th:text="#{totask2.logout}">sign out</span>
+		 	</button>
+		 </form>
+	 </div>	
  	
 	<div class="page-header">
 		<h1 th:text="#{totask2.weekEntry.header}">edit this week</h1>
@@ -193,6 +202,8 @@
 				<span class="glyphicon glyphicon-chevron-right"></span>
 				<span th:text="#{totask2.weekEntry.action.nextWeek}">&gt;</span>				
 			</a>			
+			&nbsp;
+			<span th:text="${#httpServletRequest.remoteUser}">user</span>			
 			
 			<br />
 			<br />

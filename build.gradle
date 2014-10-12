@@ -1,3 +1,8 @@
+/*
+ * gradle build script for totask2 project.
+ * @author Manfred
+ */
+
 apply plugin: "java"
 apply plugin: "spring-boot"
 
@@ -29,69 +34,50 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'org.springframework.boot:spring-boot-gradle-plugin:1.1.7.RELEASE'  
-	    classpath 'org.asciidoctor:asciidoctor-gradle-plugin:0.7.3'
-	//    classpath 'com.lunatech.jax-doclets:doclets:0.10.2-SNAPSHOT'	    
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:1.1.7.RELEASE"  
+	    classpath "org.asciidoctor:asciidoctor-gradle-plugin:0.7.3"
     }
 }
 
 dependencies {
-    compile 'org.slf4j:slf4j-api:1.7.7'
-    compile 'ch.qos.logback:logback-classic'
+    compile "org.apache.poi:poi:3.7"
+    compile "org.slf4j:slf4j-api:1.7.7"
+    compile "ch.qos.logback:logback-classic"
+    compile "net.sf.jasperreports:jasperreports:5.6.0"  
+    compile "com.h2database:h2"
     
     compile "org.springframework:spring-context:4.1.1.RELEASE"
     compile "org.springframework:spring-context-support:4.1.1.RELEASE"
-    compile("org.springframework.boot:spring-boot-starter-thymeleaf:1.1.7.RELEASE")
-	compile("org.springframework.boot:spring-boot-starter-web:1.1.7.RELEASE")
-    compile("org.springframework.boot:spring-boot-starter-data-jpa:1.1.7.RELEASE")
-    
-    compile("com.h2database:h2")
-    
-  /*  compile("org.liquibase:liquibase-core") */
+    compile "org.springframework.boot:spring-boot-starter-thymeleaf:1.1.7.RELEASE"
+	compile "org.springframework.boot:spring-boot-starter-web:1.1.7.RELEASE"
+    compile "org.springframework.boot:spring-boot-starter-data-jpa:1.1.7.RELEASE"
+    compile "org.springframework.boot:spring-boot-starter-security:1.1.7.RELEASE"
+        
+  /*  compile "org.liquibase:liquibase-core" */
         	
-    testCompile("org.springframework.boot:spring-boot-starter-test:1.1.7.RELEASE")  
-    
-    compile "net.sf.jasperreports:jasperreports:5.6.0"  
-    compile "org.apache.poi:poi:3.7"
-}
 
-configurations {
-  jaxDoclet
+    testCompile "org.springframework.boot:spring-boot-starter-test:1.1.7.RELEASE" 
 }
-dependencies {
- // jaxDoclet "com.lunatech.jax-doclets:doclets:0.10.2-SNAPSHOT"
-}
-
-/*
-task generateJpaApiDocs(type: Javadoc) {
-  source = sourceSets.main.allJava
-  classpath = configurations.compile
-  destinationDir = reporting.file("jpa-db-api-docs")
-  options.docletpath = configurations.jaxDoclet.files.asType(List)
-  options.doclet = "com.lunatech.doclets.jax.jpa.JPADoclet"
-}
-*/
-
 
 
 jdependMain {
    reports {
-      xml.enabled  false
-      text.enabled true
+      xml.enabled  = false
+      text.enabled = true
    }
 }
 jdependTest {
    reports {
-      xml.enabled  false  
-      text.enabled true
+      xml.enabled  = false  
+      text.enabled = true
    }
 }
 
 findbugs {
-        toolVersion = "3.0.0"
+        toolVersion    = "3.0.0"
         ignoreFailures = true
-        effort = "max"
-        reportLevel = "high"
+        effort         = "max"
+        reportLevel    = "high"
 }
 
 checkstyle {
@@ -101,22 +87,21 @@ checkstyle {
 
 tasks.withType(FindBugs) {
     reports {
-        xml.enabled = false
+        xml.enabled  = false
         html.enabled = true
     }
 }
 
 jacocoTestReport {
     reports {
-        xml.enabled false
-        csv.enabled false
-        html.destination "${buildDir}/reports/jacoco"
+        xml.enabled      = false
+        csv.enabled      = false
+        html.destination = "${buildDir}/reports/jacoco"
     }
 }
 
 asciidoctor {
-    outputDir = new File("$buildDir/docs/asciidoc")
+    outputDir    = new File("$buildDir/docs/asciidoc")
     logDocuments = true
 } 
-
 

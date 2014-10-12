@@ -8,6 +8,9 @@ import org.regele.totask2.util.ProjectNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -43,10 +46,13 @@ public class ProjectController {
     
   
     /** list all projects. */
+    @Secured("ROLE_ADMIN")
     @RequestMapping("/projects")
     public String projects(Model model) {
         
         LOG.debug("projects");
+        
+        dumpUser();
         
         List<Project> projects = projectRepository.findAll();
         model.addAttribute("projects", projects);        
@@ -55,7 +61,22 @@ public class ProjectController {
         return "projects";
     }    
     
+    private void dumpUser() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if( auth != null)
+            LOG.debug("user: " + auth.getName() + " " + auth.isAuthenticated() + " roles " + auth.getAuthorities().size()); //get logged in username
+        else
+            LOG.debug("no auth.user user");
+           
+                auth.getAuthorities()
+                .stream().
+                forEach( ga ->  
+                    LOG.debug("  user-role:" + ga)
+                );
+    }
+
     /** show edit page for an existing project. GET. */
+    @Secured("ROLE_ADMIN")
     @RequestMapping(value = "/project/{id}", method = RequestMethod.GET)
     public String showProject(@PathVariable final long id, final Model model) {
         
@@ -72,6 +93,7 @@ public class ProjectController {
     }    
     
     /** show edit page for a new project. GET. */
+    @Secured("ROLE_ADMIN")
     @RequestMapping(value = "/project/new", method = RequestMethod.GET)
     public String newProject(final Model model) {       
         LOG.debug("new project");
@@ -84,9 +106,12 @@ public class ProjectController {
     }
     
     /** save edited project. POST. */
+    @Secured("ROLE_ADMIN")
     @RequestMapping(value = "/project/save", method = RequestMethod.POST)
     public String saveProject(@Valid final Project project, final BindingResult bindingResult, final ModelMap model) {        
         LOG.debug("saveProject(" + project +  ")");
+        
+        dumpUser();
         
         if (bindingResult.hasErrors()) {
             return "editProject";
@@ -101,6 +126,7 @@ public class ProjectController {
     
    
     /**  generate an pdf or excel report from project data. */
+    @Secured("ROLE_ADMIN")
     @RequestMapping(value = "/projects/report/{reportFormat}", method = RequestMethod.GET)
     public ModelAndView getProjectsReport(@PathVariable final String reportFormat) {
         

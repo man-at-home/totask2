@@ -5,6 +5,7 @@ import org.regele.totask2.model.TaskRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,6 +26,7 @@ public class InfoController {
     private TaskRepository taskRepository;
 
     /** simple hello world. */
+    @Secured("ROLE_USER")
     @RequestMapping("/greeting")
     public String greeting(
             @RequestParam(value = "name", required = false, defaultValue = "World") String name,
@@ -37,6 +39,7 @@ public class InfoController {
     
     
     /** showing actual db contents. */
+    @Secured("ROLE_ADMIN")
     @RequestMapping("/dbinfo")
     public String dbinfo(final Model model) {
        

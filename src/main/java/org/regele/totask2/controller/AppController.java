@@ -18,5 +18,12 @@ public class AppController {
         LOG.debug("index");
         return "index";
     }
-        
+    
+    /** not allowed (spring security / http 403). */
+    @RequestMapping("/403")
+    public String notAllowed() {        
+        LOG.debug("not allowed page");
+        return "403";
+    }
+    
 }

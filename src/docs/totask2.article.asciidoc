@@ -86,6 +86,10 @@ image::images/totask2.weekEntry.reporting.png[screenshot6, 600, 400]
 .Zeiterfassung Chart
 image::images/totask2.weekEntry.chart.png[screenshot7, 600, 400]
 
+[[img-login]]
+.login
+image::images/totask2.login.png[screenshot8, 600, 400]
+
 
 == Erfahrungen
 

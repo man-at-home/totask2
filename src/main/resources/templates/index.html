@@ -18,6 +18,16 @@
 
 <div class="paper-box">
 
+ 	 
+	 <div style="float: right;">
+		 <form th:action="@{/logout}" method="post">
+		 	<button type="submit" class="btn btn-sm btn-default" value="sign out" th:title="${#httpServletRequest.remoteUser}">
+		 				<span class="glyphicon glyphicon-off"></span>
+						<span th:text="#{totask2.logout}">sign out</span>
+		 	</button>
+		 </form>
+	 </div>		
+
 	<div class="page-header">
 		<h1 th:text="#{totask2.index.pageheader}">my totask2 sample application</h1>
 	</div>

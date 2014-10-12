@@ -2,6 +2,9 @@ totask2 releasenotes
 ====================
 :Author: Manfred
 
+.2014-10-12
+- spring-security (in-memory face at the moment)
+
 .2014-10-11
 - chart.js bar chart
 

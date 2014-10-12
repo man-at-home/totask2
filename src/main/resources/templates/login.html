@@ -1,0 +1,103 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title th:text="#{totask2.appname}">totask2 login</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />	
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<link rel="stylesheet" type="text/css" href="/css/totask2.css" />
+	<link rel="stylesheet" type="text/css" href="/bootstrap/css/bootstrap.min.css" />
+	<link rel="stylesheet" type="text/css" href="/bootstrap/css/bootstrap-theme.min.css" />
+	<link rel="stylesheet" type="text/css" href="/bootstrap/css/bootstrapValidator.min.css"/>	
+</head>
+<body>
+	<script type="text/javascript" charset="utf8" src="/js/jquery-1.11.1.js"></script>
+	<script type="text/javascript" charset="utf8" src="/bootstrap/js/bootstrap.min.js"></script>
+	<script type="text/javascript" charset="utf8" src="/bootstrap/js/bootstrapValidator.min.js"></script>
+
+<div class="container paper-box" style="width: 60%">
+
+	<script type="text/javascript">
+		/*<![CDATA[*/
+
+			$(document).ready(function() {
+			    $('#loginForm').bootstrapValidator();
+			});	           
+
+		/*]]>*/
+	</script>
+	
+
+	<div class="page-header">
+		<h1 th:text="#{totask2.login.pageheader}">login to totask</h1>
+	</div>
+
+	<div>
+
+		<div th:if="${param.logout}" class="alert alert-info alert-dismissible" role="alert">
+		    <span th:text="#{totask2.login.logout.message}">You have been logged out.</span> 
+		</div>
+			
+		<div th:if="${param.error}" class="alert alert-danger" role="alert">
+			<span th:text="#{totask2.login.wrongCredentials.message}">Invalid user name and password.</span>	    
+		</div>
+		
+		<br/>
+	</div>
+	
+	<form id="loginForm" method="post"
+					class="form-horizontal" role="form"
+					th:action="@{/login}" 
+		            data-bv-feedbackicons-valid="glyphicon glyphicon-ok"
+                    data-bv-feedbackicons-invalid="glyphicon glyphicon-remove"
+                    data-bv-feedbackicons-validating="glyphicon glyphicon-refresh">	
+					
+	    <div class="form-group">
+	    	<label for="username" th:text="#{totask2.login.user.label}" class="col-sm-2 control-label">User Name:</label>
+	    	<div class="col-sm-10">
+	    	<input 
+	    		type="text" 
+	    		name="username"
+	    		maxlength="100"
+	    		size="40"
+	    		class="form-control" 
+	    		placeholder="user-id" 
+	    		data-bv-notempty="true"
+				data-bv-notempty-message="required field"
+				data-bv-stringlength="true"
+				data-bv-stringlength-max="100"
+	    		/> 
+	    	</div>
+	    </div>
+	    <div class="form-group">
+	    	<label  for="password"  th:text="#{totask2.login.password.label}" class="col-sm-2 control-label">Password:</label>
+	    	<div class="col-sm-10">
+	    	<input 
+	    		type="password"
+	    		name="password"
+	    		size="40"
+	    		maxlength="100"
+	    		class="form-control" 
+	    		placeholder="type in password here.."
+	    		data-bv-notempty="true"
+				data-bv-notempty-message="required field"
+				data-bv-stringlength="true"
+				data-bv-stringlength-max="100"
+	    		/>
+	    	</div>
+	    </div>
+	    
+	    <div class="form-group">
+	    	<div class="col-sm-offset-2 col-sm-10">
+	    	<button type="submit" class="btn btn-primary"  value="Sign In">
+	    		<span class="glyphicon glyphicon-ok"></span>
+	    		<span th:text="#{totask2.login.submit}">Sign In</span>
+	    	</button>
+	    </div>	
+	    </div>
+	</form>
+
+</div>
+	
+</body>
+</html> 

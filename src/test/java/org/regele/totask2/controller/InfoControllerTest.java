@@ -1,6 +1,7 @@
 package org.regele.totask2.controller;
 
 import static org.hamcrest.Matchers.containsString;
+import static org.regele.totask2.controller.SecurityRequestPostProcessors.user;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -13,6 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.security.web.FilterChainProxy;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
@@ -39,6 +41,10 @@ public class InfoControllerTest {
 
     @Autowired
     private WebApplicationContext wac;
+    
+    @Autowired
+    private FilterChainProxy springSecurityFilterChain;    
+
 
     private MockMvc mockMvc;
 
@@ -49,7 +55,10 @@ public class InfoControllerTest {
         MockitoAnnotations.initMocks(this);
 
         // Setup Spring test in webapp-mode (same config as spring-boot)
-        this.mockMvc = MockMvcBuilders.webAppContextSetup(wac).build();
+        this.mockMvc = MockMvcBuilders
+                .webAppContextSetup(wac)
+                .addFilters(this.springSecurityFilterChain)    
+                .build();
     }
    
     /** testing /dbinfo. */
@@ -59,7 +68,9 @@ public class InfoControllerTest {
         LOG.debug("request /dbinfo");
         
         MvcResult result =
-        this.mockMvc.perform(get("/dbinfo"))
+        this.mockMvc.perform(get("/dbinfo")
+                .with(user("unit-test-admin").roles("ADMIN"))                
+                )
         .andExpect(status().isOk())
         .andExpect(content().string(containsString("tasks in database:")))
         .andReturn();
@@ -75,7 +86,10 @@ public class InfoControllerTest {
         
         String requestParamName = "junit-test-param-" + new Date();
         
-        this.mockMvc.perform(get("/greeting").param("name", requestParamName))
+        this.mockMvc.perform(get("/greeting")                              
+                .param("name", requestParamName)
+                .with(user("unit-test-admin").roles("USER")) 
+                )
         .andExpect(status().isOk())
         .andExpect(content().string(containsString(requestParamName)));
     }

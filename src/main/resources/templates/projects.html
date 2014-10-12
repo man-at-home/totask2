@@ -28,6 +28,15 @@
 
 <div class="container paper-box" style="width: 70%">
 
+	 <div style="float: right;">
+	 <form th:action="@{/logout}" method="post">
+	 	<button type="submit" class="btn btn-sm btn-default" value="sign out">
+	 				<span class="glyphicon glyphicon-off"></span>
+					<span th:text="#{totask2.logout}">sign out</span>
+	 	</button>
+	 </form>
+	 </div>
+
 	<div class="page-header">
 		<h1 th:text="#{totask2.projects.pageheader}">currently known projects</h1>
 	</div>
@@ -91,6 +100,7 @@
 		</a>
 		
 	</p>
+	
 	
 </div>	
 </body>

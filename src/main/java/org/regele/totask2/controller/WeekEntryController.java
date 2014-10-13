@@ -1,6 +1,7 @@
 package org.regele.totask2.controller;
 
 
+import org.regele.totask2.WebSecurityConfig;
 import org.regele.totask2.model.TaskInWeek;
 import org.regele.totask2.model.User;
 import org.regele.totask2.model.UserRepository;
@@ -56,7 +57,8 @@ public class WeekEntryController {
     }
     
     private List<TaskInWeek> getWeek(final LocalDate dt) {
-        User      user = userRepository.getOne(2L /* TestConstants.TestUser */);   // TBF current User.        
+        
+        User      user = userRepository.findByUserName( WebSecurityConfig.getCurrentUserName() ).stream().findFirst().get();  //  (2L /* TestConstants.TestUser */);   .        
         List<TaskInWeek> tasksInWeek = getService().getWorkWeek(user, dt);      
         return tasksInWeek;
      }    
@@ -64,11 +66,20 @@ public class WeekEntryController {
     
     /** add view data to model for a given work week. */
     private void buildWeekModel(final Model model, final LocalDate dt) {
+        
         model.addAttribute("currentWeek",   dt.toString());
         model.addAttribute("previousWeek",  dt.minusWeeks(1).toString());
         model.addAttribute("nextWeek",      dt.plusWeeks(1).toString());
         model.addAttribute("date" ,         LocalDateConverter.toDate(dt));
-        model.addAttribute("tasksInWeek",   getWeek(dt));        
+        
+        try {
+            model.addAttribute("tasksInWeek",   getWeek(dt));
+        }
+        catch(Exception ex)
+        {          
+            LOG.error("error getting week data", ex);
+            model.addAttribute("flashMessage", ex.getMessage());
+        }
         
         LOG.debug("model has weekEntry for " + dt);        
     }

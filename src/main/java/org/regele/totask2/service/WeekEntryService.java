@@ -38,6 +38,9 @@ public class WeekEntryService {
     
     /** all work done on a given week. */
     public List<TaskInWeek> getWorkWeek(final User user, final LocalDate dt) {
+
+        if( user == null)
+            throw new IllegalArgumentException("no user for WorkWeek retrieval");
         
         if( dt == null)
             throw new IllegalArgumentException("no date for WorkWeek retrieval");

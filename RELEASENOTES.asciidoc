@@ -2,6 +2,10 @@ totask2 releasenotes
 ====================
 :Author: Manfred
 
+.2014-10-13
+- flyway migrations
+- qa environment
+
 .2014-10-12
 - spring-security (in-memory face at the moment)
 

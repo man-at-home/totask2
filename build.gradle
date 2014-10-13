@@ -17,6 +17,8 @@ apply plugin: "jdepend"
 apply plugin: "build-dashboard"
 apply plugin: "org.asciidoctor.gradle.asciidoctor"
 
+apply plugin: 'flyway'
+
 repositories {
         maven { url "http://repo.spring.io/libs-release" }
         mavenLocal()
@@ -36,8 +38,10 @@ buildscript {
     dependencies {
         classpath "org.springframework.boot:spring-boot-gradle-plugin:1.1.7.RELEASE"  
 	    classpath "org.asciidoctor:asciidoctor-gradle-plugin:0.7.3"
+	    classpath "org.flywaydb:flyway-gradle-plugin:3.0"	    
     }
 }
+
 
 dependencies {
     compile "org.apache.poi:poi:3.7"
@@ -54,7 +58,7 @@ dependencies {
     compile "org.springframework.boot:spring-boot-starter-security:1.1.7.RELEASE"
         
   /*  compile "org.liquibase:liquibase-core" */
-        	
+    compile "org.flywaydb:flyway-core"    	
 
     testCompile "org.springframework.boot:spring-boot-starter-test:1.1.7.RELEASE" 
 }
@@ -105,3 +109,7 @@ asciidoctor {
     logDocuments = true
 } 
 
+flyway {
+    url = "jdbc:h2:totask2.qa.db"
+    user = 'sa'
+}

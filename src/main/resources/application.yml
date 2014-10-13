@@ -1,0 +1,22 @@
+# totask2 spring configuration
+#
+# @author Manfred
+#
+
+app:
+   name: totask2
+   description: ${app.name} work entry logging (default env)
+   version: v0.0-dev
+
+spring:
+   thymeleaf:
+      cache: false
+
+   jpa:
+      show-sql: true   
+      hibernate:
+         ddl-auto: create-drop
+      show-sql: true
+
+flyway:
+   enabled: false

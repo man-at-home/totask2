@@ -188,7 +188,13 @@
 	</ul>	
 
 	
-	<span id="flashMessage" th:unless="${#strings.isEmpty(flashMessage)}" th:text="${flashMessage}">flashMessage</span>
+	<span id="flashMessage"  
+		class="alert alert-warning" 
+		role="alert" 
+		th:unless="${#strings.isEmpty(flashMessage)}" 
+		th:text="${flashMessage}">
+		flash message
+	</span>
 
 
 	<div>

@@ -29,6 +29,11 @@ repositories {
 }
 
 buildscript {
+
+	ext {
+		springBootVersion = '1.1.8.RELEASE'
+	}
+	
     repositories {
         maven { url "http://repo.spring.io/libs-release" }
         mavenLocal()
@@ -36,7 +41,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath "org.springframework.boot:spring-boot-gradle-plugin:1.1.7.RELEASE"  
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}"  
 	    classpath "org.asciidoctor:asciidoctor-gradle-plugin:0.7.3"
 	    classpath "org.flywaydb:flyway-gradle-plugin:3.0"	    
     }
@@ -49,18 +54,20 @@ dependencies {
     compile "ch.qos.logback:logback-classic"
     compile "net.sf.jasperreports:jasperreports:5.6.0"  
     compile "com.h2database:h2"
+
     
     compile "org.springframework:spring-context:4.1.1.RELEASE"
     compile "org.springframework:spring-context-support:4.1.1.RELEASE"
-    compile "org.springframework.boot:spring-boot-starter-thymeleaf:1.1.7.RELEASE"
-	compile "org.springframework.boot:spring-boot-starter-web:1.1.7.RELEASE"
-    compile "org.springframework.boot:spring-boot-starter-data-jpa:1.1.7.RELEASE"
-    compile "org.springframework.boot:spring-boot-starter-security:1.1.7.RELEASE"
+    
+    compile "org.springframework.boot:spring-boot-starter-thymeleaf"
+	compile "org.springframework.boot:spring-boot-starter-web"
+    compile "org.springframework.boot:spring-boot-starter-data-jpa"
+    compile "org.springframework.boot:spring-boot-starter-security"    
+    compile "org.springframework.boot:spring-boot-starter-actuator"
         
-  /*  compile "org.liquibase:liquibase-core" */
     compile "org.flywaydb:flyway-core"    	
 
-    testCompile "org.springframework.boot:spring-boot-starter-test:1.1.7.RELEASE" 
+    testCompile "org.springframework.boot:spring-boot-starter-test" 
 }
 
 
@@ -87,6 +94,7 @@ findbugs {
 checkstyle {
    ignoreFailures = true      
 }
+
 
 
 tasks.withType(FindBugs) {

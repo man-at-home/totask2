@@ -6,7 +6,9 @@
 app:
    name: totask2
    description: ${app.name} work entry logging (qa)
-   version: v0.0-qa
+   version: ${version}-qa
+   jmx:
+      enabled: false
 
 spring:
    thymeleaf:
@@ -20,8 +22,9 @@ spring:
       database: H2
       show-sql: true
       hibernate:
-         ddl-auto: none
+         ddl-auto: none 
          dialect: org.hibernate.dialect.H2Dialect
+ 
  
 # db migration settings enabled
 flyway:

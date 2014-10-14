@@ -8,6 +8,7 @@ import org.regele.totask2.util.ProjectNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.actuate.metrics.CounterService;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -43,7 +44,10 @@ public class ProjectController {
     
     @Autowired
     private ReportGenerator reportGenerator;
-    
+        
+    @Autowired 
+    private CounterService counterService;
+       
   
     /** list all projects. */
     @Secured("ROLE_ADMIN")
@@ -118,7 +122,10 @@ public class ProjectController {
         }
                 
         this.projectRepository.saveAndFlush(project);
-        model.clear();        
+        model.clear();       
+        
+        if( this.counterService != null ) 
+            counterService.increment("totask2.projects.changed");        
         
         LOG.debug("saved " + project + ", now redirecting.");
         return "redirect:/projects";

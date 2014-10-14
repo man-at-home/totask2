@@ -16,11 +16,13 @@ import net.sf.jasperreports.export.SimpleExporterInput;
 import net.sf.jasperreports.export.SimpleOutputStreamExporterOutput;
 
 
+
 import org.eclipse.jdt.internal.core.Assert;
 import org.regele.totask2.util.EnvironmentException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.actuate.metrics.CounterService;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
@@ -44,8 +46,6 @@ import java.util.Properties;
 @Service
 public class ReportGenerator {
 
-    public ReportGenerator()
-    {}
     
     /** output format of report. */
     public static enum ReportOutputFormat {
@@ -58,6 +58,7 @@ public class ReportGenerator {
     
     @Autowired private ApplicationContext appContext;
     
+    @Autowired private CounterService counterService;
     
 
     public void render(final String reportTemplateName, final ReportOutputFormat outputFormat, final Collection<?> pojoDataSource, OutputStream outputStream) throws EnvironmentException {
@@ -154,6 +155,9 @@ public class ReportGenerator {
         
         Map<String, Object> params = new HashMap<>();
         params.put("jasperReportsDataKey", reportData);
+        
+        if( this.counterService != null ) 
+            counterService.increment("totask2.report.invoked");
     
         LOG.debug("rendering " + reportOutputFormat + ":" + view.getUrl() + " with " + reportData.size() + " rows of data");
     

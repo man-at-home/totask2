@@ -28,11 +28,8 @@
 	
 <div class="container paper-box" style="width:70%">
 
-
-	<div class="page-header">
-		<h1>project</h1>
-	</div>
-		
+	<div th:replace="headerFooter :: header (#{totask2.project.pageheader})"></div>
+	
 	<ul class="nav nav-tabs" role="tablist">
 	  <li><a th:href="@{/}" th:text="#{totask2.nav.home}">home</a></li>
 	  <li><a th:href="@{/projects}" th:text="#{totask2.nav.projects}">projects</a></li>
@@ -98,6 +95,8 @@
 	</form>
 	
 	<br/>
+	
+	<div th:replace="headerFooter :: footer"></div>
 	     
 	
 </div>

@@ -27,9 +27,8 @@
 
 <div class="container paper-box" style="width:70%">
 
-	<div class="page-header">
-		<h1 th:text="#{totask2.tasks.pageheader}">tasks in project</h1>
-	</div>	
+	<div th:replace="headerFooter :: header ( #{totask2.tasks.pageheader} )"></div>
+
 
 	<ul class="nav nav-tabs" role="tablist">
 	  <li><a th:href="@{/}" th:text="#{totask2.nav.home}">home</a></li>
@@ -87,6 +86,9 @@
 			<span th:text="#{totask2.task.action.new}">new..</span>
 		</a>
 	</p>
+	
+	
+	<div th:replace="headerFooter :: footer"></div>
 
 </div>	
 </body>

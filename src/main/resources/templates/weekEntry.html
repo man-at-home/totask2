@@ -167,20 +167,9 @@
     </script>
  
  <div class="container paper-box">
- 	 
-	 <div style="float: right;">
-		 <form th:action="@{/logout}" method="post">
-		 	<button type="submit" class="btn btn-sm btn-default" value="sign out" th:title="${#httpServletRequest.remoteUser}">
-		 				<span class="glyphicon glyphicon-off"></span>
-						<span th:text="#{totask2.logout}">sign out</span>
-		 	</button>
-		 </form>
-	 </div>	
+ 
+ 	<div th:replace="headerFooter :: header ( #{totask2.weekEntry.header} )"></div>
  	
-	<div class="page-header">
-		<h1 th:text="#{totask2.weekEntry.header}">edit this week</h1>
-	</div>
-
 	<ul class="nav nav-tabs" role="tablist">
 	  <li><a th:href="@{/}" th:text="#{totask2.nav.home}">home</a></li>
 	  <li><a th:href="@{/projects}" th:text="#{totask2.nav.projects}">projects</a></li>
@@ -311,6 +300,8 @@
 	<p>
 		<canvas id="weekEntryChart" width="400" height="400"></canvas>
 	</p>
+	
+	<div th:replace="headerFooter :: footer"></div>
 
 </div>
 </body>

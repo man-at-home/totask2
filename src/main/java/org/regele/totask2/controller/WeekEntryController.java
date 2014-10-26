@@ -1,13 +1,12 @@
 package org.regele.totask2.controller;
 
-
-import org.regele.totask2.WebSecurityConfig;
 import org.regele.totask2.model.TaskInWeek;
 import org.regele.totask2.model.User;
 import org.regele.totask2.model.UserRepository;
 import org.regele.totask2.model.WorkEntryRepository;
 import org.regele.totask2.service.ReportGenerator;
 import org.regele.totask2.service.ReportGenerator.ReportOutputFormat;
+import org.regele.totask2.service.UserDetailsServiceImpl;
 import org.regele.totask2.service.WeekEntryService;
 import org.regele.totask2.util.ApplicationAssert;
 import org.regele.totask2.util.DurationConverter;
@@ -58,7 +57,7 @@ public class WeekEntryController {
     
     private List<TaskInWeek> getWeek(final LocalDate dt) {
         
-        User      user = userRepository.findByUserName( WebSecurityConfig.getCurrentUserName() ).stream().findFirst().get();  //  (2L /* TestConstants.TestUser */);   .        
+        User      user = userRepository.findByUserName( UserDetailsServiceImpl.getCurrentUserName() ).stream().findFirst().get();  //  (2L /* TestConstants.TestUser */);   .        
         List<TaskInWeek> tasksInWeek = getService().getWorkWeek(user, dt);      
         return tasksInWeek;
      }    

@@ -1,17 +1,17 @@
 package org.regele.totask2;
 
-import org.regele.totask2.util.ApplicationAssert;
+import org.regele.totask2.model.User;
+import org.regele.totask2.service.UserDetailsServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.authentication.configurers.GlobalAuthenticationConfigurerAdapter;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.servlet.configuration.EnableWebMvcSecurity;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
+
 
 /**
  * security configuration for this web application.
@@ -25,7 +25,12 @@ import org.springframework.security.core.userdetails.UserDetails;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private static final Logger LOG = LoggerFactory.getLogger(WebSecurityConfig.class);
+
+    private @Autowired UserDetailsServiceImpl userDetailsServiceImpl;
     
+    
+    
+    /** secure most pages. Exceptions are index.html and javascript / css resources.  */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         
@@ -46,35 +51,22 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
             .exceptionHandling()
             .accessDeniedPage("/403");
-    }    
+    }  
     
-    @Configuration
-    protected static class AuthenticationConfiguration extends GlobalAuthenticationConfigurerAdapter {
-
-        @Override
-        public void init(AuthenticationManagerBuilder auth) throws Exception {
-            
-            LOG.info("enabling in memory user store (init)");
-            
-            auth
-               .inMemoryAuthentication()
-               .withUser("unit-test-user").password("password").roles("USER", "ADMIN");
-            
-        }
+    
+    /** use own user implementation. */
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth)
+            throws Exception {
+        
+        LOG.debug("configuring userDetailsService " + userDetailsServiceImpl);
+        auth.userDetailsService(userDetailsServiceImpl)
+            .passwordEncoder(User.getPasswordEncoder())
+            ;
+       
     }
     
     
-    /** get current signed in user. */
-    public static String getCurrentUserName() {
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        
-        ApplicationAssert.assertNotNull("principal", principal);
-        
-        if (principal instanceof UserDetails) {
-          return ((UserDetails)principal).getUsername();
-        } else {
-          return principal.toString();
-        }
-    }
 
+   
 }

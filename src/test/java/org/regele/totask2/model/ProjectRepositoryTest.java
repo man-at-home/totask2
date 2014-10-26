@@ -11,8 +11,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
 
 import java.util.List;
+
 import javax.transaction.Transactional;
 
 
@@ -20,6 +22,7 @@ import javax.transaction.Transactional;
 @RunWith(SpringJUnit4ClassRunner.class)
 @Transactional
 @SpringApplicationConfiguration(classes = { Application.class })
+@WebAppConfiguration
 public class ProjectRepositoryTest {
     
 
@@ -39,7 +42,11 @@ public class ProjectRepositoryTest {
     @Test   
     public void testReadProjects() {
         assertNotNull("project repo not injected", projectRepository);
-        assertTrue("project table access not possible" ,  projectRepository.count() >= 0);
+        
+        LOG.debug("read all projects..");
+        projectRepository.findAll().stream().forEach( p -> LOG.debug(" findAll-projects: " + p.getName() + "/" + p.getId()));
+        LOG.debug("read all projects done.");
+        assertTrue("project table access not possible" ,  projectRepository.count() >= 1);
     }
 
     /** save, getOne. */
@@ -76,7 +83,7 @@ public class ProjectRepositoryTest {
 
     /** find totask2 project inserted by data.sql. */
     @Test   
-    public void testReadAdminUser() {
+    public void testReadTotask2Project() {
         List<Project> totask2Projects = projectRepository.findByName("totask2");
         assertEquals("project not found", 1, totask2Projects.size());
         LOG.debug("found totask2 project: " + totask2Projects.get(0));

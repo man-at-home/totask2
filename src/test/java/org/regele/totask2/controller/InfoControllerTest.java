@@ -22,8 +22,6 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import java.util.Date;
-
 
 /**
  * testing basic spring mvc InfoController.
@@ -78,20 +76,5 @@ public class InfoControllerTest {
         LOG.debug("response:" + result.getResponse().getContentAsString().replaceAll("\\r|\\n", ""));
     }
     
-    /** testing /greeting. */
-    @Test
-    public void testGetGreeting() throws Exception {
-        
-        LOG.debug("request /greeting");
-        
-        String requestParamName = "junit-test-param-" + new Date();
-        
-        this.mockMvc.perform(get("/greeting")                              
-                .param("name", requestParamName)
-                .with(user("unit-test-admin").roles("USER")) 
-                )
-        .andExpect(status().isOk())
-        .andExpect(content().string(containsString(requestParamName)));
-    }
 
 }

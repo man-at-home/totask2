@@ -18,6 +18,14 @@ insert into tt_task(id, name, project_id) values(4, 'demo-develop', 2);
 insert into tt_task(id, name, project_id) values(5, 'demo-test',    2);
 insert into tt_task(id, name, project_id) values(6, 'demo-doc',     2);
 
+insert into tt_task_assignment (id, starting_from, task_id, user_id)        values (  1, DATEADD('DAY',-20, TODAY), 4,  2);
+insert into tt_task_assignment (id, starting_from, task_id, user_id)        values (  2, DATEADD('DAY',-10, TODAY), 5,  2);
+insert into tt_task_assignment (id, starting_from, task_id, user_id)        values (  3, DATEADD('DAY',-50, TODAY), 6,  2);
+
+insert into tt_task_assignment (id, starting_from, task_id, user_id, until) values (  4, DATEADD('DAY',-20, TODAY), 4,  1, DATEADD('DAY',-10, TODAY));
+insert into tt_task_assignment (id, starting_from, task_id, user_id)        values (  5, DATEADD('DAY',-50, TODAY), 6,  1);
+
+
 insert into tt_workentry(id, comment, task_id, user_id, duration, at) values( 1, 'entry 4.0 dev' , 4, 2,   4, TODAY);
 insert into tt_workentry(id, comment, task_id, user_id, duration, at) values( 2, 'entry 4.1 dev' , 4, 2, 4.1, DATEADD('DAY', 1, TODAY));
 insert into tt_workentry(id, comment, task_id, user_id, duration, at) values( 3, 'entry 4.2 dev' , 4, 2, 4.2, DATEADD('DAY', 2, TODAY));

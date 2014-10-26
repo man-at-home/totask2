@@ -32,8 +32,8 @@ public class Project {
     private String name;
    
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "project")
-    private Collection<Task> tasks = new ArrayList<Task>();    
-
+    private Collection<Task> tasks = new ArrayList<Task>();   
+    
     /** pk. */
     public long getId() { return this.id; }
     public void setId(long id) { this.id = id; }

@@ -1,5 +1,9 @@
 package org.regele.totask2.model;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.stream.Stream;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -9,6 +13,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -17,7 +22,7 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(name = "TT_TASK")
 public class Task {
-
+   
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)  
     @Column(name = "ID")
@@ -33,7 +38,10 @@ public class Task {
                 foreignKey = @ForeignKey(name = "FK_TT_TASK_OWNING_PARENT") 
     )
     private Project project;
-      
+    
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "task")
+    private Collection<TaskAssignment> taskAssignments = new ArrayList<TaskAssignment>();     
+    
     public Task() {}
     
     /** create new task. */
@@ -54,6 +62,20 @@ public class Task {
     public Project getProject() { return project; }
     public void setProject(Project project) { this.project = project; }
 
+    
+    /** all assigned user assignments for this tasks. */
+    public Stream<TaskAssignment> getAssignments() { return this.taskAssignments.stream(); }
+    
+    /** create new assignment in project. */
+    public TaskAssignment addAssignment(User user) {
+        TaskAssignment ta = new TaskAssignment(this, user);
+        this.taskAssignments.add(ta);
+        return ta;
+    }    
+    
+    public void removeAssignment(TaskAssignment ta) {
+        this.taskAssignments.remove(ta);
+    }
     
     /** debug. */
     @Override

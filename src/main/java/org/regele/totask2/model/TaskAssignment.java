@@ -22,7 +22,6 @@ import org.regele.totask2.util.LocalDateConverter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.sun.istack.internal.Nullable;
 
 /**
  * mapping user to task he should work on.
@@ -57,8 +56,8 @@ public class TaskAssignment {
     @Column(name = "startingFrom", nullable = false)
     @Temporal(TemporalType.DATE)
     private Date startingFrom;
-    
-    @Nullable
+
+
     @Column(name = "until", nullable = true)
     @Temporal(TemporalType.DATE)
     private Date until;
@@ -100,8 +99,8 @@ public class TaskAssignment {
     }
     
     /** working on this task is allowed until "until" for given user (may be null for "no limit"). */    
-    public @Nullable LocalDate getUntil() { return this.until == null ? null : LocalDateConverter.toLocalDate( this.until ); }
-    public void setUntil(@Nullable LocalDate until) { 
+    public LocalDate getUntil() { return this.until == null ? null : LocalDateConverter.toLocalDate( this.until ); }
+    public void setUntil(LocalDate until) { 
         this.until = until == null ? null : LocalDateConverter.toDate(until); 
     }
     

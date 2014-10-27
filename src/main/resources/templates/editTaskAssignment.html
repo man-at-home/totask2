@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-	<title th:text="#{totask2.appname}">totask2 edit task</title>
+	<title th:text="#{totask2.appname}">totask2 edit task assignment</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />	
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -19,7 +19,7 @@
 		/*<![CDATA[*/
 
 			$(document).ready(function() {
-			    $('#taskForm').bootstrapValidator();
+			    $('#taskAssignmentForm').bootstrapValidator();
 			});	           
 
 		/*]]>*/
@@ -27,18 +27,18 @@
 	
 <div class="container paper-box" style="width:70%">
 
-	<div th:replace="headerFooter :: header ( #{totask2.task.pageheader} )"></div>
+	<div th:replace="headerFooter :: header ( #{totask2.taskAssignment.pageheader} )"></div>
 
 	<ul class="nav nav-tabs" role="tablist">
 	  <li><a th:href="@{/}" th:text="#{totask2.nav.home}">home</a></li>
-	  <li><a th:href="@{/project/} + (${task.project} ? ${task.project.id} : '' )" th:text="#{totask2.nav.project}">project</a></li>
+	  <li><a th:href="@{/task/} + (${task.id})" th:text="#{totask2.nav.task}">task</a></li>
 	  <li><a th:href="@{/weekEntry}" th:text="#{totask2.nav.weekEntry}">week entry</a></li>
 	</ul>	
 
 	<span id="flashMessage"  class="alert-warning" th:unless="${#strings.isEmpty(flashMessage)}"  th:text="${flashMessage}">flashMessage</span>	
 	<br/>
 
-	<form id="taskForm" action="#" th:action="@{/task/save}" th:object="${task}" method="post" class="form-horizontal" role="form"
+	<form id="taskAssignmentForm" action="#" th:action="@{/assignment/save}" th:object="${assignment}" method="post" class="form-horizontal" role="form"
 	                data-bv-feedbackicons-valid="glyphicon glyphicon-ok"
                     data-bv-feedbackicons-invalid="glyphicon glyphicon-remove"
                     data-bv-feedbackicons-validating="glyphicon glyphicon-refresh">	
@@ -51,53 +51,84 @@
 		<span id="flashMessage" th:text="${flashMessage}">flashMessage</span>
 
 
-		<input type="hidden" th:field="*{project.id}"/>
+		<input type="hidden" th:field="*{task.id}"/>
 		
 		 <div class="form-group">		
-			<label th:for="id" th:text="#{totask2.task.id.label}" class="col-sm-2 control-label">id</label>
+			<label th:for="id" th:text="#{totask2.taskAssignment.id.label}" class="col-sm-2 control-label">id</label>
 			<div class="col-sm-10">
 			<input readonly="readonly" type="text" th:field="*{id}" class="readonly"  th:errorclass="fieldError"/>
 			</div>
 		</div>
 		
 		 <div class="form-group">		
-			<label th:for="name" th:text="#{totask2.task.name.label}" class="col-sm-2 control-label">Name</label>
+			<label th:for="user" th:text="#{totask2.taskAssignment.user.label}" class="col-sm-2 control-label">user</label>
 			<div class="col-sm-10">
 			<input type="text" 
 				class="form-control" 
-				placeholder="task name"
+				placeholder="user"
+				th:title="#{totask2.taskAssignment.user.help}"
 				maxlength="250"
-				th:field="*{name}" 
+				th:field="*{user.displayName}" 
 				th:errorclass="fieldError"
 				data-bv-notempty="true"
 				data-bv-notempty-message="required field"
 				data-bv-stringlength="true"
-				data-bv-stringlength-min="2"
-                data-bv-stringlength-max="250"
+				data-bv-stringlength-min="1"
                 data-bv-stringlength-message="invalid length"
 			/>
-			<span th:if="${#fields.hasErrors('name')}" class="fieldError" th:errors="*{name}">Name is invalid</span>
+			<span th:if="${#fields.hasErrors('user')}" class="fieldError" th:errors="*{user}">user is invalid</span>
+			</div>
+		</div>
+		
+		<div class="form-group">		
+			<label th:for="from" th:text="#{totask2.taskAssignment.from.label}" class="col-sm-2 control-label">from</label>
+			<div class="col-sm-10">
+			<input 
+			    type="date"
+			    min="2014-01-01"
+			    th:title="#{totask2.taskAssignment.from.help}" 
+				class="form-control" s
+				placeholder="ddd.mm.yyyy"
+				maxlength="10"
+				th:field="*{from}" 
+				th:errorclass="fieldError"
+				data-bv-date-format="DD.MM.YYYY"
+				data-bv-date-separator="."
+				data-bv-notempty-message="required field"
+			/>
+			<span th:if="${#fields.hasErrors('from')}" class="fieldError" th:errors="*{from}">from is invalid</span>
+			</div>
+		</div>
+		
+		<div class="form-group">		
+			<label th:for="until" th:text="#{totask2.taskAssignment.until.label}" class="col-sm-2 control-label">until</label>
+			<div class="col-sm-10">
+			<input 
+			    type="date"
+			    th:title="#{totask2.taskAssignment.until.help}"
+			    min="2014-01-01" 
+				class="form-control" 
+				placeholder="dd.mm.yyyy"
+				maxlength="10"
+				th:field="*{until}" 
+				th:errorclass="fieldError"
+				data-bv-date-format="DD.MM.YYYY"
+				data-bv-date-separator="."
+			/>
+			<span th:if="${#fields.hasErrors('until')}" class="fieldError" th:errors="*{until}">until is invalid</span>
 			</div>
 		</div>
 
 		<div class="form-group">
 		<div class="col-sm-offset-2 col-sm-10">
-		<button type="submit" name="saveTask" class="btn btn-default" th:value="${task.id}">
+		<button type="submit" name="saveTaskAssignment" class="btn btn-default" th:value="${assignment.id}">
 			<span class="glyphicon glyphicon-ok"></span>
 			<span th:text="#{totask2.task.action.save}">save</span>
 		</button>		
 		</div>
 		</div>
 	</form>
-	
-	<p> 
-		<a th:href="@{/task/{id}/assignments(id=${task.id})}" class="btn btn-default">
-			<span class="glyphicon glyphicon-pencil"></span>
-			<span th:text="#{totask2.task.action.assignments}">user assignments..</span>
-		</a>
-	</p>
-	
-	
+
 	<div th:replace="headerFooter :: footer"></div>
 	
 </div>	

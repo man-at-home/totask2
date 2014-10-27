@@ -94,7 +94,7 @@ public class UserRepositoryTest {
         assertEquals("admin user not found", adminUsers.size() , 1);
         LOG.debug("found admin user: " + adminUsers.get(0));
         assertEquals("admin name not admin", adminUsers.get(0).getUsername(), "admin");
-        assertFalse("admin not inactive", adminUsers.get(0).isActive());
+        assertTrue("admin not active", adminUsers.get(0).isActive());
     }   
 
     /** find unit-test-user user inserted by data.sql. */

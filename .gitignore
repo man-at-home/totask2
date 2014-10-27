@@ -1,6 +1,7 @@
 /bin/
 /gradle/
 /.gradle/
+/.gemcache/
 /.settings/
 /gradlew.bat
 /totask2.logback.log

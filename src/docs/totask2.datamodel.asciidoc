@@ -1,0 +1,15 @@
+[plantuml, totask2-datamodel, png]     
+....
+object User
+object Project
+object Task 
+object TaskAssignment
+object WorkEntry
+
+Project *-- Task         : consists of
+Task *-- TaskAssignment  : should be worked on by
+Task *-- WorkEntry       : has be worked on
+User -- WorkEntry        : has worked on
+User -- TaskAssignment   : may work on
+
+....

@@ -15,7 +15,9 @@ apply plugin: "jacoco"
 apply plugin: "jdepend"
 
 apply plugin: "build-dashboard"
+
 apply plugin: "org.asciidoctor.gradle.asciidoctor"
+apply plugin: "com.lookout.jruby"
 
 apply plugin: 'flyway'
 
@@ -42,8 +44,9 @@ buildscript {
     }
     dependencies {
         classpath "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}"  
-	    classpath "org.asciidoctor:asciidoctor-gradle-plugin:0.7.3"
-	    classpath "org.flywaydb:flyway-gradle-plugin:3.0"	    
+	    classpath "org.flywaydb:flyway-gradle-plugin:3.0"	    	    
+	    classpath "org.asciidoctor:asciidoctor-gradle-plugin:1.5.0"
+	    classpath "com.lookout:jruby-gradle-plugin:2.1.+"
     }
 }
 
@@ -68,6 +71,8 @@ dependencies {
     compile "org.flywaydb:flyway-core"    	
 
     testCompile "org.springframework.boot:spring-boot-starter-test" 
+    
+//    gems group: 'rubygems', name: 'asciidoctor-diagram', version: '1.2.1'
 }
 
 
@@ -112,7 +117,15 @@ jacocoTestReport {
     }
 }
 
+ext {
+    jrubyVersion = '1.7.16'
+}
+
 asciidoctor {
+//    dependsOn jrubyPrepareGems
+//    gemPath  = file('vendor')
+//    requires = ['asciidoctor-diagram']
+    sourceDir    = new File("$projectDir/src/docs")
     outputDir    = new File("$buildDir/docs/asciidoc")
     logDocuments = true
 } 

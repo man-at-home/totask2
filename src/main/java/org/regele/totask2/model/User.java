@@ -10,6 +10,8 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -21,8 +23,6 @@ import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-
-
 /**
  * User who can log his work into totask2 application.
  * 
@@ -33,6 +33,7 @@ import javax.validation.constraints.Size;
  * 
  * @author Manfred
  * @since  2015-08-17
+ * @category ajax
  */
 @Entity
 @Table(name = "TT_USER", 
@@ -75,6 +76,7 @@ public final class User implements UserDetails {
     public User() {}
 
     /** internal pk. */
+    @JsonIgnore
     public long getId() { return id; }
     public void setId(long id) { this.id = id; }
     
@@ -98,6 +100,7 @@ public final class User implements UserDetails {
     }
 
     /** may the given user login into this application? */
+    @JsonIgnore
     public boolean isActive() {
         return active;
     }
@@ -110,6 +113,7 @@ public final class User implements UserDetails {
     }
     
     /** is it a totask2 admin? */
+    @JsonIgnore
     public boolean isAdmin() {
         return this.isAdmin;
     }    
@@ -120,7 +124,7 @@ public final class User implements UserDetails {
     
     
     /** change password of given user. */
-    public void changePasswor(String newUnencryptedPassword) {
+    public void changePasswort(String newUnencryptedPassword) {
         this.password = getPasswordEncoder().encode( newUnencryptedPassword );
     }
    
@@ -134,6 +138,7 @@ public final class User implements UserDetails {
     /** returns the authorities granted to the user.
      *  active rights/roles of user (currently only admin). */
     @Override
+    @JsonIgnore
     public Collection<? extends GrantedAuthority> getAuthorities() {
                 
         ArrayList<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>(); 
@@ -149,6 +154,7 @@ public final class User implements UserDetails {
 
     /** password, used by spring security. */
     @Override
+    @JsonIgnore
     public String getPassword() {
         
         if( this.password == null || this.password.length() <= 0 )
@@ -165,24 +171,28 @@ public final class User implements UserDetails {
 
     /** Indicates whether the user's account has expired. */
     @Override
+    @JsonIgnore
     public boolean isAccountNonExpired() {
         return this.isActive();
     }
 
     /** Indicates whether the user is locked or unlocked. */
     @Override
+    @JsonIgnore
     public boolean isAccountNonLocked() {
         return this.isActive();
     }
 
     /** Indicates whether the user's credentials (password) has expired.*/
     @Override
+    @JsonIgnore
     public boolean isCredentialsNonExpired() {
         return this.isActive();
     }
 
     /** Indicates whether the user is enabled or disabled. */
     @Override
+    @JsonIgnore
     public boolean isEnabled() {
         return this.isActive();
     } 

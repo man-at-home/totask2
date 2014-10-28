@@ -4,6 +4,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.cache.CacheManager;
+import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.cache.concurrent.ConcurrentMapCacheManager;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
@@ -18,6 +22,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 @ComponentScan
 @EnableJpaRepositories
 @EnableAutoConfiguration
+@EnableCaching
 public class Application  extends WebMvcConfigurerAdapter  {
     
     private static final Logger LOG = LoggerFactory.getLogger(Application.class);
@@ -35,6 +40,12 @@ public class Application  extends WebMvcConfigurerAdapter  {
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/login").setViewName("login");
+    }
+    
+    /** caching user list. */
+    @Bean
+    public CacheManager cacheManager() {
+        return new ConcurrentMapCacheManager("users");
     }
     
     /** dummy message. */

@@ -48,8 +48,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
  
         return users.get(0);
     }
-    
-    
+        
     
     public static String getCurrentUserName() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();

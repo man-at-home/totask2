@@ -7,6 +7,7 @@ import org.regele.totask2.service.UserCachingService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,10 +20,11 @@ public class UserController {
     
     @Autowired private UserCachingService userCachingService;
     
+    @Secured("ROLE_ADMIN")
     @RequestMapping("/users")
-    public List<User> getUsers(@RequestParam(value="filter", defaultValue="") final String filter) {
-        LOG.debug("/users, filter=" + filter);
-        return userCachingService.getCachedUsers(filter);        
+    public List<User> getUsers(@RequestParam(value="term", defaultValue="") final String term) {
+        LOG.debug("/users, term=" + term);
+        return userCachingService.getCachedUsers(term);        
     }
         
 

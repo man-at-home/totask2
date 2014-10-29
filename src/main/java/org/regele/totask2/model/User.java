@@ -197,6 +197,13 @@ public final class User implements UserDetails {
         return this.isActive();
     } 
     
+    /** editTaskAssignment.html#user will be used for autocompletion JSON. */
+    public String getValue() { return this.getLabel(); }
+    
+    /** editTaskAssignment.html#user will be used for autocompletion JSON. */
+    public String getLabel() { return this.getUsername() + ": " + this.getDisplayName(); }
+    
+    
     public static BCryptPasswordEncoder getPasswordEncoder()
     {
         return new BCryptPasswordEncoder();

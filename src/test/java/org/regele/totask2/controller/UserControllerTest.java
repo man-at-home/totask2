@@ -7,6 +7,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.junit.Assert.*;
 import static org.hamcrest.Matchers.*;
 
+import java.nio.charset.Charset;
 import java.util.List;
 
 import org.junit.Before;
@@ -20,6 +21,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.http.MediaType;
 import org.springframework.security.web.FilterChainProxy;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
@@ -80,6 +82,10 @@ public class UserControllerTest {
             .with(user("unit-test-admin")
             .roles("ADMIN", "USER")))
         .andExpect(status().isOk())
+        .andExpect(content().contentType(new MediaType(MediaType.APPLICATION_JSON.getType(),
+                MediaType.APPLICATION_JSON.getSubtype(),                        
+                Charset.forName("utf8")                     
+                )))
         .andExpect(content().string(containsString("{\"displayName\":\"predefined admin user\",\"username\":\"admin\"}")))
         .andExpect(content().string(containsString("{\"displayName\":\"unit-test user data.sql\",\"username\":\"unit-test-user\"}")))
         .andReturn();
@@ -90,9 +96,9 @@ public class UserControllerTest {
     
     /** testing /users?filter=admin. */
     @Test
-    public void testUsersWithA() throws Exception {
+    public void testUsersWithAdmin() throws Exception {
         
-        LOG.debug("request /users?filter=a");
+        LOG.debug("request /users?term=a");
         
         MvcResult result =
         this.mockMvc

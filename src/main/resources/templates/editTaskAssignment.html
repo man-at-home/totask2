@@ -6,12 +6,14 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<link rel="stylesheet" type="text/css" href="/css/totask2.css" />
+	<link rel="stylesheet" type="text/css" href="/css/jquery-ui.min.css" />
 	<link rel="stylesheet" type="text/css" href="/bootstrap/css/bootstrap.min.css" />
 	<link rel="stylesheet" type="text/css" href="/bootstrap/css/bootstrap-theme.min.css" />
 	<link rel="stylesheet" type="text/css" href="/bootstrap/css/bootstrapValidator.min.css"/>	
 </head>
 <body>
 	<script type="text/javascript" charset="utf8" src="/js/jquery-1.11.1.js"></script>
+	<script type="text/javascript" charset="utf8" src="/js/jquery-ui.min.js"></script>	
 	<script type="text/javascript" charset="utf8" src="/bootstrap/js/bootstrap.min.js"></script>
 	<script type="text/javascript" charset="utf8" src="/bootstrap/js/bootstrapValidator.min.js"></script>
 
@@ -20,7 +22,14 @@
 
 			$(document).ready(function() {
 			    $('#taskAssignmentForm').bootstrapValidator();
-			});	           
+			});	  
+		
+			 $(function() {				 
+				    $( "#user" ).autocomplete({
+				      source: "/users",
+				      minLength: 2
+				    });
+				  });
 
 		/*]]>*/
 	</script>
@@ -60,10 +69,13 @@
 			</div>
 		</div>
 		
-		 <div class="form-group">		
+		
+		 <div class="form-group ui-widget">		
 			<label th:for="user" th:text="#{totask2.taskAssignment.user.label}" class="col-sm-2 control-label">user</label>
 			<div class="col-sm-10">
-			<input type="text" 
+			<input 
+			    type="text"
+			    id="user" 
 				class="form-control" 
 				placeholder="user"
 				th:title="#{totask2.taskAssignment.user.help}"
@@ -75,7 +87,7 @@
 				data-bv-stringlength="true"
 				data-bv-stringlength-min="1"
                 data-bv-stringlength-message="invalid length"
-			/>
+				/>
 			<span th:if="${#fields.hasErrors('user')}" class="fieldError" th:errors="*{user}">user is invalid</span>
 			</div>
 		</div>
@@ -87,7 +99,7 @@
 			    type="date"
 			    min="2014-01-01"
 			    th:title="#{totask2.taskAssignment.from.help}" 
-				class="form-control" s
+				class="form-control"
 				placeholder="ddd.mm.yyyy"
 				maxlength="10"
 				th:field="*{from}" 
@@ -120,13 +132,14 @@
 		</div>
 
 		<div class="form-group">
-		<div class="col-sm-offset-2 col-sm-10">
-		<button type="submit" name="saveTaskAssignment" class="btn btn-default" th:value="${assignment.id}">
-			<span class="glyphicon glyphicon-ok"></span>
-			<span th:text="#{totask2.task.action.save}">save</span>
-		</button>		
+			<div class="col-sm-offset-2 col-sm-10">
+			<button type="submit" name="saveTaskAssignment" class="btn btn-default" th:value="${assignment.id}">
+				<span class="glyphicon glyphicon-ok"></span>
+				<span th:text="#{totask2.task.action.save}">save</span>
+			</button>		
+			</div>
 		</div>
-		</div>
+
 	</form>
 
 	<div th:replace="headerFooter :: footer"></div>

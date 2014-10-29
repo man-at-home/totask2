@@ -27,6 +27,8 @@ _Client Seitig_ benutze ich http://getbootstrap.com//[bootstrap^] für css,
 http://bootstrapvalidator.com/[bootstrapvalidator^] für einige Client seitige Prüfungen, 
 http://jquery.com/[jquery^] als Java Script Libary, dazu http://www.datatables.net/[datatables^] als Datagrid.
 Ein Chart wird mit http://www.chartjs.org/[Charts.js^] clientseitig erstellt.
+Für die kompfortable Auswahl von Usern benutze ich das http://jqueryui.com/autocomplete/[autocomplete plugin^], um
+Suchvorschläge on the fly per REST/json vom Server zu holen.
 
 Zum _Reporting_ wird http://community.jaspersoft.com/project/jasperreports-library[JasperReports^] genutzt 
 um Excel und PDF zu generieren.
@@ -87,9 +89,13 @@ image::images/totask2.weekEntry.reporting.png[screenshot6, 600, 400]
 .Zeiterfassung Chart
 image::images/totask2.weekEntry.chart.png[screenshot7, 600, 400]
 
+[[img-editAssignment]]
+.Zeiterfassung Ajax Autocompletion
+image::images/totask2.editAssignment.autocomplete.png[screenshot8, 600, 400]
+
 [[img-login]]
 .login
-image::images/totask2.login.png[screenshot8, 600, 400]
+image::images/totask2.login.png[screenshot9, 600, 400]
 
 
 == Erfahrungen

@@ -143,8 +143,9 @@ public class WeekEntryController {
             .stream()
             .filter(t -> t.isModifiedByUser())
             .map(tiw -> tiw.getTask().getName())
-            .collect(Collectors.joining(", "));
+            .collect(Collectors.joining(", "))
             ;
+            
         
         LOG.debug("updating: " + changedTaskNames);
         

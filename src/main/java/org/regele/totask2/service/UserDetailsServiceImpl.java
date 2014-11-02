@@ -1,10 +1,10 @@
 package org.regele.totask2.service;
 
-import java.util.List;
 
 import org.regele.totask2.model.User;
 import org.regele.totask2.model.UserRepository;
 import org.regele.totask2.util.ApplicationAssert;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +13,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * connect spring-security with home grown tt_user/user of totask2.
@@ -37,12 +39,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             throws UsernameNotFoundException {
         
         List<User> users = userRepository.findByUserName(userName);
-        if( users.size() != 1) {
+        if (users.size() != 1) {
             LOG.info("user <" + userName + "> not found: " + users.size());
             throw new UsernameNotFoundException(userName + " no found.");
-        }
-        else
-        {
+        } else {
             LOG.debug("found user: " + users.get(0) + " with pw: " + users.get(0).getPassword());
         }
  
@@ -56,7 +56,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         ApplicationAssert.assertNotNull("principal", principal);
         
         if (principal instanceof UserDetails) {
-          return ((UserDetails)principal).getUsername();
+          return ((UserDetails) principal).getUsername();
         } else {
           return principal.toString();
         }

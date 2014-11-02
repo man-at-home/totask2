@@ -27,7 +27,14 @@
 			 $(function() {				 
 				    $( "#user" ).autocomplete({
 				      source: "/users",
-				      minLength: 2
+				      minLength: 2,
+				      select: function(event, ui) {				    	 				    	  
+				    	  if( ui.item ) {
+					    	  // ( ) ? "hier: " + ui.item.username : "-" );
+					    	  $(".userIdRef").val( ui.item.id );
+					    	  $(".userNameRef").val( ui.item.username );
+				    	  }
+				      }
 				    });
 				  });
 
@@ -40,7 +47,7 @@
 
 	<ul class="nav nav-tabs" role="tablist">
 	  <li><a th:href="@{/}" th:text="#{totask2.nav.home}">home</a></li>
-	  <li><a th:href="@{/task/} + (${task.id})" th:text="#{totask2.nav.task}">task</a></li>
+	  <li><a th:href="@{/task/} + (${assignment.task} ? ${assignment.task.id} : '' )" th:text="#{totask2.nav.task}">current task</a></li>
 	  <li><a th:href="@{/weekEntry}" th:text="#{totask2.nav.weekEntry}">week entry</a></li>
 	</ul>	
 
@@ -59,75 +66,85 @@
 		</div>
 		<span id="flashMessage" th:text="${flashMessage}">flashMessage</span>
 
-
 		<input type="hidden" th:field="*{task.id}"/>
+		<input type="hidden" class="userIdRef" th:field="*{user.id}"/>
 		
 		 <div class="form-group">		
 			<label th:for="id" th:text="#{totask2.taskAssignment.id.label}" class="col-sm-2 control-label">id</label>
 			<div class="col-sm-10">
-			<input readonly="readonly" type="text" th:field="*{id}" class="readonly"  th:errorclass="fieldError"/>
+				<input readonly="readonly" type="text" th:field="*{id}" class="readonly"  th:errorclass="fieldError"/>
+			</div>
+		</div>
+
+		 <div class="form-group">		
+			<label th:for="task.name" th:text="#{totask2.taskAssignment.task.label}" class="col-sm-2 control-label">task</label>
+			<div class="col-sm-10">
+				<input readonly="readonly" type="text" th:field="*{task.name}" class="readonly form-control"/>
+			</div>
+		</div>		
+		
+		 <div class="form-group">		
+			<label th:for="user" th:text="#{totask2.taskAssignment.user.label}" class="col-sm-2 control-label">user</label>
+			<div class="col-sm-10">
+				<input 
+				    type="text"
+				    id="user" 
+					class="form-control" 
+					placeholder="user"
+					th:title="#{totask2.taskAssignment.user.help}"
+					maxlength="250"
+					th:field="*{user.displayName}" 
+					th:errorclass="fieldError"
+					data-bv-notempty="true"
+					data-bv-notempty-message="required field"
+				/>
+				<span th:if="${#fields.hasErrors('user')}" class="fieldError" th:errors="*{user}">user is invalid</span>
 			</div>
 		</div>
 		
-		
-		 <div class="form-group ui-widget">		
-			<label th:for="user" th:text="#{totask2.taskAssignment.user.label}" class="col-sm-2 control-label">user</label>
+		<div class="form-group">
+			<label th:text="#{totask2.taskAssignment.user.name.label}" class="col-sm-2 control-label">user</label>
 			<div class="col-sm-10">
-			<input 
-			    type="text"
-			    id="user" 
-				class="form-control" 
-				placeholder="user"
-				th:title="#{totask2.taskAssignment.user.help}"
-				maxlength="250"
-				th:field="*{user.displayName}" 
-				th:errorclass="fieldError"
-				data-bv-notempty="true"
-				data-bv-notempty-message="required field"
-				data-bv-stringlength="true"
-				data-bv-stringlength-min="1"
-                data-bv-stringlength-message="invalid length"
-				/>
-			<span th:if="${#fields.hasErrors('user')}" class="fieldError" th:errors="*{user}">user is invalid</span>
+				<input readonly="readonly" type="text" th:field="*{user.username}" class="readonly form-control userNameRef"/>
 			</div>
 		</div>
 		
 		<div class="form-group">		
 			<label th:for="from" th:text="#{totask2.taskAssignment.from.label}" class="col-sm-2 control-label">from</label>
 			<div class="col-sm-10">
-			<input 
-			    type="date"
-			    min="2014-01-01"
-			    th:title="#{totask2.taskAssignment.from.help}" 
-				class="form-control"
-				placeholder="ddd.mm.yyyy"
-				maxlength="10"
-				th:field="*{from}" 
-				th:errorclass="fieldError"
-				data-bv-date-format="DD.MM.YYYY"
-				data-bv-date-separator="."
-				data-bv-notempty-message="required field"
-			/>
-			<span th:if="${#fields.hasErrors('from')}" class="fieldError" th:errors="*{from}">from is invalid</span>
+				<input 
+				    type="date"
+				    min="2014-01-01"
+				    th:title="#{totask2.taskAssignment.from.help}" 
+					class="form-control"
+					placeholder="ddd.mm.yyyy"
+					maxlength="10"
+					th:field="*{startingFrom}" 
+					th:errorclass="fieldError"
+					data-bv-date-format="DD.MM.YYYY"
+					data-bv-date-separator="."
+					data-bv-notempty-message="required field"
+				/>
+				<span th:if="${#fields.hasErrors('from')}" class="fieldError" th:errors="*{from}">from is invalid</span>
 			</div>
 		</div>
 		
 		<div class="form-group">		
 			<label th:for="until" th:text="#{totask2.taskAssignment.until.label}" class="col-sm-2 control-label">until</label>
 			<div class="col-sm-10">
-			<input 
-			    type="date"
-			    th:title="#{totask2.taskAssignment.until.help}"
-			    min="2014-01-01" 
-				class="form-control" 
-				placeholder="dd.mm.yyyy"
-				maxlength="10"
-				th:field="*{until}" 
-				th:errorclass="fieldError"
-				data-bv-date-format="DD.MM.YYYY"
-				data-bv-date-separator="."
-			/>
-			<span th:if="${#fields.hasErrors('until')}" class="fieldError" th:errors="*{until}">until is invalid</span>
+				<input 
+				    type="date"
+				    th:title="#{totask2.taskAssignment.until.help}"
+				    min="2014-01-01" 
+					class="form-control" 
+					placeholder="dd.mm.yyyy"
+					maxlength="10"
+					th:field="*{validUntil}" 
+					th:errorclass="fieldError"
+					data-bv-date-format="DD.MM.YYYY"
+					data-bv-date-separator="."
+				/>
+				<span th:if="${#fields.hasErrors('until')}" class="fieldError" th:errors="*{until}">until is invalid</span>
 			</div>
 		</div>
 

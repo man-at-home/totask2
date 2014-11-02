@@ -67,16 +67,18 @@ public class ProjectController {
     
     private void dumpUser() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if( auth != null)
+        if( auth != null) {
             LOG.debug("user: " + auth.getName() + " " + auth.isAuthenticated() + " roles " + auth.getAuthorities().size()); //get logged in username
-        else
+ 
+            auth.getAuthorities()
+            .stream().
+            forEach( ga ->  
+                LOG.debug("  user-role:" + ga)
+            );
+        }
+        else {
             LOG.debug("no auth.user user");
-           
-                auth.getAuthorities()
-                .stream().
-                forEach( ga ->  
-                    LOG.debug("  user-role:" + ga)
-                );
+        }           
     }
 
     /** show edit page for an existing project. GET. */

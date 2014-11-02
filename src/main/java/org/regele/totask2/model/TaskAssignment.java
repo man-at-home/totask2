@@ -1,5 +1,13 @@
 package org.regele.totask2.model;
 
+import org.regele.totask2.util.ApplicationAssert;
+import org.regele.totask2.util.LocalDateConverter;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
+
 import java.time.LocalDate;
 import java.util.Date;
 
@@ -17,11 +25,6 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
-import org.regele.totask2.util.ApplicationAssert;
-import org.regele.totask2.util.LocalDateConverter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 
 /**
  * mapping user to task he should work on.
@@ -33,7 +36,7 @@ import org.slf4j.LoggerFactory;
 @Table(name = "TT_TASK_ASSIGNMENT")
 public class TaskAssignment {
        
-    private static final @NotNull Logger LOG = LoggerFactory.getLogger(TaskAssignment.class);      
+    private static final Logger LOG = LoggerFactory.getLogger(TaskAssignment.class);      
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)  
@@ -55,16 +58,18 @@ public class TaskAssignment {
     @NotNull
     @Column(name = "startingFrom", nullable = false)
     @Temporal(TemporalType.DATE)
+    @DateTimeFormat(iso = ISO.DATE)
     private Date startingFrom;
 
 
     @Column(name = "until", nullable = true)
     @Temporal(TemporalType.DATE)
+    @DateTimeFormat(iso = ISO.DATE)
     private Date until;
     
 
     public TaskAssignment() {
-        this.startingFrom = LocalDateConverter.toDate( LocalDate.now() );
+        this.startingFrom = LocalDateConverter.toDate(LocalDate.now());
     }
 
     /** give user new assignment. */
@@ -72,6 +77,7 @@ public class TaskAssignment {
         this();
         setUser(user);
         setTask(task);
+        setFrom(LocalDate.now());
         LOG.debug("created " + this.toString());
     }
     
@@ -81,25 +87,45 @@ public class TaskAssignment {
     public void setId(long id) { this.id = id; }
 
     /** working user. */
-    public @NotNull User getUser() { return this.user; }
-    protected void setUser(final @NotNull User user) { this.user = user; }
+    @NotNull public User getUser() { return this.user; }
+    public void setUser(@NotNull final  User user) { 
+        LOG.debug("assigning task to user: " + user);
+        this.user = user; 
+    }
 
     /** assigned task for user. */
-    public @NotNull Task getTask() { return this.task; }
-    protected void setTask(final @NotNull Task task) { this.task = task; }
+    public Task getTask() { return this.task; }
+    public void setTask(final Task task) { 
+        LOG.debug("assigning task: " + task);
+        this.task = task; 
+    }
+    
+    
+    public Date getStartingFrom() { return this.startingFrom; }
+    public void setStartingFrom(@NotNull final Date from) { 
+        ApplicationAssert.assertNotNull("from must not be null", from);
+        this.startingFrom = from; 
+    }
     
     /** working on this task is allowed beginning from "from" for given user. */    
-    public @NotNull LocalDate getFrom() { return this.startingFrom == null ? null : LocalDateConverter.toLocalDate( this.startingFrom ); }
+    @NotNull public LocalDate getFrom() { return this.startingFrom == null ? null : LocalDateConverter.toLocalDate(this.startingFrom); }
     
     /** set from date, not null! */
-    public void setFrom(@NotNull LocalDate from) 
-    { 
+    public void setFrom(@NotNull LocalDate from) { 
         ApplicationAssert.assertNotNull("from must not be null", from);
         this.startingFrom = LocalDateConverter.toDate(from); 
     }
     
+    @DateTimeFormat(iso = ISO.DATE)
+    public Date getValidUntil() { return this.until; }
+    
+    @DateTimeFormat(iso = ISO.DATE)
+    public void setValidUntil(final Date until) { 
+        this.until = until;
+    }    
+    
     /** working on this task is allowed until "until" for given user (may be null for "no limit"). */    
-    public LocalDate getUntil() { return this.until == null ? null : LocalDateConverter.toLocalDate( this.until ); }
+    public LocalDate getUntil() { return this.until == null ? null : LocalDateConverter.toLocalDate(this.until); }
     public void setUntil(LocalDate until) { 
         this.until = until == null ? null : LocalDateConverter.toDate(until); 
     }
@@ -107,7 +133,7 @@ public class TaskAssignment {
     /** debug output. */
     @Override
     public String toString() {
-        return "Assignment [id=" + id + ": task " + task + ", to be worked on by=" + user + "]";
+        return "Assignment [id=" + id + ": task " + task + ", to be worked on by=" + user + " from " + startingFrom + " - " + until + "]";
     }
         
 }

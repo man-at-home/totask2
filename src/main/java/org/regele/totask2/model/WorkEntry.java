@@ -101,7 +101,7 @@ public class WorkEntry {
     /** optional comment (prose). */
     public String getComment() { return comment; }
     public void setComment(final String comment) { 
-        if( comment != this.comment) {
+        if (this.comment != null && !this.comment.equals(this.comment)) {
             isModifiedByUser = true;
         }
         this.comment = comment; 
@@ -138,7 +138,7 @@ public class WorkEntry {
     public float getDuration() { return duration; }
     
     public void setDuration(final float duration) { 
-        if( duration != this.duration) {
+        if (duration != this.duration) {
             LOG.debug("change duration: " + this.duration + " ->" + duration);
             isModifiedByUser = true;
         }
@@ -151,8 +151,8 @@ public class WorkEntry {
         return "WorkEntry [at=" + at + ", duration=" + duration + "]";
     }    
     
-    public boolean isModifiedByUser()
-    {
+    /** instance is modified ("dirty") therefore needs to be saved to db. */
+    public boolean isModifiedByUser() {
         return this.isModifiedByUser;
     }
 }

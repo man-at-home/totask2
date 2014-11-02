@@ -1,7 +1,5 @@
 package org.regele.totask2.model;
 
-import java.util.ArrayList;
-import java.util.Collection;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,7 +8,9 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import java.util.ArrayList;
+import java.util.Collection;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -22,6 +22,9 @@ import javax.persistence.Table;
 import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 /**
  * User who can log his work into totask2 application.
@@ -76,7 +79,6 @@ public final class User implements UserDetails {
     public User() {}
 
     /** internal pk. */
-    @JsonIgnore
     public long getId() { return id; }
     public void setId(long id) { this.id = id; }
     
@@ -125,14 +127,14 @@ public final class User implements UserDetails {
     
     /** change password of given user. */
     public void changePasswort(String newUnencryptedPassword) {
-        this.password = getPasswordEncoder().encode( newUnencryptedPassword );
+        this.password = getPasswordEncoder().encode(newUnencryptedPassword);
     }
    
     
     /** debug. */
     @Override
     public String toString() {
-        return "User [userName=" + userName + ", active=" + active + "]";
+        return "User [" + id + ", username=" + userName + ", active=" + active + "]";
     }
 
     /** returns the authorities granted to the user.
@@ -143,7 +145,7 @@ public final class User implements UserDetails {
                 
         ArrayList<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>(); 
         
-        if( this.isAdmin() ) {
+        if (this.isAdmin()) {
             GrantedAuthority adminRole = new SimpleGrantedAuthority("ROLE_ADMIN");
             authorities.add(adminRole);
         }
@@ -157,13 +159,10 @@ public final class User implements UserDetails {
     @JsonIgnore
     public String getPassword() {
         
-        if( this.password == null || this.password.length() <= 0 )
-        {
+        if (this.password == null || this.password.length() <= 0) {
             LOG.debug("START-password of user " + this.getDisplayName() + " requested.");        
             return getPasswordEncoder().encode("123456");
-        }
-        else
-        {
+        } else {
             LOG.debug("custom-password of user " + this.getDisplayName() + " requested.");        
             return this.password;
         }
@@ -204,8 +203,7 @@ public final class User implements UserDetails {
     public String getLabel() { return this.getUsername() + ": " + this.getDisplayName(); }
     
     
-    public static BCryptPasswordEncoder getPasswordEncoder()
-    {
+    public static BCryptPasswordEncoder getPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
 

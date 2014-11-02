@@ -1,11 +1,13 @@
 package org.regele.totask2.controller;
 
 import static org.hamcrest.Matchers.containsString;
+import static org.regele.totask2.controller.SecurityRequestPostProcessors.*;
+
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.regele.totask2.controller.SecurityRequestPostProcessors.*;
+
 
 import org.junit.Before;
 import org.junit.Ignore;

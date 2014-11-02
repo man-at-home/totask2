@@ -1,14 +1,12 @@
 package org.regele.totask2.controller;
 
+import static org.hamcrest.Matchers.*;
+import static org.junit.Assert.*;
+
 import static org.regele.totask2.controller.SecurityRequestPostProcessors.user;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.junit.Assert.*;
-import static org.hamcrest.Matchers.*;
-
-import java.nio.charset.Charset;
-import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -29,6 +27,10 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
+
+import java.nio.charset.Charset;
+import java.util.List;
+
 
 /**
  * testing user caching.
@@ -86,8 +88,10 @@ public class UserControllerTest {
                 MediaType.APPLICATION_JSON.getSubtype(),                        
                 Charset.forName("utf8")                     
                 )))
-        .andExpect(content().string(containsString("{\"displayName\":\"predefined admin user\",\"username\":\"admin\"}")))
-        .andExpect(content().string(containsString("{\"displayName\":\"unit-test user data.sql\",\"username\":\"unit-test-user\"}")))
+        .andExpect(content().string(containsString("\"displayName\":\"predefined admin user\"")))
+        .andExpect(content().string(containsString("\"username\":\"admin\"")))
+        .andExpect(content().string(containsString("\"displayName\":\"unit-test user data.sql\"")))
+        .andExpect(content().string(containsString("\"username\":\"unit-test-user\"")))
         .andReturn();
         
         LOG.debug("response:" + result.getResponse().getContentAsString().replaceAll("\\r|\\n", ""));
@@ -103,12 +107,13 @@ public class UserControllerTest {
         MvcResult result =
         this.mockMvc
             .perform(get("/users")
-                    .param("filter", "admin")                  
+                    .param("term", "admin")                  
             .with(user("unit-test-admin")
             .roles("ADMIN", "USER")))
         .andExpect(status().isOk())
-        .andExpect(content().string(containsString("{\"displayName\":\"predefined admin user\",\"username\":\"admin\"}")))
-        .andExpect(content().string(not(containsString("{\"displayName\":\"unit-test user data.sql\",\"username\":\"unit-test-user\"}"))))
+        .andExpect(content().string(containsString("\"displayName\":\"predefined admin user\"")))
+        .andExpect(content().string(containsString("\"username\":\"admin\"")))
+        .andExpect(content().string(not(containsString("\"username\":\"unit-test-user\""))))
         .andReturn();
         
         LOG.debug("response:" + result.getResponse().getContentAsString().replaceAll("\\r|\\n", ""));

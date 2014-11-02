@@ -26,7 +26,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private static final Logger LOG = LoggerFactory.getLogger(WebSecurityConfig.class);
 
-    private @Autowired UserDetailsServiceImpl userDetailsServiceImpl;
+    @Autowired private UserDetailsServiceImpl userDetailsServiceImpl;
     
     
     

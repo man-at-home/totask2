@@ -143,9 +143,7 @@ public class ReportGenerator {
             Properties headers = new Properties();
             headers.setProperty("Content-Disposition", "attachment; filename=" + reportName + ".xls");
             view.setHeaders(headers);
-        }
-        else
-        {
+        } else {
             view.setContentType("application/pdf");
             Properties headers = new Properties();
             headers.setProperty("Content-Disposition", "attachment; filename=" + reportName + ".pdf");
@@ -156,8 +154,9 @@ public class ReportGenerator {
         Map<String, Object> params = new HashMap<>();
         params.put("jasperReportsDataKey", reportData);
         
-        if( this.counterService != null ) 
+        if (this.counterService != null) { 
             counterService.increment("totask2.report.invoked");
+        }
     
         LOG.debug("rendering " + reportOutputFormat + ":" + view.getUrl() + " with " + reportData.size() + " rows of data");
     

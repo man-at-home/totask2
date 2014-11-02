@@ -14,13 +14,6 @@ package org.regele.totask2.controller;
 * specific language governing permissions and limitations under the License.
 */
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
-import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.mock.web.MockHttpServletRequest;
@@ -37,10 +30,19 @@ import org.springframework.security.web.context.HttpRequestResponseHolder;
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.security.web.context.SecurityContextRepository;
 import org.springframework.test.web.servlet.request.RequestPostProcessor;
-// import org.springframework.test.web.server.request.RequestPostProcessor;
 import org.springframework.util.Assert;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+
 
 /**
 * Demonstrates how to use a {@link RequestPostProcessor} to add
@@ -80,8 +82,8 @@ final class SecurityRequestPostProcessors {
    }
 
 
-   /** Support class for {@link RequestPostProcessor}'s that establish a Spring Security context */
-   private static abstract class SecurityContextRequestPostProcessorSupport {
+   /** Support class for {@link RequestPostProcessor}'s that establish a Spring Security context. */
+   private abstract static class SecurityContextRequestPostProcessorSupport {
 
        private SecurityContextRepository repository = new HttpSessionSecurityContextRepository();
 
@@ -104,7 +106,7 @@ final class SecurityRequestPostProcessors {
        }
    }
 
-   public final static class SecurityContextRequestPostProcessor
+   public static final class SecurityContextRequestPostProcessor
            extends SecurityContextRequestPostProcessorSupport implements RequestPostProcessor {
 
        private final SecurityContext securityContext;
@@ -114,12 +116,12 @@ final class SecurityRequestPostProcessors {
        }
 
        public MockHttpServletRequest postProcessRequest(MockHttpServletRequest request) {
-           save(this.securityContext,request);
+           save(this.securityContext, request);
            return request;
        }
    }
 
-   public final static class UserRequestPostProcessor
+   public static final class UserRequestPostProcessor
            extends SecurityContextRequestPostProcessorSupport implements RequestPostProcessor {
 
        private final String username;
@@ -156,8 +158,8 @@ final class SecurityRequestPostProcessors {
         */
        public UserRequestPostProcessor roles(String... roles) {
            this.authorities = new ArrayList<GrantedAuthority>(roles.length); // fixed, should use "this"
-           for(String role : roles) {
-               if(this.rolePrefix == null || role.startsWith(this.rolePrefix)) {
+           for (String role : roles) {
+               if (this.rolePrefix == null || role.startsWith(this.rolePrefix)) {
                    this.authorities.add(new SimpleGrantedAuthority(role));
                } else {
                    this.authorities.add(new SimpleGrantedAuthority(this.rolePrefix + role));
@@ -179,12 +181,12 @@ final class SecurityRequestPostProcessors {
        public MockHttpServletRequest postProcessRequest(MockHttpServletRequest request) {
            UsernamePasswordAuthenticationToken authentication =
                    new UsernamePasswordAuthenticationToken(this.username, this.credentials, this.authorities);
-           save(authentication,request);
+           save(authentication, request);
            return request;
        }
    }
 
-   public final static class UserDetailsRequestPostProcessor
+   public static final class UserDetailsRequestPostProcessor
            extends SecurityContextRequestPostProcessorSupport implements RequestPostProcessor {
 
        private final String username;
@@ -209,7 +211,7 @@ final class SecurityRequestPostProcessors {
 
        public MockHttpServletRequest postProcessRequest(MockHttpServletRequest request) {
            UsernamePasswordAuthenticationToken authentication = authentication(request.getServletContext());
-           save(authentication,request);
+           save(authentication, request);
            return request;
        }
 
@@ -222,7 +224,7 @@ final class SecurityRequestPostProcessors {
        }
 
        private UserDetailsService userDetailsService(ApplicationContext context) {
-           if(this.userDetailsServiceBeanId == null) {
+           if (this.userDetailsServiceBeanId == null) {
                return context.getBean(UserDetailsService.class);
            }
            return context.getBean(this.userDetailsServiceBeanId, UserDetailsService.class);

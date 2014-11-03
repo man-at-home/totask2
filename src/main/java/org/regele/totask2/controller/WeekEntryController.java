@@ -51,8 +51,10 @@ public class WeekEntryController {
     /** reporting code for excel export. */
     @Autowired private ReportGenerator reportGenerator;
     
+    @Autowired private WeekEntryService weekEntryService;
+    
     private WeekEntryService getService() {
-        return new WeekEntryService(this.workEntryRepository);
+        return weekEntryService;
     }
     
     private List<TaskInWeek> getWeek(final LocalDate dt) {

@@ -1,8 +1,12 @@
 package org.regele.totask2.model;
 
+import static java.time.temporal.TemporalAdjusters.nextOrSame;
+import static java.time.temporal.TemporalAdjusters.previousOrSame;
 import static org.junit.Assert.*;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -62,7 +66,7 @@ public class TaskAssignmentRepositoryTest {
 
     /** custom finder. */
     @Test
-    public void testFindByUserAndPeriod() {
+    public void testFindAdminAssignments() {
         LocalDate from = LocalDate.now().minusYears(1);
         LocalDate until = LocalDate.now().plusDays(7);
         List<TaskAssignment> tas = taskAssignmentRepository.findByUserAndPeriod(TestConstants.ADMIN_USER, LocalDateConverter.toDate(from), LocalDateConverter.toDate(until));
@@ -70,6 +74,36 @@ public class TaskAssignmentRepositoryTest {
         tas.stream().forEach( a -> LOG.debug("found assignment: " + a));
         assertEquals("assignments unexpected", 2, tas.size());
     }
+    
+    /** custom finder. */
+    @Test
+    public void testFindByUserAssignmentsThisWeek() {
+        
+        LocalDate date  = LocalDate.now().with(previousOrSame(DayOfWeek.MONDAY));        
+        Date from  = LocalDateConverter.toDate(date);
+        Date until = LocalDateConverter.toDate(date.with(nextOrSame(DayOfWeek.SUNDAY)));
+        
+        LOG.debug("find current for Testuser: " + from + " - " + until);
+        List<TaskAssignment> tas = taskAssignmentRepository.findByUserAndPeriod(TestConstants.TEST_USER, from, until);
+        assertNotNull(tas);        
+        tas.stream().forEach( a -> LOG.debug("found assignment: " + a));
+        assertEquals("assignment count unexpected", 3, tas.size());
+    }    
+
+    /** custom finder. */
+    @Test
+    public void testFindByUserAssignmentsFutureWeek() {
+        
+        LocalDate date  = LocalDate.now().plusMonths(2).with(previousOrSame(DayOfWeek.MONDAY));        
+        Date from  = LocalDateConverter.toDate(date);
+        Date until = LocalDateConverter.toDate(date.with(nextOrSame(DayOfWeek.SUNDAY)));
+        
+        LOG.debug("find future for Testuser: " + from + " - " + until);
+        List<TaskAssignment> tas = taskAssignmentRepository.findByUserAndPeriod(TestConstants.TEST_USER, from, until);
+        assertNotNull(tas);        
+        tas.stream().forEach( a -> LOG.debug("found assignment: " + a));
+        assertEquals("assignment count unexpected", 2, tas.size());
+    }     
 
     @Test
     public void testFindAll() {

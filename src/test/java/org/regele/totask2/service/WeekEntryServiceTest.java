@@ -60,7 +60,7 @@ public class WeekEntryServiceTest {
         LocalDate dt   = LocalDate.now();        
         User      user = userRepository.getOne( TestConstants.TEST_USER );
         
-        WeekEntryService svc = new WeekEntryService(workEntryRepository);
+        WeekEntryService svc = new WeekEntryService();
         
         List<TaskInWeek> tasksInWeek = svc.getWorkWeek(user, dt);
         
@@ -91,7 +91,7 @@ public class WeekEntryServiceTest {
         LocalDate dt   = LocalDate.now();        
         User      user = userRepository.getOne( TestConstants.TEST_USER );
         
-        WeekEntryService svc = new WeekEntryService(workEntryRepository);
+        WeekEntryService svc = new WeekEntryService();
         
         List<TaskInWeek> tasksInWeek = svc.getWorkWeek(user, dt);
         assertEquals("0 update", 0, svc.saveWeek(tasksInWeek));

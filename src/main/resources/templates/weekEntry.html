@@ -121,13 +121,7 @@
 		
 		
 		function updateWeekEntryChart(dailyTotals) {
-//			if( weekChart != null ) {
-//				weekChart.datasets[0].bars[i] = dailyTotals[i] // for is missing here;
-//				weekChart.update();
-//			}
-//			else {
 				drawWeekEntryChart(dailyTotals)
-//			}				
 		}
 		
 		
@@ -176,15 +170,18 @@
 	  <li class="active"><a href="#" th:text="#{totask2.nav.weekEntry}">home</a></li>
 	</ul>	
 
-	
-	<span id="flashMessage"  
-		class="alert alert-warning" 
-		role="alert" 
-		th:unless="${#strings.isEmpty(flashMessage)}" 
-		th:text="${flashMessage}">
-		flash message
-	</span>
-
+	<p>
+		<br />
+		<span id="flashMessage"  
+			class="alert alert-warning" 
+			role="alert" 
+			th:unless="${#strings.isEmpty(flashMessage)}" 
+			th:text="${flashMessage}">
+			flash message
+		</span>
+		&nbsp;
+		<br />
+	</p>
 
 	<div>
 			<a th:href="@{/weekEntry/} + ${previousWeek}" class="btn btn-default">			

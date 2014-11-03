@@ -14,13 +14,13 @@ insert into tt_task(id, name, project_id) values(3, 'document', 1);
 -- demo project 2
 insert into tt_project (id, name) values (2, 'demo-project');
 
-insert into tt_task(id, name, project_id) values(4, 'demo-develop', 2);  
-insert into tt_task(id, name, project_id) values(5, 'demo-test',    2);
-insert into tt_task(id, name, project_id) values(6, 'demo-doc',     2);
+insert into tt_task(id, name, project_id) values(4, 'demo-develop',        2);  
+insert into tt_task(id, name, project_id) values(5, 'demo-test',           2);
+insert into tt_task(id, name, project_id) values(6, 'demo-doc 14days',     2);
 
 insert into tt_task_assignment (id, starting_from, task_id, user_id)        values (  1, DATEADD('DAY',-20, TODAY), 4,  2);
 insert into tt_task_assignment (id, starting_from, task_id, user_id)        values (  2, DATEADD('DAY',-10, TODAY), 5,  2);
-insert into tt_task_assignment (id, starting_from, task_id, user_id)        values (  3, DATEADD('DAY',-50, TODAY), 6,  2);
+insert into tt_task_assignment (id, starting_from, task_id, user_id, until) values (  3, DATEADD('DAY',-50, TODAY), 6,  2, DATEADD('DAY', 14, TODAY));
 
 insert into tt_task_assignment (id, starting_from, task_id, user_id, until) values (  4, DATEADD('DAY',-20, TODAY), 4,  1, DATEADD('DAY',-10, TODAY));
 insert into tt_task_assignment (id, starting_from, task_id, user_id)        values (  5, DATEADD('DAY',-50, TODAY), 6,  1);

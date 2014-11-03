@@ -2,6 +2,8 @@ totask2 releasenotes
 ====================
 :Author: Manfred
 
+releasenotes for http://man-at-home.github.io/totask2/
+
 .2014-11-03
 - task assignment (new entity)
 - autocompletion for users

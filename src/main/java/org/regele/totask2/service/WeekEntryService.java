@@ -8,6 +8,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.regele.totask2.model.TaskAssignment;
+import org.regele.totask2.model.TaskAssignmentRepository;
 import org.regele.totask2.model.TaskInWeek;
 import org.regele.totask2.model.User;
 import org.regele.totask2.model.WorkEntry;
@@ -16,6 +18,8 @@ import org.regele.totask2.util.ApplicationAssert;
 import org.regele.totask2.util.LocalDateConverter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 
 /**
@@ -24,19 +28,29 @@ import org.slf4j.LoggerFactory;
  * @author Manfred
  * @since 2014-08-09
  */
+@Service
 public class WeekEntryService {
 
     private static final Logger LOG = LoggerFactory.getLogger(WeekEntryService.class);   
     
-    /** work entry repository under test. */
-    private WorkEntryRepository workEntryRepository;    
+    /** already used tasks. work entry repository. */
+    @Autowired private WorkEntryRepository workEntryRepository;   
+    
+    /** possible tasks. */
+    @Autowired private TaskAssignmentRepository taskAssignmentRepository; 
 
     /** .ctor */
-    public WeekEntryService(final WorkEntryRepository workEntryRepository) {
-        this.workEntryRepository = workEntryRepository;
+    public WeekEntryService() {
     }
     
-    /** all work done on a given week. */
+    /** 
+     * all work done on a given week.
+     * 
+     *  @param user given user to log work for.
+     *  @param dt   date in week (always full week is returned MON-SUN)
+     *  @throws IllegalArgumentException
+     *  @author Manfred
+     */
     public List<TaskInWeek> getWorkWeek(final User user, final LocalDate dt) {
 
         if( user == null)
@@ -61,9 +75,18 @@ public class WeekEntryService {
                 .distinct()
                 .collect( Collectors.toList() );
         
-        LOG.debug("given week tasks count: " + tasksInWeek.size());
+        LOG.debug("given already booked week tasks count: " + tasksInWeek.size());
         
-        // suitable daily workEntries for task
+        List<TaskAssignment> assignments = taskAssignmentRepository.findByUserAndPeriod(user.getId(), from, until);
+        LOG.debug("possible tasks count: " + assignments.size());
+        
+        assignments.stream()
+                   .filter(ta -> ! tasksInWeek.stream().anyMatch( tw -> tw.getTask().getId() == ta.getTask().getId()) )
+                   .distinct()
+                   .forEach(found -> tasksInWeek.add(new TaskInWeek(found.getTask())))
+                   ;
+        
+        LOG.debug("booked AND allowed tasks count: " + tasksInWeek.size());
         
         for( TaskInWeek tiw : tasksInWeek)
         {
@@ -82,6 +105,11 @@ public class WeekEntryService {
         return tasksInWeek;
     }
 
+    /** 
+     * save weekEntries for given week. 
+     * 
+     * @return count of saved workEntries.
+     * */
     public int saveWeek(List<TaskInWeek> tasksInWeek) {
         
         int saveCount = 0;

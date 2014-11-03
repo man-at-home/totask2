@@ -3,7 +3,7 @@ totask2
 :Author: Manfred
 :Date:   2014-10-11	
 
-demo application, port of totask to spring mvc
+demo application, port of totask to spring mvc. See homepage on http://man-at-home.github.io/totask2/
 
 link:RELEASENOTES.asciidoc[releasenotes]
 

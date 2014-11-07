@@ -19,6 +19,9 @@ import java.util.List;
 /**
  * connect spring-security with home grown tt_user/user of totask2.
  * 
+ * @see User
+ * @see <a href="http://projects.spring.io/spring-security/">http://projects.spring.io/spring-security/</a>
+ * 
  * @author Manfred
  * @since  2014-10-25
  */

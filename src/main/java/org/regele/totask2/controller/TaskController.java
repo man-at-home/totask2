@@ -32,6 +32,8 @@ import javax.validation.Valid;
  * - remove task from project
  * - change task details
  * 
+ * @see TaskAssignmentController
+ * 
  * @author Manfred
  * @since  2014-08-21
  */

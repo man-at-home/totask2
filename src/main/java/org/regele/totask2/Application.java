@@ -1,5 +1,6 @@
 package org.regele.totask2;
 
+import org.regele.totask2.controller.AppController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
@@ -16,6 +17,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 
 /** 
  * totask2 application starter.
+ * 
+ * @see AppController
+ * 
  * @author Manfred 
  */
 @Configuration

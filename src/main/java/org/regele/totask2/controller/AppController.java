@@ -9,7 +9,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 
-/** main menu. */
+/** 
+ * main menu. 
+ * 
+ * @see ProjectController
+ * @see WeekEntryController
+ * 
+ * */
 @Controller
 public class AppController {
 

@@ -3,9 +3,13 @@ package org.regele.totask2.util;
 import java.math.BigDecimal;
 import java.text.ParseException;
 
+import org.regele.totask2.model.WorkEntry;
 
-
-/** helper for duration conversion. */
+/** 
+ * helper for duration conversion. 
+ * 
+ * @see WorkEntry#getDuration()
+ * */
 public final class DurationConverter {
     
     //private static final Logger LOG = LoggerFactory.getLogger(DurationConverter.class);

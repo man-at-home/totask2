@@ -17,7 +17,11 @@ import net.sf.jasperreports.export.SimpleOutputStreamExporterOutput;
 
 
 
+
+
 import org.eclipse.jdt.internal.core.Assert;
+import org.regele.totask2.controller.ProjectController;
+import org.regele.totask2.controller.WeekEntryController;
 import org.regele.totask2.util.EnvironmentException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,6 +44,10 @@ import java.util.Properties;
 
 /**
  * report generation with jasper report.
+ * 
+ * @see <a href="http://de.wikipedia.org/wiki/JasperReports">http://de.wikipedia.org/wiki/JasperReports</a>
+ * @see WeekEntryController#getWeekEntryReport(String, String)
+ * @see ProjectController#getProjectsReport(String)
  * 
  * @author manfred
  * */

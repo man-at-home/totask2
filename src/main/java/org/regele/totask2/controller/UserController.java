@@ -17,6 +17,8 @@ import java.util.List;
 /** 
  * REST controller, used as ajax endpoint providing users data for autocompletion. 
  * (used by TaskAssignment).
+ * 
+ * @see TaskAssignmentController
  */
 @RestController
 public class UserController {

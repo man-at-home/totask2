@@ -3,6 +3,7 @@ package org.regele.totask2.controller;
 import org.regele.totask2.model.TaskInWeek;
 import org.regele.totask2.model.User;
 import org.regele.totask2.model.UserRepository;
+import org.regele.totask2.model.WorkEntry;
 import org.regele.totask2.model.WorkEntryRepository;
 import org.regele.totask2.service.ReportGenerator;
 import org.regele.totask2.service.ReportGenerator.ReportOutputFormat;
@@ -33,6 +34,9 @@ import java.util.stream.Collectors;
 /** main entry page for uses.
  * - display exactly one week of work
  * - all tasks, one entry per task an day.
+ * 
+ * @see WorkEntry
+ * @see Task
  * 
  * @author Manfred
  * @since  2014-08-09

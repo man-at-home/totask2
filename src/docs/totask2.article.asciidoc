@@ -41,7 +41,7 @@ in-memory Datenbank gelöst, zumindest während der Entwicklung. Eine separate q
 deren Tabellenstruktur (DDLs) werden mit "Migrations" durch http://flywaydb.org/[flyway^] gepflegt.
 
 Dieser Artikel und das Readme als _Dokumentation_ sind mit http://asciidoctor.org/docs/asciidoc-writers-guide/[asciidoc^] 
-Markup erstellt. 
+Markup erstellt. Einige Diagramme sind mit http://plantuml.sourceforge.net/[plantuml^] generiert.
 
 Ein nettes Gimmick ist dass  github  asciidoc Documente "on the fly" direkt aus dem Repository im Browser als Html
 rendern kann, live zu sehen unter https://github.com/man-at-home/totask2/blob/master/src/docs/totask2.article.asciidoc
@@ -97,6 +97,15 @@ image::images/totask2.editAssignment.autocomplete.png[screenshot8, 600, 400]
 .login
 image::images/totask2.login.png[screenshot9, 600, 400]
 
+== Entwicklungsumgebung
+
+[[img-javadoc-plantuml]]
+.javadoc plantuml Dokumentation
+image::images/totask2.dev.JavaDoc.png[screenshot_DEV_1, 600, 400]
+
+[[img-db]]
+.h2console DB Abfragetool
+image::images/totask2.dev.H2Console.png[screenshot_DEV_2, 600, 400]
 
 == Erfahrungen
 

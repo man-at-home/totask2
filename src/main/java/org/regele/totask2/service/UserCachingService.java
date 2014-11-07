@@ -15,6 +15,8 @@ import org.springframework.stereotype.Service;
 /**
  * user caching.
  * 
+ * @see User
+ * 
  * @author Manfred
  * @since  2014-10-28
  */

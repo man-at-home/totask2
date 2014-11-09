@@ -35,17 +35,30 @@ Das komplette Project mit git clone aus dem master repository von github holen:
 
 Compile und Test des Projects => `%> gradle test`.
 
-Dokumentation erstellen => `%> gradle asciidoctor`.
+Dokumentation erstellen (einschließlich diesem Dokument) => `%> gradle allDocs`.
 
 
-== Architectur
+== Architektur
 
-TBD
+=== Datenmodell
+
+[[img-erd]]
+.Datenmodell
+image::images/uml/totask2.design.datamodel.png[screenshot.erd, 500, 300]
+
+=== Code Modell
+
+[[img-modules]]
+.Modulübersicht
+image::images/uml/totask2.design.modules.png[screenshot.modules, 700, 400]
+
+[[img-sequence]]
+.Sequenzdiagramm (Beispielhaft)
+image::images/uml/totask2.design.controllers.png[screenshot.sequence, 700, 400]
 
 
 == Code-Beispiele  
 
-TBD
 
 === Data Model (JPA)
 

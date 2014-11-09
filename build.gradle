@@ -134,4 +134,17 @@ javadoc {
     options.addBooleanOption("Xdoclint:none").setValue(true)
 }
 
+
+task copyPlantUMLImages(type: Copy) {
+    dependsOn    javadoc
+    from fileTree(dir: "$buildDir/docs/javadoc", include: "**/doc-files/*.png").files
+    into "$buildDir/docs/asciidoc/images/uml"
+}
+
+task allDocs {
+    dependsOn asciidoctor, copyPlantUMLImages 
+    description "generation full documenation for totask2"
+}
+
+
 // todo: start h2 console.. jdbc:h2:c:/data/projects/totask2/totask2.qa.db

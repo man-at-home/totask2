@@ -10,7 +10,7 @@
  *
  * 
  * <h2>Use Cases for this application</h2>
- * <img alt="package-uml" src="doc-files/totask2.design.usercases.png">
+ * <img alt="package-uml" src="doc-files/totask2.design.usecases.png">
  * 
  * @author Manfred
  * @since  2014
@@ -56,7 +56,7 @@ database "H2" {
 
 @enduml
 
-@startuml  doc-files/totask2.design.usercases.png
+@startuml  doc-files/totask2.design.usecases.png
 
 User <|-- Admin
 

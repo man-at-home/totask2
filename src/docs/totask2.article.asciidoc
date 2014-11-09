@@ -17,6 +17,23 @@ ist eine "Ausrede" um einen wieder einmal willkürlich ausgewählten Software-St
 totask2 erlaubt eine Erfassung von (Arbeits-) Zeiten zu Projekttasks. Daher verwaltet das Programm
 Entitäten wie Projekt, Task und Arbeitszeit (WorkEntry).
 
+=== Spec
+
+* Ein Administrator darf Projekte anlegen
+* ein Projekt hat ein oder zwei Projektleiter [TBD]
+* Projektleiter könnne Tasks zu Ihren Projekten erfassen
+* jeder Task kann Usern zugeordnet in einem Zeitraum zugeordnet werden, in denen Arbeiten zum Task zulässig sind
+* jeder User kann Zeiten wochenweise für Tasks erfassen die ihm im Zeitraum zugeordnet sind
+* die Erfassung erfolgt je Tag und Task in Stunden(bruchteilen)
+* die Erfassung kann für die aktuelle und zurückliegende Wochen erfolgen
+* seine erfassten Zeiten kann der User als Excel herunterladen
+
+[[img-useCases]]
+.unterstützte Usecases
+image::images/uml/totask2.design.usecases.png[screenshot.useCases, 700, 400]
+
+
+
 == Der Software Stack
 
 http://springmvc.org/[springmvc^] als serverseitiges _Web Framework_.

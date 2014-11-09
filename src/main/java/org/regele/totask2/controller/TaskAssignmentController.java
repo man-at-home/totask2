@@ -33,7 +33,7 @@ import javax.validation.Valid;
 /** 
  * manage task assignments to users. 
  * 
- * @author Manfred
+ * @author man-at-home
  * @since  2014-10-27
  * */
 @Controller

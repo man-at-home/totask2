@@ -34,7 +34,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  * which is later encapsulated into Authentication objects. This allows non-security related user information (such as email 
  * addresses, telephone numbers etc) to be stored in a convenient location. 
  * 
- * @author Manfred
+ * @author man-at-home
  * @since  2015-08-17
  * @category ajax
  */

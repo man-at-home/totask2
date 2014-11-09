@@ -1,6 +1,6 @@
 totask2 releasenotes
 ====================
-:Author: Manfred
+:Author: man-at-home
 
 releasenotes for http://man-at-home.github.io/totask2/
 

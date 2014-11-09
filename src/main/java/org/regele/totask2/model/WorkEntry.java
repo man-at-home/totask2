@@ -28,7 +28,7 @@ import javax.validation.constraints.Size;
 /**
  * logged working hours for one user for a given task.
  * 
- * @author Manfred
+ * @author man-at-home
  * @since  2014-08-23 
  */
 @Entity

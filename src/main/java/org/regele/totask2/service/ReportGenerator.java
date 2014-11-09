@@ -49,7 +49,7 @@ import java.util.Properties;
  * @see WeekEntryController#getWeekEntryReport(String, String)
  * @see ProjectController#getProjectsReport(String)
  * 
- * @author manfred
+ * @author man-at-home
  * */
 @Service
 public class ReportGenerator {
@@ -74,7 +74,7 @@ public class ReportGenerator {
             String reportName = "/reports/" + reportTemplateName;
             
             HashMap<String, Object> reportParams = new HashMap<String, Object>();
-            reportParams.put("reportTitle", "manfred User Report");
+            reportParams.put("reportTitle", "totask2 User Report");
 
             // 2. Retrieve template
             LOG.debug("loading report..: " + this.getClass().getResource(reportName));

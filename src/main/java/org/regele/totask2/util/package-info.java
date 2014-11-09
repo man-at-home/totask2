@@ -4,7 +4,7 @@
  * 
  * formatting, conversions, application specific exceptions.
  * 
- * @author Manfred
+ * @author man-at-home
  */
 
 

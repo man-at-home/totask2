@@ -1,6 +1,6 @@
 -- integrate userdetails spring security
 -- ------------------------------------------
--- @Manfred
+-- @author man-at-home
 
 ALTER TABLE tt_user ADD IF NOT EXISTS is_admin  boolean default false not null;
 

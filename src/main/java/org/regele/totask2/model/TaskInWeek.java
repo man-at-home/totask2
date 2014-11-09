@@ -5,7 +5,7 @@ import java.util.Arrays;
 /**
  * Holder, one week of workEntries for a specific task.
  * 
- * @author Manfred 
+ * @author man-at-home 
  */
 public class TaskInWeek {
 

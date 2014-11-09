@@ -22,7 +22,7 @@ import java.util.List;
  * @see User
  * @see <a href="http://projects.spring.io/spring-security/">http://projects.spring.io/spring-security/</a>
  * 
- * @author Manfred
+ * @author man-at-home
  * @since  2014-10-25
  */
 @Service

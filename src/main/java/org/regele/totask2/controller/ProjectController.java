@@ -32,7 +32,7 @@ import javax.validation.Valid;
  * 
  * @see TaskController
  * 
- * @author Manfred
+ * @author man-at-home
  * @since  2014-08-14
  */
 @Controller

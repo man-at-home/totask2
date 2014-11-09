@@ -25,7 +25,7 @@ import org.springframework.stereotype.Service;
 /**
  * packaging and handling workEntries for weekly based operations.
  * 
- * @author Manfred
+ * @author man-at-home
  * @since 2014-08-09
  */
 @Service
@@ -49,7 +49,7 @@ public class WeekEntryService {
      *  @param user given user to log work for.
      *  @param dt   date in week (always full week is returned MON-SUN)
      *  @throws IllegalArgumentException
-     *  @author Manfred
+     *  @author man-at-home
      */
     public List<TaskInWeek> getWorkWeek(final User user, final LocalDate dt) {
 

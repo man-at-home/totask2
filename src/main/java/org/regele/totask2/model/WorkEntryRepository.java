@@ -10,7 +10,7 @@ import java.util.List;
 
 /** data access layer for work entries. 
  * 
- * @author Manfred
+ * @author man-at-home
  * */
 public interface WorkEntryRepository extends JpaRepository<WorkEntry, Long>  {
 

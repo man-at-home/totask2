@@ -1,6 +1,6 @@
 -- initial totask2 db flyway migration script
 -- ------------------------------------------
--- @Manfred
+-- @author man-at-home
 
 -- tables
 -- ------

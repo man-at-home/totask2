@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
  * 
  * @see User
  * 
- * @author Manfred
+ * @author man-at-home
  * @since  2014-10-28
  */
 @Service

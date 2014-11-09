@@ -4,7 +4,7 @@
  * 
  * report generation, spring-security integration for user class
  * 
- * @author Manfred
+ * @author man-at-home
  */
 
 

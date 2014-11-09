@@ -27,7 +27,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 /**
  * testing basic spring mvc TaskController.
- * @author Manfred
+ * @author man-at-home
  * @since 2014-08-22
  */
 @RunWith(SpringJUnit4ClassRunner.class)

@@ -12,7 +12,7 @@
  * <h2>Use Cases for this application</h2>
  * <img alt="package-uml" src="doc-files/totask2.design.usecases.png">
  * 
- * @author Manfred
+ * @author man-at-home
  * @since  2014
  *
  * @category diagram

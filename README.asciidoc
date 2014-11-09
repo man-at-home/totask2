@@ -1,6 +1,6 @@
 totask2
 =======
-:Author: Manfred
+:Author: man-at-home
 :Date:   2014-10-11	
 
 demo application, port of totask to spring mvc. See homepage on http://man-at-home.github.io/totask2/

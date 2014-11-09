@@ -34,7 +34,7 @@ import javax.validation.Valid;
  * 
  * @see TaskAssignmentController
  * 
- * @author Manfred
+ * @author man-at-home
  * @since  2014-08-21
  */
 @Controller

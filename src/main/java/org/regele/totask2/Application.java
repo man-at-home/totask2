@@ -20,7 +20,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
  * 
  * @see AppController
  * 
- * @author Manfred 
+ * @author man-at-home 
  */
 @Configuration
 @ComponentScan
@@ -54,7 +54,7 @@ public class Application  extends WebMvcConfigurerAdapter  {
     
     /** dummy message. */
     public static String getInfo() {
-        return "manfreds test spring project";
+        return "man-at-homes test spring project";
     }
     
 }

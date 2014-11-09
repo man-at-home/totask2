@@ -17,7 +17,7 @@ import javax.validation.ValidatorFactory;
 
 /**
  * testing the project class.
- * @author Manfred
+ * @author man-at-home
  *
  */
 public class ProjectTest {

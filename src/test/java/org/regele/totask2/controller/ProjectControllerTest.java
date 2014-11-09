@@ -30,7 +30,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 /**
  * testing basic spring mvc ProjectController.
- * @author Manfred
+ * @author man-at-home
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = Application.class)

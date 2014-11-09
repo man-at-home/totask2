@@ -18,7 +18,7 @@ import java.util.Date;
 /**
  * exploring new date time classes java 8.
  * 
- * @author Manfred
+ * @author man-at-home
  * @since  2014-08-14
  */
 public class DateHandlingTest {

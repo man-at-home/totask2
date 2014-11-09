@@ -16,7 +16,7 @@ import org.springframework.security.config.annotation.web.servlet.configuration.
 /**
  * security configuration for this web application.
  * 
- * @author Manfred
+ * @author man-at-home
  * @since 2014-10-12
  */
 @Configuration

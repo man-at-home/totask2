@@ -7,7 +7,7 @@
  * 
  * @see <a href="http://docs.spring.io/spring/docs/current/spring-framework-reference/html/mvc.html">http://docs.spring.io/spring/docs/current/spring-framework-reference/html/mvc.html</a>
  * 
- * @author Manfred
+ * @author man-at-home
  * @since  2014-11-07 
  *
  * @category diagram

@@ -38,7 +38,7 @@ import java.util.stream.Collectors;
  * @see WorkEntry
  * @see Task
  * 
- * @author Manfred
+ * @author man-at-home
  * @since  2014-08-09
  */
 @Controller

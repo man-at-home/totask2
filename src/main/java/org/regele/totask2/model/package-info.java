@@ -6,7 +6,7 @@
  * 
  * @see <a href="http://hibernate.org">http://hibernate.org</a>
  * 
- * @author Manfred
+ * @author man-at-home
  * @since  2014-11-07 
  *
  * @category diagram

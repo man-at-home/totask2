@@ -34,7 +34,7 @@ import java.util.List;
 
 /**
  * testing user caching.
- * @author Manfred
+ * @author man-at-home
  * @since 2014-10-28
  */
 @RunWith(SpringJUnit4ClassRunner.class)

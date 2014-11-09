@@ -29,7 +29,7 @@ import javax.validation.constraints.NotNull;
 /**
  * mapping user to task he should work on.
  * 
- * @author Manfred
+ * @author man-at-home
  * @since  2014-10-26 
  */
 @Entity

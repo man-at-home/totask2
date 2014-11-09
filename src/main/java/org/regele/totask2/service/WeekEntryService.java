@@ -64,7 +64,7 @@ public class WeekEntryService {
         Date from  = LocalDateConverter.toDate(date);
         Date until = LocalDateConverter.toDate(date.with(nextOrSame(DayOfWeek.SUNDAY)));
         
-        LOG.debug("retrieving entries for user " + user + " between " + from + " - " + until);        
+        LOG.debug("retrieving entries for user " + user + " between " + from + " - " + until + " rep: " + workEntryRepository);        
         
         List<WorkEntry> entries = workEntryRepository.findForUserAndTimespan(user.getId(), from, until); 
         

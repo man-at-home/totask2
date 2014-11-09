@@ -59,11 +59,10 @@
 					<th />
 				</tr>
 				</tfoot>
-				
-				<tbody>
-					<tr th:each="project : ${projects}">
+				<tbody> 
+					<tr th:each="project : ${projects}">    												
 						<td class="dt-center"  th:text="${project.id}">17</td>
-						<td th:text="${project.name}" class="dt-left">project name</td>
+						<td th:text="${project.name}" class="dt-left">project name</td>						
 						<td class="dt-left">
 							<a th:href="@{/project/{id}(id=${project.id})}" class="btn btn-default">
 								<span class="glyphicon glyphicon-pencil"></span>
@@ -72,6 +71,7 @@
 						</td>
 					</tr>
 				</tbody>
+
 			</table>
 		</div>
 	</form>

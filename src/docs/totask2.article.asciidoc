@@ -1,7 +1,8 @@
 = totask2
 :numbered:
-:icons: font
-manfred (me) <manfred@domainnotshownhere.org>
+:icons:    font
+:toc:      left
+man-at-home
 v1.0, 2014-10-10
 
 eine rudimentäre Projektzeiterfassung 

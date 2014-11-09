@@ -18,20 +18,25 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+// tag::developer-manual-model[] 
+
 /** a working task of a project that needs to be worked on. */
-@Entity
+@Entity                                                     // <1>
 @Table(name = "TT_TASK")
 public class Task {
    
-    @Id
+    @Id                                                     // <2>
     @GeneratedValue(strategy = GenerationType.AUTO)  
-    @Column(name = "ID")
-    private long     id;    
+    @Column(name = "ID") 
+    private long     id;            
 
     @Size(min = 2, max = 250)
     @NotNull
-    @Column(name = "NAME", nullable = false, length = 250)
+    @Column(name = "NAME", nullable = false, length = 250)  // <3>
     private String  name;
+
+// end::developer-manual-model[] 
+    
     
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "PROJECT_ID", referencedColumnName = "ID",

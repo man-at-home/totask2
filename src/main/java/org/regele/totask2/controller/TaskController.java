@@ -50,21 +50,24 @@ public class TaskController {
     @Autowired
     private ProjectRepository projectRepository;    
 
+// tag::developer-manual-controller[]
     /** show all tasks for given project. */
     @Secured("ROLE_ADMIN")
-    @RequestMapping(value = "/project/{id}/tasks", method = RequestMethod.GET)
+    @RequestMapping(value = "/project/{id}/tasks", method = RequestMethod.GET)          // <1>
     public String tasksForProject(@PathVariable final long id, final Model model) {
         
         LOG.debug("tasks for project " + id);
    
-        List<Task> tasks = taskRepository.findByProjectId(id);
+        List<Task> tasks = taskRepository.findByProjectId(id);                          // <2>
         
-        model.addAttribute("tasks", tasks);           
+        model.addAttribute("tasks", tasks);                                             // <3>
         model.addAttribute("projectId", id);
-        
+
+
         LOG.debug("serving " + tasks.size() + " tasks for project " + id);
         return "tasks";
     }
+// end::developer-manual-controller[] 
     
     /** show edit page for an existing task. GET. */
     @Secured("ROLE_ADMIN")

@@ -1,0 +1,81 @@
+= totask2 Entwickler Dokumentation
+:numbered:
+:hide-uri-scheme:
+:sourcedir:    ../main/java
+:resourcedir:  ../main/resources
+:source-highlighter: highlightjs
+:icons:        font
+:toc:          left
+man-at-home
+v1.0, 2014-11-XX
+
+== Überblick
+
+Das Dokument beschreibt aus Entwicklersicht das 
+Aufsetzen und Weiterentwickeln der Anwendung totask2.
+
+== Notwendige Umgebung
+
+* Java JDK 8 (oracle) installieren
+* Gradle download                     http://www.gradle.org
+* git intallieren                     http://git-scm.com
+
+TIP: zudem eine IDE (z.B akuelles eclipse)          http://eclipse.org
+
+== Download
+
+Das komplette Project mit git clone aus dem master repository von github holen:
+
+----
+%> git clone https://github.com/man-at-home/totask2.git
+----
+
+
+== Build
+
+Compile und Test des Projects => `%> gradle test`.
+
+Dokumentation erstellen => `%> gradle asciidoctor`.
+
+
+== Architectur
+
+TBD
+
+
+== Code-Beispiele  
+
+TBD
+
+=== Data Model (JPA)
+
+[source,java,indent=0]
+----
+include::{sourcedir}/org/regele/totask2/model/Task.java[tags=developer-manual-model] 
+----
+<1> java class maps to database table tt_task.
+<2> attribute maps to database column id (primary key).
+<3> attribute maps to database column name.
+
+=== Controller (SpringMVC)
+
+[source,java,indent=0]
+.Task.java
+----
+include::{sourcedir}/org/regele/totask2/controller/TaskController.java[tags=developer-manual-controller] 
+----
+<1> respond to browser GET request on URL /project/xx/tasks.
+<2> load Tasks from db.
+<3> put found Tasks for rendering into view template.
+
+
+=== View Templates (thymeleaf)
+
+[source,html,indent=0]
+.tasks.html
+----
+include::{resourcedir}/templates/tasks.html[tags=developer-manual-view] 
+----
+<1> iterating over List<Task> tasks.
+<2> show model attribute from an instance of Task.
+<3> show i18n text from message.properties.

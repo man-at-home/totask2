@@ -17,6 +17,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
 
 import java.time.LocalDate;
 import java.util.Arrays;
@@ -25,20 +26,25 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 
-/** testing db access and data cummulation for one week of work. 
+/** 
+ * testing db access and data cumulation for one week of work. 
  */
 @Transactional
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = { Application.class })
+@WebAppConfiguration
 public class WeekEntryServiceTest {
     
     private static final Logger LOG = LoggerFactory.getLogger(WeekEntryServiceTest.class);
     
     /** work entry repository under test. */
-    @Autowired
-    private WorkEntryRepository workEntryRepository;
+    @Autowired private WorkEntryRepository workEntryRepository;
     
     @Autowired private UserRepository userRepository;
+    
+    /** under test. */
+    @Autowired private WeekEntryService weekEntryService;
+ 
     
     @BeforeClass
     public static void setUpBeforeClass() throws Exception {
@@ -50,6 +56,7 @@ public class WeekEntryServiceTest {
     public void testRepoInjection() {
         assertNotNull("work entry repo not injected", workEntryRepository);
         assertNotNull("user repo not injected", userRepository);
+        assertNotNull("weekEntryService not injected", weekEntryService);
     }
 
     
@@ -60,9 +67,7 @@ public class WeekEntryServiceTest {
         LocalDate dt   = LocalDate.now();        
         User      user = userRepository.getOne( TestConstants.TEST_USER );
         
-        WeekEntryService svc = new WeekEntryService();
-        
-        List<TaskInWeek> tasksInWeek = svc.getWorkWeek(user, dt);
+        List<TaskInWeek> tasksInWeek = weekEntryService.getWorkWeek(user, dt);
         
         assertNotNull("TaskInWeek found" , tasksInWeek);
         
@@ -90,11 +95,9 @@ public class WeekEntryServiceTest {
 
         LocalDate dt   = LocalDate.now();        
         User      user = userRepository.getOne( TestConstants.TEST_USER );
-        
-        WeekEntryService svc = new WeekEntryService();
-        
-        List<TaskInWeek> tasksInWeek = svc.getWorkWeek(user, dt);
-        assertEquals("0 update", 0, svc.saveWeek(tasksInWeek));
+                
+        List<TaskInWeek> tasksInWeek = weekEntryService.getWorkWeek(user, dt);
+        assertEquals("0 update", 0, weekEntryService.saveWeek(tasksInWeek));
         
         tasksInWeek.get(0).getDailyEntries()[0].setDuration(9.9f);
         tasksInWeek.get(0).getDailyEntries()[1].setDuration(8.8f);
@@ -102,9 +105,9 @@ public class WeekEntryServiceTest {
         tasksInWeek.get(0).getDailyEntries()[3].setDuration(6.6f);
         tasksInWeek.get(0).getDailyEntries()[4].setDuration(5.5f);
         
-        assertEquals("5 update", 5, svc.saveWeek(tasksInWeek));
+        assertEquals("5 update", 5, weekEntryService.saveWeek(tasksInWeek));
         
-        List<TaskInWeek> tasksInWeekReread = svc.getWorkWeek(user, dt);
+        List<TaskInWeek> tasksInWeekReread = weekEntryService.getWorkWeek(user, dt);
         assertEquals("updated 9.9f", 9.9f, tasksInWeekReread.get(0).getDailyEntries()[0].getDuration(),0);   
         assertEquals("updated 6.6f", 6.6f, tasksInWeekReread.get(0).getDailyEntries()[3].getDuration(),0);  
     }

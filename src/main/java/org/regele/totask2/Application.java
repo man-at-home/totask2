@@ -15,6 +15,8 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
+import com.mangofactory.swagger.plugin.EnableSwagger;
+
 /** 
  * totask2 application starter.
  * 
@@ -27,9 +29,11 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 @EnableJpaRepositories
 @EnableAutoConfiguration
 @EnableCaching
+@EnableSwagger
 public class Application  extends WebMvcConfigurerAdapter  {
     
     private static final Logger LOG = LoggerFactory.getLogger(Application.class);
+    
 
     /** start web application stand alone. */
     public static void main(String[] args) {

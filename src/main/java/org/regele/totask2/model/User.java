@@ -9,6 +9,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 
+
+
+
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -24,6 +27,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.wordnik.swagger.annotations.ApiModel;
+import com.wordnik.swagger.annotations.ApiModelProperty;
 
 
 /**
@@ -39,6 +44,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  * @category ajax
  */
 @Entity
+@ApiModel(description = "user")
 @Table(name = "TT_USER", 
        indexes = {@Index(name = "IDX_TT_USER_NAME", unique = true, columnList = "USER_NAME")}
       )
@@ -79,11 +85,13 @@ public final class User implements UserDetails {
     public User() {}
 
     /** internal pk. */
+    @ApiModelProperty(value = "unique id of user (PK)")
     public long getId() { return id; }
     public void setId(long id) { this.id = id; }
     
     /** UserId used to login into this application.*/
     @Override
+    @ApiModelProperty(value = "unique username, used for login into totask2.", required=true)
     public String getUsername() {
         return userName;
     }
@@ -93,6 +101,7 @@ public final class User implements UserDetails {
     }
 
     /** display friendly name of this user, shown in dialogs. */
+    @ApiModelProperty(value = "display friendly name of this user, shown in dialogs.", required=true)
     public String getDisplayName() {
         return displayName;
     }

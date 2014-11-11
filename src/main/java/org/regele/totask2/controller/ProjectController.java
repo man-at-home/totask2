@@ -19,36 +19,47 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.wordnik.swagger.annotations.Api;
+import com.wordnik.swagger.annotations.ApiOperation;
+import com.wordnik.swagger.annotations.ApiResponse;
+import com.wordnik.swagger.annotations.ApiResponses;
 
 import java.util.List;
 
 import javax.validation.Valid;
+import javax.ws.rs.Produces;
 
 
 /** admin ui projects.
  * - add project
  * - change project
  * 
- * @see TaskController
- * 
  * @author man-at-home
  * @since  2014-08-14
  */
 @Controller
+@Api(value="project REST-API", description = "totask2 projects REST API")
 public class ProjectController {
 
     private static final Logger LOG = LoggerFactory.getLogger(ProjectController.class);
 
     /** project repository. */
-    @Autowired
-    private ProjectRepository projectRepository;
+    @Autowired private ProjectRepository    projectRepository;    
+    @Autowired private ReportGenerator      reportGenerator;        
+    @Autowired private CounterService       counterService;
     
-    @Autowired
-    private ReportGenerator reportGenerator;
-        
-    @Autowired 
-    private CounterService counterService;
+    /** REST API: /REST/Projects. */
+    @RequestMapping(value = "/REST/projects", method = RequestMethod.GET)
+    @Produces("application/json")
+    @ApiOperation(value = "REST/projects", notes = "return all known projects")
+    @ApiResponses(value = { @ApiResponse( code = 200, message = "ok") })
+    @ResponseBody public List<Project> restProjects()
+    {
+        return projectRepository.findAll();        
+    }
        
   
     /** list all projects. */

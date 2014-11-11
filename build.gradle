@@ -5,6 +5,7 @@
 
 apply plugin: "java"
 apply plugin: "spring-boot"
+// apply plugin: "tomcat"
 
 apply plugin: "eclipse"
  
@@ -47,6 +48,7 @@ buildscript {
 	    classpath "org.flywaydb:flyway-gradle-plugin:3.0"	    	    
 	    classpath "org.asciidoctor:asciidoctor-gradle-plugin:1.5.0"
 	    classpath 'be.jlr-home.gradle:plantumlPlugin:0.1.1'	    
+//        classpath 'org.gradle.api.plugins:gradle-tomcat-plugin:1.2.5'
     }
 }
 
@@ -57,7 +59,9 @@ dependencies {
     compile "ch.qos.logback:logback-classic"
     compile "net.sf.jasperreports:jasperreports:5.6.0"  
     compile "com.h2database:h2"
-
+    
+    compile "org.ajar:swagger-spring-mvc-ui:0.2"
+	compile "com.mangofactory:swagger-springmvc:0.9.0"
     
     compile "org.springframework:spring-context:4.1.1.RELEASE"
     compile "org.springframework:spring-context-support:4.1.1.RELEASE"

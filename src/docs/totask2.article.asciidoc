@@ -80,36 +80,49 @@ checkstyle, pmd, findbugs, asciidoc
 .Startseite
 image::images/totask2.startpage.png[screenshot1, 600, 300]
 
+Eine Liste mit allen verwalteten Projekten:
+
 [[img-projects]]
 .Projektübersicht
 image::images/totask2.projects.png[screenshot2, 600, 300]
+
+editierbar:
 
 [[img-editProject]]
 .Projektbearbeitung
 image::images/totask2.editProject.png[screenshot3, 600, 400]
 
+Die eigentliche Stundenerfassung für "normale" Nutzer:
 
 [[img-weekEntry]]
 .Zeiterfassung
 image::images/totask2.weekEntry.png[screenshot4, 600, 400]
 
+Diverse Client Seitige (JavaScript/jquery) Funktionalitäten:
+
 [[img-weekEntryClient]]
 .Zeiterfassung Client Funktionen
 image::images/totask2.weekEntry.clientLogic.png[screenshot5, 600, 400]
 
+Eingaben lassen sich als Excel Report herunterladen (Reporting Tool Jasper Reports ist integriert):
 
 [[img-weekEntryReporting]]
 .Zeiterfassung Reporting
 image::images/totask2.weekEntry.reporting.png[screenshot6, 600, 400]
 
-
+Die Zeiteingaben führen "on the fly" zur graphischen Rückmeldung als Balkendiagramm (chart.js):
+ 
 [[img-weekEntryChart]]
 .Zeiterfassung Chart
 image::images/totask2.weekEntry.chart.png[screenshot7, 600, 400]
 
+Die Benutzereingabe nutzt ein "autocomplete" axax Control von jquery-ui:
+
 [[img-editAssignment]]
 .Zeiterfassung Ajax Autocompletion
 image::images/totask2.editAssignment.autocomplete.png[screenshot8, 600, 400]
+
+Login Seite (integriert mit spring-security):
 
 [[img-login]]
 .login
@@ -117,13 +130,23 @@ image::images/totask2.login.png[screenshot9, 600, 400]
 
 == Entwicklungsumgebung
 
+PlantUML ermgöglicht das einfache Einbetten von UML Diagrammen in die javadoc-Dokumentation:
+
 [[img-javadoc-plantuml]]
 .javadoc plantuml Dokumentation
 image::images/totask2.dev.JavaDoc.png[screenshot_DEV_1, 600, 400]
 
+Den Inhalt der Datenbank H2 kann man mit der mitgelieferten Console einsehen und ändern:
+
 [[img-db]]
 .h2console DB Abfragetool
 image::images/totask2.dev.H2Console.png[screenshot_DEV_2, 600, 400]
+
+Die eingebauten REST Aufrufe lassen sich mit der intergrierten Web UI leicht ausprobieren:
+
+[[img-swagger]]
+.swagger-ui (interaktive REST Console)
+image::images/totask2.rest.swagger-ui.png[screenshot_DEV_3, 600, 400]
 
 == Erfahrungen
 

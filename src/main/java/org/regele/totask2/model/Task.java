@@ -20,7 +20,10 @@ import javax.validation.constraints.Size;
 
 // tag::developer-manual-model[] 
 
-/** a working task of a project that needs to be worked on. */
+/** 
+ * a working task of a {@link Project} that needs to be worked on. 
+ * @author man-at-home
+ * */
 @Entity                                                     // <1>
 @Table(name = "TT_TASK")
 public class Task {
@@ -34,7 +37,7 @@ public class Task {
     @NotNull
     @Column(name = "NAME", nullable = false, length = 250)  // <3>
     private String  name;
-
+    
 // end::developer-manual-model[] 
     
     
@@ -68,16 +71,17 @@ public class Task {
     public void setProject(Project project) { this.project = project; }
 
     
-    /** all assigned user assignments for this tasks. */
+    /** all {@link User} assignments for this task. */
     public Stream<TaskAssignment> getAssignments() { return this.taskAssignments.stream(); }
     
-    /** create new assignment in project. */
+    /** create new assignment for this task. */
     public TaskAssignment addAssignment(User user) {
         TaskAssignment ta = new TaskAssignment(this, user);
         this.taskAssignments.add(ta);
         return ta;
     }    
     
+    /** remove assignment of {@link User} from this task. */
     public void removeAssignment(TaskAssignment ta) {
         this.taskAssignments.remove(ta);
     }

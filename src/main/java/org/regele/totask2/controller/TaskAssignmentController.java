@@ -102,7 +102,10 @@ public class TaskAssignmentController {
     }
     
     
-    /** show edit page for a new assignment. GET. */
+    /** show edit page for a new assignment. GET. 
+     * 
+     * @exception TaskNotFoundException
+     * */
     @Secured("ROLE_ADMIN")
     @RequestMapping(value = "task/{taskId}/assignment/new", method = RequestMethod.GET)
     public String newAssignment(@PathVariable final long taskId, final Model model) {       

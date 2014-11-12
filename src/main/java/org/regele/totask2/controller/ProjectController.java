@@ -2,12 +2,16 @@ package org.regele.totask2.controller;
 
 import org.regele.totask2.model.Project;
 import org.regele.totask2.model.ProjectRepository;
+import org.regele.totask2.model.User;
 import org.regele.totask2.service.ReportGenerator;
 import org.regele.totask2.service.ReportGenerator.ReportOutputFormat;
+import org.regele.totask2.service.UserCachingService;
+import org.regele.totask2.util.ApplicationAssert;
 import org.regele.totask2.util.ProjectNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomCollectionEditor;
 import org.springframework.boot.actuate.metrics.CounterService;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.Authentication;
@@ -16,6 +20,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -28,6 +35,8 @@ import com.wordnik.swagger.annotations.ApiResponse;
 import com.wordnik.swagger.annotations.ApiResponses;
 
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 import javax.ws.rs.Produces;
@@ -50,6 +59,7 @@ public class ProjectController {
     @Autowired private ProjectRepository    projectRepository;    
     @Autowired private ReportGenerator      reportGenerator;        
     @Autowired private CounterService       counterService;
+    @Autowired private UserCachingService   userCachingService;
     
     /** REST API: /REST/Projects. */
     @RequestMapping(value = "/REST/projects", method = RequestMethod.GET)
@@ -59,6 +69,47 @@ public class ProjectController {
     @ResponseBody public List<Project> restProjects()
     {
         return projectRepository.findAll();        
+    }
+    
+    
+    @ModelAttribute("projectLeads")
+    public List<User> getProjectLeads()
+    {
+        return userCachingService.getCachedUsers();
+    }
+    
+    
+    /** 
+     * convert projectLeads user.id <-> user instance in template with 
+     * <code>th:field="*{{projectLeads}}"</code> in view <i>templates/editProject.html</i>.
+     * 
+     * @see <a href="https://github.com/brianreavis/selectize.js">selectize.js</a>
+     * @see User
+     * @see Project#getProjectLeads()
+     * @see CustomCollectionEditor
+     * */
+    @InitBinder
+    public void initProjectLeadBinder(final WebDataBinder binder) {
+        binder.registerCustomEditor(
+                Set.class, 
+                "projectLeads", 
+                new CustomCollectionEditor(Set.class) {
+                    
+                    protected Object convertElement(Object element) {
+                        if (element instanceof User) {
+                            LOG.debug("converting from User to User: " + element);
+                            return element;
+                        }
+                        if (element instanceof String) {
+                            LOG.debug("Looking up user by id " + element);
+                            User user = userCachingService.getCachedUserById( Long.parseLong(element + ""));
+                            return user;
+                        }
+                        LOG.error("Don't know what to do with: " + element);
+                        return null;
+            }
+        }
+        );
     }
        
   
@@ -93,8 +144,36 @@ public class ProjectController {
             LOG.debug("no auth.user user");
         }           
     }
+    
+    
+    private void dumpProject(final Project project) {
+        
+        if( project == null)
+            LOG.debug("no project to dump");
+        else {
+            LOG.debug("project........:  " + project.toString());
+            LOG.debug(".......leads...:  " + 
+                                project.getProjectLeads().stream()
+                                .map(User::getUsername)
+                                .collect(Collectors.joining(", "))
+                     );
+           
+            /*
+             * no, requires session
+            LOG.debug(".......tasks..:  " + 
+                    project.getTasks()
+                    .map(Task::getName)
+                    .collect(Collectors.joining(", "))
+                    );
+            */
+    }
+        
+    }
 
-    /** show edit page for an existing project. GET. */
+    /** show edit page for an existing project. GET. 
+     * 
+     * @exception ProjectNotFoundException
+     * */
     @Secured("ROLE_ADMIN")
     @RequestMapping(value = "/project/{id}", method = RequestMethod.GET)
     public String showProject(@PathVariable final long id, final Model model) {
@@ -103,8 +182,11 @@ public class ProjectController {
         
         Project project = projectRepository.findOne(id);
         if (project == null) {
-            throw new ProjectNotFoundException("project " + id + " not found to show.");
+            throw new ProjectNotFoundException("project " + id + " not found to show.");            
         }
+        
+        ApplicationAssert.assertNotNull("projectLeads empty, project " + project.getId() , project.getProjectLeads().size());        
+        dumpProject(project);
         model.addAttribute("project", project);        
         
         LOG.debug("will show " + project);
@@ -136,6 +218,8 @@ public class ProjectController {
             return "editProject";
         }
                 
+        dumpProject(project);
+        
         this.projectRepository.saveAndFlush(project);
         model.clear();       
         
@@ -146,7 +230,9 @@ public class ProjectController {
         return "redirect:/projects";
     }    
     
-   
+
+
+
     /**  generate an pdf or excel report from project data. */
     @Secured("ROLE_ADMIN")
     @RequestMapping(value = "/projects/report/{reportFormat}", method = RequestMethod.GET)

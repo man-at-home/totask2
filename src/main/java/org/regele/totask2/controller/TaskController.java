@@ -28,11 +28,14 @@ import javax.validation.Valid;
 /** 
  * admin ui tasks.
  * 
- * - add task to project
- * - remove task from project
- * - change task details
+ * <ul>
+ *  <li>add task to project</li>
+ *  <li>remove task from project</li>
+ *  <li>change task details</li>
+ * </ul> 
  * 
  * @see TaskAssignmentController
+ * @see Task
  * 
  * @author man-at-home
  * @since  2014-08-21
@@ -51,7 +54,10 @@ public class TaskController {
     private ProjectRepository projectRepository;    
 
 // tag::developer-manual-controller[]
-    /** show all tasks for given project. */
+    /** show all tasks for given project. 
+     * 
+     * @param id project.id to show tasks for.
+     * */
     @Secured("ROLE_ADMIN")
     @RequestMapping(value = "/project/{id}/tasks", method = RequestMethod.GET)          // <1>
     public String tasksForProject(@PathVariable final long id, final Model model) {
@@ -69,7 +75,10 @@ public class TaskController {
     }
 // end::developer-manual-controller[] 
     
-    /** show edit page for an existing task. GET. */
+    /** show edit page for an existing task. GET. 
+     * 
+     * @param id task.id to show/edit
+     * */
     @Secured("ROLE_ADMIN")
     @RequestMapping(value = "/task/{id}", method = RequestMethod.GET)
     public String editTask(@PathVariable final long id, final Model model) {
@@ -83,7 +92,12 @@ public class TaskController {
         return "editTask";
     }
     
-    /** delete an existing task. POST. */
+    /** 
+     * delete an existing task. POST.
+     *  
+     * @param id  task.id to delete.
+     * @exception TaskNotFoundException
+     */
     @Secured("ROLE_ADMIN")
     @RequestMapping(value = "task/delete", method = RequestMethod.POST)
     public String deleteTask(@RequestParam long id, final Model model) {
@@ -104,7 +118,12 @@ public class TaskController {
         return "redirect:/project/" + projectId + "/tasks";
     }
     
-    /** show edit page for a new task. GET. */
+    /** 
+     * show edit page for a new task. GET. 
+     * 
+     * @param projectId part of GET path, id of project for the new task.
+     * @exception ProjectNotFoundException
+     * */
     @Secured("ROLE_ADMIN")
     @RequestMapping(value = "project/{projectId}/task/new", method = RequestMethod.GET)
     public String newTask(@PathVariable final long projectId, final Model model) {       
@@ -122,7 +141,10 @@ public class TaskController {
     }    
     
     
-    /** save edited task. POST. */
+    /** save edited task. POST. 
+     * 
+     * @param task html values (edited), updating to db.
+     * */
     @Secured("ROLE_ADMIN")
     @RequestMapping(value = "/task/save", method = RequestMethod.POST)
     public String editTaskSave(@Valid final Task task, final BindingResult bindingResult, final ModelMap model) {        
@@ -142,6 +164,8 @@ public class TaskController {
         return "redirect:/project/" + savedTask.getProject().getId() + "/tasks";
     }    
     
+    
+    /** internal helper dump. */
     private void dumpUser() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if( auth != null) {

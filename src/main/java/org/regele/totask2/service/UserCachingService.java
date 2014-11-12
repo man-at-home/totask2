@@ -6,6 +6,8 @@ import java.util.stream.Collectors;
 
 import org.regele.totask2.model.User;
 import org.regele.totask2.model.UserRepository;
+import org.regele.totask2.util.UserNotFoundException;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,9 +15,10 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 /**
- * user caching.
+ * basic {@link User} caching, avoiding endless db access.
  * 
- * @see User
+ * @see User 
+ * @see #getCachedUsers()
  * 
  * @author man-at-home
  * @since  2014-10-28
@@ -34,7 +37,19 @@ public class UserCachingService {
         List<User> users = userRepository.findAll();
         LOG.debug("getCachedUsers() -> " + users.size() + " hits.");
         return users;
-    }   
+    }
+    
+    /** find user by user.id. */
+    public User getCachedUserById(final long userId) {
+        
+        return this.getCachedUsers()
+                .stream()
+                .filter( u -> u.getId() == userId)
+                .findFirst()
+                .orElseThrow( () -> new UserNotFoundException("no user with id " + userId))
+                ;
+    }
+
     
     public List<User> getCachedUsers(final String filter) {
         List<User> users;

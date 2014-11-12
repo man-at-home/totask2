@@ -3,7 +3,7 @@
 :icons:    font
 :toc:      left
 man-at-home
-v1.0, 2014-10-10
+v1.1, 2014-11-11
 
 eine rudimentäre Projektzeiterfassung 
 
@@ -47,6 +47,7 @@ http://jquery.com/[jquery^] als Java Script Libary, dazu http://www.datatables.n
 Ein Chart wird mit http://www.chartjs.org/[Charts.js^] clientseitig erstellt.
 Für die kompfortable Auswahl von Usern benutze ich das http://jqueryui.com/autocomplete/[autocomplete plugin^], um
 Suchvorschläge on the fly per REST/json vom Server zu holen.
+Für die UI Zuordnung Projectleiter zu Projekt kommt das http://brianreavis.github.io/selectize.js/[selectize.js] zum Einsatz.
 
 Zum _Reporting_ wird http://community.jaspersoft.com/project/jasperreports-library[JasperReports^] genutzt 
 um Excel und PDF zu generieren.
@@ -86,7 +87,7 @@ Eine Liste mit allen verwalteten Projekten:
 .Projektübersicht
 image::images/totask2.projects.png[screenshot2, 600, 300]
 
-editierbar:
+editierbar das Project, inklusive Projektleiterselektion mit Ajax-Control selectize.js
 
 [[img-editProject]]
 .Projektbearbeitung

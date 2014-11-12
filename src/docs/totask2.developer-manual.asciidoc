@@ -92,3 +92,11 @@ include::{resourcedir}/templates/tasks.html[tags=developer-manual-view]
 <1> iterating over List<Task> tasks.
 <2> show model attribute from an instance of Task.
 <3> show i18n text from message.properties.
+
+=== plantUML Diagramming
+
+[source,java,indent=0]
+.package-info.java (plantuml documenentation for JavaDoc)
+----
+include::{sourcedir}/org/regele/totask2/model/package-info.java[tags=developer-manual-plantuml] 
+----

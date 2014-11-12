@@ -2,6 +2,8 @@ package org.regele.totask2.model;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.stream.Stream;
 
 import javax.persistence.Column;
@@ -10,6 +12,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -20,7 +23,32 @@ import com.wordnik.swagger.annotations.ApiModel;
 import com.wordnik.swagger.annotations.ApiModelProperty;
 
 
-/** project to log work on tasks. */
+/** 
+ * project to log work on tasks. 
+ * 
+ * <p>
+ * <br>
+ * <img alt="project-uml" src="doc-files/totask2.design.datamodel.project.png">
+ * </p>
+ * @see Task 
+ * @see User User as project lead  
+ * @author man-at-home
+ * 
+ */
+/*
+@startuml doc-files/totask2.design.datamodel.project.png
+
+ Project         "1" *-- "n" Task            : contains
+ Project         "n"  -- "n" User            : leads 
+
+ Project   : id           : PK
+ Project   : name         : String
+ Project   : isAdmin      : bool
+ Project   : projectLeads : Set<User>
+ Project   : tasks        : Collection<Tasks>
+ 
+ @enduml
+ */
 @Entity
 @Table(name = "TT_PROJECT")
 @ApiModel(value="Project", description="project to log work on tasks, containing *task*s and being administered by project leads")
@@ -37,18 +65,32 @@ public class Project {
     private String name;
    
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "project")
-    private Collection<Task> tasks = new ArrayList<Task>();   
+    private Collection<Task> tasks = new ArrayList<Task>(); 
+    
+    @ManyToMany(fetch = FetchType.EAGER)
+    private Set<User> projectLeads = new HashSet<User>(0);
     
     /** unique id of given project (PK). */
     @ApiModelProperty(value="unique id of given project (PK).")
     public long getId() { return this.id; }
     public void setId(long id) { this.id = id; }
     
-    /** all tasks belonging to this project. */
+    /** leads of this projects. These {@link User}s are allowed to create and administer {@link Task}s for this project. 
+     *
+     * @see User the project lead is a user.
+     * @see Task leads are allowed to administer tasks.
+     * 
+     * @since 2014-11-11
+     */
+    @JsonIgnore
+    public Set<User> getProjectLeads() { return this.projectLeads; }
+    public void setProjectLeads(final Set<User> projectLeads) { this.projectLeads = projectLeads; }
+    
+    /** all {@link Task}s belonging to this project. */
     @JsonIgnore
     public Stream<Task> getTasks() { return this.tasks.stream(); }
     
-    /** create new task in project. */
+    /** create new {@link Task} below this project. */
     public Task createTask() {
         Task t = new Task(this);
         this.tasks.add(t);

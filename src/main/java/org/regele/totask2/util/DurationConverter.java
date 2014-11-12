@@ -12,8 +12,6 @@ import org.regele.totask2.model.WorkEntry;
  * */
 public final class DurationConverter {
     
-    //private static final Logger LOG = LoggerFactory.getLogger(DurationConverter.class);
-
     /** needs work. */
     public static BigDecimal parse(final String durationString) throws ParseException {
         

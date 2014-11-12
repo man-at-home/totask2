@@ -49,6 +49,7 @@ import java.util.Properties;
  * @see WeekEntryController#getWeekEntryReport(String, String)
  * @see ProjectController#getProjectsReport(String)
  * 
+ * 
  * @author man-at-home
  * */
 @Service
@@ -67,8 +68,10 @@ public class ReportGenerator {
     @Autowired private ApplicationContext appContext;
     
     @Autowired private CounterService counterService;
-    
 
+    /** render. 
+     * @exception EnvironmentException 
+     */ 
     public void render(final String reportTemplateName, final ReportOutputFormat outputFormat, final Collection<?> pojoDataSource, OutputStream outputStream) throws EnvironmentException {
         try {
             String reportName = "/reports/" + reportTemplateName;

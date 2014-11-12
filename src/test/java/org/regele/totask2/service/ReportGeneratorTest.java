@@ -14,7 +14,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.wordnik.swagger.config.SwaggerConfig;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -27,7 +30,8 @@ import java.util.List;
 
 /** testing jasper report generation. */
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = { Application.class })
+@SpringApplicationConfiguration(classes = { Application.class, SwaggerConfig.class })
+@WebAppConfiguration
 public class ReportGeneratorTest {
 
     private static final Logger LOG = LoggerFactory

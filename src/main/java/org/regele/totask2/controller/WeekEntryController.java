@@ -32,8 +32,10 @@ import java.util.stream.Collectors;
 
 
 /** main entry page for uses.
- * - display exactly one week of work
- * - all tasks, one entry per task an day.
+ * <ul>
+ *  <li>display exactly one week of work</li>
+ *  <li>all {@link Task}s assigned to user, one entry per task and day.</li>
+ * <ul>
  * 
  * @see WorkEntry
  * @see Task
@@ -90,7 +92,9 @@ public class WeekEntryController {
     }
 
 
-    /** GET: provide workEntry data of current week. */
+    /** GET: provide {@link WorkEntry} data of current week and {@link User}. 
+     * @see       WorkEntry
+     */
     @RequestMapping(value = "/weekEntry" , method = RequestMethod.GET)
     public String weekEntry(final Model model) {
         LOG.debug("weekEntry(default)");
@@ -100,7 +104,11 @@ public class WeekEntryController {
     }
     
     
-    /** GET: provide all workEntry data for given week, enable editing on html page. */
+    /** GET: provide {@link WorkEntry} data of week "dateString" and {@link User}.
+     * 
+     * @param dateString dateString of week to display.
+     * @see   WorkEntry
+     */  
     @RequestMapping(value = "/weekEntry/{dateString}", method = RequestMethod.GET)
     public String weekEntry(final Model model, @PathVariable final String dateString) {        
         LOG.debug("weekEntry( " + dateString + ")");
@@ -110,7 +118,11 @@ public class WeekEntryController {
     }
     
     
-    /** POST: save all workEntry data for given week. */
+    /** POST: save all {@link WorkEntry} data for given week and {@link User}. 
+     * 
+     * @see       WorkEntry
+     * @exception InvalidClientArgumentsException
+     * */
     @RequestMapping(value = "/weekEntry/{dateString}", method = RequestMethod.POST)
     public String saveWeekEntry(
             final Model model, 

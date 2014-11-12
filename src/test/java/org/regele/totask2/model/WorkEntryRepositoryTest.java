@@ -13,6 +13,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
+
+import com.wordnik.swagger.config.SwaggerConfig;
 
 import java.time.LocalDate;
 import java.util.Date;
@@ -24,7 +27,8 @@ import javax.transaction.Transactional;
 /** testing db access. */
 @Transactional
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = { Application.class })
+@SpringApplicationConfiguration(classes = { Application.class, SwaggerConfig.class })
+@WebAppConfiguration
 public class WorkEntryRepositoryTest {
     
 

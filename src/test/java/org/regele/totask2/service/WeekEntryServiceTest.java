@@ -19,6 +19,8 @@ import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
+import com.wordnik.swagger.config.SwaggerConfig;
+
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
@@ -31,7 +33,7 @@ import javax.transaction.Transactional;
  */
 @Transactional
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = { Application.class })
+@SpringApplicationConfiguration(classes = { Application.class, SwaggerConfig.class })
 @WebAppConfiguration
 public class WeekEntryServiceTest {
     

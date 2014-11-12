@@ -11,11 +11,13 @@
  *
  * @category diagram
  */
+// tag::developer-manual-plantuml[]
 /*
  * 
 @startuml doc-files/totask2.design.datamodel.png
 
  Project         "1" *-- "n" Task : contains
+ Project         "n"  -- "n" User            : leads 
  Task            "1" *-- "n" TaskAssignment 
  TaskAssignment  "1" -- "n"  User : assigned to
  WorkEntry       "n" -- "1"  User 
@@ -39,3 +41,4 @@
  @enduml
  */
 package org.regele.totask2.model;
+//end::developer-manual-plantuml[]

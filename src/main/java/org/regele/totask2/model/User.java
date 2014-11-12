@@ -1,12 +1,17 @@
 package org.regele.totask2.model;
 
 
+import org.regele.totask2.service.UserCachingService;
+import org.regele.totask2.service.UserDetailsServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
+
+
 
 
 
@@ -38,6 +43,10 @@ import com.wordnik.swagger.annotations.ApiModelProperty;
  * Implementations are not used directly by Spring Security for security purposes. They simply store user information 
  * which is later encapsulated into Authentication objects. This allows non-security related user information (such as email 
  * addresses, telephone numbers etc) to be stored in a convenient location. 
+ * 
+ * @see <a href="http://projects.spring.io/spring-security/">spring security</a>
+ * @see UserCachingService
+ * @see UserDetailsServiceImpl
  * 
  * @author man-at-home
  * @since  2015-08-17
@@ -76,7 +85,6 @@ public final class User implements UserDetails {
     
     @Column(name = "IS_ADMIN", nullable = false)
     private boolean isAdmin;
-    
     
     @Version    
     private long version;
@@ -216,4 +224,30 @@ public final class User implements UserDetails {
         return new BCryptPasswordEncoder();
     }
 
+    
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result
+                + ((userName == null) ? 0 : userName.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        User other = (User) obj;
+        if (userName == null) {
+            if (other.userName != null)
+                return false;
+        } else if (!userName.equals(other.userName))
+            return false;
+        return true;
+    }
 }

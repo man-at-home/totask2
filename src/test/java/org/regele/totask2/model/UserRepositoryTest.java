@@ -13,13 +13,15 @@ import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
+import com.wordnik.swagger.config.SwaggerConfig;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
 
 /** testing db access. */
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = { Application.class })
+@SpringApplicationConfiguration(classes = { Application.class, SwaggerConfig.class })
 @WebAppConfiguration
 public class UserRepositoryTest {
     

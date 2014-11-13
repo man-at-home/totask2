@@ -68,6 +68,7 @@
 				placeholder="task name"
 				maxlength="250"
 				th:field="*{name}" 
+				th:disabled="${isEditAllowed}"
 				th:errorclass="fieldError"
 				data-bv-notempty="true"
 				data-bv-notempty-message="required field"
@@ -82,7 +83,7 @@
 
 		<div class="form-group">
 		<div class="col-sm-offset-2 col-sm-10">
-		<button type="submit" name="saveTask" class="btn btn-default" th:value="${task.id}">
+		<button type="submit" name="saveTask" class="btn btn-default" th:value="${task.id}" th:if="${isEditAllowed}">
 			<span class="glyphicon glyphicon-ok"></span>
 			<span th:text="#{totask2.task.action.save}">save</span>
 		</button>		
@@ -91,7 +92,7 @@
 	</form>
 	
 	<p> 
-		<a th:href="@{/task/{id}/assignments(id=${task.id})}" class="btn btn-default">
+		<a th:href="@{/task/{id}/assignments(id=${task.id})}" class="btn btn-default" th:if="${isEditAllowed}">
 			<span class="glyphicon glyphicon-pencil"></span>
 			<span th:text="#{totask2.task.action.assignments}">user assignments..</span>
 		</a>

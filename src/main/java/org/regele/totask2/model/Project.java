@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import javax.persistence.Column;
@@ -17,6 +18,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.wordnik.swagger.annotations.ApiModel;
@@ -53,14 +57,16 @@ import com.wordnik.swagger.annotations.ApiModelProperty;
 @Table(name = "TT_PROJECT")
 @ApiModel(value="Project", description="project to log work on tasks, containing *task*s and being administered by project leads")
 public class Project {
+    
+    private static final Logger LOG = LoggerFactory.getLogger(Project.class);  
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)  
     @Column(name = "ID")
     private long     id;
   
-    @Size(min = 2, max = 250)
     @NotNull    
+    @Size(min = 2, max = 250)
     @Column(name = "NAME", nullable = false, length = 250)
     private String name;
    
@@ -101,13 +107,50 @@ public class Project {
     /** display name of this project, length: 2..250. */
     @ApiModelProperty(value="display name of this project, length: 2..250", required=true)
     public String getName() { return name; }
-    public void setName(String name) { this.name = name; }
- 
+    public void setName(@NotNull final String name) { this.name = name; }
+
+    
+    
+    /** access check (edit allowed for admin and project leads). */
+    public boolean isEditAllowed(final User user)
+    {
+        return user != null &&
+               (user.isAdmin() || this.getProjectLeads().stream().anyMatch(pl -> pl.equals(user)));
+    }
+    
+    
     /** debug.*/
     @Override
     public String toString() {
         return "Project [" + this.id  + ", name=" + this.name + "]";
     }
     
-
+    
+    
+    /** internal logging helper. */
+    public void dump() 
+    {
+        dump(this);
+    }
+    
+    
+    /** internal logging helper. */
+    public static void dump(final Project project) {
+        
+        if( project == null)
+            LOG.debug("no project to dump");
+        else {
+            LOG.debug("project........:  " + project.toString());
+            LOG.debug(".......leads...:  " + 
+                                (
+                                project.getProjectLeads() == null ? 
+                                        "" :
+                                project.getProjectLeads().stream()
+                                .map(User::getUsername)
+                                .collect(Collectors.joining(", "))
+                                )
+                     );
+           
+        }        
+    }
 }

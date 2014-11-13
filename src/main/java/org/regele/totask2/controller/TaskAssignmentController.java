@@ -6,15 +6,16 @@ import org.regele.totask2.model.TaskAssignment;
 import org.regele.totask2.model.TaskAssignmentRepository;
 import org.regele.totask2.model.TaskRepository;
 import org.regele.totask2.model.User;
-import org.regele.totask2.model.UserRepository;
-import org.regele.totask2.service.UserDetailsServiceImpl;
+import org.regele.totask2.service.UserCachingService;
+import org.regele.totask2.util.Authorisation;
 import org.regele.totask2.util.TaskAssignmentNotFoundException;
 import org.regele.totask2.util.TaskNotFoundException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -48,7 +49,16 @@ public class TaskAssignmentController {
     @Autowired private TaskAssignmentRepository taskAssignmentRepository;
     
     /** user repository. */
-    @Autowired private UserRepository userRepository;
+    @Autowired private UserCachingService userCachingService;
+    
+    
+
+    /** currently logged in @see user */
+    @ModelAttribute("user")
+    public User getUser()
+    {
+        return userCachingService.getCachedUser(SecurityContextHolder.getContext().getAuthentication());
+    }    
    
     
     /** show all tasks for given project. */
@@ -58,10 +68,14 @@ public class TaskAssignmentController {
         LOG.debug("task assignments for task " + id);
   
         Task task = taskRepository.findOne(id);
+        Authorisation.require( task.isEditAllowed(getUser()));       
+
         List<TaskAssignment> assignments = taskAssignmentRepository.findByTask(task);
         
         model.addAttribute("task", task);           
         model.addAttribute("assignments", assignments);
+        model.addAttribute("isEditAllowed", task.isEditAllowed(getUser()));
+      
         
         LOG.debug("serving " + assignments.size() + " assignments for task " + task);
         return "taskAssignments";
@@ -76,9 +90,10 @@ public class TaskAssignmentController {
         TaskAssignment assignmentToDelete = taskAssignmentRepository.findOne(id);
         if (assignmentToDelete == null) {
             throw new TaskAssignmentNotFoundException("assignment " + id + " not found for deletion.");
-        }
+        }     
         
         long taskId = assignmentToDelete.getTask().getId();
+        Authorisation.require( assignmentToDelete.getTask().isEditAllowed(getUser()));       
         
         taskAssignmentRepository.delete(assignmentToDelete);
         taskAssignmentRepository.flush();
@@ -94,6 +109,9 @@ public class TaskAssignmentController {
         LOG.debug("edit task assignment " + id);
         
         TaskAssignment assignment = taskAssignmentRepository.getOne(id);
+        
+        Authorisation.require( assignment.getTask().isEditAllowed(getUser()));       
+        
         model.addAttribute("task", assignment.getTask());
         model.addAttribute("assignment", assignment);        
         
@@ -106,17 +124,18 @@ public class TaskAssignmentController {
      * 
      * @exception TaskNotFoundException
      * */
-    @Secured("ROLE_ADMIN")
     @RequestMapping(value = "task/{taskId}/assignment/new", method = RequestMethod.GET)
     public String newAssignment(@PathVariable final long taskId, final Model model) {       
         LOG.debug("new assignment for task " + taskId);
 
-        User user = userRepository.findByUserName(UserDetailsServiceImpl.getCurrentUserName()).stream().findFirst().get();               
+        User user = getUser();               
         Task task = this.taskRepository.findOne(taskId);
         
         if (task == null) {
             throw new TaskNotFoundException("task " + taskId + " not found creating new assignment.");
         }
+        Authorisation.require( task.isEditAllowed(getUser()));    
+        
         TaskAssignment assignment = task.addAssignment(user);
         
         model.addAttribute("task", task);
@@ -128,7 +147,6 @@ public class TaskAssignmentController {
     
     
     /** save edited assignment. POST. */
-    @Secured("ROLE_ADMIN")
     @RequestMapping(value = "/assignment/save", method = RequestMethod.POST)
     public String editAssignmentSave(@Valid @ModelAttribute final TaskAssignment assignment, final BindingResult bindingResult, final ModelMap model) {        
         LOG.debug("editTaskAssignmentSave(" + assignment + ")");
@@ -139,6 +157,8 @@ public class TaskAssignmentController {
             model.addAttribute("assignment", assignment);        
             return "editTaskAssignment";
         }
+
+        Authorisation.require( assignment.getTask().isEditAllowed(getUser()));       
         
         TaskAssignment savedTaskAssignment  = this.taskAssignmentRepository.saveAndFlush(assignment);
         model.clear();        

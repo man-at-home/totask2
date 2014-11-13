@@ -7,11 +7,11 @@ import java.util.stream.Collectors;
 import org.regele.totask2.model.User;
 import org.regele.totask2.model.UserRepository;
 import org.regele.totask2.util.UserNotFoundException;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 /**
@@ -50,6 +50,22 @@ public class UserCachingService {
                 ;
     }
 
+    /** find user by logged in user */
+    public User getCachedUser(final Authentication authentication) {
+        
+        if( authentication == null)
+            throw new NullPointerException("no authentication object");
+        
+        if( authentication.getPrincipal() instanceof User)
+            return (User) authentication.getPrincipal(); 
+        
+        return this.getCachedUsers()
+                .stream()
+                .filter( u -> u.getUsername() == authentication.getName())
+                .findFirst()
+                .orElseThrow( () -> new UserNotFoundException("no user with id " + authentication.getName()))
+                ;
+    }
     
     public List<User> getCachedUsers(final String filter) {
         List<User> users;

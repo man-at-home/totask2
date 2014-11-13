@@ -110,7 +110,7 @@
 		
 		<div class="form-group">
 		<div class="col-sm-offset-2 col-sm-10">
-			<button type="submit" class="btn btn-primary" name="saveProject" th:value="${project.id}" th:text="#{totask2.project.action.save}">save</button>
+			<button type="submit" class="btn btn-primary" name="saveProject" th:value="${project.id}"  th:if="${isEditAllowed}" th:text="#{totask2.project.action.save}">save</button>
 		</div>
 		</div>
 		

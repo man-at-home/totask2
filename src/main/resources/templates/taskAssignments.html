@@ -66,11 +66,11 @@
 					<td th:text="${assignment.until}">12.12.2015</td>
 					<td class="dt-left">
 					
-						<a th:href="@{/assignment/{id}(id=${assignment.id})}" class="btn btn-default">
+						<a th:href="@{/assignment/{id}(id=${assignment.id})}" class="btn btn-default" th:if="${isEditAllowed}">
 							<span class="glyphicon glyphicon-pencil"></span>
 							<span th:text="#{totask2.taskAssignments.action.edit}">edit..</span>
 						</a>
-						<button class="btn btn-default" name="id" th:value="${assignment.id}">
+						<button class="btn btn-default" name="id" th:value="${assignment.id}" th:if="${isEditAllowed}">
 							<span class="glyphicon glyphicon-remove"></span>
 							<span th:text="#{totask2.taskAssignments.action.delete}">delete</span>
 						</button>						
@@ -84,7 +84,7 @@
 	</div>
 	
 	<p> 
-		<a th:href="@{/task/{id}/assignment/new(id=${task.id})}" class="btn btn-default">
+		<a th:href="@{/task/{id}/assignment/new(id=${task.id})}" class="btn btn-default" th:if="${isEditAllowed}">
 			<span class="glyphicon glyphicon-plus"></span>
 			<span th:text="#{totask2.taskAssignments.action.new}">new..</span>
 		</a>

@@ -2,6 +2,7 @@ package org.regele.totask2.controller;
 
 import org.regele.totask2.model.ProjectRepository;
 import org.regele.totask2.model.TaskRepository;
+import org.regele.totask2.util.Authorisation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,13 +25,8 @@ public class InfoController {
     
     private static final Logger LOG = LoggerFactory.getLogger(InfoController.class);
     
-    /** project repository. */
-    @Autowired
-    private ProjectRepository projectRepository;
- 
-    /** task repository. */
-    @Autowired
-    private TaskRepository taskRepository;
+    @Autowired private ProjectRepository projectRepository;
+    @Autowired private TaskRepository taskRepository;
 
     /** REST API. */
     @RequestMapping(value = "/REST/info", method = RequestMethod.GET)    
@@ -57,7 +53,7 @@ public class InfoController {
     
     
     /** showing actual db contents. */
-    @Secured("ROLE_ADMIN")
+    @Secured(Authorisation.ROLE_ADMIN)
     @RequestMapping("/dbinfo")
     @ApiIgnore
     public String dbinfo(final Model model) {

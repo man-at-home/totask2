@@ -2,7 +2,6 @@ package org.regele.totask2.model;
 
 import org.regele.totask2.util.ApplicationAssert;
 import org.regele.totask2.util.LocalDateConverter;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -129,7 +128,7 @@ public class TaskAssignment {
     public void setUntil(LocalDate until) { 
         this.until = until == null ? null : LocalDateConverter.toDate(until); 
     }
-    
+        
     /** debug output. */
     @Override
     public String toString() {

@@ -64,7 +64,9 @@
 						<td class="dt-center"  th:text="${project.id}">17</td>
 						<td th:text="${project.name}" class="dt-left">project name</td>						
 						<td class="dt-left">
-							<a th:href="@{/project/{id}(id=${project.id})}" class="btn btn-default">
+							<a th:href="@{/project/{id}(id=${project.id})}"
+							   th:if="${project.isEditAllowed(user)}" 
+								class="btn btn-default">
 								<span class="glyphicon glyphicon-pencil"></span>
 								<span th:text="#{totask2.project.action.edit}">edit..</span>
 							</a>
@@ -77,7 +79,7 @@
 	</form>
 	
 	<p>
-		<a th:href="@{/project/new}" class="btn btn-default">
+		<a th:href="@{/project/new}" class="btn btn-default" th:if="${isNewAllowed}">
 			<span class="glyphicon glyphicon-plus"></span>
 			<span th:text="#{totask2.project.action.new}">new..</span>
 		</a>

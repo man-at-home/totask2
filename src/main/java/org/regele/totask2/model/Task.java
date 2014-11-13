@@ -41,7 +41,7 @@ public class Task {
 // end::developer-manual-model[] 
     
     
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "PROJECT_ID", referencedColumnName = "ID",
                 foreignKey = @ForeignKey(name = "FK_TT_TASK_OWNING_PARENT") 
     )
@@ -85,6 +85,15 @@ public class Task {
     public void removeAssignment(TaskAssignment ta) {
         this.taskAssignments.remove(ta);
     }
+    
+    
+    /** access check (edit allowed for admin and project leads). */
+    public boolean isEditAllowed(final User user)
+    {
+        return user != null &&
+               (user.isAdmin() || this.getProject().isEditAllowed(user));
+    }
+    
     
     /** debug. */
     @Override

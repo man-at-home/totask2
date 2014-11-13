@@ -3,12 +3,17 @@ package org.regele.totask2.model;
 
 import org.regele.totask2.service.UserCachingService;
 import org.regele.totask2.service.UserDetailsServiceImpl;
+import org.regele.totask2.util.Authorisation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
+
 
 
 
@@ -163,7 +168,7 @@ public final class User implements UserDetails {
         ArrayList<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>(); 
         
         if (this.isAdmin()) {
-            GrantedAuthority adminRole = new SimpleGrantedAuthority("ROLE_ADMIN");
+            GrantedAuthority adminRole = new SimpleGrantedAuthority(Authorisation.ROLE_ADMIN);
             authorities.add(adminRole);
         }
         
@@ -249,5 +254,24 @@ public final class User implements UserDetails {
         } else if (!userName.equals(other.userName))
             return false;
         return true;
+    }
+    
+    
+    
+    /** internal logging helper. */
+    public static void dumpAuthentication() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if( auth != null) {
+            LOG.debug("user: " + auth.getName() + " " + auth.isAuthenticated() + " roles " + auth.getAuthorities().size()); //get logged in username
+ 
+            auth.getAuthorities()
+            .stream().
+            forEach( ga ->  
+                LOG.debug("  user-role:" + ga)
+            );
+        }
+        else {
+            LOG.debug("no auth.user user");
+        }           
     }
 }

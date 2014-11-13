@@ -64,14 +64,14 @@ public class WorkEntry {
     private String  comment;
     
     @NotNull
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "USER_ID", referencedColumnName = "ID",
                 foreignKey = @ForeignKey(name = "FK_TT_WORKENTRY_USER") 
     )   
     private User user;
     
     @NotNull
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "TASK_ID", referencedColumnName = "ID",
                 foreignKey = @ForeignKey(name = "FK_TT_WORKENTRY_TASK")
     )

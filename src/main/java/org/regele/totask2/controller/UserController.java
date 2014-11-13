@@ -2,6 +2,7 @@ package org.regele.totask2.controller;
 
 import org.regele.totask2.model.User;
 import org.regele.totask2.service.UserCachingService;
+import org.regele.totask2.util.Authorisation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +38,7 @@ public class UserController {
     @Autowired private UserCachingService userCachingService;
     
     /** REST API. get all users the fit the given "term". */
-    @Secured("ROLE_ADMIN")
+    @Secured(Authorisation.ROLE_ADMIN)
     @ApiIgnore
     @RequestMapping(value = "/users", method = RequestMethod.GET)
     public List<User> getUsers(@RequestParam(value = "term", defaultValue = "") final String term) {
@@ -46,7 +47,7 @@ public class UserController {
     }
 
     /** REST API. get all users the fit the given "term". */
-//    @Secured("ROLE_ADMIN")
+//    @Secured(Authorisation.ROLE_ADMIN)
     @RequestMapping(value = "REST/users", method = RequestMethod.GET)
     @Produces("application/json")
     @ApiOperation(value = "REST/users", notes = "return all known users given a search criteria *term*")

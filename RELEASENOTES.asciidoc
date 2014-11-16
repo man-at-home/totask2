@@ -2,7 +2,7 @@ totask2 releasenotes
 ====================
 :Author: man-at-home
 
-releasenotes for http://man-at-home.github.io/totask2/
+basic releasenotes for http://man-at-home.github.io/totask2/
 
 .2014-11-16
 - selenium test

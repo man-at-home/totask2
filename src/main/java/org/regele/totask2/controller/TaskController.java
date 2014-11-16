@@ -28,7 +28,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 /** 
- * admin ui tasks.
+ * admin ui {@link Task}s.
  * 
  * <ul>
  *  <li>add task to project</li>

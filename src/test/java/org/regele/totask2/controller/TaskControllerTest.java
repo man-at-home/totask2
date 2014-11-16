@@ -37,7 +37,6 @@ public class TaskControllerTest {
 
     private static final Logger LOG = LoggerFactory.getLogger(TaskControllerTest.class);
 
-    @Autowired private ProjectController        taskController;
     @Autowired private WebApplicationContext    wac;
     @Autowired private FilterChainProxy         springSecurityFilterChain; 
 

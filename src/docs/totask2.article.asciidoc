@@ -44,7 +44,8 @@ ich wollte dabei closures ausprobieren https://java.com/de/[java]. Als Templatin
 _Client Seitig_ benutze ich http://getbootstrap.com//[bootstrap^] für css, 
 http://bootstrapvalidator.com/[bootstrapvalidator^] für einige Client seitige Prüfungen, 
 http://jquery.com/[jquery^] als Java Script Libary, dazu http://www.datatables.net/[datatables^] als Datagrid.
-Ein Chart wird mit http://www.chartjs.org/[Charts.js^] clientseitig erstellt.
+Ein Chart wird mit http://www.chartjs.org/[Charts.js^] clientseitig erstellt, 
+ein Gantt Chart mit https://github.com/thegrubbsian/jquery.ganttView[ganttView].
 Für die kompfortable Auswahl von Usern benutze ich das http://jqueryui.com/autocomplete/[autocomplete plugin^], um
 Suchvorschläge on the fly per REST/json vom Server zu holen.
 Für die UI Zuordnung Projectleiter zu Projekt kommt das http://brianreavis.github.io/selectize.js/[selectize.js] zum Einsatz.
@@ -81,7 +82,7 @@ checkstyle, pmd, findbugs, asciidoc
 .Startseite
 image::images/totask2.startpage.png[screenshot1, 600, 300]
 
-Eine Liste mit allen verwalteten Projekten:
+Eine Liste mit allen verwalteten Projekten: 
 
 [[img-projects]]
 .Projektübersicht
@@ -92,6 +93,13 @@ editierbar das Project, inklusive Projektleiterselektion mit Ajax-Control select
 [[img-editProject]]
 .Projektbearbeitung
 image::images/totask2.editProject.png[screenshot3, 600, 400]
+
+die geplante Projektlaufzeit (je Task und Assignment) als Gantt-Diagramm:
+
+[[img-ganttProject]]
+.Projektanzeige als Gantt Chart
+image::images/totask2.project.gantt.png[screenshot3, 600, 400]
+
 
 Die eigentliche Stundenerfassung für "normale" Nutzer:
 
@@ -130,6 +138,13 @@ Login Seite (integriert mit spring-security):
 image::images/totask2.login.png[screenshot9, 600, 400]
 
 == Entwicklungsumgebung
+
+Entwicklung
+
+[[img-desktop]]
+.desktop developing totask2
+image::images/totask2.dev.desktop.png[screenshot_DEV_0, 600, 400]
+
 
 PlantUML ermgöglicht das einfache Einbetten von UML Diagrammen in die javadoc-Dokumentation:
 

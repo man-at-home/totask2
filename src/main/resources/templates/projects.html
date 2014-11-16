@@ -2,9 +2,11 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 	<title th:text="#{totask2.appname}">totask2 projects</title>
+
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />	
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
+
 	<link rel="stylesheet" type="text/css" href="/css/totask2.css" />
 	<link rel="stylesheet" type="text/css" href="/bootstrap/css/bootstrap.min.css" />
 	<link rel="stylesheet" type="text/css" href="/bootstrap/css/bootstrap-theme.min.css" />
@@ -70,6 +72,12 @@
 								<span class="glyphicon glyphicon-pencil"></span>
 								<span th:text="#{totask2.project.action.edit}">edit..</span>
 							</a>
+							<a th:href="@{/plan/project/{id}(id=${project.id})}"
+							   th:if="${project.isEditAllowed(user)}" 
+								class="btn btn-default">
+								<span class="glyphicon glyphicon-calendar"></span>
+								<span th:text="#{totask2.project.action.projectPlan}">show plan..</span>
+							</a>							
 						</td>
 					</tr>
 				</tbody>

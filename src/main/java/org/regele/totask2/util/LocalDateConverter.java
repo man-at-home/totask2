@@ -20,4 +20,8 @@ public final class LocalDateConverter {
         return ld;
     }    
     
+    
+    public static Date getDate(int days) {
+        return toDate(LocalDate.now().plusDays(days));
+    }
 }

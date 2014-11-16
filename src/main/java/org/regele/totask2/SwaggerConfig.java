@@ -28,6 +28,7 @@ public class SwaggerConfig extends WebMvcConfigurerAdapter {
     public SwaggerConfig() {
         LOG.debug("creating swagger config");
     }
+   
 
     @Bean //Don't forget the @Bean annotation
     public SwaggerSpringMvcPlugin customImplementation(){

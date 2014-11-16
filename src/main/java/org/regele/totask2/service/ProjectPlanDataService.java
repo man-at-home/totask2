@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 import javax.validation.constraints.NotNull;
 
+import org.regele.totask2.controller.ProjectPlanController;
 import org.regele.totask2.controller.ProjectPlanData;
 import org.regele.totask2.model.Project;
 import org.regele.totask2.model.Task;
@@ -15,7 +16,15 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-/** loading and converting project data. */
+/** 
+ * loading and converting {@link Project} data into suitable JSON Objects for gantt chart. 
+ * 
+ * @see Project
+ * @see ProjectPlanData
+ * @see ProjectPlanController
+ * 
+ * @author man-at-home 
+ */
 @Service
 public class ProjectPlanDataService {
 

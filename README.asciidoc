@@ -3,12 +3,13 @@ totask2
 :Author: man-at-home
 :Date:   2014-10-11	
 
-demo application, port of totask to spring mvc. See homepage on http://man-at-home.github.io/totask2/
+demo application, port of totask to spring mvc. 
+
+See homepage on http://man-at-home.github.io/totask2/
+
 
 link:RELEASENOTES.asciidoc[releasenotes]
 
 link:src/docs/totask2.article.asciidoc[documentation]
 
-current documentation on github https://github.com/man-at-home/totask2/blob/master/src/docs/totask2.article.asciidoc
-
-TIP: https://github.com/man-at-home/totask/blob/master/src/docs/totask.article.asciidoc[totask], the ported application, base idea for this application.
+link:src/docs/totask2.developer-manual.asciidoc[dev docs]

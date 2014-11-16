@@ -26,7 +26,8 @@ import com.wordnik.swagger.annotations.Api;
  * project gantt chart rendering (using ganttView).
  * 
  * @see Project
- * @ <a href="https://github.com/thegrubbsian/jquery.ganttView">ganttView</a>
+ * @see TaskAssignment
+ * @see <a href="https://github.com/thegrubbsian/jquery.ganttView">ganttView javascript control</a>
  * 
  * @author man-at-home
  * @since  2014-11-15

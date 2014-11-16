@@ -40,6 +40,7 @@ http://springmvc.org/[springmvc^] als serverseitiges _Web Framework_.
 
 SpringMVC Web Anwendungen werden natürlich in Java programmiert, im vorliegenden Fall bereits mit Java 8 - 
 ich wollte dabei closures ausprobieren https://java.com/de/[java]. Als Templating Engine dazu thymeleaf. 
+Logging erfolgt mit http://logback.qos.ch/[logback/slf4j], Unit Tests mit http://junit.org/[junit].
 
 _Client Seitig_ benutze ich http://getbootstrap.com//[bootstrap^] für css, 
 http://bootstrapvalidator.com/[bootstrapvalidator^] für einige Client seitige Prüfungen, 
@@ -68,6 +69,8 @@ rendern kann, live zu sehen unter https://github.com/man-at-home/totask2/blob/ma
 
 Für das _Build Management_ nutze ich http://www.gradle.org/[gradle^], mit einigen Plugins wie 
 checkstyle, pmd, findbugs, asciidoc
+
+Experimentell ist http://www.seleniumhq.org/[selenium] als Web Test Tool.
 
 === Anforderungen zum Entwickeln
 
@@ -145,6 +148,12 @@ Entwicklung
 .desktop developing totask2
 image::images/totask2.dev.desktop.png[screenshot_DEV_0, 600, 400]
 
+eclipse / springIDE
+
+[[img-ide]]
+.desktop ide
+image::images/totask2.dev.springIDE.png[screenshot_DEV_0b, 600, 400]
+
 
 PlantUML ermgöglicht das einfache Einbetten von UML Diagrammen in die javadoc-Dokumentation:
 
@@ -163,6 +172,20 @@ Die eingebauten REST Aufrufe lassen sich mit der intergrierten Web UI leicht aus
 [[img-swagger]]
 .swagger-ui (interaktive REST Console)
 image::images/totask2.rest.swagger-ui.png[screenshot_DEV_3, 600, 400]
+
+Tests mit junit 4:
+
+[[img-junit]]
+.junit
+image::images/totask2.dev.junit.png[screenshot_DEV_0, 600, 400]
+
+experimentelle Selenium Tests:
+
+
+[[img-selenium]]
+.selenium ide
+image::images/totask2.dev.seleniumIDE.png[screenshot_DEV_20, 600, 400]
+
 
 == Erfahrungen
 

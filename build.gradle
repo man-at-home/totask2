@@ -5,7 +5,6 @@
 
 apply plugin: "java"
 apply plugin: "spring-boot"
-// apply plugin: "tomcat"
 
 apply plugin: "eclipse"
  
@@ -47,9 +46,13 @@ buildscript {
         classpath "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}"  
 	    classpath "org.flywaydb:flyway-gradle-plugin:3.0"	    	    
 	    classpath "org.asciidoctor:asciidoctor-gradle-plugin:1.5.0"
-	    classpath 'be.jlr-home.gradle:plantumlPlugin:0.1.1'	    
-//        classpath 'org.gradle.api.plugins:gradle-tomcat-plugin:1.2.5'
+	    classpath "be.jlr-home.gradle:plantumlPlugin:0.1.1"	    
     }
+}
+
+ext {
+	springVersion     = '4.1.1.RELEASE'
+	seleniumVersion   = '2.44.0'
 }
 
 
@@ -63,8 +66,8 @@ dependencies {
     compile "org.ajar:swagger-spring-mvc-ui:0.2"
 	compile "com.mangofactory:swagger-springmvc:0.9.0"
     
-    compile "org.springframework:spring-context:4.1.1.RELEASE"
-    compile "org.springframework:spring-context-support:4.1.1.RELEASE"
+    compile "org.springframework:spring-context:${springVersion}"
+    compile "org.springframework:spring-context-support:${springVersion}"
     
     compile "org.springframework.boot:spring-boot-starter-thymeleaf"
 	compile "org.springframework.boot:spring-boot-starter-web"
@@ -72,9 +75,14 @@ dependencies {
     compile "org.springframework.boot:spring-boot-starter-security"    
     compile "org.springframework.boot:spring-boot-starter-actuator"
         
-    compile "org.flywaydb:flyway-core"    	
+    compile "org.flywaydb:flyway-core"    
+
+   // compile "org.seleniumhq.selenium:selenium-api:${seleniumVersion}"
+   // compile "org.seleniumhq.selenium:selenium-java:${seleniumVersion}"
+    compile "org.seleniumhq.selenium:selenium-firefox-driver:${seleniumVersion}"
+
     testCompile "org.springframework.boot:spring-boot-starter-test" 
-}
+ }
 
 
 jdependMain {

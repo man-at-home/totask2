@@ -22,7 +22,12 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.wordnik.swagger.annotations.ApiModel;
 import com.wordnik.swagger.annotations.ApiModelProperty;
 
-/** JSON Wrapper of {@link Task} for ganttView. */
+/** 
+ * JSON Wrapper of {@link Task} for ganttView. 
+ * 
+ * @see     ProjectPlanController
+ * @author  man-at-home
+ * */
 @ApiModel(value="ProjectPlanData", description="project task data for ganttView")
 @Component
 public class ProjectPlanData {

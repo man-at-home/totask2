@@ -90,7 +90,7 @@ public class UserControllerTest {
                 )))
         .andExpect(content().string(containsString("\"displayName\":\"predefined admin user\"")))
         .andExpect(content().string(containsString("\"username\":\"admin\"")))
-        .andExpect(content().string(containsString("\"displayName\":\"unit-test user data.sql\"")))
+        .andExpect(content().string(containsString("\"displayName\":\"unit-test user\"")))
         .andExpect(content().string(containsString("\"username\":\"unit-test-user\"")))
         .andReturn();
         

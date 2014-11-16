@@ -4,6 +4,13 @@ totask2 releasenotes
 
 releasenotes for http://man-at-home.github.io/totask2/
 
+.2014-11-16
+- selenium test
+
+.2014-11-15
+- gantt diagramm for projects
+- project leads for projects
+
 .2014-11-03
 - task assignment (new entity)
 - autocompletion for users

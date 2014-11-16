@@ -16,6 +16,9 @@ import org.springframework.security.config.annotation.web.servlet.configuration.
 /**
  * security configuration for this web application.
  * 
+ * @see UserDetailsServiceImpl
+ * @see <a href="http://projects.spring.io/spring-security/">http://projects.spring.io/spring-security/</a>
+ * 
  * @author man-at-home
  * @since 2014-10-12
  */

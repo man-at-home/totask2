@@ -28,8 +28,23 @@ import javax.validation.constraints.NotNull;
 /**
  * mapping {@link User} to {@link Task} he should work on.
  * 
+ * <p>
+ * <br>
+ * <img alt="project-uml" src="doc-files/totask2.design.datamodel.taskAssignment.png">
+ * </p>
  * @author man-at-home
  * @since  2014-10-26 
+ */
+/*
+@startuml doc-files/totask2.design.datamodel.taskAssignment.png
+
+ User            "1" -- "n" TaskAssignment  : may work on
+ TaskAssignment  "n" -- "1" Task            : assigned to 
+
+ TaskAssignment : from    : Date
+ TaskAssignment : until   : Date
+ 
+ @enduml
  */
 @Entity
 @Table(name = "TT_TASK_ASSIGNMENT")

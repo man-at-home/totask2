@@ -1,9 +1,6 @@
 package org.regele.totask2.service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
-
+import org.regele.totask2.controller.UserController;
 import org.regele.totask2.model.User;
 import org.regele.totask2.model.UserRepository;
 import org.regele.totask2.util.UserNotFoundException;
@@ -13,6 +10,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 
 /**
  * basic {@link User} caching, avoiding endless db access.
@@ -31,7 +33,15 @@ public class UserCachingService {
     /** user. */
     @Autowired private UserRepository userRepository;      
     
-    /** cached user access. */
+    /** 
+     * cached {@link User} access. 
+     * 
+     * @see {@link Cacheable} spring Cacheable
+     * 
+     * @see org.regele.totask2.Application#cacheManager()
+     * 
+     * @author man-at-home
+     * */
     @Cacheable("users")
     public List<User> getCachedUsers() {
         List<User> users = userRepository.findAll();
@@ -39,7 +49,9 @@ public class UserCachingService {
         return users;
     }
     
-    /** find user by user.id. */
+    /** find user by user.id. 
+     * @param userId
+     */
     public User getCachedUserById(final long userId) {
         
         return this.getCachedUsers()
@@ -50,23 +62,32 @@ public class UserCachingService {
                 ;
     }
 
-    /** find user by logged in user */
+    /** find user by logged in user 
+     * 
+     * @param authentication currently logged in user (spring security authentication).
+     * */
     public User getCachedUser(final Authentication authentication) {
         
-        if( authentication == null)
-            throw new NullPointerException("no authentication object");
+        if( authentication == null || authentication.getName() == null)
+            throw new NullPointerException("no authentication user/no name [getCachedUser]");
         
         if( authentication.getPrincipal() instanceof User)
             return (User) authentication.getPrincipal(); 
         
         return this.getCachedUsers()
                 .stream()
-                .filter( u -> u.getUsername() == authentication.getName())
+                .filter( u -> u.getUsername().equalsIgnoreCase(authentication.getName()))
                 .findFirst()
                 .orElseThrow( () -> new UserNotFoundException("no user with id " + authentication.getName()))
                 ;
     }
     
+    
+    /** 
+     * providing users by search pattern <u>filter</u> for ui.
+     * 
+     * @see UserController#restUsers(String)
+     */
     public List<User> getCachedUsers(final String filter) {
         List<User> users;
         if( filter == null || filter.length() == 0) {

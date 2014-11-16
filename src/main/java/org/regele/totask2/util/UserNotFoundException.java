@@ -1,6 +1,11 @@
 package org.regele.totask2.util;
 
-
+/** 
+ * user not found ui/http exception. 
+ * 
+ * @see     User
+ * @author  man-at-home
+ */
 public class UserNotFoundException extends ToTaskExceptionBase {
 
     private static final long serialVersionUID = 1L;

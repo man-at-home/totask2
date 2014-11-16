@@ -1,6 +1,7 @@
 package org.regele.totask2;
 
 import org.regele.totask2.controller.AppController;
+import org.regele.totask2.service.UserCachingService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
@@ -18,11 +19,13 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 import com.mangofactory.swagger.plugin.EnableSwagger;
 
 /** 
- * totask2 application starter.
+ * totask2 application starter (spring-boot web application).
  * 
  * @see AppController
+ * @see <a href="https://github.com/man-at-home/totask2">https://github.com/man-at-home/totask2</a>
  * 
  * @author man-at-home 
+ * @since 2014
  */
 @Configuration
 @ComponentScan
@@ -50,7 +53,11 @@ public class Application  extends WebMvcConfigurerAdapter  {
         registry.addViewController("/login").setViewName("login");
     }
     
-    /** caching user list. */
+    /** caching user list.
+     * 
+     * @see UserCachingService
+     * @see User 
+     */
     @Bean
     public CacheManager cacheManager() {
         return new ConcurrentMapCacheManager("users");

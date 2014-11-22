@@ -1,5 +1,7 @@
 package org.regele.totask2.model;
 
+import org.hibernate.envers.AuditTable;
+import org.hibernate.envers.Audited;
 import org.regele.totask2.util.ApplicationAssert;
 import org.regele.totask2.util.LocalDateConverter;
 import org.slf4j.Logger;
@@ -47,7 +49,9 @@ import javax.validation.constraints.NotNull;
  @enduml
  */
 @Entity
+@Audited
 @Table(name = "TT_TASK_ASSIGNMENT")
+@AuditTable("TT_TASK_ASSIGNMENT_HISTORY")
 public class TaskAssignment {
        
     private static final Logger LOG = LoggerFactory.getLogger(TaskAssignment.class);      

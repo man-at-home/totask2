@@ -18,6 +18,9 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.hibernate.envers.AuditTable;
+import org.hibernate.envers.Audited;
+
 // tag::developer-manual-model[] 
 
 /** 
@@ -25,7 +28,9 @@ import javax.validation.constraints.Size;
  * @author man-at-home
  * */
 @Entity                                                     // <1>
+@Audited
 @Table(name = "TT_TASK")
+@AuditTable("TT_TASK_HISTORY")
 public class Task {
    
     @Id                                                     // <2>

@@ -1,6 +1,8 @@
 package org.regele.totask2.model;
 
 
+import org.hibernate.envers.AuditTable;
+import org.hibernate.envers.Audited;
 import org.regele.totask2.service.UserCachingService;
 import org.regele.totask2.service.UserDetailsServiceImpl;
 import org.regele.totask2.util.Authorisation;
@@ -12,6 +14,8 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
+
 
 
 
@@ -58,10 +62,12 @@ import com.wordnik.swagger.annotations.ApiModelProperty;
  * @category ajax
  */
 @Entity
+@Audited
 @ApiModel(description = "user")
 @Table(name = "TT_USER", 
        indexes = {@Index(name = "IDX_TT_USER_NAME", unique = true, columnList = "USER_NAME")}
       )
+@AuditTable("TT_USER_HISTORY")
 public final class User implements UserDetails {
 
     private static final long serialVersionUID = 1L;

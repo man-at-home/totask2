@@ -1,6 +1,7 @@
-= totask2 Entwickler Dokumentation
+﻿= totask2 Entwickler Dokumentation
 :numbered:
 :hide-uri-scheme:
+:testdir:      ../test/java
 :sourcedir:    ../main/java
 :resourcedir:  ../main/resources
 :source-highlighter: highlightjs
@@ -100,3 +101,22 @@ include::{resourcedir}/templates/tasks.html[tags=developer-manual-view]
 ----
 include::{sourcedir}/org/regele/totask2/model/package-info.java[tags=developer-manual-plantuml] 
 ----
+
+
+=== entity versioning
+
+[source,java,indent=0]
+.Project.java 
+----
+include::{sourcedir}/org/regele/totask2/model/Project.java[tags=developer-manual-history-entity] 
+----
+<1> activate versioning.
+<2> specific table name.
+
+
+[source,java,indent=0]
+.ProjectHistoryTest.java 
+----
+include::{testdir}/org/regele/totask2/model/ProjectHistoryTest.java[tags=developer-manual-history-query] 
+----
+

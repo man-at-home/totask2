@@ -59,7 +59,7 @@ _Versionierung_ ist mit git gelöst http://git-scm.com/[git^]. Das Repositoryist
 _Datenhaltung_ wird mit der integrierten  http://www.h2database.com/[h2^] 
 in-memory Datenbank gelöst, zumindest während der Entwicklung. Eine separate qa Datenbank wird mit dem QA Profil angesprochen,
 deren Tabellenstruktur (DDLs) werden mit "Migrations" durch http://flywaydb.org/[flyway^] gepflegt.
-Einige Tabellen sind historisiert, dies wird mit http://de.slideshare.net/jdegler/hibernate-envers[hibernate-envers] realisiert.
+Einige Tabellen/Daten sind historisiert, dies wird mit http://de.slideshare.net/jdegler/hibernate-envers[hibernate-envers] realisiert.
 
 Dieser Artikel und das Readme als _Dokumentation_ sind mit http://asciidoctor.org/docs/asciidoc-writers-guide/[asciidoc^] 
 Markup erstellt. Einige Diagramme sind mit http://plantuml.sourceforge.net/[plantuml^] generiert.
@@ -186,6 +186,10 @@ experimentelle Selenium Tests:
 .selenium ide
 image::images/totask2.dev.seleniumIDE.png[screenshot_DEV_20, 600, 400]
 
+
+== weitere Details
+
+link:totask2.developer-manual.asciidoc[dev docs]
 
 == Erfahrungen
 

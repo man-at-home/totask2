@@ -3,16 +3,16 @@ package org.regele.totask2.controller;
 import org.regele.totask2.model.Project;
 import org.regele.totask2.model.ProjectRepository;
 import org.regele.totask2.model.User;
+import org.regele.totask2.service.AuditingService;
+import org.regele.totask2.service.AuditingService.EntityRevision;
 import org.regele.totask2.service.ReportGenerator;
 import org.regele.totask2.service.ReportGenerator.ReportOutputFormat;
 import org.regele.totask2.service.UserCachingService;
 import org.regele.totask2.util.ApplicationAssert;
 import org.regele.totask2.util.Authorisation;
 import org.regele.totask2.util.ProjectNotFoundException;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.actuate.metrics.CounterService;
 import org.springframework.security.access.annotation.Secured;
@@ -59,6 +59,7 @@ public class ProjectController {
     @Autowired private ReportGenerator      reportGenerator;        
     @Autowired private CounterService       counterService;
     @Autowired private UserCachingService   userCachingService;
+    @Autowired private AuditingService      auditingService;
  
     
     /** REST API: /REST/Projects. */
@@ -213,4 +214,31 @@ public class ProjectController {
                         );
     }
     
+    
+    
+    /** 
+     * show history trail for existing project. GET. 
+     * 
+     * @see AuditingService
+     * 
+     * @param id project.id /project/{id}/history
+     * @exception ProjectNotFoundException
+     * */
+    @RequestMapping(value = "/project/{id}/history", method = RequestMethod.GET)
+    public String showProjectHistory(@PathVariable final long id, final Model model) {
+        
+        LOG.debug("show history of project " + id);
+        
+        Project project = projectRepository.findOne(id);
+        if (project == null) {
+            throw new ProjectNotFoundException("project " + id + " not found to show.");            
+        }
+        
+        List<EntityRevision> history = auditingService.retrieveHistory(project.getClass(), project.getId());
+        
+        model.addAttribute("history", history);  
+        
+        LOG.debug("will show history for " + project);
+        return "historyOfProject";
+    }  
 }//class

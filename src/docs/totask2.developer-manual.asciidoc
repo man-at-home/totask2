@@ -2,6 +2,7 @@
 :numbered:
 :hide-uri-scheme:
 :testdir:      ../test/java
+:selenium:     ../test/selenium
 :sourcedir:    ../main/java
 :resourcedir:  ../main/resources
 :source-highlighter: highlightjs
@@ -12,8 +13,8 @@ v1.0, 2014-11-XX
 
 == Überblick
 
-Das Dokument beschreibt aus Entwicklersicht das 
-Aufsetzen und Weiterentwickeln der Anwendung totask2.
+Das Dokument beschreibt *aus Entwicklersicht* das 
+Aufsetzen und Weiterentwickeln der Anwendung *totask2*.
 
 == Notwendige Umgebung
 
@@ -45,17 +46,17 @@ Dokumentation erstellen (einschließlich diesem Dokument) => `%> gradle allDocs`
 
 [[img-erd]]
 .Datenmodell
-image::images/uml/totask2.design.datamodel.png[screenshot.erd, 500, 300]
+image::images/uml/totask2.design.datamodel.png[screenshot.erd, 200, 100]
 
 === Code Modell
 
 [[img-modules]]
 .Modulübersicht
-image::images/uml/totask2.design.modules.png[screenshot.modules, 700, 400]
+image::images/uml/totask2.design.modules.png[screenshot.modules, 600, 300]
 
 [[img-sequence]]
 .Sequenzdiagramm (Beispielhaft)
-image::images/uml/totask2.design.controllers.png[screenshot.sequence, 700, 400]
+image::images/uml/totask2.design.controllers.png[screenshot.sequence, 600, 300]
 
 
 == Code-Beispiele  
@@ -94,13 +95,55 @@ include::{resourcedir}/templates/tasks.html[tags=developer-manual-view]
 <2> show model attribute from an instance of Task.
 <3> show i18n text from message.properties.
 
-=== plantUML Diagramming
+=== Ajax / Javascript
+
+==== autocomplete
+
+[[img-editAssignment]]
+.Zeiterfassung Ajax Autocompletion
+image::images/totask2.editAssignment.autocomplete.png[screenshot8, 600, 400]
+
+[source,html,indent=0]
+.editTaskAssignment.html (autocomplete jquery html)
+----
+include::{resourcedir}/templates/editTaskAssignment.html[tags=developer-manual-autocompleteControl] 
+----
+<1> hidden reference to selected user for postback.
+<2> the autocomplete control
+<3> results are written back there for detailed display
+
+[source,javascript,indent=0]
+.editTaskAssignment.html (autocomplete jquery plugin)
+----
+include::{resourcedir}/templates/editTaskAssignment.html[tags=developer-manual-autocomplete] 
+----
+<1> url where to get data from (UserController url /users)
+<2> put selected user data back in ui
 
 [source,java,indent=0]
-.package-info.java (plantuml documenentation for JavaDoc)
+.UserController.java
 ----
-include::{sourcedir}/org/regele/totask2/model/package-info.java[tags=developer-manual-plantuml] 
+include::{sourcedir}/org/regele/totask2/controller/UserController.java[tags=developer-manual-autocomplete-backend] 
 ----
+
+==== chart
+
+[[img-weekEntryChart]]
+.weekEntryChart
+image::images/totask2.weekEntry.chart.png[screenshotChart, 600, 400]
+
+[source,javascript,indent=0]
+.weekEntry.html (chart data)
+----
+include::{resourcedir}/templates/weekEntry.html[tags=developer-manual-chartData] 
+----
+
+[source,javascript,indent=0]
+.weekEntry.html (chart ui)
+----
+include::{resourcedir}/templates/weekEntry.html[tags=developer-manual-chart] 
+----
+
 
 
 === entity versioning
@@ -120,3 +163,42 @@ include::{sourcedir}/org/regele/totask2/model/Project.java[tags=developer-manual
 include::{testdir}/org/regele/totask2/model/ProjectHistoryTest.java[tags=developer-manual-history-query] 
 ----
 
+[[img-projectHistory]]
+.ProjectHistory
+image::images/totask2.project.history.png[screenshot.projectHistory, 700, 400]
+
+
+
+=== selenium test
+
+[[img-test]]
+.totask2.test.LoginProjectsLogout.selenium.html
+image::images/totask2.dev.seleniumTest.png[testscript.html, 500, 300]
+
+[[img-test-ide]]
+.test-ide
+image::images/totask2.dev.seleniumIDE.png[screnshot.ide, 500, 300]
+
+=== plantUML diagram
+
+[source,java,indent=0]
+.package-info.java (plantuml documenentation for JavaDoc)
+----
+include::{sourcedir}/org/regele/totask2/model/package-info.java[tags=developer-manual-plantuml] 
+----
+
+[[img-erd2]]
+.Datenmodell2
+image::images/uml/totask2.design.datamodel.png[screenshot2.erd, 200, 100]
+
+=== asciidoctor documentation
+
+[source]
+.task2.developer-manual.asciidoc (this documentation)
+----
+    == Überblick
+
+    Das Dokument beschreibt *aus Entwicklersicht* das...
+    ...
+	include::{resourcedir}/templates/weekEnty.html[tags=developer-manual-chart] 
+----

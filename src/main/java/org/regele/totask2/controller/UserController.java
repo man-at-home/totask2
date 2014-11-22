@@ -37,6 +37,9 @@ public class UserController {
     
     @Autowired private UserCachingService userCachingService;
     
+    
+// tag::developer-manual-autocomplete-backend[]
+    
     /** REST API. get all users the fit the given "term". */
     @Secured(Authorisation.ROLE_ADMIN)
     @ApiIgnore
@@ -45,9 +48,10 @@ public class UserController {
         LOG.debug("/users, term=" + term);
         return userCachingService.getCachedUsers(term);        
     }
+    
+//  end::developer-manual-autocomplete-backend[]
 
     /** REST API. get all users the fit the given "term". */
-//    @Secured(Authorisation.ROLE_ADMIN)
     @RequestMapping(value = "REST/users", method = RequestMethod.GET)
     @Produces("application/json")
     @ApiOperation(value = "REST/users", notes = "return all known users given a search criteria *term*")

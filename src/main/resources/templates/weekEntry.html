@@ -92,7 +92,8 @@
 	    			
 				$('#' + className + '_total').html( sumOneTask ); /* sum work hours for task ${taskInWeek.task.name} */
 	    	}
-	    	
+
+// tag::developer-manual-chartData[]	    	
 	    	var dailyTotals = new Array(6);
 	    	var weekSum = 0;
 	    	for (i = 0; i <= 6; i++) { 
@@ -105,6 +106,7 @@
 	    	$('#week_total').html(weekSum.toFixed(1));	
 	    	
 	    	return dailyTotals;
+// end::developer-manual-chartData[]	    	
 	    }	    
 	    
 		/** sum all hours done for a task for complete week. */
@@ -127,7 +129,7 @@
 		
 		/** draw chart week this weeks data. */
 		function drawWeekEntryChart(dailyTotals) {
-			
+// tag::developer-manual-chart[]			
 			var chartData = {
 				    labels: [ /*[[#{totask2.weekEntry.monday.label}]]*/    "Mon", 
 				              /*[[#{totask2.weekEntry.tuesday.label}]]*/   "Tue", 
@@ -154,6 +156,8 @@
 					chartData,
 					{animationSteps: 20} /* options. */
 					);
+// end::developer-manual-chart[]			
+
 		}
 			
 	

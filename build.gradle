@@ -157,4 +157,10 @@ task allDocs {
 }
 
 
-// todo: start h2 console.. jdbc:h2:c:/data/projects/totask2/totask2.qa.db
+project.gradle.projectsEvaluated {
+    applicationDefaultJvmArgs = ["-Dspring.profiles.active=${project.gradle.startParameter.systemPropertiesArgs['spring.profiles.active']}"]
+}
+
+
+// reminder: start h2 console (starmenue) h2w.bat, connect to jdbc:h2:c:/data/projects/totask2/totask2.qa.db
+// reminder: run qa profile: >gradle bootRun -Dspring.profiles.active=qa

@@ -9,7 +9,7 @@
 :icons:        font
 :toc:          left
 man-at-home
-v1.0, 2014-11-XX
+v1.0, 2014-11-25
 
 == Überblick
 
@@ -20,7 +20,7 @@ Aufsetzen und Weiterentwickeln der Anwendung *totask2*.
 
 * Java JDK 8 (oracle) installieren
 * Gradle download                     http://www.gradle.org
-* git intallieren                     http://git-scm.com
+* git installieren                     http://git-scm.com
 
 TIP: zudem eine IDE (z.B akuelles eclipse)          http://eclipse.org
 
@@ -33,12 +33,15 @@ Das komplette Project mit git clone aus dem master repository von github holen:
 ----
 
 
-== Build
+== Build & Run
 
 Compile und Test des Projects => `%> gradle test`.
 
 Dokumentation erstellen (einschließlich diesem Dokument) => `%> gradle allDocs`.
 
+Run mit InMemory Datenbank => `%> gradle bootRun`
+
+Run mit persistenter Datenbank => `%> gradle bootRun -Dspring.profiles.active=qa`
 
 == Architektur
 
@@ -196,9 +199,45 @@ image::images/uml/totask2.design.datamodel.png[screenshot2.erd, 200, 100]
 [source]
 .task2.developer-manual.asciidoc (this documentation)
 ----
-    == Überblick
+    == Überblick                                                           // <1>
 
-    Das Dokument beschreibt *aus Entwicklersicht* das...
+    Das Dokument beschreibt *aus Entwicklersicht* das...                   // <2>     
     ...
 	include::{resourcedir}/templates/weekEnty.html[tags=developer-manual-chart] 
 ----
+<1> headline
+<2> text with bold (*) part
+
+=== flyway database migrations
+
+automatic database upgrades
+
+[[img-flywayscripts]]
+.flyway script directory
+image::images/totask2.dev.flywayScripts.png[flywayscripts.dir, 700, 400]
+
+
+[source]
+.console with flyway output/commands
+----
+	:testClasses                                                                       
+	:flywayInfo                                                                        
+	+----------------+----------------------------+---------------------+---------+    
+	| Version        | Description                | Installed on        | State   |    
+	+----------------+----------------------------+---------------------+---------+    
+	| 1              | init totask2 db            | 2014-10-26 02:17:37 | Success |    // <1>
+	| 2              | createTestUsersProject.db  | 2014-10-26 02:17:37 | Success |    
+	| 3              | alterTableUsers.db         | 2014-10-26 02:17:37 | Success |    
+	| 4              | alterTablesVarious.db      |                     | Pending |    // <2>
+	| 5              | createHistoryTables.db     |                     | Pending |    
+	+----------------+----------------------------+---------------------+---------+    
+	                                                                                   
+	BUILD SUCCESSFUL       
+
+    >gradle flywayMigrate                                                              // <3>
+
+----
+<1> already deployed scripts
+<2> scripts needing deployment
+<3> deploy scripts to database via command line
+

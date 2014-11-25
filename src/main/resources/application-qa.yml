@@ -5,8 +5,8 @@
 
 app:
    name: totask2
-   description: ${app.name} work entry logging (qa)
-   version: ${version}-qa
+   description: totask work entry logging (qa)
+   version: qa
    jmx:
       enabled: false
 

@@ -3,9 +3,9 @@
 :icons:    font
 :toc:      left
 man-at-home
-v1.1, 2014-11-11
+v1.2, 2014-11-26
 
-eine rudimentäre Projektzeiterfassung 
+totask: eine rudimentäre Projektzeiterfassung 
 
 == die Motivation
 
@@ -14,16 +14,17 @@ totask2 ist eine "Ausrede" um einen wieder einmal willkürlich ausgewählten Sof
 == Beschreibung
 
 totask2 erlaubt eine Erfassung von (Arbeits-) Zeiten zu Projekttasks. Daher verwaltet das Programm
-Entitäten wie Projekt, Task und Arbeitszeit (WorkEntry).
+Entitäten wie Projekt, Task und Arbeitszeit (WorkEntry) und Taskzuordnung zu Usern (TaskAssignment).
+
 
 === Spec
 
-* Ein Administrator darf Projekte anlegen
-* ein Projekt hat ein oder zwei Projektleiter [TBD]
+* Ein Administrator (User) darf Projekte anlegen
+* ein Projekt hat einen oder mehrere Projektleiter (User)
 * Projektleiter könnne Tasks zu Ihren Projekten erfassen
-* jeder Task kann Usern zugeordnet in einem Zeitraum zugeordnet werden, in denen Arbeiten zum Task zulässig sind
+* jeder Task kann Usern (für einem Zeitraum) zugeordnet werden, in diesem dann Arbeiten zum Task zulässig sind (TaskAssignment)
 * jeder User kann Zeiten wochenweise für Tasks erfassen die ihm im Zeitraum zugeordnet sind
-* die Erfassung erfolgt je Tag und Task in Stunden(bruchteilen)
+* die Erfassung erfolgt je Tag und Task in Stunden(bruchteilen) (WorkEntry)
 * die Erfassung kann für die aktuelle und zurückliegende Wochen erfolgen
 * seine erfassten Zeiten kann der User als Excel herunterladen
 
@@ -35,36 +36,35 @@ Hint: obiges Bild nur sichtbar bei lokalem build, nicht auf github.
 
 == Der Software Stack
 
-http://springmvc.org/[springmvc^] als serverseitiges _Web Framework_.
+http://springmvc.org/[springmvc^] als serverseitiges Java _Web Framework_.
 
 SpringMVC Web Anwendungen werden natürlich in Java programmiert, im vorliegenden Fall bereits mit Java 8 - 
-ich wollte dabei closures ausprobieren https://java.com/de/[java]. Als Templating Engine dazu thymeleaf. 
+ich wollte dabei Closures nutzen https://java.com/de/[java]. Als Templating Engine dazu thymeleaf. 
 Logging erfolgt mit http://logback.qos.ch/[logback/slf4j], Unit Tests mit http://junit.org/[junit].
 
 _Client Seitig_ benutze ich http://getbootstrap.com//[bootstrap^] für css, 
 http://bootstrapvalidator.com/[bootstrapvalidator^] für einige Client seitige Prüfungen, 
-http://jquery.com/[jquery^] als Java Script Libary, dazu http://www.datatables.net/[datatables^] als Datagrid.
+http://jquery.com/[jquery^] als JavaScript Libary, dazu http://www.datatables.net/[datatables^] als Datagrid.
 Ein Chart wird mit http://www.chartjs.org/[Charts.js^] clientseitig erstellt, 
 ein Gantt Chart mit https://github.com/thegrubbsian/jquery.ganttView[ganttView].
 Für die kompfortable Auswahl von Usern benutze ich das http://jqueryui.com/autocomplete/[autocomplete plugin^], um
 Suchvorschläge on the fly per REST/json vom Server zu holen.
-Für die UI Zuordnung Projectleiter zu Projekt kommt das http://brianreavis.github.io/selectize.js/[selectize.js] zum Einsatz.
+Für die UI Zuordnung Projektleiter zu Projekt kommt das http://brianreavis.github.io/selectize.js/[selectize.js] zum Einsatz.
 
 Zum _Reporting_ wird http://community.jaspersoft.com/project/jasperreports-library[JasperReports^] genutzt 
-um Excel und PDF zu generieren.
+um Excel und PDF Auswertungen zu generieren.
 
-_Versionierung_ ist mit git gelöst http://git-scm.com/[git^]. Das Repositoryist auf 
- https://github.com/[github^] gehostet.
+_Versionierung_ ist mit git gelöst http://git-scm.com/[git^]. Das Repository ist auf https://github.com/[github^] gehostet.
  
 _Datenhaltung_ wird mit der integrierten  http://www.h2database.com/[h2^] 
 in-memory Datenbank gelöst, zumindest während der Entwicklung. Eine separate qa Datenbank wird mit dem QA Profil angesprochen,
-deren Tabellenstruktur (DDLs) werden mit "Migrations" durch http://flywaydb.org/[flyway^] gepflegt.
+deren Tabellenstruktur (DDLs) wird mit "Migrations" durch http://flywaydb.org/[flyway^] gepflegt.
 Einige Tabellen/Daten sind historisiert, dies wird mit http://de.slideshare.net/jdegler/hibernate-envers[hibernate-envers] realisiert.
 
-Dieser Artikel und das Readme als _Dokumentation_ sind mit http://asciidoctor.org/docs/asciidoc-writers-guide/[asciidoc^] 
-Markup erstellt. Einige Diagramme sind mit http://plantuml.sourceforge.net/[plantuml^] generiert.
+Dieser Artikel und weitere _Dokumentation_ ist mit http://asciidoctor.org/docs/asciidoc-writers-guide/[asciidoc^] 
+Markup erstellt. Einige Diagramme sind mit http://plantuml.sourceforge.net/[plantuml^] erstellt und generiert.
 
-Ein nettes Gimmick ist dass  github  asciidoc Documente "on the fly" direkt aus dem Repository im Browser als Html
+Ein nettes Gimmick, ist dass  github  asciidoc Documente "on the fly" direkt aus dem Repository im Browser als Html
 rendern kann, live zu sehen unter https://github.com/man-at-home/totask2/blob/master/src/docs/totask2.article.asciidoc
 
 Für das _Build Management_ nutze ich http://www.gradle.org/[gradle^], mit einigen Plugins wie 
@@ -80,6 +80,8 @@ Experimentell ist http://www.seleniumhq.org/[selenium] als Web Test Tool.
 
 
 == Ergebnis
+
+hier kurze Blicke auf die laufende Anwendung:
 
 [[img-startpage]]
 .Startseite
@@ -140,9 +142,12 @@ Login Seite (integriert mit spring-security):
 .login
 image::images/totask2.login.png[screenshot9, 600, 400]
 
+
+
+
 == Entwicklungsumgebung
 
-Entwicklung
+Einblicke in die Entwicklung von totask2:
 
 [[img-desktop]]
 .desktop developing totask2
@@ -153,6 +158,13 @@ eclipse / springIDE
 [[img-ide]]
 .desktop ide
 image::images/totask2.dev.springIDE.png[screenshot_DEV_0b, 600, 400]
+
+
+Für die REST Datenquellen stellt swagger-ui einen automatische generierten Client zur Verfügung:
+
+[[img-wagger]]
+.wagger-ui
+image::images/totask2.rest.swagger-ui.png[screenshot_DEV_swagger_0c, 600, 400]
 
 
 PlantUML ermgöglicht das einfache Einbetten von UML Diagrammen in die javadoc-Dokumentation:
@@ -167,11 +179,6 @@ Den Inhalt der Datenbank H2 kann man mit der mitgelieferten Console einsehen und
 .h2console DB Abfragetool
 image::images/totask2.dev.H2Console.png[screenshot_DEV_2, 600, 400]
 
-Die eingebauten REST Aufrufe lassen sich mit der intergrierten Web UI leicht ausprobieren:
-
-[[img-swagger]]
-.swagger-ui (interaktive REST Console)
-image::images/totask2.rest.swagger-ui.png[screenshot_DEV_3, 600, 400]
 
 Tests mit junit 4:
 
@@ -186,10 +193,15 @@ experimentelle Selenium Tests:
 .selenium ide
 image::images/totask2.dev.seleniumIDE.png[screenshot_DEV_20, 600, 400]
 
+git Repository und Versionierung:
+
+[[img-git]]
+.git SourceTree UI
+image::images/totask2.dev.SourceTree.png[screenshot_DEV_20, 600, 400]
 
 == weitere Details
 
-link:totask2.developer-manual.asciidoc[dev docs]
+link:totask2.developer-manual.html[dev docs]
 
 == Erfahrungen
 

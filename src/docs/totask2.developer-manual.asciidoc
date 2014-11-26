@@ -9,24 +9,28 @@
 :icons:        font
 :toc:          left
 man-at-home
-v1.0, 2014-11-25
+v1.2, 2014-11-26
 
 == Überblick
 
-Das Dokument beschreibt *aus Entwicklersicht* das 
-Aufsetzen und Weiterentwickeln der Anwendung *totask2*.
+Das Dokument beschreibt *aus Entwicklersicht* das  Aufsetzen und Weiterentwickeln der Anwendung *totask2*.
+Die Anwendung ist eigentlich nur eine Entschuldigung diverse Bibliotheken und Tools einzusetzen um die 
+Ideen dahinter näher beurteilen zu können.
 
 == Notwendige Umgebung
 
-* Java JDK 8 (oracle) installieren
-* Gradle download                     http://www.gradle.org
-* git installieren                     http://git-scm.com
+Vorbedingung hierzu:
 
-TIP: zudem eine IDE (z.B akuelles eclipse)          http://eclipse.org
+* Java JDK 8 (oracle) installieren
+* Gradle download  als Build System    http://www.gradle.org
+* git installieren zur Versionierung   http://git-scm.com
+
+TIP: zudem eine IDE (z.B akuelles eclipse) http://eclipse.org
 
 == Download
 
-Das komplette Project mit git clone aus dem master repository von github holen:
+Der komplette Quellcode des Projekts lässt sich mit "git clone" aus dem Master Source Repository 
+von github holen.
 
 ----
 %> git clone https://github.com/man-at-home/totask2.git
@@ -35,17 +39,21 @@ Das komplette Project mit git clone aus dem master repository von github holen:
 
 == Build & Run
 
-Compile und Test des Projects => `%> gradle test`.
+Compile und Test des Projekts erfolgt mit => `%> gradle test`.
 
-Dokumentation erstellen (einschließlich diesem Dokument) => `%> gradle allDocs`.
+Dokumentation erstellen (einschließlich diesem Dokument hier) => `%> gradle allDocs`.
 
-Run mit InMemory Datenbank => `%> gradle bootRun`
+Run mit InMemory Datenbank h2 => `%> gradle bootRun`
 
-Run mit persistenter Datenbank => `%> gradle bootRun -Dspring.profiles.active=qa`
+Run mit persistenter Datenbank (die Daten bleiben zwischen den Runs erhalten) => `%> gradle bootRun -Dspring.profiles.active=qa`
 
 == Architektur
 
+Ein kurzer Überblick über die Architektur der Webanwendung totask2.
+
 === Datenmodell
+
+Das Datenmodell der Projektzeiterfassung.
 
 [[img-erd]]
 .Datenmodell
@@ -53,9 +61,13 @@ image::images/uml/totask2.design.datamodel.png[screenshot.erd, 200, 100]
 
 === Code Modell
 
+Überblick über die internen Module von totask2.
+
 [[img-modules]]
 .Modulübersicht
 image::images/uml/totask2.design.modules.png[screenshot.modules, 600, 300]
+
+Schematischer Ablauf eines Requests (Anfrage einer Seite durch den Browser):
 
 [[img-sequence]]
 .Sequenzdiagramm (Beispielhaft)
@@ -64,64 +76,82 @@ image::images/uml/totask2.design.controllers.png[screenshot.sequence, 600, 300]
 
 == Code-Beispiele  
 
+Die Code Beispiele werden "on the fly" bei der Dokumentengenerierung hier in das Dokument übernommen,
+sollten also immer aktuell sein.
 
 === Data Model (JPA)
+
+Die Datenzugriffsschicht mapped Java Domain Objekte mit JPA Annotations (insbl. @Entity) auf relationale
+Datenbanktabellen.
 
 [source,java,indent=0]
 ----
 include::{sourcedir}/org/regele/totask2/model/Task.java[tags=developer-manual-model] 
 ----
-<1> java class maps to database table tt_task.
-<2> attribute maps to database column id (primary key).
-<3> attribute maps to database column name.
+<1> Task Klasse wird in die Tabelle tt_task gespeichert
+<2> Id Attribut entspricht in der Datenbank der Spalte id (primary key)
+<3> Name Attribut mapped zur Spalte name
 
 === Controller (SpringMVC)
+
+Diese SpringMVC Controller Klasse nimmt Browseranfragen auf bestimmten Urls: (hier project/xx/tasks) entgehen
+und schickt Antworten an den Browser zurück.
 
 [source,java,indent=0]
 .Task.java
 ----
 include::{sourcedir}/org/regele/totask2/controller/TaskController.java[tags=developer-manual-controller] 
 ----
-<1> respond to browser GET request on URL /project/xx/tasks.
-<2> load Tasks from db.
-<3> put found Tasks for rendering into view template.
+<1> Zuständig für Browser Anfragen (GET request) mit URL /project/xx/tasks
+<2> Laden der Tasks zum Projekt aus der Datenbankload
+<3> Bereitstellen der Tasks für Rendern der HTML Seite im View Template
 
 
 === View Templates (thymeleaf)
+
+Markup um HTML Antwort (Übersicht von Tasks) bereitzustellen.
 
 [source,html,indent=0]
 .tasks.html
 ----
 include::{resourcedir}/templates/tasks.html[tags=developer-manual-view] 
 ----
-<1> iterating over List<Task> tasks.
-<2> show model attribute from an instance of Task.
-<3> show i18n text from message.properties.
+<1> Geht über eine List von Tasks (List<Task>)
+<2> Zeige für einen Task das Attribut "from"
+<3> Konstanter i18n Text (aus der Datei message.properties)
 
 === Ajax / Javascript
 
 ==== autocomplete
 
+Ajax Funktion bei der Auswahl von Usern (Suchfunktion) bei der Zuordnung von Tasks:
+
 [[img-editAssignment]]
 .Zeiterfassung Ajax Autocompletion
 image::images/totask2.editAssignment.autocomplete.png[screenshot8, 600, 400]
+
+im HTML:
 
 [source,html,indent=0]
 .editTaskAssignment.html (autocomplete jquery html)
 ----
 include::{resourcedir}/templates/editTaskAssignment.html[tags=developer-manual-autocompleteControl] 
 ----
-<1> hidden reference to selected user for postback.
-<2> the autocomplete control
-<3> results are written back there for detailed display
+<1> versteckte Referenz des ausgewählten Users, wird beim Speichern (POST) zum Server gesendet
+<2> das eigentliche autocomplete Control (jquery)
+<3> Detailanzeige gerade gewählter User
+
+JavaScript Client Code für autocomplete Funktion:
 
 [source,javascript,indent=0]
 .editTaskAssignment.html (autocomplete jquery plugin)
 ----
 include::{resourcedir}/templates/editTaskAssignment.html[tags=developer-manual-autocomplete] 
 ----
-<1> url where to get data from (UserController url /users)
-<2> put selected user data back in ui
+<1> URL mit REST/JSON Datenquelle für User (konkret: Klasse UserController url /users)
+<2> JSON Daten der Rückmeldung in Anzeige übernehmen
+
+Hier die REST Datenquelle in der UserController Klasse:
 
 [source,java,indent=0]
 .UserController.java
@@ -131,9 +161,13 @@ include::{sourcedir}/org/regele/totask2/controller/UserController.java[tags=deve
 
 ==== chart
 
+Auf der Erfassungsseite für Zeiten wird direkt bei der Eingabe clientseitig ein Chart der Stunden erzeugt:
+
 [[img-weekEntryChart]]
 .weekEntryChart
 image::images/totask2.weekEntry.chart.png[screenshotChart, 600, 400]
+
+Der Htlm/JavaScript Code hierzu
 
 [source,javascript,indent=0]
 .weekEntry.html (chart data)
@@ -148,17 +182,20 @@ include::{resourcedir}/templates/weekEntry.html[tags=developer-manual-chart]
 ----
 
 
+=== Versionierung von Daten
 
-=== entity versioning
+Einige Stammdaten der Anwendung sind versioniert (sprich: alte Stände werden aufgehoben, historisiert). Dazu
+verwende ich hibernate-envers.
 
 [source,java,indent=0]
 .Project.java 
 ----
 include::{sourcedir}/org/regele/totask2/model/Project.java[tags=developer-manual-history-entity] 
 ----
-<1> activate versioning.
-<2> specific table name.
+<1> Annotation um das Objekt zu versionieren.
+<2> Datenbanktabelle für historische Werte.
 
+Auf alte Werte kann dann mit der envers API zugegriffen werden:
 
 [source,java,indent=0]
 .ProjectHistoryTest.java 
@@ -166,13 +203,17 @@ include::{sourcedir}/org/regele/totask2/model/Project.java[tags=developer-manual
 include::{testdir}/org/regele/totask2/model/ProjectHistoryTest.java[tags=developer-manual-history-query] 
 ----
 
+in der UI:
+
 [[img-projectHistory]]
 .ProjectHistory
 image::images/totask2.project.history.png[screenshot.projectHistory, 700, 400]
 
 
 
-=== selenium test
+=== Selenium Test
+
+Neben Unit Tests mit spring-tests ist auch ein reiner Blackbox test mit Selenium vorbereitet:
 
 [[img-test]]
 .totask2.test.LoginProjectsLogout.selenium.html
@@ -182,7 +223,14 @@ image::images/totask2.dev.seleniumTest.png[testscript.html, 500, 300]
 .test-ide
 image::images/totask2.dev.seleniumIDE.png[screnshot.ide, 500, 300]
 
-=== plantUML diagram
+=== plantUML Diagramm
+
+Die hier gezeigten Diagramme sind mit plantUML erzeugt. Der Charm dabei: 
+
+a) auch das Diagramm ist in Textformat und kann daher gemerged/versioniert werden
+b) es ist direkt im JavaDoc Kommentar enthalten und dementsprechend auch in der daraus generierten HTML Dokumentation. 
+
+Diagramm im Quellcode:
 
 [source,java,indent=0]
 .package-info.java (plantuml documenentation for JavaDoc)
@@ -190,11 +238,17 @@ image::images/totask2.dev.seleniumIDE.png[screnshot.ide, 500, 300]
 include::{sourcedir}/org/regele/totask2/model/package-info.java[tags=developer-manual-plantuml] 
 ----
 
+aufbereitet wird daraus:
+
 [[img-erd2]]
 .Datenmodell2
 image::images/uml/totask2.design.datamodel.png[screenshot2.erd, 200, 100]
 
-=== asciidoctor documentation
+=== asciidoctor Dokumentation
+
+Die Dokumentation zum Projekt (auch dieses Dokument) ist in "asciidoc" erstellt. Eine Markupsprache spezifisch für 
+einfache Dokumentenerstellung. Sie kann in diverse Formate aufbereitet werden (u.a. html, pdf, latex) ist gut les- und
+versionierbar.
 
 [source]
 .task2.developer-manual.asciidoc (this documentation)
@@ -205,17 +259,22 @@ image::images/uml/totask2.design.datamodel.png[screenshot2.erd, 200, 100]
     ...
 	include::{resourcedir}/templates/weekEnty.html[tags=developer-manual-chart] 
 ----
-<1> headline
-<2> text with bold (*) part
+<1> Überschrift
+<2> Text mit teilweise (*) hervorgehobenen Bereichen
 
-=== flyway database migrations
+=== flyway Datenbank Migration
 
-automatic database upgrades
+Die Datenbankstruktur wird im Entwicklungsbetrieb automatisch generiert, für die Test/Produktionsumgebung wird die Struktur
+aber mit Flyway verwaltet. Dieses kleine Tool verwaltet je Datenbank den aktuellen und führt bei Bedarf beim Start der Anwendung
+notwendige Migration am Datenmodell durch.  
+
+Aus den Scripten:
 
 [[img-flywayscripts]]
 .flyway script directory
 image::images/totask2.dev.flywayScripts.png[flywayscripts.dir, 700, 400]
 
+Und eigener Verwaltungstabellen erkennt Flyway den Stand der Datenbank:
 
 [source]
 .console with flyway output/commands
@@ -237,7 +296,35 @@ image::images/totask2.dev.flywayScripts.png[flywayscripts.dir, 700, 400]
     >gradle flywayMigrate                                                              // <3>
 
 ----
-<1> already deployed scripts
-<2> scripts needing deployment
-<3> deploy scripts to database via command line
+<1> bereits installierte Datenbankscripts
+<2> noch fehlende Datenbankscripts
+<3> Kommandozeilenaufruf um Datenbank auf neuesten Stand zu bringen
+
+
+=== gradle Build 
+
+gradle ist ein Groovy basierendes Build System, als alternative zu maven oder ant zu empfehlen.
+
+[source,groovy]
+.gradle.build.output
+----
+\data\projects\toTask2>gradle --daemon allDocs
+
+	:asciidoctor
+	Converting C:\data\projects\toTask2\src\docs\totask2.article.asciidoc
+	Converting C:\data\projects\toTask2\src\docs\totask2.developer-manual.asciidoc
+	Converting C:\data\projects\toTask2\src\docs\totask2.slides.asciidoc
+	:compileJava UP-TO-DATE
+	:processResources UP-TO-DATE
+	:classes UP-TO-DATE
+	:plantuml
+	:javadoc UP-TO-DATE
+	:copyPlantUMLImages UP-TO-DATE
+	:allDocs
+
+	BUILD SUCCESSFUL
+
+	Total time: 31.077 secs
+\data\projects\toTask2>
+----
 

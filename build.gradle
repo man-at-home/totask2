@@ -165,5 +165,10 @@ project.gradle.projectsEvaluated {
 }
 
 
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.2.1'
+}
+
+
 // reminder: start h2 console (starmenue) h2w.bat, connect to jdbc:h2:c:/data/projects/totask2/totask2.qa.db
 // reminder: run qa profile: >gradle bootRun -Dspring.profiles.active=qa

@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"> 
 <head>
 	<title th:text="#{totask2.appname}">totask2 projects</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />	
@@ -47,7 +47,7 @@
 	            $(this).change(function(){   
 	                var data = calculateTotal(false);	/* calculate if value may changed */
 	                updateWeekEntryChart(data);
-	            })
+	            });
 	        });	  
 	        
 	        var dailyTotals = calculateTotal(true);  /* calculate on start */
@@ -68,7 +68,7 @@
 					            classes[this] = this;
 					        }    
 				    });
-			   }
+			   } 
 			});
 			
 			return classes;
@@ -77,7 +77,7 @@
 		/** sum up all week entries in sum field */
 	    function calculateTotal( isFirstCalculation ) 
 	    {
-	    	for (className in taskClassNames) {
+	    	for (var className in taskClassNames) {
 	    		var sumOneTask = sumOneTaskRow('.' + className).toFixed(1);
 	    		var oldSum     = parseFloat($('#' + className + '_total').text());
 	    		
@@ -114,7 +114,7 @@
 	    {
 	        var sum = 0;
 	        $(cssClassOfTask).each(function() {
-	            if(!isNaN(this.value) && this.value.length!=0) {
+	            if(!isNaN(this.value) && this.value.length!==0) {
 	                sum += parseFloat(this.value);
 	            }
 	        });
@@ -123,7 +123,7 @@
 		
 		
 		function updateWeekEntryChart(dailyTotals) {
-				drawWeekEntryChart(dailyTotals)
+				drawWeekEntryChart(dailyTotals);
 		}
 		
 		

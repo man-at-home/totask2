@@ -209,8 +209,10 @@ link:totask2.developer-manual.html[dev docs]
 
 * kein xml, einfach zu durchschauen, 
 * entwicklerfreundliche Bibliotheken
+* springmvc unterstützt den Test der controller gut
 * Datenbank und Datenmodell (it jpa) schlank
 
 === negativ
 
-* bisher noch keine
+* check von html inline JavaScipt mit jshint aufgegeben, gradle plugin kennt --export option nicht
+

@@ -4,6 +4,18 @@ totask2 releasenotes
 
 basic releasenotes for http://man-at-home.github.io/totask2/
 
+.2014-11-29
+- cgi server on openShift (jenkins), gradle wrapper
+
+.2014-11-28
+- github homepage (gh-pages)
+
+.2014-11-27
+- asciidoc documents refreshed
+
+.2014-11-22
+- versioning with hibernate-envers
+
 .2014-11-16
 - selenium test
 

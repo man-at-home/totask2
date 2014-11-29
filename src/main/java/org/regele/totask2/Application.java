@@ -4,7 +4,7 @@ import org.regele.totask2.controller.AppController;
 import org.regele.totask2.service.UserCachingService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.boot.SpringApplication;
+// import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.EnableCaching;
@@ -34,11 +34,12 @@ import com.mangofactory.swagger.plugin.EnableSwagger;
 @EnableCaching
 @EnableSwagger
 public class Application  extends WebMvcConfigurerAdapter  {
-    
+
     private static final Logger LOG = LoggerFactory.getLogger(Application.class);
     
-
-    /** start web application stand alone. */
+/*
+    //** start web application stand alone. *
+       * @deprecated old standalone style app, for container use see ContainerApplication
     public static void main(String[] args) {
         LOG.debug("starting application");
         
@@ -46,6 +47,7 @@ public class Application  extends WebMvcConfigurerAdapter  {
         app.setShowBanner(false);
         app.run(args);
     }
+*/
     
     /** security: show where the login page is. */
     @Override
@@ -65,6 +67,7 @@ public class Application  extends WebMvcConfigurerAdapter  {
     
     /** dummy message. */
     public static String getInfo() {
+        LOG.debug("getInfo");
         return "man-at-homes test spring project";
     }
     

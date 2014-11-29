@@ -1,5 +1,6 @@
 /*
  * gradle build script for totask2 project.
+ *
  * @author man-at-home
  */
 
@@ -19,11 +20,12 @@ apply plugin: "jdepend"
 apply plugin: "build-dashboard"
 
 apply plugin: "org.asciidoctor.gradle.asciidoctor"
-apply plugin: 'plantuml'
-apply plugin: 'flyway'
+apply plugin: "plantuml"
+apply plugin: "flyway"
 
 repositories {
-        maven { url "http://repo.spring.io/libs-release" }
+        maven{ url "http://repo.spring.io/libs-release" }
+
         mavenLocal()
         mavenCentral()
         
@@ -60,7 +62,7 @@ ext {
 
 war {
     baseName = 'totask2'
-    version =  '0.0.1'
+    version =  '0.0.2'
 }
 
 configurations {
@@ -94,7 +96,7 @@ dependencies {
 
     testCompile "org.springframework.boot:spring-boot-starter-test" 
 
-    providedRuntime("org.springframework.boot:spring-boot-starter-tomcat")
+//    providedRuntime("org.springframework.boot:spring-boot-starter-tomcat")
  }
 
 
@@ -104,6 +106,7 @@ jdependMain {
       text.enabled = true
    }
 }
+
 jdependTest {
    reports {
       xml.enabled  = false  
@@ -121,8 +124,6 @@ findbugs {
 checkstyle {
    ignoreFailures = true      
 }
-
-
 
 
 tasks.withType(FindBugs) {
@@ -160,28 +161,45 @@ javadoc {
     options.addBooleanOption("Xdoclint:none").setValue(true)
 }
 
+// enable spring-boot profiles in gradle tasks
+project.gradle.projectsEvaluated {
+    applicationDefaultJvmArgs = ["-Dspring.profiles.active=${project.gradle.startParameter.systemPropertiesArgs['spring.profiles.active']}"]
+}
 
+
+// CUSTOM TASKS
+// ============
+
+// use diagrams from javadoc in asciidoc articles too
 task copyPlantUMLImages(type: Copy) {
     dependsOn    javadoc
+    description "use diagrams from javadoc in asciidoc articles too"
     from fileTree(dir: "$buildDir/docs/javadoc", include: "**/doc-files/*.png").files
     into "$buildDir/docs/asciidoc/images/uml"
 }
 
+// generate all documentation
 task allDocs {
     dependsOn asciidoctor, copyPlantUMLImages 
     description "generation full documenation for totask2"
 }
 
 
-project.gradle.projectsEvaluated {
-    applicationDefaultJvmArgs = ["-Dspring.profiles.active=${project.gradle.startParameter.systemPropertiesArgs['spring.profiles.active']}"]
-}
-
-
+// gradlew.bat script configuration
 task wrapper(type: Wrapper) {
     gradleVersion = '2.2.1'
 }
 
+// deploy into app server (wildlfy 8.1 currently)
+task deployLocal(type: Copy) {
+    dependsOn assemble
+    description "deploy into app server (wildlfy 8.1 currently)"
+    from "$buildDir/libs"
+    include 'totask*.war'
+    into 'c:/dev/wildfly/standalone/deployments'
+}
 
-// reminder: start h2 console (starmenue) h2w.bat, connect to jdbc:h2:c:/data/projects/totask2/totask2.qa.db
+
+// reminder: start h2 console (start-menue) h2w.bat, connect to jdbc:h2:c:/data/projects/totask2/totask2.qa.db
 // reminder: run qa profile: >gradle bootRun -Dspring.profiles.active=qa
+    

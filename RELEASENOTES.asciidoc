@@ -6,6 +6,7 @@ basic releasenotes for http://man-at-home.github.io/totask2/
 
 .2014-11-29
 - cgi server on openShift (jenkins), gradle wrapper
+- deployment wildfly 8.1 locally
 
 .2014-11-28
 - github homepage (gh-pages)

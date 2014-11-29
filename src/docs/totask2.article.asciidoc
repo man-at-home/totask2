@@ -199,12 +199,30 @@ git Repository und Versionierung:
 .git SourceTree UI
 image::images/totask2.dev.SourceTree.png[screenshot_DEV_20, 600, 400]
 
-Automatisierte builds mit dem build Server *jenkins* finden in der cloud auf einer openShift application statt.
-Der Server holt sich den master-Branch von github und generiert Dokumentation und führt einen Testlauf durch.
+
+
+== Deployment
+
+=== Lokal
+
+Neben der einfachsten Ausführung als Stand Alone App hier ein Deployment
+im RedHat WildFly Application Server:
+
+[[img-wildfly]]
+.lokale Installation im wildfly Container 
+image::images/totask2.dev.wildfly.admin.png[screenshot_EE, 600, 400]
+
+=== Cloud
+
+Automatisierte Builds mit dem build Server *jenkins* finden in der _cloud_ auf einer openShift Applikation 
+(== Runtime Umgebung in der cloud von red hat) statt.
+Der Build-Server holt sich den totask2 Source im master-Branch von github und generiert Dokumentation (alternativ: compile).
 
 [[img-jenkins]]
 .jenkins on openshift
 image::images/totask2.cloud.jenkins.png[screenshot_CLOUD_1, 600, 400]
+
+
 
 == weitere Details
 
@@ -221,5 +239,10 @@ link:totask2.developer-manual.html[dev docs]
 
 === negativ
 
+Wo hakt es (noch?)
+
 * check von html inline JavaScipt mit jshint aufgegeben, gradle plugin kennt --export option nicht
+* gradle tests laufen derzeit nicht auf dem jenkins cloud server (incompatibilität gradle 2 und openShift?)
+* bekomme asciidoctor-diagram im gradle build nicht ans laufen, daher mit Umweg (umkopieren der generierten Bilder aus JavaDoc Erzeugung)
+
 

@@ -68,7 +68,7 @@ Ein nettes Gimmick, ist dass  github  asciidoc Documente "on the fly" direkt aus
 rendern kann, live zu sehen unter https://github.com/man-at-home/totask2/blob/master/src/docs/totask2.article.asciidoc
 
 Für das _Build Management_ nutze ich http://www.gradle.org/[gradle^], mit einigen Plugins wie 
-checkstyle, pmd, findbugs, asciidoc
+checkstyle, pmd, findbugs, asciidoc. Ein Build-Server http://jenkins-ci.org/[jenkins] läuft in der cloud (openshift).
 
 Experimentell ist http://www.seleniumhq.org/[selenium] als Web Test Tool.
 
@@ -198,6 +198,13 @@ git Repository und Versionierung:
 [[img-git]]
 .git SourceTree UI
 image::images/totask2.dev.SourceTree.png[screenshot_DEV_20, 600, 400]
+
+Automatisierte builds mit dem build Server *jenkins* finden in der cloud auf einer openShift application statt.
+Der Server holt sich den master-Branch von github und generiert Dokumentation und führt einen Testlauf durch.
+
+[[img-jenkins]]
+.jenkins on openshift
+image::images/totask2.cloud.jenkins.png[screenshot_CLOUD_1, 600, 400]
 
 == weitere Details
 

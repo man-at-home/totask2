@@ -4,6 +4,7 @@
  */
 
 apply plugin: "java"
+apply plugin: "war"
 apply plugin: "spring-boot"
 // apply plugin: "js"
 
@@ -57,6 +58,15 @@ ext {
 	seleniumVersion   = '2.44.0'
 }
 
+war {
+    baseName = 'totask2'
+    version =  '0.0.1'
+}
+
+configurations {
+    providedRuntime
+}
+
 
 dependencies {
     compile "org.apache.poi:poi:3.7"
@@ -81,7 +91,10 @@ dependencies {
         
     compile "org.flywaydb:flyway-core"    
     compile "org.seleniumhq.selenium:selenium-firefox-driver:${seleniumVersion}"
+
     testCompile "org.springframework.boot:spring-boot-starter-test" 
+
+    providedRuntime("org.springframework.boot:spring-boot-starter-tomcat")
  }
 
 

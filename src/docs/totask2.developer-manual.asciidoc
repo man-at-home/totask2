@@ -47,6 +47,24 @@ Run mit InMemory Datenbank h2 => `%> gradle bootRun`
 
 Run mit persistenter Datenbank (die Daten bleiben zwischen den Runs erhalten) => `%> gradle bootRun -Dspring.profiles.active=qa`
 
+== Deployment
+
+Für OpenShift
+
+* generell wird ganz normal .\build.gradle wird verwendet
+* hooks für OpenShift sind
+** .openshift\action_hooks\pre_build 
+** .openshift\action_hooks\build
+** .openshift\action_hooks\deploy
+
+* update der Anwendung in der cloud mit git:
+**
+
+* Zugriff/Monitoring
+** ssh:
+** sftp: _hostname_.rhcloud.com
+** web:  www.openshift.coms
+
 == Architektur
 
 Ein kurzer Überblick über die Architektur der Webanwendung totask2.
@@ -326,5 +344,12 @@ gradle ist ein Groovy basierendes Build System, als alternative zu maven oder an
 
 	Total time: 31.077 secs
 \data\projects\toTask2>
+----
+
+=== Eigene Merker
+
+openShift hooks müssen ausführbar sein unter unix:
+----
+git update-index --chmod=+x .openshift/action_hooks/*
 ----
 

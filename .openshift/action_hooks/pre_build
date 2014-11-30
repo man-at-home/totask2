@@ -1,9 +1,8 @@
 #!/bin/bash
-
+ 
 set -x
 if [ ! -d $OPENSHIFT_DATA_DIR/gradle ]
 then
   cd $OPENSHIFT_DATA_DIR
   mkdir gradle
 fi
-

@@ -72,6 +72,10 @@ checkstyle, pmd, findbugs, asciidoc. Ein Build-Server http://jenkins-ci.org/[jen
 
 Experimentell ist http://www.seleniumhq.org/[selenium] als Web Test Tool.
 
+Als "echter" Appserver für das Deployment fungiert der http://www.wildfly.org/[WildFly Application Server] von redhat.
+Hosting der Anwendung in der cloud erfolgt unter openShift in einer https://developers.openshift.com/en/wildfly-overview.html[WildFly Cardridge].
+
+
 === Anforderungen zum Entwickeln
 
 * java8 jdk and runtime

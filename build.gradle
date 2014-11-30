@@ -190,7 +190,7 @@ task wrapper(type: Wrapper) {
     gradleVersion = '2.2.1'
 }
 
-// deploy into app server (wildlfy 8.1 currently)
+// deploy into local running app server (wildlfy 8.1 currently)
 task deployLocal(type: Copy) {
     dependsOn assemble
     description "deploy into app server (wildlfy 8.1 currently)"
@@ -198,6 +198,16 @@ task deployLocal(type: Copy) {
     include 'totask*.war'
     into 'c:/dev/wildfly/standalone/deployments'
 }
+
+// deploy into cloud server (wildlfy cardridge currently)
+task deployOpenShift(type: Copy) {
+//    dependsOn assemble
+    description "deploy into app server (wildlfy 8.1 - called from action_hook/deploy)"
+    from "$buildDir/libs"
+    include 'totask*.war'
+    into 'deployments'
+}
+
 
 
 // reminder: start h2 console (start-menue) h2w.bat, connect to jdbc:h2:c:/data/projects/totask2/totask2.qa.db

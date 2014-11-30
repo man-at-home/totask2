@@ -4,6 +4,9 @@ totask2 releasenotes
 
 basic releasenotes for http://man-at-home.github.io/totask2/
 
+.2014-11-30
+- created wildfly cardridge on openshift for cloud deployment
+
 .2014-11-29
 - cgi server on openShift (jenkins), gradle wrapper
 - deployment wildfly 8.1 locally

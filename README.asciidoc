@@ -1,7 +1,7 @@
 totask2
 =======
 :Author: man-at-home
-:Date:   2014-10-11	
+:Date:   2014-11-30	
 
 demo application, testing ground for methods and technologies.
 port of my old totask grails app to spring mvc. 

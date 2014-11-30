@@ -15,7 +15,6 @@
  * @author man-at-home
  * @since  2014
  *
- * @category diagram
  */
 /*
  * 

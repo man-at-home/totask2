@@ -3,7 +3,6 @@ package org.regele.totask2.controller;
 import org.regele.totask2.model.TaskInWeek;
 import org.regele.totask2.model.User;
 import org.regele.totask2.model.UserRepository;
-import org.regele.totask2.model.WorkEntry;
 import org.regele.totask2.model.WorkEntryRepository;
 import org.regele.totask2.service.ReportGenerator;
 import org.regele.totask2.service.ReportGenerator.ReportOutputFormat;
@@ -34,11 +33,11 @@ import java.util.stream.Collectors;
 /** main entry page for uses.
  * <ul>
  *  <li>display exactly one week of work</li>
- *  <li>all {@link Task}s assigned to user, one entry per task and day.</li>
+ *  <li>all {@link org.regele.totask2.Task}s assigned to user, one entry per task and day.</li>
  * <ul>
  * 
- * @see WorkEntry
- * @see Task
+ * @see org.regele.totask2.model.WorkEntry
+ * @see org.regele.totask2.model.Task
  * 
  * @author man-at-home
  * @since  2014-08-09
@@ -92,8 +91,8 @@ public class WeekEntryController {
     }
 
 
-    /** GET: provide {@link WorkEntry} data of current week and {@link User}. 
-     * @see       WorkEntry
+    /** GET: provide {@link org.regele.totask2.model.WorkEntry} data of current week and {@link org.regele.totask2.model.User}. 
+     * @see       org.regele.totask2.model.WorkEntry
      */
     @RequestMapping(value = "/weekEntry" , method = RequestMethod.GET)
     public String weekEntry(final Model model) {
@@ -104,10 +103,10 @@ public class WeekEntryController {
     }
     
     
-    /** GET: provide {@link WorkEntry} data of week "dateString" and {@link User}.
+    /** GET: provide {@link org.regele.totask2.model.WorkEntry} data of week "dateString" and {@link User}.
      * 
      * @param dateString dateString of week to display.
-     * @see   WorkEntry
+     * @see   org.regele.totask2.model.WorkEntry
      */  
     @RequestMapping(value = "/weekEntry/{dateString}", method = RequestMethod.GET)
     public String weekEntry(final Model model, @PathVariable final String dateString) {        
@@ -118,9 +117,9 @@ public class WeekEntryController {
     }
     
     
-    /** POST: save all {@link WorkEntry} data for given week and {@link User}. 
+    /** POST: save all {@link org.regele.totask2.model.WorkEntry} data for given week and {@link org.regele.totask2.model.User}. 
      * 
-     * @see       WorkEntry
+     * @see       org.regele.totask2.model.WorkEntry
      * @exception InvalidClientArgumentsException
      * */
     @RequestMapping(value = "/weekEntry/{dateString}", method = RequestMethod.POST)
@@ -178,7 +177,11 @@ public class WeekEntryController {
     
     
         
-    /**  generates an excel report containing given weeks work data. */
+    /**  
+     * generates an excel report containing given weeks work data. 
+     * 
+     * @see ReportGenerator
+     */
     @RequestMapping(value = "/weekEntry/report/{reportFormat}/{dateString}", method = RequestMethod.GET, produces = "application/vnd.ms-excel")
     public ModelAndView getWeekEntryReport(@PathVariable final String reportFormat, @PathVariable final String dateString) {
         

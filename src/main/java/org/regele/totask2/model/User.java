@@ -59,7 +59,6 @@ import com.wordnik.swagger.annotations.ApiModelProperty;
  * 
  * @author man-at-home
  * @since  2015-08-17
- * @category ajax
  */
 @Entity
 @Audited
@@ -230,12 +229,18 @@ public final class User implements UserDetails {
     /** editTaskAssignment.html#user will be used for autocompletion JSON. */
     public String getLabel() { return this.getUsername() + ": " + this.getDisplayName(); }
     
-    
+    /** 
+     * password encoding algorithm.
+     * 
+     * @see #password
+     * @see BCryptPasswordEncoder
+     * @return algorithm
+     */
     public static BCryptPasswordEncoder getPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
-    
+    /** needed implementation. */
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -245,6 +250,7 @@ public final class User implements UserDetails {
         return result;
     }
 
+    /** needed implementation. */
     @Override
     public boolean equals(Object obj) {
         if (this == obj)

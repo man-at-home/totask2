@@ -3,7 +3,7 @@ package org.regele.totask2.util;
 /** 
  * user not found ui/http exception. 
  * 
- * @see     User
+ * @see     org.regele.totask2.model.User
  * @author  man-at-home
  */
 public class UserNotFoundException extends ToTaskExceptionBase {

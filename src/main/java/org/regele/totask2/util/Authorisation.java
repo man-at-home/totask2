@@ -10,10 +10,9 @@ import org.springframework.security.core.Authentication;
 /**
  * helper to check roles of logged in user.
  * 
- * @see User
+ * @see org.regele.totask2.model.User
  * 
  * @author man-at-home
- *
  */
 public class Authorisation {
 
@@ -26,7 +25,7 @@ public class Authorisation {
     /** 
      * user has admin role. 
      * 
-     * @see ROLE_ADMIN
+     * @see #ROLE_ADMIN
      * */
     public static boolean isAdmin(final Authentication auth)  {
         

@@ -9,7 +9,6 @@
  * @author man-at-home
  * @since  2014-11-07 
  *
- * @category diagram
  */
 // tag::developer-manual-plantuml[]
 /*

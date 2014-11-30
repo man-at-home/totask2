@@ -28,11 +28,11 @@ import javax.validation.constraints.NotNull;
 
 
 /**
- * mapping {@link User} to {@link Task} he should work on.
+ * mapping a {@link User} to a {@link Task} he should work on.
  * 
  * <p>
- * <br>
- * <img alt="project-uml" src="doc-files/totask2.design.datamodel.taskAssignment.png">
+ *  <br>
+ *  <img alt="project-uml" src="doc-files/totask2.design.datamodel.taskAssignment.png">
  * </p>
  * @author man-at-home
  * @since  2014-10-26 

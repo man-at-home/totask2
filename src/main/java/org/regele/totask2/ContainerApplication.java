@@ -9,6 +9,13 @@ import org.springframework.boot.context.web.SpringBootServletInitializer;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
+/**
+ * spring boot configuration for deployment on appserver (wildfly).
+ * 
+ * @see <a href="http://www.wildfly.com">wildfly (red hat app server)</a>
+ * @author man-at-home
+ * @since  2014-11-29
+ */
 @Configuration
 @ComponentScan
 @EnableAutoConfiguration

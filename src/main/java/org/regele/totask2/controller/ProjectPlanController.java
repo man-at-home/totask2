@@ -25,8 +25,8 @@ import com.wordnik.swagger.annotations.Api;
 /** 
  * project gantt chart rendering (using ganttView).
  * 
- * @see Project
- * @see TaskAssignment
+ * @see org.regele.totask2.model.Project
+ * @see org.regele.totask2.model.TaskAssignment
  * @see <a href="https://github.com/thegrubbsian/jquery.ganttView">ganttView javascript control</a>
  * 
  * @author man-at-home
@@ -68,7 +68,7 @@ public class ProjectPlanController {
 
     
     /** 
-     * REST: provide {@link Task} data in json form ({@link ProjectPlanData} for rendering gantt chart. 
+     * REST: provide {@link org.regele.totask2.model.Task} data in json form ({@link ProjectPlanData} for rendering gantt chart. 
      * 
      * @param id  project.id /plan/data/project/{id}
      * @exception ProjectNotFoundException

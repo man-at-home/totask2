@@ -155,7 +155,7 @@ flyway {
 
 javadoc {
 	failOnError         = false
-    options.overview    = "overview.html" // relative to source root
+    options.overview    = "src/main/java/overview.html" // relative to source root
 	options.windowTitle = "totask2 api documentation ${version}"	
     options.links( "http://download.oracle.com/javase/8/docs/api/" )
     options.addBooleanOption("Xdoclint:none").setValue(true)

@@ -36,18 +36,7 @@ import com.mangofactory.swagger.plugin.EnableSwagger;
 public class Application  extends WebMvcConfigurerAdapter  {
 
     private static final Logger LOG = LoggerFactory.getLogger(Application.class);
-    
-/*
-    //** start web application stand alone. *
-       * @deprecated old standalone style app, for container use see ContainerApplication
-    public static void main(String[] args) {
-        LOG.debug("starting application");
-        
-        SpringApplication app = new SpringApplication(Application.class);
-        app.setShowBanner(false);
-        app.run(args);
-    }
-*/
+
     
     /** security: show where the login page is. */
     @Override
@@ -55,10 +44,11 @@ public class Application  extends WebMvcConfigurerAdapter  {
         registry.addViewController("/login").setViewName("login");
     }
     
-    /** caching user list.
+    /** 
+     * caching user list.
      * 
      * @see UserCachingService
-     * @see User 
+     * @see org.regele.totask2.model.User
      */
     @Bean
     public CacheManager cacheManager() {

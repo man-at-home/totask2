@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
  * basic {@link User} caching, avoiding endless db access.
  * 
  * @see User 
- * @see #getCachedUsers()
+ * @see #getCachedUsers
  * 
  * @author man-at-home
  * @since  2014-10-28
@@ -34,14 +34,11 @@ public class UserCachingService {
     @Autowired private UserRepository userRepository;      
     
     /** 
-     * cached {@link User} access. 
-     * 
-     * @see {@link Cacheable} spring Cacheable
-     * 
-     * @see org.regele.totask2.Application#cacheManager()
-     * 
+     * cached {@link User} access.
+     *
+     * @see org.regele.totask2.Application#cacheManager
      * @author man-at-home
-     * */
+     */
     @Cacheable("users")
     public List<User> getCachedUsers() {
         List<User> users = userRepository.findAll();

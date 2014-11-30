@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 5.6.1.final using JasperReports Library version 5.6.1  -->
+<!-- 2014-09-27T14:40:23 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="projectsReport.template" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="30" bottomMargin="30" uuid="c910612d-017d-42d9-8ea9-af26c5767211">
+	<parameter name="reportTitle" class="java.lang.String"/>
+	<field name="id" class="java.lang.Long">
+		<fieldDescription><![CDATA[id]]></fieldDescription>
+	</field>
+	<field name="name" class="java.lang.String">
+		<fieldDescription><![CDATA[name]]></fieldDescription>
+	</field>
+	<title>
+		<band height="83" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="0" width="555" height="50" backcolor="#C0C0C0" uuid="3a26a11c-8cc1-44a3-a0a8-27715cb67327"/>
+				<textElement textAlignment="Center" markup="styled">
+					<font size="16"/>
+				</textElement>
+				<text><![CDATA[list of projects
+		]]></text>
+			</staticText>
+			<textField pattern="MMMMM dd, yyyy" isBlankWhenNull="true">
+				<reportElement x="460" y="0" width="94" height="22" uuid="c831efe1-788c-4d44-b1b3-a53e75bbbc56"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<detail>
+		<band height="36" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="136" height="15" uuid="b100726b-19da-4e44-8745-09ba668ddacc"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="136" y="0" width="236" height="15" uuid="87b9af39-c638-41cb-9c33-b88e6a623aa8"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{id}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="35" splitType="Stretch">
+			<staticText>
+				<reportElement x="200" y="0" width="200" height="30" uuid="4d35d367-caba-4e57-9029-67fa4736b512"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[report of projects]]></text>
+			</staticText>
+			<textField evaluationTime="Report">
+				<reportElement x="454" y="5" width="100" height="30" uuid="34ef0d23-9d59-428b-bf50-5795446734fa"/>
+				<textElement textAlignment="Left"/>
+				<textFieldExpression><![CDATA[" of " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="354" y="5" width="100" height="30" uuid="2d1cc2dd-94d8-4998-81ea-6313e549fd8f"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

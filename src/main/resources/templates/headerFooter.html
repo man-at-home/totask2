@@ -1,0 +1,37 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+
+  <body>
+
+	<h1>fragments</h1>
+	
+	<!--  fragments, commonly included in other templates -->
+
+    <div th:fragment="header (pageTitle)">
+    
+     
+    		<div style="float: right;">
+				<form th:action="@{/logout}" method="post">
+					<button type="submit" class="btn btn-sm btn-default" value="sign out" th:title="${#httpServletRequest.remoteUser}">
+						<span class="glyphicon glyphicon-off"></span> <span th:text="#{totask2.logout}">sign out</span>
+					</button>
+				</form>
+			</div>
+			
+			<div class="page-header">
+				<h1 th:text="${pageTitle}">my totask2 application</h1>
+			</div>
+    
+			
+     		<!--  totask2 implementation -->      
+    </div>
+  
+    <footer th:fragment="footer">
+      <hr />
+      &copy; man.at.home (2014)
+    </footer>
+  
+  </body>
+  
+</html>

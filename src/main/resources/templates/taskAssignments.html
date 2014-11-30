@@ -1,0 +1,98 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title th:text="#{totask2.appname}">totask2 assignments</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />	
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<link rel="stylesheet" type="text/css" href="../../../css/totask2.css" />
+	<link rel="stylesheet" type="text/css" href="../../../bootstrap/css/bootstrap.min.css" />
+	<link rel="stylesheet" type="text/css" href="../../../bootstrap/css/bootstrap-theme.min.css" />
+	<link rel="stylesheet" type="text/css" href="../../../css/jquery.dataTables.css" />
+</head>
+<body>
+	<script type="text/javascript" charset="utf8" src="../../../js/jquery-1.11.1.js"></script>
+	<script type="text/javascript" charset="utf8" src="../../../js/jquery.dataTables.js"></script>
+	<script type="text/javascript" charset="utf8" src="../../../bootstrap/js/bootstrap.min.js"></script>
+
+	<script type="text/javascript">
+		/*<![CDATA[*/
+
+		$(document).ready(function() {
+			$('#tableTaskAssignments').dataTable();
+		});
+
+		/*]]>*/
+	</script>
+
+<div class="container paper-box" style="width:70%">
+
+	<div th:replace="headerFooter :: header ( #{totask2.taskAssignments.pageheader} )"></div>
+
+
+	<ul class="nav nav-tabs" role="tablist">
+	  <li><a th:href="@{/}" th:text="#{totask2.nav.home}">home</a></li>
+	  <li><a th:href="@{/task/} + ${task.Id}" th:text="#{totask2.nav.task}">task</a></li>
+	  <li><a th:href="@{/weekEntry}" th:text="#{totask2.nav.weekEntry}">week entry</a></li>
+	</ul>
+
+	<span id="flashMessage"  class="alert-warning" th:unless="${#strings.isEmpty(flashMessage)}"  th:text="${flashMessage}">flashMessage</span>
+
+	<div style="width: 80%">
+	
+	<form action="#" th:action="@{/assignment/delete}" method="post">
+	
+	<br />
+	
+		<table id="tableTaskAssignments" class="display compact cell-border">
+			<caption th:text="${task.name}"></caption>
+			<thead>
+				<tr>
+					<th th:text="#{totask2.taskAssignments.user.label}">user</th>
+					<th th:text="#{totask2.taskAssignments.from.label}">from</th>
+					<th th:text="#{totask2.taskAssignments.until.label}">until</th>
+					<th th:text="#{totask2.taskAssignments.link}" class="dt-left"/>
+				</tr>
+			</thead>
+			<tfoot>
+				<tr>
+					<th /><th /><th />
+				</tr>
+			</tfoot>
+			<tbody>
+				<tr th:each="assignment : ${assignments}">
+					<td th:text="${assignment.user.displayName}">17</td>
+					<td th:text="${assignment.from}">1.1.2014</td>
+					<td th:text="${assignment.until}">12.12.2015</td>
+					<td class="dt-left">
+					
+						<a th:href="@{/assignment/{id}(id=${assignment.id})}" class="btn btn-default" th:if="${isEditAllowed}">
+							<span class="glyphicon glyphicon-pencil"></span>
+							<span th:text="#{totask2.taskAssignments.action.edit}">edit..</span>
+						</a>
+						<button class="btn btn-default" name="id" th:value="${assignment.id}" th:if="${isEditAllowed}">
+							<span class="glyphicon glyphicon-remove"></span>
+							<span th:text="#{totask2.taskAssignments.action.delete}">delete</span>
+						</button>						
+					
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</form>
+	
+	</div>
+	
+	<p> 
+		<a th:href="@{/task/{id}/assignment/new(id=${task.id})}" class="btn btn-default" th:if="${isEditAllowed}">
+			<span class="glyphicon glyphicon-plus"></span>
+			<span th:text="#{totask2.taskAssignments.action.new}">new..</span>
+		</a>
+	</p>
+	
+	
+	<div th:replace="headerFooter :: footer"></div>
+
+</div>	
+</body>
+</html>

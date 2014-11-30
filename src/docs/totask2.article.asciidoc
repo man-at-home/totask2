@@ -1,0 +1,248 @@
+= totask2
+:numbered:
+:icons:    font
+:toc:      left
+man-at-home
+v1.2, 2014-11-26
+
+totask: eine rudimentäre Projektzeiterfassung 
+
+== die Motivation
+
+totask2 ist eine "Ausrede" um einen wieder einmal willkürlich ausgewählten Software-Stack auszuprobieren. 
+
+== Beschreibung
+
+totask2 erlaubt eine Erfassung von (Arbeits-) Zeiten zu Projekttasks. Daher verwaltet das Programm
+Entitäten wie Projekt, Task und Arbeitszeit (WorkEntry) und Taskzuordnung zu Usern (TaskAssignment).
+
+
+=== Spec
+
+* Ein Administrator (User) darf Projekte anlegen
+* ein Projekt hat einen oder mehrere Projektleiter (User)
+* Projektleiter könnne Tasks zu Ihren Projekten erfassen
+* jeder Task kann Usern (für einem Zeitraum) zugeordnet werden, in diesem dann Arbeiten zum Task zulässig sind (TaskAssignment)
+* jeder User kann Zeiten wochenweise für Tasks erfassen die ihm im Zeitraum zugeordnet sind
+* die Erfassung erfolgt je Tag und Task in Stunden(bruchteilen) (WorkEntry)
+* die Erfassung kann für die aktuelle und zurückliegende Wochen erfolgen
+* seine erfassten Zeiten kann der User als Excel herunterladen
+
+[[img-useCases]]
+.unterstützte Usecases
+image::images/uml/totask2.design.usecases.png[screenshot.useCases, 700, 400]
+
+Hint: obiges Bild nur sichtbar bei lokalem build, nicht auf github.
+
+== Der Software Stack
+
+http://springmvc.org/[springmvc^] als serverseitiges Java _Web Framework_.
+
+SpringMVC Web Anwendungen werden natürlich in Java programmiert, im vorliegenden Fall bereits mit Java 8 - 
+ich wollte dabei Closures nutzen https://java.com/de/[java]. Als Templating Engine dazu thymeleaf. 
+Logging erfolgt mit http://logback.qos.ch/[logback/slf4j], Unit Tests mit http://junit.org/[junit].
+
+_Client Seitig_ benutze ich http://getbootstrap.com//[bootstrap^] für css, 
+http://bootstrapvalidator.com/[bootstrapvalidator^] für einige Client seitige Prüfungen, 
+http://jquery.com/[jquery^] als JavaScript Libary, dazu http://www.datatables.net/[datatables^] als Datagrid.
+Ein Chart wird mit http://www.chartjs.org/[Charts.js^] clientseitig erstellt, 
+ein Gantt Chart mit https://github.com/thegrubbsian/jquery.ganttView[ganttView].
+Für die kompfortable Auswahl von Usern benutze ich das http://jqueryui.com/autocomplete/[autocomplete plugin^], um
+Suchvorschläge on the fly per REST/json vom Server zu holen.
+Für die UI Zuordnung Projektleiter zu Projekt kommt das http://brianreavis.github.io/selectize.js/[selectize.js] zum Einsatz.
+
+Zum _Reporting_ wird http://community.jaspersoft.com/project/jasperreports-library[JasperReports^] genutzt 
+um Excel und PDF Auswertungen zu generieren.
+
+_Versionierung_ ist mit git gelöst http://git-scm.com/[git^]. Das Repository ist auf https://github.com/[github^] gehostet.
+ 
+_Datenhaltung_ wird mit der integrierten  http://www.h2database.com/[h2^] 
+in-memory Datenbank gelöst, zumindest während der Entwicklung. Eine separate qa Datenbank wird mit dem QA Profil angesprochen,
+deren Tabellenstruktur (DDLs) wird mit "Migrations" durch http://flywaydb.org/[flyway^] gepflegt.
+Einige Tabellen/Daten sind historisiert, dies wird mit http://de.slideshare.net/jdegler/hibernate-envers[hibernate-envers] realisiert.
+
+Dieser Artikel und weitere _Dokumentation_ ist mit http://asciidoctor.org/docs/asciidoc-writers-guide/[asciidoc^] 
+Markup erstellt. Einige Diagramme sind mit http://plantuml.sourceforge.net/[plantuml^] erstellt und generiert.
+
+Ein nettes Gimmick, ist dass  github  asciidoc Documente "on the fly" direkt aus dem Repository im Browser als Html
+rendern kann, live zu sehen unter https://github.com/man-at-home/totask2/blob/master/src/docs/totask2.article.asciidoc
+
+Für das _Build Management_ nutze ich http://www.gradle.org/[gradle^], mit einigen Plugins wie 
+checkstyle, pmd, findbugs, asciidoc. Ein Build-Server http://jenkins-ci.org/[jenkins] läuft in der cloud (openshift).
+
+Experimentell ist http://www.seleniumhq.org/[selenium] als Web Test Tool.
+
+=== Anforderungen zum Entwickeln
+
+* java8 jdk and runtime
+* git versioning
+* gradle build system
+
+
+== Ergebnis
+
+hier kurze Blicke auf die laufende Anwendung:
+
+[[img-startpage]]
+.Startseite
+image::images/totask2.startpage.png[screenshot1, 600, 300]
+
+Eine Liste mit allen verwalteten Projekten: 
+
+[[img-projects]]
+.Projektübersicht
+image::images/totask2.projects.png[screenshot2, 600, 300]
+
+editierbar das Project, inklusive Projektleiterselektion mit Ajax-Control selectize.js
+
+[[img-editProject]]
+.Projektbearbeitung
+image::images/totask2.editProject.png[screenshot3, 600, 400]
+
+die geplante Projektlaufzeit (je Task und Assignment) als Gantt-Diagramm:
+
+[[img-ganttProject]]
+.Projektanzeige als Gantt Chart
+image::images/totask2.project.gantt.png[screenshot3, 600, 400]
+
+
+Die eigentliche Stundenerfassung für "normale" Nutzer:
+
+[[img-weekEntry]]
+.Zeiterfassung
+image::images/totask2.weekEntry.png[screenshot4, 600, 400]
+
+Diverse Client Seitige (JavaScript/jquery) Funktionalitäten:
+
+[[img-weekEntryClient]]
+.Zeiterfassung Client Funktionen
+image::images/totask2.weekEntry.clientLogic.png[screenshot5, 600, 400]
+
+Eingaben lassen sich als Excel Report herunterladen (Reporting Tool Jasper Reports ist integriert):
+
+[[img-weekEntryReporting]]
+.Zeiterfassung Reporting
+image::images/totask2.weekEntry.reporting.png[screenshot6, 600, 400]
+
+Die Zeiteingaben führen "on the fly" zur graphischen Rückmeldung als Balkendiagramm (chart.js):
+ 
+[[img-weekEntryChart]]
+.Zeiterfassung Chart
+image::images/totask2.weekEntry.chart.png[screenshot7, 600, 400]
+
+Die Benutzereingabe nutzt ein "autocomplete" axax Control von jquery-ui:
+
+[[img-editAssignment]]
+.Zeiterfassung Ajax Autocompletion
+image::images/totask2.editAssignment.autocomplete.png[screenshot8, 600, 400]
+
+Login Seite (integriert mit spring-security):
+
+[[img-login]]
+.login
+image::images/totask2.login.png[screenshot9, 600, 400]
+
+
+
+
+== Entwicklungsumgebung
+
+Einblicke in die Entwicklung von totask2:
+
+[[img-desktop]]
+.desktop developing totask2
+image::images/totask2.dev.desktop.png[screenshot_DEV_0, 600, 400]
+
+eclipse / springIDE
+
+[[img-ide]]
+.desktop ide
+image::images/totask2.dev.springIDE.png[screenshot_DEV_0b, 600, 400]
+
+
+Für die REST Datenquellen stellt swagger-ui einen automatische generierten Client zur Verfügung:
+
+[[img-wagger]]
+.wagger-ui
+image::images/totask2.rest.swagger-ui.png[screenshot_DEV_swagger_0c, 600, 400]
+
+
+PlantUML ermgöglicht das einfache Einbetten von UML Diagrammen in die javadoc-Dokumentation:
+
+[[img-javadoc-plantuml]]
+.javadoc plantuml Dokumentation
+image::images/totask2.dev.JavaDoc.png[screenshot_DEV_1, 600, 400]
+
+Den Inhalt der Datenbank H2 kann man mit der mitgelieferten Console einsehen und ändern:
+
+[[img-db]]
+.h2console DB Abfragetool
+image::images/totask2.dev.H2Console.png[screenshot_DEV_2, 600, 400]
+
+
+Tests mit junit 4:
+
+[[img-junit]]
+.junit
+image::images/totask2.dev.junit.png[screenshot_DEV_0, 600, 400]
+
+experimentelle Selenium Tests:
+
+
+[[img-selenium]]
+.selenium ide
+image::images/totask2.dev.seleniumIDE.png[screenshot_DEV_20, 600, 400]
+
+git Repository und Versionierung:
+
+[[img-git]]
+.git SourceTree UI
+image::images/totask2.dev.SourceTree.png[screenshot_DEV_20, 600, 400]
+
+
+
+== Deployment
+
+=== Lokal
+
+Neben der einfachsten Ausführung als Stand Alone App hier ein Deployment
+im RedHat WildFly Application Server:
+
+[[img-wildfly]]
+.lokale Installation im wildfly Container 
+image::images/totask2.dev.wildfly.admin.png[screenshot_EE, 600, 400]
+
+=== Cloud
+
+Automatisierte Builds mit dem build Server *jenkins* finden in der _cloud_ auf einer openShift Applikation 
+(== Runtime Umgebung in der cloud von red hat) statt.
+Der Build-Server holt sich den totask2 Source im master-Branch von github und generiert Dokumentation (alternativ: compile).
+
+[[img-jenkins]]
+.jenkins on openshift
+image::images/totask2.cloud.jenkins.png[screenshot_CLOUD_1, 600, 400]
+
+
+
+== weitere Details
+
+link:totask2.developer-manual.html[dev docs]
+
+== Erfahrungen
+
+=== positiv
+
+* kein xml, einfach zu durchschauen, 
+* entwicklerfreundliche Bibliotheken
+* springmvc unterstützt den Test der controller gut
+* Datenbank und Datenmodell (it jpa) schlank
+
+=== negativ
+
+Wo hakt es (noch?)
+
+* check von html inline JavaScipt mit jshint aufgegeben, gradle plugin kennt --export option nicht
+* gradle tests laufen derzeit nicht auf dem jenkins cloud server (incompatibilität gradle 2 und openShift?)
+* bekomme asciidoctor-diagram im gradle build nicht ans laufen, daher mit Umweg (umkopieren der generierten Bilder aus JavaDoc Erzeugung)
+
+

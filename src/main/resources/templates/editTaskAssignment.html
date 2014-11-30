@@ -1,0 +1,181 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title th:text="#{totask2.appname}">totask2 edit task assignment</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />	
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<link rel="stylesheet" type="text/css" href="../../css/totask2.css" />
+	<link rel="stylesheet" type="text/css" href="../../css/jquery-ui.min.css" />
+	<link rel="stylesheet" type="text/css" href="../../bootstrap/css/bootstrap.min.css" />
+	<link rel="stylesheet" type="text/css" href="../../bootstrap/css/bootstrap-theme.min.css" />
+	<link rel="stylesheet" type="text/css" href="../../bootstrap/css/bootstrapValidator.min.css"/>	
+</head>
+<body>
+	<script type="text/javascript" charset="utf8" src="../../js/jquery-1.11.1.js"></script>
+	<script type="text/javascript" charset="utf8" src="../../js/jquery-ui.min.js"></script>	
+	<script type="text/javascript" charset="utf8" src="../../bootstrap/js/bootstrap.min.js"></script>
+	<script type="text/javascript" charset="utf8" src="../../bootstrap/js/bootstrapValidator.min.js"></script>
+
+	<script type="text/javascript">
+		/*<![CDATA[*/
+
+			$(document).ready(function() {
+			    $('#taskAssignmentForm').bootstrapValidator();
+			});	  
+
+// tag::developer-manual-autocomplete[]
+		
+			 $(function() {				 
+				    $( "#user" ).autocomplete({
+				      source: "/users",											// <1>
+				      minLength: 2,
+				      select: function(event, ui) {				    	 				    	  
+				    	  if( ui.item ) {
+					    	  // ( ) ? "hier: " + ui.item.username : "-" );
+					    	  $(".userIdRef").val( ui.item.id );				// <2>
+					    	  $(".userNameRef").val( ui.item.username );
+				    	  }
+				      }
+				    });
+				  });
+
+// end::developer-manual-autocomplete[]
+
+		/*]]>*/
+	</script>
+	
+<div class="container paper-box" style="width:70%">
+
+	<div th:replace="headerFooter :: header ( #{totask2.taskAssignment.pageheader} )"></div>
+
+	<ul class="nav nav-tabs" role="tablist">
+	  <li><a th:href="@{/}" th:text="#{totask2.nav.home}">home</a></li>
+	  <li><a th:href="@{/task/} + (${assignment.task} ? ${assignment.task.id} : '' )" th:text="#{totask2.nav.task}">current task</a></li>
+	  <li><a th:href="@{/weekEntry}" th:text="#{totask2.nav.weekEntry}">week entry</a></li>
+	</ul>	
+
+	<span id="flashMessage"  class="alert-warning" th:unless="${#strings.isEmpty(flashMessage)}"  th:text="${flashMessage}">flashMessage</span>	
+	<br/>
+
+	<form id="taskAssignmentForm" action="#" th:action="@{/assignment/save}" th:object="${assignment}" method="post" class="form-horizontal" role="form"
+	                data-bv-feedbackicons-valid="glyphicon glyphicon-ok"
+                    data-bv-feedbackicons-invalid="glyphicon glyphicon-remove"
+                    data-bv-feedbackicons-validating="glyphicon glyphicon-refresh">	
+	
+		<div id="errsg" class="alert alert-danger" role="alert" th:if="${#fields.hasAnyErrors()}">
+				<ul th:if="${#fields.hasAnyErrors()}">
+			  		<li th:each="err : ${#fields.allErrors()}" th:text="${err}">...</li>
+				</ul>
+		</div>
+		<span id="flashMessage" th:text="${flashMessage}">flashMessage</span>
+		
+		 <div class="form-group">		
+			<label th:for="id" th:text="#{totask2.taskAssignment.id.label}" class="col-sm-2 control-label">id</label>
+			<div class="col-sm-10">
+				<input readonly="readonly" type="text" th:field="*{id}" class="readonly"  th:errorclass="fieldError"/>
+			</div>
+		</div>
+
+		 <div class="form-group">		
+			<label th:for="task.name" th:text="#{totask2.taskAssignment.task.label}" class="col-sm-2 control-label">task</label>
+			<div class="col-sm-10">
+				<input readonly="readonly" type="text" th:field="*{task.name}" class="readonly form-control"/>
+			</div>
+		</div>		
+
+<!--
+// tag::developer-manual-autocompleteControl[]
+                -->
+		<input type="hidden" th:field="*{task.id}"/>
+		<input type="hidden" class="userIdRef" th:field="*{user.id}"/>	<!-- // <1> 
+		-->
+		
+		 <div class="form-group">		
+			<label th:for="user" th:text="#{totask2.taskAssignment.user.label}" class="col-sm-2 control-label">user</label>		
+			<div class="col-sm-10">
+				<input 
+				    type="text"
+				    id="user" 
+					class="form-control" 
+					placeholder="user"
+					th:title="#{totask2.taskAssignment.user.help}"
+					maxlength="250"
+					th:field="*{user.displayName}" 
+					th:errorclass="fieldError"
+					data-bv-notempty="true"
+					data-bv-notempty-message="required field"
+				/>																												<!-- // <2> 
+				-->
+
+				<span th:if="${#fields.hasErrors('user')}" class="fieldError" th:errors="*{user}">user is invalid</span>
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<label th:text="#{totask2.taskAssignment.user.name.label}" class="col-sm-2 control-label">user</label>
+			<div class="col-sm-10">
+				<input readonly="readonly" type="text" th:field="*{user.username}" class="readonly form-control userNameRef"/>	<!-- // <3> 
+				--> 
+			</div>
+		</div>
+		
+<!--
+// end::developer-manual-autocompleteControl[]
+                -->
+
+		<div class="form-group">		
+			<label th:for="from" th:text="#{totask2.taskAssignment.from.label}" class="col-sm-2 control-label">from</label>
+			<div class="col-sm-10">
+				<input 
+				    type="date"
+				    min="2014-01-01"
+				    th:title="#{totask2.taskAssignment.from.help}" 
+					class="form-control"
+					placeholder="ddd.mm.yyyy"
+					maxlength="10"
+					th:field="*{startingFrom}" 
+					th:errorclass="fieldError"
+					data-bv-date-format="DD.MM.YYYY"
+					data-bv-date-separator="."
+					data-bv-notempty-message="required field"
+				/>
+				<span th:if="${#fields.hasErrors('from')}" class="fieldError" th:errors="*{from}">from is invalid</span>
+			</div>
+		</div>
+		
+		<div class="form-group">		
+			<label th:for="until" th:text="#{totask2.taskAssignment.until.label}" class="col-sm-2 control-label">until</label>
+			<div class="col-sm-10">
+				<input 
+				    type="date"
+				    th:title="#{totask2.taskAssignment.until.help}"
+				    min="2014-01-01" 
+					class="form-control" 
+					placeholder="dd.mm.yyyy"
+					maxlength="10"
+					th:field="*{validUntil}" 
+					th:errorclass="fieldError"
+					data-bv-date-format="DD.MM.YYYY"
+					data-bv-date-separator="."
+				/>
+				<span th:if="${#fields.hasErrors('until')}" class="fieldError" th:errors="*{until}">until is invalid</span>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<div class="col-sm-offset-2 col-sm-10">
+			<button type="submit" name="saveTaskAssignment" class="btn btn-default" th:value="${assignment.id}">
+				<span class="glyphicon glyphicon-ok"></span>
+				<span th:text="#{totask2.task.action.save}">save</span>
+			</button>		
+			</div>
+		</div>
+
+	</form>
+
+	<div th:replace="headerFooter :: footer"></div>
+	
+</div>	
+</body>
+</html>

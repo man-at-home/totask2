@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" 
+	name="weekEntryReport.template" 
+	pageWidth="595" 
+	pageHeight="842" 
+	columnWidth="555" 
+	leftMargin="20" 
+	rightMargin="20" 
+	topMargin="30" 
+	bottomMargin="30" 
+	uuid="c910612d-017d-42d9-8ea9-af26c5767211">
+
+	<parameter name="reportTitle" class="java.lang.String"/>
+	
+	<field name="taskName" class="java.lang.String">
+		<fieldDescription><![CDATA[task.name]]></fieldDescription>
+	</field>
+	<field name="duration" class="java.lang.Double">
+		<fieldDescription><![CDATA[duration]]></fieldDescription>
+	</field>
+	<field name="day0_duration" class="java.lang.Float">
+		<fieldDescription><![CDATA[dailyEntries[0].duration]]></fieldDescription>
+	</field>
+	<field name="day1_duration" class="java.lang.Float">
+		<fieldDescription><![CDATA[dailyEntries[1].duration]]></fieldDescription>
+	</field>
+	<field name="day2_duration" class="java.lang.Float">
+		<fieldDescription><![CDATA[dailyEntries[2].duration]]></fieldDescription>
+	</field>
+	<field name="day3_duration" class="java.lang.Float">
+		<fieldDescription><![CDATA[dailyEntries[3].duration]]></fieldDescription>
+	</field>
+	<field name="day4_duration" class="java.lang.Float">
+		<fieldDescription><![CDATA[dailyEntries[4].duration]]></fieldDescription>
+	</field>
+	<field name="day5_duration" class="java.lang.Float">
+		<fieldDescription><![CDATA[dailyEntries[5].duration]]></fieldDescription>
+	</field>
+	<field name="day6_duration" class="java.lang.Float">
+		<fieldDescription><![CDATA[dailyEntries[6].duration]]></fieldDescription>
+	</field>
+	
+	
+
+	
+	<title>
+		<band height="83" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="0" width="555" height="50" backcolor="#C0C0C0" uuid="3a26a11c-8cc1-44a3-a0a8-27715cb67327"/>
+				<textElement textAlignment="Center" markup="styled">
+					<font size="16"/>
+				</textElement>
+				<text><![CDATA[a week of work]]></text>
+			</staticText>
+		</band>
+	</title>
+	<detail>
+		<band height="15" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="100" height="15" uuid="b100726b-19da-4e44-8745-09ba668ddacc"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{taskName}]]></textFieldExpression>
+			</textField>
+
+			<textField>
+				<reportElement x="100" y="0" width="50" height="15"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{day0_duration}]]></textFieldExpression>
+			</textField>			
+			<textField>
+				<reportElement x="150" y="0" width="50" height="15"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{day1_duration}]]></textFieldExpression>
+			</textField>			
+			<textField>
+				<reportElement x="200" y="0" width="50" height="15"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{day2_duration}]]></textFieldExpression>
+			</textField>			
+			<textField>
+				<reportElement x="250" y="0" width="50" height="15"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{day3_duration}]]></textFieldExpression>
+			</textField>												
+			<textField>
+				<reportElement x="300" y="0" width="50" height="15"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{day4_duration}]]></textFieldExpression>
+			</textField>			
+			<textField>
+				<reportElement x="350" y="0" width="50" height="15"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{day5_duration}]]></textFieldExpression>
+			</textField>						
+			<textField>
+				<reportElement x="400" y="0" width="50" height="15"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{day6_duration}]]></textFieldExpression>
+			</textField>
+			
+			<textField>
+				<reportElement x="410" y="0" width="50" height="15"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{duration}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="35" splitType="Stretch">
+			<staticText>
+				<reportElement x="200" y="0" width="200" height="30" uuid="4d35d367-caba-4e57-9029-67fa4736b512"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[report of a week]]></text>
+			</staticText>
+			<textField evaluationTime="Report">
+				<reportElement x="454" y="5" width="100" height="30" uuid="34ef0d23-9d59-428b-bf50-5795446734fa"/>
+				<textElement textAlignment="Left"/>
+				<textFieldExpression><![CDATA[" of " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="354" y="5" width="100" height="30" uuid="2d1cc2dd-94d8-4998-81ea-6313e549fd8f"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

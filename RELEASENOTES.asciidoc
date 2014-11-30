@@ -1,0 +1,56 @@
+totask2 releasenotes
+====================
+:Author: man-at-home
+
+basic releasenotes for http://man-at-home.github.io/totask2/
+
+.2014-11-29
+- cgi server on openShift (jenkins), gradle wrapper
+- deployment wildfly 8.1 locally
+
+.2014-11-28
+- github homepage (gh-pages)
+
+.2014-11-27
+- asciidoc documents refreshed
+
+.2014-11-22
+- versioning with hibernate-envers
+
+.2014-11-16
+- selenium test
+
+.2014-11-15
+- gantt diagramm for projects
+- project leads for projects
+
+.2014-11-03
+- task assignment (new entity)
+- autocompletion for users
+
+.2014-10-13
+- flyway migrations
+- qa environment
+
+.2014-10-12
+- spring-security (in-memory face at the moment)
+
+.2014-10-11
+- chart.js bar chart
+
+.2014-10-08
+- bootstrapvalidator
+
+.2014-10-03
+- build upgraded to gradle 2.1
+- ingegrated findbugs
+- upgraded spring to 4.1.1
+- upgraded spring-boot to 1.1.7
+- added this file (releasnotes)
+	
+.2014-09-xx
+- jasper reports integration
+	
+.2014-09-xx
+- datatables integration
+	

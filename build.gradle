@@ -1,0 +1,205 @@
+/*
+ * gradle build script for totask2 project.
+ *
+ * @author man-at-home
+ */
+
+apply plugin: "java"
+apply plugin: "war"
+apply plugin: "spring-boot"
+// apply plugin: "js"
+
+apply plugin: "eclipse"
+ 
+apply plugin: "checkstyle"   // not yet ready for closures
+apply plugin: "findbugs"     
+apply plugin: "pmd"
+apply plugin: "jacoco"
+apply plugin: "jdepend"
+
+apply plugin: "build-dashboard"
+
+apply plugin: "org.asciidoctor.gradle.asciidoctor"
+apply plugin: "plantuml"
+apply plugin: "flyway"
+
+repositories {
+        maven{ url "http://repo.spring.io/libs-release" }
+
+        mavenLocal()
+        mavenCentral()
+        
+        maven{url "http://jasperreports.sourceforge.net/maven2/"}
+        maven{url "http://jaspersoft.artifactoryonline.com/jaspersoft/third-party-ce-artifacts/"}
+}
+
+buildscript {
+
+	ext {
+		springBootVersion = '1.1.8.RELEASE'
+	}
+	
+    repositories {
+        maven { url "http://repo.spring.io/libs-release" }
+        mavenLocal()
+        mavenCentral()
+        jcenter()
+    }
+    
+    dependencies {
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}"  
+	    classpath "org.flywaydb:flyway-gradle-plugin:3.0"	    	    
+	    classpath "org.asciidoctor:asciidoctor-gradle-plugin:1.5.0"
+	    classpath "be.jlr-home.gradle:plantumlPlugin:0.1.1"	    
+//        classpath "com.eriwen:gradle-js-plugin:1.12.1"
+    }
+}
+
+ext {
+	springVersion     = '4.1.1.RELEASE'
+	seleniumVersion   = '2.44.0'
+}
+
+war {
+    baseName = 'totask2'
+    version =  '0.0.2'
+}
+
+configurations {
+    providedRuntime
+}
+
+
+dependencies {
+    compile "org.apache.poi:poi:3.7"
+    compile "org.slf4j:slf4j-api:1.7.7"
+    compile "ch.qos.logback:logback-classic"
+    compile "net.sf.jasperreports:jasperreports:5.6.0"  
+    compile "com.h2database:h2"
+    
+    compile "org.ajar:swagger-spring-mvc-ui:0.2"
+	compile "com.mangofactory:swagger-springmvc:0.9.0"
+    
+    compile "org.springframework:spring-context:${springVersion}"
+    compile "org.springframework:spring-context-support:${springVersion}"
+    
+    compile "org.springframework.boot:spring-boot-starter-thymeleaf"
+	compile "org.springframework.boot:spring-boot-starter-web"
+    compile "org.springframework.boot:spring-boot-starter-data-jpa"
+    compile "org.springframework.boot:spring-boot-starter-security"    
+    compile "org.springframework.boot:spring-boot-starter-actuator"
+    
+    compile "org.hibernate:hibernate-envers:4.3.6.Final"
+        
+    compile "org.flywaydb:flyway-core"    
+    compile "org.seleniumhq.selenium:selenium-firefox-driver:${seleniumVersion}"
+
+    testCompile "org.springframework.boot:spring-boot-starter-test" 
+
+//    providedRuntime("org.springframework.boot:spring-boot-starter-tomcat")
+ }
+
+
+jdependMain {
+   reports {
+      xml.enabled  = false
+      text.enabled = true
+   }
+}
+
+jdependTest {
+   reports {
+      xml.enabled  = false  
+      text.enabled = true
+   }
+}
+
+findbugs {
+        toolVersion    = "3.0.0"
+        ignoreFailures = true
+        effort         = "max"
+        reportLevel    = "high"
+}
+
+checkstyle {
+   ignoreFailures = true      
+}
+
+
+tasks.withType(FindBugs) {
+    reports {
+        xml.enabled  = false
+        html.enabled = true
+    }
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled      = false
+        csv.enabled      = false
+        html.destination = "${buildDir}/reports/jacoco"
+    }
+}
+
+
+asciidoctor {
+    sourceDir    = new File("$projectDir/src/docs")
+    outputDir    = new File("$buildDir/docs/asciidoc")
+    logDocuments = true
+} 
+
+flyway {
+    url = "jdbc:h2:totask2.qa.db"
+    user = 'sa'
+}
+
+javadoc {
+	failOnError         = false
+    options.overview    = "overview.html" // relative to source root
+	options.windowTitle = "totask2 api documentation ${version}"	
+    options.links( "http://download.oracle.com/javase/8/docs/api/" )
+    options.addBooleanOption("Xdoclint:none").setValue(true)
+}
+
+// enable spring-boot profiles in gradle tasks
+project.gradle.projectsEvaluated {
+    applicationDefaultJvmArgs = ["-Dspring.profiles.active=${project.gradle.startParameter.systemPropertiesArgs['spring.profiles.active']}"]
+}
+
+
+// CUSTOM TASKS
+// ============
+
+// use diagrams from javadoc in asciidoc articles too
+task copyPlantUMLImages(type: Copy) {
+    dependsOn    javadoc
+    description "use diagrams from javadoc in asciidoc articles too"
+    from fileTree(dir: "$buildDir/docs/javadoc", include: "**/doc-files/*.png").files
+    into "$buildDir/docs/asciidoc/images/uml"
+}
+
+// generate all documentation
+task allDocs {
+    dependsOn asciidoctor, copyPlantUMLImages 
+    description "generation full documenation for totask2"
+}
+
+
+// gradlew.bat script configuration
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.2.1'
+}
+
+// deploy into app server (wildlfy 8.1 currently)
+task deployLocal(type: Copy) {
+    dependsOn assemble
+    description "deploy into app server (wildlfy 8.1 currently)"
+    from "$buildDir/libs"
+    include 'totask*.war'
+    into 'c:/dev/wildfly/standalone/deployments'
+}
+
+
+// reminder: start h2 console (start-menue) h2w.bat, connect to jdbc:h2:c:/data/projects/totask2/totask2.qa.db
+// reminder: run qa profile: >gradle bootRun -Dspring.profiles.active=qa
+    

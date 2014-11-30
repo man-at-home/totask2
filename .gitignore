@@ -1,0 +1,11 @@
+/bin/
+/gradle/
+/.gradle/
+/.gemcache/
+/.settings/
+/gradlew.bat
+/totask2.logback.log
+/build/
+/totask2.qa.db.h2.db
+/totask2.qa.db.trace.db
+/totask2.qa.db.lock.db

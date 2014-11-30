@@ -1,0 +1,138 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title th:text="#{totask2.appname}">totask2 edit project</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />	
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	
+	<link rel="stylesheet" type="text/css" href="../css/totask2.css" />
+	<link rel="stylesheet" type="text/css" href="../bootstrap/css/bootstrap.min.css" />
+	<link rel="stylesheet" type="text/css" href="../bootstrap/css/bootstrap-theme.min.css" />
+	<link rel="stylesheet" type="text/css" href="../bootstrap/css/bootstrapValidator.min.css"/>
+	<link rel="stylesheet" type="text/css" href="../css/jquery.dataTables.css" />
+	<link rel="stylesheet" type="text/css" href="../css/selectize.bootstrap3.css" />
+	
+</head>
+<body>
+	<script type="text/javascript" charset="utf8" src="../js/jquery-1.11.1.js"></script>
+	<script type="text/javascript" charset="utf8" src="../bootstrap/js/bootstrap.min.js"></script>
+	<script type="text/javascript" charset="utf8" src="../bootstrap/js/bootstrapValidator.min.js"></script>
+	<script type="text/javascript" charset="utf8" src="../js/selectize.js"></script>
+
+	<script type="text/javascript">
+		/*<![CDATA[*/
+
+			$(document).ready(function() {
+				
+			    $('#projectForm').bootstrapValidator();
+			    
+			    $('#leadsSelect').selectize({
+			    	plugins: ['remove_button'],
+			        maxItems: 3
+			    });
+			});	           
+
+		/*]]>*/
+	</script>
+	
+<div class="container paper-box" style="width:70%">
+
+	<div th:replace="headerFooter :: header (#{totask2.project.pageheader})"></div>
+	
+	<ul class="nav nav-tabs" role="tablist">
+	  <li><a th:href="@{/}" th:text="#{totask2.nav.home}">home</a></li>
+	  <li><a th:href="@{/projects}" th:text="#{totask2.nav.projects}">projects</a></li>
+	  <li><a th:href="@{/weekEntry}" th:text="#{totask2.nav.weekEntry}">home</a></li>
+	</ul>	
+	
+	<span id="flashMessage"  class="alert-warning" th:unless="${#strings.isEmpty(flashMessage)}"  th:text="${flashMessage}">flashMessage</span>
+	<br />
+
+	<form id="projectForm" action="#" method="post" class="form-horizontal" role="form"
+					th:action="@{/project/save}" 
+					th:object="${project}"  
+	                data-bv-feedbackicons-valid="glyphicon glyphicon-ok"
+                    data-bv-feedbackicons-invalid="glyphicon glyphicon-remove"
+                    data-bv-feedbackicons-validating="glyphicon glyphicon-refresh">		
+                    
+		<ul th:if="${#fields.hasAnyErrors()}">
+		  <li class="fieldError alert alert-danger" th:each="err : ${#fields.allErrors()}" th:text="${err}">...</li>
+		</ul>
+
+		
+		 <div class="form-group">
+			<label th:for="id" th:text="#{totask2.project.id.label}" class="col-sm-2 control-label">Id:</label>
+			<div class="col-sm-10">
+			<input readonly="readonly" type="text" th:field="*{id}" class="readonly form-control"  th:errorclass="fieldError"/>
+			</div>
+		</div>
+		
+		
+		 <div class="form-group">
+			<label th:for="name" th:text="#{totask2.project.name.label}" class="col-sm-2 control-label">Name:</label>
+			<div class="col-sm-10">
+			<input 
+				type="text" 
+				class="form-control"
+				placeholder="project name"
+				maxlength="250"
+				th:field="*{name}" 
+				th:errorclass="fieldError"
+				data-bv-notempty="true"
+				data-bv-notempty-message="required field"
+				data-bv-stringlength="true"
+				data-bv-stringlength-min="2"
+                data-bv-stringlength-max="250"
+                data-bv-stringlength-message="invalid length"
+			/>
+			<span th:if="${#fields.hasErrors('name')}" class="fieldError" th:errors="*{name}">Name is invalid</span>
+			</div>
+		</div>
+		
+		
+		<div class="form-group">
+			<label for="leadsSelect" th:text="#{totask2.project.projectLeads.label}" class="col-sm-2 control-label">Lead:</label>
+			<div class="col-sm-10">			
+				    <select id="leadsSelect" 
+				            class="form-control"
+				            multiple="multiple"
+				            th:field="*{projectLeads}">
+				            				        
+				        <option th:each="lead : ${projectLeads}"
+				        		th:text="${lead.label}"
+				                th:value="${{lead.id}}">
+				        </option>   
+    				</select>			
+			</div>
+		</div>
+
+		<br />
+		
+		<div class="form-group">
+		<div class="col-sm-offset-2 col-sm-10">
+			<button type="submit" class="btn btn-primary" name="saveProject" th:value="${project.id}"  th:if="${isEditAllowed}" th:text="#{totask2.project.action.save}">save</button>
+		</div>
+		</div>
+		
+		<div class="form-group">
+		<div class="col-sm-offset-2 col-sm-10">
+			<br/><br/>
+			<a th:href="@{/project/{id}/tasks(id=${project.id})}"  class="btn btn-default"  th:text="#{totask2.project.action.tasks}">tasks..</a>
+			<br/><br/>
+			<a th:href="@{/plan/project/{id}(id=${project.id})}"   class="btn btn-default"  th:text="#{totask2.project.action.projectPlan}">show plan</a>
+			<br/><br/>
+			<a th:href="@{/project/{id}/history(id=${project.id})}" class="btn btn-default" target="_blank" th:text="#{totask2.project.action.projectHistory}">show history..</a>
+		</div>
+		</div>
+		
+	</form>
+	
+	<br/>
+	
+	<div th:replace="headerFooter :: footer"></div>
+	     
+	
+</div>
+</body>
+</html>

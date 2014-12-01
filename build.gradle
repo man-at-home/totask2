@@ -61,8 +61,7 @@ ext {
 }
 
 war {
-    baseName = 'totask2'
-    version =  '0.0.2'
+    archiveName = 'ROOT.war'
 }
 
 configurations {
@@ -195,17 +194,18 @@ task deployLocal(type: Copy) {
     dependsOn assemble
     description "deploy into app server (wildlfy 8.1 currently)"
     from "$buildDir/libs"
-    include 'totask*.war'
+    include '*.war'
     into 'c:/dev/wildfly/standalone/deployments'
 }
 
 // deploy into cloud server (wildlfy cardridge currently)
 task deployOpenShift(type: Copy) {
-//    dependsOn assemble
+    dependsOn assemble
     description "deploy into app server (wildlfy 8.1 - called from action_hook/deploy)"
     from "$buildDir/libs"
-    include 'totask*.war'
-    into 'deployments'
+    include '*.war'    
+    into 'deployments'  
+//    rename { String fileName -> "ROOT.war" }
 }
 
 

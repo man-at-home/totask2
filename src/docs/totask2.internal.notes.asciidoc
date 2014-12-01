@@ -1,0 +1,36 @@
+= totask2 Entwicklernotizen
+:numbered:
+:hide-uri-scheme:
+:testdir:      ../test/java
+:sourcedir:    ../main/java
+:resourcedir:  ../main/resources
+:source-highlighter: highlightjs
+:icons:        font
+:toc:          left
+man-at-home
+v1.2, 2014-12-01
+
+== Überblick
+
+== Scripts
+
+.build
+----
+#!/bin/bash
+set -x
+ 
+cd $OPENSHIFT_REPO_DIR
+export GRADLE_USER_HOME=$OPENSHIFT_DATA_DIR/gradle
+
+./gradlew -s assemble
+----
+
+.pre_build
+----
+#!/bin/bash
+
+cd $OPENSHIFT_REPO_DIR
+export GRADLE_USER_HOME=$OPENSHIFT_DATA_DIR/gradle
+
+./gradlew deployOpenShift
+----

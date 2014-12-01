@@ -67,8 +67,14 @@ Für OpenShift
 ** web:  http://www.openshift.com
 
 [[img-sftp]]
-.sftp openShift
-image::images/uml/totask2.cloud.sftp.png[screenshot.sftp, 400, 200]
+.sftp to openShift gear
+image::images/totask2.cloud.wildfly.deploy.png[screenshot.sftp, 400, 200]
+
+
+[[img-rhc]]
+.rhc command line openShift
+image::images/totask2.cloud.rhc.png[screenshot.sftp, 400, 200]
+ 
 
 
 == Architektur

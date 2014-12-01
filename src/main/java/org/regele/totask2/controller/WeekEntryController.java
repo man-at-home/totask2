@@ -33,7 +33,7 @@ import java.util.stream.Collectors;
 /** main entry page for uses.
  * <ul>
  *  <li>display exactly one week of work</li>
- *  <li>all {@link org.regele.totask2.Task}s assigned to user, one entry per task and day.</li>
+ *  <li>all {@link org.regele.totask2.model.Task}s assigned to user, one entry per task and day.</li>
  * <ul>
  * 
  * @see org.regele.totask2.model.WorkEntry

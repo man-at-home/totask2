@@ -61,7 +61,7 @@ ext {
 }
 
 war {
-    archiveName = 'ROOT.war'
+    archiveName = 'totask2.war'
 }
 
 configurations {

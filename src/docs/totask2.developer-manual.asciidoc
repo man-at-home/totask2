@@ -9,7 +9,7 @@
 :icons:        font
 :toc:          left
 man-at-home
-v1.2, 2014-11-26
+v1.3, 2014-12-02
 
 == Überblick
 
@@ -59,21 +59,22 @@ Für OpenShift
 
 * update der Anwendung in der cloud mit git:
 ** `git push cloud`
-** remote clould: `ssh://5******4@h***e.rhcloud.com/~/git/host.git/`
+** remote: `ssh://5******4@h***e.rhcloud.com/~/git/host.git/`
 
 * Zugriff/Monitoring
-** ssh:
-** sftp: _hostname_.rhcloud.com
 ** web:  http://www.openshift.com
+** ssh:  wie auf openShift Seite zur Anwendung angegeben
+** sftp: _hostname_.rhcloud.com
+** commandline: rhc Kommandos
 
 [[img-sftp]]
 .sftp to openShift gear
-image::images/totask2.cloud.wildfly.deploy.png[screenshot.sftp, 400, 200]
+image::images/totask2.cloud.wildfly.deploy.png[screenshot.sftp, 500, 300]
 
 
 [[img-rhc]]
 .rhc command line openShift
-image::images/totask2.cloud.rhc.png[screenshot.sftp, 400, 200]
+image::images/totask2.cloud.rhc.png[screenshot.sftp, 500, 300]
  
 
 
@@ -258,6 +259,7 @@ image::images/totask2.dev.seleniumIDE.png[screnshot.ide, 500, 300]
 Die hier gezeigten Diagramme sind mit plantUML erzeugt. Der Charm dabei: 
 
 a) auch das Diagramm ist in Textformat und kann daher gemerged/versioniert werden
+
 b) es ist direkt im JavaDoc Kommentar enthalten und dementsprechend auch in der daraus generierten HTML Dokumentation. 
 
 Diagramm im Quellcode:
@@ -295,8 +297,7 @@ versionierbar.
 === flyway Datenbank Migration
 
 Die Datenbankstruktur wird im Entwicklungsbetrieb automatisch generiert, für die Test/Produktionsumgebung wird die Struktur
-aber mit Flyway verwaltet. Dieses kleine Tool verwaltet je Datenbank den aktuellen und führt bei Bedarf beim Start der Anwendung
-notwendige Migration am Datenmodell durch.  
+aber mit Flyway verwaltet. Dieses kleine Tool verwaltet je Datenbank deren aktuellen Releasestand und führt bei Bedarf beim Start der Anwendung notwendige Migrationen am Datenmodell (Upgrade) durch.  
 
 Aus den Scripten:
 
@@ -333,7 +334,7 @@ Und eigener Verwaltungstabellen erkennt Flyway den Stand der Datenbank:
 
 === gradle Build 
 
-gradle ist ein Groovy basierendes Build System, als alternative zu maven oder ant zu empfehlen.
+gradle ist ein Groovy basierendes Build System, als Alternative zu den bekannteren Build-Tools maven oder ant zu empfehlen.
 
 [source,groovy]
 .gradle.build.output
@@ -358,10 +359,4 @@ gradle ist ein Groovy basierendes Build System, als alternative zu maven oder an
 \data\projects\toTask2>
 ----
 
-=== Eigene Merker
-
-openShift hooks müssen ausführbar sein unter unix:
-----
-git update-index --chmod=+x .openshift/action_hooks/*
-----
 

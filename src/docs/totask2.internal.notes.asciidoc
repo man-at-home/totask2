@@ -8,7 +8,7 @@
 :icons:        font
 :toc:          left
 man-at-home
-v1.2, 2014-12-01
+v1.3, 2014-12-02
 
 == Überblick
 
@@ -33,4 +33,12 @@ cd $OPENSHIFT_REPO_DIR
 export GRADLE_USER_HOME=$OPENSHIFT_DATA_DIR/gradle
 
 ./gradlew deployOpenShift
+----
+
+
+== Eigene Merker
+
+openShift hooks müssen ausführbar sein unter unix:
+----
+git update-index --chmod=+x .openshift/action_hooks/*
 ----

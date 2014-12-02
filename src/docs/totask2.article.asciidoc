@@ -1,9 +1,9 @@
-= totask2
-:numbered:
+= totask2 Überblick
+:numbered: 
 :icons:    font
 :toc:      left
 man-at-home
-v1.2, 2014-11-26
+v1.3, 2014-12-02
 
 totask: eine rudimentäre Projektzeiterfassung 
 
@@ -38,42 +38,42 @@ Hint: obiges Bild nur sichtbar bei lokalem build, nicht auf github.
 
 http://springmvc.org/[springmvc^] als serverseitiges Java _Web Framework_.
 
-SpringMVC Web Anwendungen werden natürlich in Java programmiert, im vorliegenden Fall bereits mit Java 8 - 
-ich wollte dabei Closures nutzen https://java.com/de/[java]. Als Templating Engine dazu thymeleaf. 
+SpringMVC Web Anwendungen werden natürlich in Java programmiert. Im vorliegenden Fall bereits mit https://java.com/de/[Java 8]
+da ich dabei Closures nutzen wollte. Als Templating Engine für HTML wird dabei http://www.thymeleaf.org/[thymeleaf] verwendet. 
 Logging erfolgt mit http://logback.qos.ch/[logback/slf4j], Unit Tests mit http://junit.org/[junit].
 
 _Client Seitig_ benutze ich http://getbootstrap.com//[bootstrap^] für css, 
 http://bootstrapvalidator.com/[bootstrapvalidator^] für einige Client seitige Prüfungen, 
-http://jquery.com/[jquery^] als JavaScript Libary, dazu http://www.datatables.net/[datatables^] als Datagrid.
+http://jquery.com/[jquery^] als JavaScript Library, dazu http://www.datatables.net/[datatables^] als Datagrid.
 Ein Chart wird mit http://www.chartjs.org/[Charts.js^] clientseitig erstellt, 
 ein Gantt Chart mit https://github.com/thegrubbsian/jquery.ganttView[ganttView].
 Für die kompfortable Auswahl von Usern benutze ich das http://jqueryui.com/autocomplete/[autocomplete plugin^], um
 Suchvorschläge on the fly per REST/json vom Server zu holen.
-Für die UI Zuordnung Projektleiter zu Projekt kommt das http://brianreavis.github.io/selectize.js/[selectize.js] zum Einsatz.
+Für die UI Zuordnung Projektleiter zu Projekt kommt das Control http://brianreavis.github.io/selectize.js/[selectize.js] zum Einsatz.
 
-Zum _Reporting_ wird http://community.jaspersoft.com/project/jasperreports-library[JasperReports^] genutzt 
+Für _Reporting_ wird http://community.jaspersoft.com/project/jasperreports-library[JasperReports^] genutzt 
 um Excel und PDF Auswertungen zu generieren.
 
-_Versionierung_ ist mit git gelöst http://git-scm.com/[git^]. Das Repository ist auf https://github.com/[github^] gehostet.
+_Versionierung_ ist mit http://git-scm.com/[git] gelöst. Das Repository ist auf https://github.com/[github^] gehostet.
  
 _Datenhaltung_ wird mit der integrierten  http://www.h2database.com/[h2^] 
-in-memory Datenbank gelöst, zumindest während der Entwicklung. Eine separate qa Datenbank wird mit dem QA Profil angesprochen,
+in-Memory Datenbank gelöst, zumindest während der Entwicklung. Eine separate qa Datenbank wird mit dem QA Profil angesprochen,
 deren Tabellenstruktur (DDLs) wird mit "Migrations" durch http://flywaydb.org/[flyway^] gepflegt.
 Einige Tabellen/Daten sind historisiert, dies wird mit http://de.slideshare.net/jdegler/hibernate-envers[hibernate-envers] realisiert.
 
 Dieser Artikel und weitere _Dokumentation_ ist mit http://asciidoctor.org/docs/asciidoc-writers-guide/[asciidoc^] 
 Markup erstellt. Einige Diagramme sind mit http://plantuml.sourceforge.net/[plantuml^] erstellt und generiert.
-
-Ein nettes Gimmick, ist dass  github  asciidoc Documente "on the fly" direkt aus dem Repository im Browser als Html
-rendern kann, live zu sehen unter https://github.com/man-at-home/totask2/blob/master/src/docs/totask2.article.asciidoc
+Ein nettes Gimmick: github kann asciidoc Documente "on the fly" direkt aus dem Repository im Browser als Html
+rendern. Live zu sehen unter https://github.com/man-at-home/totask2/blob/master/src/docs/totask2.article.asciidoc
 
 Für das _Build Management_ nutze ich http://www.gradle.org/[gradle^], mit einigen Plugins wie 
-checkstyle, pmd, findbugs, asciidoc. Ein Build-Server http://jenkins-ci.org/[jenkins] läuft in der cloud (openshift).
+checkstyle, pmd, findbugs, asciidoctor. Ein Build-Server http://jenkins-ci.org/[jenkins] läuft in der cloud (openshift).
 
 Experimentell ist http://www.seleniumhq.org/[selenium] als Web Test Tool.
 
-Als "echter" Appserver für das Deployment fungiert der http://www.wildfly.org/[WildFly Application Server] von redhat.
-Hosting der Anwendung in der cloud erfolgt unter openShift in einer https://developers.openshift.com/en/wildfly-overview.html[WildFly Cardridge].
+Als "echter" Appserver für das Deployment fungiert der http://www.wildfly.org/[WildFly Application Server] von redhat - sowohl lokal installiert als auch in der cloud.
+
+Hosting der Anwendung in der cloud erfolgt mit openShift in einer https://developers.openshift.com/en/wildfly-overview.html[WildFly Cardridge].
 
 
 === Anforderungen zum Entwickeln
@@ -97,7 +97,7 @@ Eine Liste mit allen verwalteten Projekten:
 .Projektübersicht
 image::images/totask2.projects.png[screenshot2, 600, 300]
 
-editierbar das Project, inklusive Projektleiterselektion mit Ajax-Control selectize.js
+editierbar das Projekt, inklusive Projektleiterselektion mit Ajax-Control selectize.js
 
 [[img-editProject]]
 .Projektbearbeitung
@@ -134,7 +134,7 @@ Die Zeiteingaben führen "on the fly" zur graphischen Rückmeldung als Balkendia
 .Zeiterfassung Chart
 image::images/totask2.weekEntry.chart.png[screenshot7, 600, 400]
 
-Die Benutzereingabe nutzt ein "autocomplete" axax Control von jquery-ui:
+Die Benutzereingabe nutzt ein "autocomplete" ajax Control von jquery-ui:
 
 [[img-editAssignment]]
 .Zeiterfassung Ajax Autocompletion
@@ -236,17 +236,19 @@ link:totask2.developer-manual.html[dev docs]
 
 === positiv
 
-* kein xml, einfach zu durchschauen, 
+* kein Xml, einfach zu durchschauen, 
+* lokale Stand-Alone Entwicklung: nur git und Java notwendig für den Start, der Rest lädt automagisch nach!
 * entwicklerfreundliche Bibliotheken
-* springmvc unterstützt den Test der controller gut
-* Datenbank und Datenmodell (it jpa) schlank
+* springMVC unterstützt den Test der Controller gut
+* Datenbank und Datenmodell (mit jpa) schlank
+* Komplett Repository, Tracker, Homepage und Test-Server in der (free!) cloud (github und openShift)
 
 === negativ
 
 Wo hakt es (noch?)
 
-* check von html inline JavaScipt mit jshint aufgegeben, gradle plugin kennt --export option nicht
-* gradle tests laufen derzeit nicht auf dem jenkins cloud server (incompatibilität gradle 2 und openShift?)
-* bekomme asciidoctor-diagram im gradle build nicht ans laufen, daher mit Umweg (umkopieren der generierten Bilder aus JavaDoc Erzeugung)
-
+* check von html inline JavaScipt mit jshint aufgegeben, gradle Plugin kennt --export option nicht
+* gradle Tests laufen derzeit nicht auf dem Jenkins Cloud Server (Inkompatibilität gradle 2 und openShift?)
+* Deployment auf openShift erfolgt mit sftp, der "empfohlene Weg" über git scheitert bei mir an der notwendigen zusätzlichen gradle Installation (zu wenig disk quota im free plan von openShift hierfür)
+* bekomme asciidoctor-diagram im gradle Build nicht ans laufen, daher mit Umweg (umkopieren der generierten Bilder aus der JavaDoc Erzeugung)
 

@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.0">
 <meta name="author" content="man-at-home">
-<title>totask2</title>
+<title>totask2 Entwicklernotizen</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic|Noto+Serif:400,400italic,700,700italic|Droid+Sans+Mono:400">
 <style>
 /* Asciidoctor default stylesheet | MIT License | http://asciidoctor.org */
@@ -410,443 +410,71 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 .show-for-print{display:inherit!important}}
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.1.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/styles/github.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad()</script>
 </head>
 <body class="article toc2 toc-left">
 <div id="header">
-<h1>totask2</h1>
+<h1>totask2 Entwicklernotizen</h1>
 <div class="details">
 <span id="author" class="author">man-at-home</span><br>
 <span id="revnumber">version 1.2,</span>
-<span id="revdate">2014-11-26</span>
+<span id="revdate">2014-12-01</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#_die_motivation">1. die Motivation</a></li>
-<li><a href="#_beschreibung">2. Beschreibung</a>
-<ul class="sectlevel2">
-<li><a href="#_spec">2.1. Spec</a></li>
-</ul>
-</li>
-<li><a href="#_der_software_stack">3. Der Software Stack</a>
-<ul class="sectlevel2">
-<li><a href="#_anforderungen_zum_entwickeln">3.1. Anforderungen zum Entwickeln</a></li>
-</ul>
-</li>
-<li><a href="#_ergebnis">4. Ergebnis</a></li>
-<li><a href="#_entwicklungsumgebung">5. Entwicklungsumgebung</a></li>
-<li><a href="#_deployment">6. Deployment</a>
-<ul class="sectlevel2">
-<li><a href="#_lokal">6.1. Lokal</a></li>
-<li><a href="#_cloud">6.2. Cloud</a></li>
-</ul>
-</li>
-<li><a href="#_weitere_details">7. weitere Details</a></li>
-<li><a href="#_erfahrungen">8. Erfahrungen</a>
-<ul class="sectlevel2">
-<li><a href="#_positiv">8.1. positiv</a></li>
-<li><a href="#_negativ">8.2. negativ</a></li>
-</ul>
-</li>
+<li><a href="#_Überblick">1. Überblick</a></li>
+<li><a href="#_scripts">2. Scripts</a></li>
+<li><a href="#_eigene_merker">3. Eigene Merker</a></li>
 </ul>
 </div>
 </div>
 <div id="content">
-<div id="preamble">
+<div class="sect1">
+<h2 id="_Überblick">1. Überblick</h2>
 <div class="sectionbody">
-<div class="paragraph">
-<p>totask: eine rudimentäre Projektzeiterfassung</p>
-</div>
+
 </div>
 </div>
 <div class="sect1">
-<h2 id="_die_motivation">1. die Motivation</h2>
+<h2 id="_scripts">2. Scripts</h2>
 <div class="sectionbody">
-<div class="paragraph">
-<p>totask2 ist eine "Ausrede" um einen wieder einmal willkürlich ausgewählten Software-Stack auszuprobieren.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_beschreibung">2. Beschreibung</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>totask2 erlaubt eine Erfassung von (Arbeits-) Zeiten zu Projekttasks. Daher verwaltet das Programm
-Entitäten wie Projekt, Task und Arbeitszeit (WorkEntry) und Taskzuordnung zu Usern (TaskAssignment).</p>
-</div>
-<div class="sect2">
-<h3 id="_spec">2.1. Spec</h3>
-<div class="ulist">
-<ul>
-<li>
-<p>Ein Administrator (User) darf Projekte anlegen</p>
-</li>
-<li>
-<p>ein Projekt hat einen oder mehrere Projektleiter (User)</p>
-</li>
-<li>
-<p>Projektleiter könnne Tasks zu Ihren Projekten erfassen</p>
-</li>
-<li>
-<p>jeder Task kann Usern (für einem Zeitraum) zugeordnet werden, in diesem dann Arbeiten zum Task zulässig sind (TaskAssignment)</p>
-</li>
-<li>
-<p>jeder User kann Zeiten wochenweise für Tasks erfassen die ihm im Zeitraum zugeordnet sind</p>
-</li>
-<li>
-<p>die Erfassung erfolgt je Tag und Task in Stunden(bruchteilen) (WorkEntry)</p>
-</li>
-<li>
-<p>die Erfassung kann für die aktuelle und zurückliegende Wochen erfolgen</p>
-</li>
-<li>
-<p>seine erfassten Zeiten kann der User als Excel herunterladen</p>
-</li>
-</ul>
-</div>
-<div id="img-useCases" class="imageblock">
+<div class="listingblock">
+<div class="title">build</div>
 <div class="content">
-<img src="images/uml/totask2.design.usecases.png" alt="screenshot.useCases" width="700" height="400">
+<pre>#!/bin/bash
+set -x
+
+cd $OPENSHIFT_REPO_DIR
+export GRADLE_USER_HOME=$OPENSHIFT_DATA_DIR/gradle
+
+./gradlew -s assemble</pre>
 </div>
-<div class="title">Figure 1. unterstützte Usecases</div>
 </div>
-<div class="paragraph">
-<p>Hint: obiges Bild nur sichtbar bei lokalem build, nicht auf github.</p>
+<div class="listingblock">
+<div class="title">pre_build</div>
+<div class="content">
+<pre>#!/bin/bash
+
+cd $OPENSHIFT_REPO_DIR
+export GRADLE_USER_HOME=$OPENSHIFT_DATA_DIR/gradle
+
+./gradlew deployOpenShift</pre>
 </div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_der_software_stack">3. Der Software Stack</h2>
+<h2 id="_eigene_merker">3. Eigene Merker</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p><a href="http://springmvc.org/" target="_blank">springmvc</a> als serverseitiges Java <em>Web Framework</em>.</p>
+<p>openShift hooks müssen ausführbar sein unter unix:</p>
 </div>
-<div class="paragraph">
-<p>SpringMVC Web Anwendungen werden natürlich in Java programmiert. Im vorliegenden Fall bereits mit <a href="https://java.com/de/">Java 8</a>
-da ich dabei Closures nutzen wollte. Als Templating Engine für HTML wird dabei <a href="http://www.thymeleaf.org/">thymeleaf</a> verwendet.
-Logging erfolgt mit <a href="http://logback.qos.ch/">logback/slf4j</a>, Unit Tests mit <a href="http://junit.org/">junit</a>.</p>
-</div>
-<div class="paragraph">
-<p><em>Client Seitig</em> benutze ich <a href="http://getbootstrap.com//" target="_blank">bootstrap</a> für css,
-<a href="http://bootstrapvalidator.com/" target="_blank">bootstrapvalidator</a> für einige Client seitige Prüfungen,
-<a href="http://jquery.com/" target="_blank">jquery</a> als JavaScript Library, dazu <a href="http://www.datatables.net/" target="_blank">datatables</a> als Datagrid.
-Ein Chart wird mit <a href="http://www.chartjs.org/" target="_blank">Charts.js</a> clientseitig erstellt,
-ein Gantt Chart mit <a href="https://github.com/thegrubbsian/jquery.ganttView">ganttView</a>.
-Für die kompfortable Auswahl von Usern benutze ich das <a href="http://jqueryui.com/autocomplete/" target="_blank">autocomplete plugin</a>, um
-Suchvorschläge on the fly per REST/json vom Server zu holen.
-Für die UI Zuordnung Projektleiter zu Projekt kommt das Control <a href="http://brianreavis.github.io/selectize.js/">selectize.js</a> zum Einsatz.</p>
-</div>
-<div class="paragraph">
-<p>Für <em>Reporting</em> wird <a href="http://community.jaspersoft.com/project/jasperreports-library" target="_blank">JasperReports</a> genutzt
-um Excel und PDF Auswertungen zu generieren.</p>
-</div>
-<div class="paragraph">
-<p><em>Versionierung</em> ist mit <a href="http://git-scm.com/">git</a> gelöst. Das Repository ist auf <a href="https://github.com/" target="_blank">github</a> gehostet.</p>
-</div>
-<div class="paragraph">
-<p><em>Datenhaltung</em> wird mit der integrierten  <a href="http://www.h2database.com/" target="_blank">h2</a>
-in-Memory Datenbank gelöst, zumindest während der Entwicklung. Eine separate qa Datenbank wird mit dem QA Profil angesprochen,
-deren Tabellenstruktur (DDLs) wird mit "Migrations" durch <a href="http://flywaydb.org/" target="_blank">flyway</a> gepflegt.
-Einige Tabellen/Daten sind historisiert, dies wird mit <a href="http://de.slideshare.net/jdegler/hibernate-envers">hibernate-envers</a> realisiert.</p>
-</div>
-<div class="paragraph">
-<p>Dieser Artikel und weitere <em>Dokumentation</em> ist mit <a href="http://asciidoctor.org/docs/asciidoc-writers-guide/" target="_blank">asciidoc</a>
-Markup erstellt. Einige Diagramme sind mit <a href="http://plantuml.sourceforge.net/" target="_blank">plantuml</a> erstellt und generiert.
-Ein nettes Gimmick: github kann asciidoc Documente "on the fly" direkt aus dem Repository im Browser als Html
-rendern. Live zu sehen unter <a href="https://github.com/man-at-home/totask2/blob/master/src/docs/totask2.article.asciidoc" class="bare">https://github.com/man-at-home/totask2/blob/master/src/docs/totask2.article.asciidoc</a></p>
-</div>
-<div class="paragraph">
-<p>Für das <em>Build Management</em> nutze ich <a href="http://www.gradle.org/" target="_blank">gradle</a>, mit einigen Plugins wie
-checkstyle, pmd, findbugs, asciidoctor. Ein Build-Server <a href="http://jenkins-ci.org/">jenkins</a> läuft in der cloud (openshift).</p>
-</div>
-<div class="paragraph">
-<p>Experimentell ist <a href="http://www.seleniumhq.org/">selenium</a> als Web Test Tool.</p>
-</div>
-<div class="paragraph">
-<p>Als "echter" Appserver für das Deployment fungiert der <a href="http://www.wildfly.org/">WildFly Application Server</a> von redhat - sowohl lokal installiert als auch in der cloud.</p>
-</div>
-<div class="paragraph">
-<p>Hosting der Anwendung in der cloud erfolgt mit openShift in einer <a href="https://developers.openshift.com/en/wildfly-overview.html">WildFly Cardridge</a>.</p>
-</div>
-<div class="sect2">
-<h3 id="_anforderungen_zum_entwickeln">3.1. Anforderungen zum Entwickeln</h3>
-<div class="ulist">
-<ul>
-<li>
-<p>java8 jdk and runtime</p>
-</li>
-<li>
-<p>git versioning</p>
-</li>
-<li>
-<p>gradle build system</p>
-</li>
-</ul>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_ergebnis">4. Ergebnis</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>hier kurze Blicke auf die laufende Anwendung:</p>
-</div>
-<div id="img-startpage" class="imageblock">
+<div class="listingblock">
 <div class="content">
-<img src="images/totask2.startpage.png" alt="screenshot1" width="600" height="300">
-</div>
-<div class="title">Figure 2. Startseite</div>
-</div>
-<div class="paragraph">
-<p>Eine Liste mit allen verwalteten Projekten:</p>
-</div>
-<div id="img-projects" class="imageblock">
-<div class="content">
-<img src="images/totask2.projects.png" alt="screenshot2" width="600" height="300">
-</div>
-<div class="title">Figure 3. Projektübersicht</div>
-</div>
-<div class="paragraph">
-<p>editierbar das Projekt, inklusive Projektleiterselektion mit Ajax-Control selectize.js</p>
-</div>
-<div id="img-editProject" class="imageblock">
-<div class="content">
-<img src="images/totask2.editProject.png" alt="screenshot3" width="600" height="400">
-</div>
-<div class="title">Figure 4. Projektbearbeitung</div>
-</div>
-<div class="paragraph">
-<p>die geplante Projektlaufzeit (je Task und Assignment) als Gantt-Diagramm:</p>
-</div>
-<div id="img-ganttProject" class="imageblock">
-<div class="content">
-<img src="images/totask2.project.gantt.png" alt="screenshot3" width="600" height="400">
-</div>
-<div class="title">Figure 5. Projektanzeige als Gantt Chart</div>
-</div>
-<div class="paragraph">
-<p>Die eigentliche Stundenerfassung für "normale" Nutzer:</p>
-</div>
-<div id="img-weekEntry" class="imageblock">
-<div class="content">
-<img src="images/totask2.weekEntry.png" alt="screenshot4" width="600" height="400">
-</div>
-<div class="title">Figure 6. Zeiterfassung</div>
-</div>
-<div class="paragraph">
-<p>Diverse Client Seitige (JavaScript/jquery) Funktionalitäten:</p>
-</div>
-<div id="img-weekEntryClient" class="imageblock">
-<div class="content">
-<img src="images/totask2.weekEntry.clientLogic.png" alt="screenshot5" width="600" height="400">
-</div>
-<div class="title">Figure 7. Zeiterfassung Client Funktionen</div>
-</div>
-<div class="paragraph">
-<p>Eingaben lassen sich als Excel Report herunterladen (Reporting Tool Jasper Reports ist integriert):</p>
-</div>
-<div id="img-weekEntryReporting" class="imageblock">
-<div class="content">
-<img src="images/totask2.weekEntry.reporting.png" alt="screenshot6" width="600" height="400">
-</div>
-<div class="title">Figure 8. Zeiterfassung Reporting</div>
-</div>
-<div class="paragraph">
-<p>Die Zeiteingaben führen "on the fly" zur graphischen Rückmeldung als Balkendiagramm (chart.js):</p>
-</div>
-<div id="img-weekEntryChart" class="imageblock">
-<div class="content">
-<img src="images/totask2.weekEntry.chart.png" alt="screenshot7" width="600" height="400">
-</div>
-<div class="title">Figure 9. Zeiterfassung Chart</div>
-</div>
-<div class="paragraph">
-<p>Die Benutzereingabe nutzt ein "autocomplete" ajax Control von jquery-ui:</p>
-</div>
-<div id="img-editAssignment" class="imageblock">
-<div class="content">
-<img src="images/totask2.editAssignment.autocomplete.png" alt="screenshot8" width="600" height="400">
-</div>
-<div class="title">Figure 10. Zeiterfassung Ajax Autocompletion</div>
-</div>
-<div class="paragraph">
-<p>Login Seite (integriert mit spring-security):</p>
-</div>
-<div id="img-login" class="imageblock">
-<div class="content">
-<img src="images/totask2.login.png" alt="screenshot9" width="600" height="400">
-</div>
-<div class="title">Figure 11. login</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_entwicklungsumgebung">5. Entwicklungsumgebung</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Einblicke in die Entwicklung von totask2:</p>
-</div>
-<div id="img-desktop" class="imageblock">
-<div class="content">
-<img src="images/totask2.dev.desktop.png" alt="screenshot_DEV_0" width="600" height="400">
-</div>
-<div class="title">Figure 12. desktop developing totask2</div>
-</div>
-<div class="paragraph">
-<p>eclipse / springIDE</p>
-</div>
-<div id="img-ide" class="imageblock">
-<div class="content">
-<img src="images/totask2.dev.springIDE.png" alt="screenshot_DEV_0b" width="600" height="400">
-</div>
-<div class="title">Figure 13. desktop ide</div>
-</div>
-<div class="paragraph">
-<p>Für die REST Datenquellen stellt swagger-ui einen automatische generierten Client zur Verfügung:</p>
-</div>
-<div id="img-wagger" class="imageblock">
-<div class="content">
-<img src="images/totask2.rest.swagger-ui.png" alt="screenshot_DEV_swagger_0c" width="600" height="400">
-</div>
-<div class="title">Figure 14. wagger-ui</div>
-</div>
-<div class="paragraph">
-<p>PlantUML ermgöglicht das einfache Einbetten von UML Diagrammen in die javadoc-Dokumentation:</p>
-</div>
-<div id="img-javadoc-plantuml" class="imageblock">
-<div class="content">
-<img src="images/totask2.dev.JavaDoc.png" alt="screenshot_DEV_1" width="600" height="400">
-</div>
-<div class="title">Figure 15. javadoc plantuml Dokumentation</div>
-</div>
-<div class="paragraph">
-<p>Den Inhalt der Datenbank H2 kann man mit der mitgelieferten Console einsehen und ändern:</p>
-</div>
-<div id="img-db" class="imageblock">
-<div class="content">
-<img src="images/totask2.dev.H2Console.png" alt="screenshot_DEV_2" width="600" height="400">
-</div>
-<div class="title">Figure 16. h2console DB Abfragetool</div>
-</div>
-<div class="paragraph">
-<p>Tests mit junit 4:</p>
-</div>
-<div id="img-junit" class="imageblock">
-<div class="content">
-<img src="images/totask2.dev.junit.png" alt="screenshot_DEV_0" width="600" height="400">
-</div>
-<div class="title">Figure 17. junit</div>
-</div>
-<div class="paragraph">
-<p>experimentelle Selenium Tests:</p>
-</div>
-<div id="img-selenium" class="imageblock">
-<div class="content">
-<img src="images/totask2.dev.seleniumIDE.png" alt="screenshot_DEV_20" width="600" height="400">
-</div>
-<div class="title">Figure 18. selenium ide</div>
-</div>
-<div class="paragraph">
-<p>git Repository und Versionierung:</p>
-</div>
-<div id="img-git" class="imageblock">
-<div class="content">
-<img src="images/totask2.dev.SourceTree.png" alt="screenshot_DEV_20" width="600" height="400">
-</div>
-<div class="title">Figure 19. git SourceTree UI</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_deployment">6. Deployment</h2>
-<div class="sectionbody">
-<div class="sect2">
-<h3 id="_lokal">6.1. Lokal</h3>
-<div class="paragraph">
-<p>Neben der einfachsten Ausführung als Stand Alone App hier ein Deployment
-im RedHat WildFly Application Server:</p>
-</div>
-<div id="img-wildfly" class="imageblock">
-<div class="content">
-<img src="images/totask2.dev.wildfly.admin.png" alt="screenshot_EE" width="600" height="400">
-</div>
-<div class="title">Figure 20. lokale Installation im wildfly Container</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_cloud">6.2. Cloud</h3>
-<div class="paragraph">
-<p>Automatisierte Builds mit dem build Server <strong>jenkins</strong> finden in der <em>cloud</em> auf einer openShift Applikation
-(== Runtime Umgebung in der cloud von red hat) statt.
-Der Build-Server holt sich den totask2 Source im master-Branch von github und generiert Dokumentation (alternativ: compile).</p>
-</div>
-<div id="img-jenkins" class="imageblock">
-<div class="content">
-<img src="images/totask2.cloud.jenkins.png" alt="screenshot_CLOUD_1" width="600" height="400">
-</div>
-<div class="title">Figure 21. jenkins on openshift</div>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_weitere_details">7. weitere Details</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p><a href="totask2.developer-manual.html">dev docs</a></p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_erfahrungen">8. Erfahrungen</h2>
-<div class="sectionbody">
-<div class="sect2">
-<h3 id="_positiv">8.1. positiv</h3>
-<div class="ulist">
-<ul>
-<li>
-<p>kein Xml, einfach zu durchschauen,</p>
-</li>
-<li>
-<p>lokale Stand-Alone Entwicklung: nur git und Java notwendig für den Start, der Rest lädt automagisch nach!</p>
-</li>
-<li>
-<p>entwicklerfreundliche Bibliotheken</p>
-</li>
-<li>
-<p>springMVC unterstützt den Test der Controller gut</p>
-</li>
-<li>
-<p>Datenbank und Datenmodell (mit jpa) schlank</p>
-</li>
-<li>
-<p>Komplett Repository, Tracker, Homepage und Test-Server in der (free!) cloud (github und openShift)</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_negativ">8.2. negativ</h3>
-<div class="paragraph">
-<p>Wo hakt es (noch?)</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>check von html inline JavaScipt mit jshint aufgegeben, gradle Plugin kennt --export option nicht</p>
-</li>
-<li>
-<p>gradle Tests laufen derzeit nicht auf dem Jenkins Cloud Server (Inkompatibilität gradle 2 und openShift?)</p>
-</li>
-<li>
-<p>Deployment auf openShift erfolgt mit sftp, der "empfohlene Weg" über git scheitert bei mir an der notwendigen zusätzlichen gradle Installation (zu wenig disk quota im free plan von openShift hierfür)</p>
-</li>
-<li>
-<p>bekomme asciidoctor-diagram im gradle Build nicht ans laufen, daher mit Umweg (umkopieren der generierten Bilder aus der JavaDoc Erzeugung)</p>
-</li>
-</ul>
+<pre>git update-index --chmod=+x .openshift/action_hooks/*</pre>
 </div>
 </div>
 </div>
@@ -855,7 +483,7 @@ Der Build-Server holt sich den totask2 Source im master-Branch von github und ge
 <div id="footer">
 <div id="footer-text">
 Version 1.2<br>
-Last updated 2014-12-02 22:28:03 MEZ
+Last updated 2014-12-02 22:14:36 MEZ
 </div>
 </div>
 </body>

@@ -429,24 +429,25 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_notwendige_umgebung">2. Notwendige Umgebung</a></li>
 <li><a href="#_download">3. Download</a></li>
 <li><a href="#_build_run">4. Build &amp; Run</a></li>
-<li><a href="#_architektur">5. Architektur</a>
+<li><a href="#_deployment">5. Deployment</a></li>
+<li><a href="#_architektur">6. Architektur</a>
 <ul class="sectlevel2">
-<li><a href="#_datenmodell">5.1. Datenmodell</a></li>
-<li><a href="#_code_modell">5.2. Code Modell</a></li>
+<li><a href="#_datenmodell">6.1. Datenmodell</a></li>
+<li><a href="#_code_modell">6.2. Code Modell</a></li>
 </ul>
 </li>
-<li><a href="#_code_beispiele">6. Code-Beispiele</a>
+<li><a href="#_code_beispiele">7. Code-Beispiele</a>
 <ul class="sectlevel2">
-<li><a href="#_data_model_jpa">6.1. Data Model (JPA)</a></li>
-<li><a href="#_controller_springmvc">6.2. Controller (SpringMVC)</a></li>
-<li><a href="#_view_templates_thymeleaf">6.3. View Templates (thymeleaf)</a></li>
-<li><a href="#_ajax_javascript">6.4. Ajax / Javascript</a></li>
-<li><a href="#_versionierung_von_daten">6.5. Versionierung von Daten</a></li>
-<li><a href="#_selenium_test">6.6. Selenium Test</a></li>
-<li><a href="#_plantuml_diagramm">6.7. plantUML Diagramm</a></li>
-<li><a href="#_asciidoctor_dokumentation">6.8. asciidoctor Dokumentation</a></li>
-<li><a href="#_flyway_datenbank_migration">6.9. flyway Datenbank Migration</a></li>
-<li><a href="#_gradle_build">6.10. gradle Build</a></li>
+<li><a href="#_data_model_jpa">7.1. Data Model (JPA)</a></li>
+<li><a href="#_controller_springmvc">7.2. Controller (SpringMVC)</a></li>
+<li><a href="#_view_templates_thymeleaf">7.3. View Templates (thymeleaf)</a></li>
+<li><a href="#_ajax_javascript">7.4. Ajax / Javascript</a></li>
+<li><a href="#_versionierung_von_daten">7.5. Versionierung von Daten</a></li>
+<li><a href="#_selenium_test">7.6. Selenium Test</a></li>
+<li><a href="#_plantuml_diagramm">7.7. plantUML Diagramm</a></li>
+<li><a href="#_asciidoctor_dokumentation">7.8. asciidoctor Dokumentation</a></li>
+<li><a href="#_flyway_datenbank_migration">7.9. flyway Datenbank Migration</a></li>
+<li><a href="#_gradle_build">7.10. gradle Build</a></li>
 </ul>
 </li>
 </ul>
@@ -528,13 +529,88 @@ von github holen.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_architektur">5. Architektur</h2>
+<h2 id="_deployment">5. Deployment</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Für OpenShift</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>generell wird ganz normal .\build.gradle wird verwendet</p>
+</li>
+<li>
+<p>hooks für OpenShift sind folgende shell Scripte:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>.openshift\action_hooks\pre_build (cardridge vorbereiten für build)</p>
+</li>
+<li>
+<p>.openshift\action_hooks\build     (gradle assemble Aufruf)</p>
+</li>
+<li>
+<p>.openshift\action_hooks\deploy    (gradle deployOpenShift Aufruf)</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>update der Anwendung in der cloud mit git:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>git push cloud</code></p>
+</li>
+<li>
+<p>remote: <code>ssh://5<strong><strong></strong>*4@h</strong>**e.rhcloud.com/~/git/host.git/</code></p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Zugriff/Monitoring</p>
+<div class="ulist">
+<ul>
+<li>
+<p>web:  <a href="http://www.openshift.com" class="bare">www.openshift.com</a></p>
+</li>
+<li>
+<p>ssh:  wie auf openShift Seite zur Anwendung angegeben</p>
+</li>
+<li>
+<p>sftp: <em>hostname</em>.rhcloud.com</p>
+</li>
+<li>
+<p>commandline: rhc Kommandos</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div id="img-sftp" class="imageblock">
+<div class="content">
+<img src="images/totask2.cloud.wildfly.deploy.png" alt="screenshot.sftp" width="500" height="300">
+</div>
+<div class="title">Figure 1. sftp to openShift gear</div>
+</div>
+<div id="img-rhc" class="imageblock">
+<div class="content">
+<img src="images/totask2.cloud.rhc.png" alt="screenshot.sftp" width="500" height="300">
+</div>
+<div class="title">Figure 2. rhc command line openShift</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_architektur">6. Architektur</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Ein kurzer Überblick über die Architektur der Webanwendung totask2.</p>
 </div>
 <div class="sect2">
-<h3 id="_datenmodell">5.1. Datenmodell</h3>
+<h3 id="_datenmodell">6.1. Datenmodell</h3>
 <div class="paragraph">
 <p>Das Datenmodell der Projektzeiterfassung.</p>
 </div>
@@ -542,11 +618,11 @@ von github holen.</p>
 <div class="content">
 <img src="images/uml/totask2.design.datamodel.png" alt="screenshot.erd" width="200" height="100">
 </div>
-<div class="title">Figure 1. Datenmodell</div>
+<div class="title">Figure 3. Datenmodell</div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_code_modell">5.2. Code Modell</h3>
+<h3 id="_code_modell">6.2. Code Modell</h3>
 <div class="paragraph">
 <p>Überblick über die internen Module von totask2.</p>
 </div>
@@ -554,7 +630,7 @@ von github holen.</p>
 <div class="content">
 <img src="images/uml/totask2.design.modules.png" alt="screenshot.modules" width="600" height="300">
 </div>
-<div class="title">Figure 2. Modulübersicht</div>
+<div class="title">Figure 4. Modulübersicht</div>
 </div>
 <div class="paragraph">
 <p>Schematischer Ablauf eines Requests (Anfrage einer Seite durch den Browser):</p>
@@ -563,20 +639,20 @@ von github holen.</p>
 <div class="content">
 <img src="images/uml/totask2.design.controllers.png" alt="screenshot.sequence" width="600" height="300">
 </div>
-<div class="title">Figure 3. Sequenzdiagramm (Beispielhaft)</div>
+<div class="title">Figure 5. Sequenzdiagramm (Beispielhaft)</div>
 </div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_code_beispiele">6. Code-Beispiele</h2>
+<h2 id="_code_beispiele">7. Code-Beispiele</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Die Code Beispiele werden "on the fly" bei der Dokumentengenerierung hier in das Dokument übernommen,
 sollten also immer aktuell sein.</p>
 </div>
 <div class="sect2">
-<h3 id="_data_model_jpa">6.1. Data Model (JPA)</h3>
+<h3 id="_data_model_jpa">7.1. Data Model (JPA)</h3>
 <div class="paragraph">
 <p>Die Datenzugriffsschicht mapped Java Domain Objekte mit JPA Annotations (insbl. @Entity) auf relationale
 Datenbanktabellen.</p>
@@ -622,7 +698,7 @@ public class Task {
 </div>
 </div>
 <div class="sect2">
-<h3 id="_controller_springmvc">6.2. Controller (SpringMVC)</h3>
+<h3 id="_controller_springmvc">7.2. Controller (SpringMVC)</h3>
 <div class="paragraph">
 <p>Diese SpringMVC Controller Klasse nimmt Browseranfragen auf bestimmten Urls: (hier project/xx/tasks) entgehen
 und schickt Antworten an den Browser zurück.</p>
@@ -670,7 +746,7 @@ public String tasksForProject(@PathVariable final long id, final Model model) {
 </div>
 </div>
 <div class="sect2">
-<h3 id="_view_templates_thymeleaf">6.3. View Templates (thymeleaf)</h3>
+<h3 id="_view_templates_thymeleaf">7.3. View Templates (thymeleaf)</h3>
 <div class="paragraph">
 <p>Markup um HTML Antwort (Übersicht von Tasks) bereitzustellen.</p>
 </div>
@@ -718,9 +794,9 @@ public String tasksForProject(@PathVariable final long id, final Model model) {
 </div>
 </div>
 <div class="sect2">
-<h3 id="_ajax_javascript">6.4. Ajax / Javascript</h3>
+<h3 id="_ajax_javascript">7.4. Ajax / Javascript</h3>
 <div class="sect3">
-<h4 id="_autocomplete">6.4.1. autocomplete</h4>
+<h4 id="_autocomplete">7.4.1. autocomplete</h4>
 <div class="paragraph">
 <p>Ajax Funktion bei der Auswahl von Usern (Suchfunktion) bei der Zuordnung von Tasks:</p>
 </div>
@@ -728,7 +804,7 @@ public String tasksForProject(@PathVariable final long id, final Model model) {
 <div class="content">
 <img src="images/totask2.editAssignment.autocomplete.png" alt="screenshot8" width="600" height="400">
 </div>
-<div class="title">Figure 4. Zeiterfassung Ajax Autocompletion</div>
+<div class="title">Figure 6. Zeiterfassung Ajax Autocompletion</div>
 </div>
 <div class="paragraph">
 <p>im HTML:</p>
@@ -840,7 +916,7 @@ public List&lt;User&gt; getUsers(@RequestParam(value = "term", defaultValue = ""
 </div>
 </div>
 <div class="sect3">
-<h4 id="_chart">6.4.2. chart</h4>
+<h4 id="_chart">7.4.2. chart</h4>
 <div class="paragraph">
 <p>Auf der Erfassungsseite für Zeiten wird direkt bei der Eingabe clientseitig ein Chart der Stunden erzeugt:</p>
 </div>
@@ -848,7 +924,7 @@ public List&lt;User&gt; getUsers(@RequestParam(value = "term", defaultValue = ""
 <div class="content">
 <img src="images/totask2.weekEntry.chart.png" alt="screenshotChart" width="600" height="400">
 </div>
-<div class="title">Figure 5. weekEntryChart</div>
+<div class="title">Figure 7. weekEntryChart</div>
 </div>
 <div class="paragraph">
 <p>Der Htlm/JavaScript Code hierzu</p>
@@ -904,7 +980,7 @@ weekChart = new Chart(ctx).Bar(
 </div>
 </div>
 <div class="sect2">
-<h3 id="_versionierung_von_daten">6.5. Versionierung von Daten</h3>
+<h3 id="_versionierung_von_daten">7.5. Versionierung von Daten</h3>
 <div class="paragraph">
 <p>Einige Stammdaten der Anwendung sind versioniert (sprich: alte Stände werden aufgehoben, historisiert). Dazu
 verwende ich hibernate-envers.</p>
@@ -968,11 +1044,11 @@ result.stream().forEach(
 <div class="content">
 <img src="images/totask2.project.history.png" alt="screenshot.projectHistory" width="700" height="400">
 </div>
-<div class="title">Figure 6. ProjectHistory</div>
+<div class="title">Figure 8. ProjectHistory</div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_selenium_test">6.6. Selenium Test</h3>
+<h3 id="_selenium_test">7.6. Selenium Test</h3>
 <div class="paragraph">
 <p>Neben Unit Tests mit spring-tests ist auch ein reiner Blackbox test mit Selenium vorbereitet:</p>
 </div>
@@ -980,23 +1056,25 @@ result.stream().forEach(
 <div class="content">
 <img src="images/totask2.dev.seleniumTest.png" alt="testscript.html" width="500" height="300">
 </div>
-<div class="title">Figure 7. totask2.test.LoginProjectsLogout.selenium.html</div>
+<div class="title">Figure 9. totask2.test.LoginProjectsLogout.selenium.html</div>
 </div>
 <div id="img-test-ide" class="imageblock">
 <div class="content">
 <img src="images/totask2.dev.seleniumIDE.png" alt="screnshot.ide" width="500" height="300">
 </div>
-<div class="title">Figure 8. test-ide</div>
+<div class="title">Figure 10. test-ide</div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_plantuml_diagramm">6.7. plantUML Diagramm</h3>
+<h3 id="_plantuml_diagramm">7.7. plantUML Diagramm</h3>
 <div class="paragraph">
 <p>Die hier gezeigten Diagramme sind mit plantUML erzeugt. Der Charm dabei:</p>
 </div>
 <div class="paragraph">
-<p>a) auch das Diagramm ist in Textformat und kann daher gemerged/versioniert werden
-b) es ist direkt im JavaDoc Kommentar enthalten und dementsprechend auch in der daraus generierten HTML Dokumentation.</p>
+<p>a) auch das Diagramm ist in Textformat und kann daher gemerged/versioniert werden</p>
+</div>
+<div class="paragraph">
+<p>b) es ist direkt im JavaDoc Kommentar enthalten und dementsprechend auch in der daraus generierten HTML Dokumentation.</p>
 </div>
 <div class="paragraph">
 <p>Diagramm im Quellcode:</p>
@@ -1042,11 +1120,11 @@ package org.regele.totask2.model;</code></pre>
 <div class="content">
 <img src="images/uml/totask2.design.datamodel.png" alt="screenshot2.erd" width="200" height="100">
 </div>
-<div class="title">Figure 9. Datenmodell2</div>
+<div class="title">Figure 11. Datenmodell2</div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_asciidoctor_dokumentation">6.8. asciidoctor Dokumentation</h3>
+<h3 id="_asciidoctor_dokumentation">7.8. asciidoctor Dokumentation</h3>
 <div class="paragraph">
 <p>Die Dokumentation zum Projekt (auch dieses Dokument) ist in "asciidoc" erstellt. Eine Markupsprache spezifisch für
 einfache Dokumentenerstellung. Sie kann in diverse Formate aufbereitet werden (u.a. html, pdf, latex) ist gut les- und
@@ -1076,11 +1154,10 @@ versionierbar.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_flyway_datenbank_migration">6.9. flyway Datenbank Migration</h3>
+<h3 id="_flyway_datenbank_migration">7.9. flyway Datenbank Migration</h3>
 <div class="paragraph">
 <p>Die Datenbankstruktur wird im Entwicklungsbetrieb automatisch generiert, für die Test/Produktionsumgebung wird die Struktur
-aber mit Flyway verwaltet. Dieses kleine Tool verwaltet je Datenbank den aktuellen und führt bei Bedarf beim Start der Anwendung
-notwendige Migration am Datenmodell durch.</p>
+aber mit Flyway verwaltet. Dieses kleine Tool verwaltet je Datenbank deren aktuellen Releasestand und führt bei Bedarf beim Start der Anwendung notwendige Migrationen am Datenmodell (Upgrade) durch.</p>
 </div>
 <div class="paragraph">
 <p>Aus den Scripten:</p>
@@ -1089,7 +1166,7 @@ notwendige Migration am Datenmodell durch.</p>
 <div class="content">
 <img src="images/totask2.dev.flywayScripts.png" alt="flywayscripts.dir" width="700" height="400">
 </div>
-<div class="title">Figure 10. flyway script directory</div>
+<div class="title">Figure 12. flyway script directory</div>
 </div>
 <div class="paragraph">
 <p>Und eigener Verwaltungstabellen erkennt Flyway den Stand der Datenbank:</p>
@@ -1132,9 +1209,9 @@ notwendige Migration am Datenmodell durch.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_gradle_build">6.10. gradle Build</h3>
+<h3 id="_gradle_build">7.10. gradle Build</h3>
 <div class="paragraph">
-<p>gradle ist ein Groovy basierendes Build System, als alternative zu maven oder ant zu empfehlen.</p>
+<p>gradle ist ein Groovy basierendes Build System, als Alternative zu den bekannteren Build-Tools maven oder ant zu empfehlen.</p>
 </div>
 <div class="listingblock">
 <div class="title">gradle.build.output</div>
@@ -1166,7 +1243,7 @@ notwendige Migration am Datenmodell durch.</p>
 <div id="footer">
 <div id="footer-text">
 Version 1.2<br>
-Last updated 2014-11-26 23:20:09 MEZ
+Last updated 2014-12-02 22:13:43 MEZ
 </div>
 </div>
 </body>

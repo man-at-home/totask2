@@ -419,8 +419,8 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h1>totask2 Entwickler Dokumentation</h1>
 <div class="details">
 <span id="author" class="author">man-at-home</span><br>
-<span id="revnumber">version 1.2,</span>
-<span id="revdate">2014-11-26</span>
+<span id="revnumber">version 1.3,</span>
+<span id="revdate">2014-12-02</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
@@ -515,16 +515,19 @@ von github holen.</p>
 <h2 id="_build_run">4. Build &amp; Run</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Compile und Test des Projekts erfolgt mit &#8658; <code>%&gt; gradle test</code>.</p>
+<p>Compile und Test des Projekts erfolgt mit &#8658; <code>%&gt; gradlew test</code>.</p>
 </div>
 <div class="paragraph">
-<p>Dokumentation erstellen (einschließlich diesem Dokument hier) &#8658; <code>%&gt; gradle allDocs</code>.</p>
+<p>Dokumentation erstellen (einschließlich diesem Dokument hier) &#8658; <code>%&gt; gradlew allDocs</code>.</p>
 </div>
 <div class="paragraph">
-<p>Run mit InMemory Datenbank h2 &#8658; <code>%&gt; gradle bootRun</code></p>
+<p>Run mit InMemory Datenbank h2 &#8658; <code>%&gt; gradlew bootRun</code></p>
 </div>
 <div class="paragraph">
-<p>Run mit persistenter Datenbank (die Daten bleiben zwischen den Runs erhalten) &#8658; <code>%&gt; gradle bootRun -Dspring.profiles.active=qa</code></p>
+<p>Run mit persistenter Datenbank (die Daten bleiben zwischen den Runs erhalten) &#8658; <code>%&gt; gradlew bootRun -Dspring.profiles.active=qa</code></p>
+</div>
+<div class="paragraph">
+<p>QA Analyse incl. Tests und CodeCoverage: <code>%&gt; gradlew sonarRunners</code></p>
 </div>
 </div>
 </div>
@@ -988,13 +991,10 @@ verwende ich hibernate-envers.</p>
 <div class="listingblock">
 <div class="title">Project.java</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java" data-lang="java">@Entity
-@Table(name = "TT_PROJECT")
-
+<pre class="highlightjs highlight"><code class="language-java" data-lang="java">@Table(name = "TT_PROJECT")
 @Audited                                    <i class="conum" data-value="1"></i><b>(1)</b>
 @AuditTable("TT_PROJECT_HISTORY")           <i class="conum" data-value="2"></i><b>(2)</b>
-
-@ApiModel(value="Project", description="project to log work on tasks, containing *task*s and being administered by project leads")
+@ApiModel(value = "Project", description = "project to log work on tasks, containing *task*s and being administered by project leads")
 public class Project {
 
     private static final Logger LOG = LoggerFactory.getLogger(Project.class);
@@ -1082,35 +1082,36 @@ result.stream().forEach(
 <div class="listingblock">
 <div class="title">package-info.java (plantuml documenentation for JavaDoc)</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java" data-lang="java">/*
- *
+<pre class="highlightjs highlight"><code class="language-java" data-lang="java">package org.regele.totask2.model;
+
+/*
+*
 @startuml doc-files/totask2.design.datamodel.png
 
- Project         "1" *-- "n" Task : contains
- Project         "n"  -- "n" User            : leads
- Task            "1" *-- "n" TaskAssignment
- TaskAssignment  "1" -- "n"  User : assigned to
- WorkEntry       "n" -- "1"  User
- WorkEntry       "n" -- "1"  Task : worked on
+Project         "1" *-- "n" Task : contains
+Project         "n"  -- "n" User            : leads
+Task            "1" *-- "n" TaskAssignment
+TaskAssignment  "1" -- "n"  User : assigned to
+WorkEntry       "n" -- "1"  User
+WorkEntry       "n" -- "1"  Task : worked on
 
- Project   : name
- Task      : name
+Project   : name
+Task      : name
 
- User      : username
- User      : displayName
- User      : password
- User      : isAdmin : boolean
+User      : username
+User      : displayName
+User      : password
+User      : isAdmin : boolean
 
- WorkEntry  : at       : Date
- WorkEntry  : duration : Hours
+WorkEntry  : at       : Date
+WorkEntry  : duration : Hours
 
- TaskAssignment : from  : Date
- TaskAssignment : until : Date
+TaskAssignment : from  : Date
+TaskAssignment : until : Date
 
 
- @enduml
- */
-package org.regele.totask2.model;</code></pre>
+@enduml
+*/</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1242,8 +1243,8 @@ aber mit Flyway verwaltet. Dieses kleine Tool verwaltet je Datenbank deren aktue
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 1.2<br>
-Last updated 2014-12-02 22:13:43 MEZ
+Version 1.3<br>
+Last updated 2014-12-06 00:48:04 MEZ
 </div>
 </div>
 </body>

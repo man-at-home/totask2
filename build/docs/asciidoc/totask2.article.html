@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.0">
 <meta name="author" content="man-at-home">
-<title>totask2</title>
+<title>totask2 Überblick</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic|Noto+Serif:400,400italic,700,700italic|Droid+Sans+Mono:400">
 <style>
 /* Asciidoctor default stylesheet | MIT License | http://asciidoctor.org */
@@ -413,11 +413,11 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </head>
 <body class="article toc2 toc-left">
 <div id="header">
-<h1>totask2</h1>
+<h1>totask2 Überblick</h1>
 <div class="details">
 <span id="author" class="author">man-at-home</span><br>
-<span id="revnumber">version 1.2,</span>
-<span id="revdate">2014-11-26</span>
+<span id="revnumber">version 1.3,</span>
+<span id="revdate">2014-12-06</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
@@ -435,17 +435,18 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </li>
 <li><a href="#_ergebnis">4. Ergebnis</a></li>
 <li><a href="#_entwicklungsumgebung">5. Entwicklungsumgebung</a></li>
-<li><a href="#_deployment">6. Deployment</a>
+<li><a href="#_qa">6. QA</a></li>
+<li><a href="#_deployment">7. Deployment</a>
 <ul class="sectlevel2">
-<li><a href="#_lokal">6.1. Lokal</a></li>
-<li><a href="#_cloud">6.2. Cloud</a></li>
+<li><a href="#_lokal">7.1. Lokal</a></li>
+<li><a href="#_cloud">7.2. Cloud</a></li>
 </ul>
 </li>
-<li><a href="#_weitere_details">7. weitere Details</a></li>
-<li><a href="#_erfahrungen">8. Erfahrungen</a>
+<li><a href="#_weitere_details">8. weitere Details</a></li>
+<li><a href="#_erfahrungen">9. Erfahrungen</a>
 <ul class="sectlevel2">
-<li><a href="#_positiv">8.1. positiv</a></li>
-<li><a href="#_negativ">8.2. negativ</a></li>
+<li><a href="#_positiv">9.1. positiv</a></li>
+<li><a href="#_negativ">9.2. negativ</a></li>
 </ul>
 </li>
 </ul>
@@ -525,7 +526,7 @@ Entitäten wie Projekt, Task und Arbeitszeit (WorkEntry) und Taskzuordnung zu Us
 <div class="paragraph">
 <p>SpringMVC Web Anwendungen werden natürlich in Java programmiert. Im vorliegenden Fall bereits mit <a href="https://java.com/de/">Java 8</a>
 da ich dabei Closures nutzen wollte. Als Templating Engine für HTML wird dabei <a href="http://www.thymeleaf.org/">thymeleaf</a> verwendet.
-Logging erfolgt mit <a href="http://logback.qos.ch/">logback/slf4j</a>, Unit Tests mit <a href="http://junit.org/">junit</a>.</p>
+Logging erfolgt mit <a href="http://logback.qos.ch/">logback/slf4j</a>, Unit Tests mit <a href="http://junit.org/">junit</a>. Der REST Teil wird über <a href="http://swagger.io/">wagger</a> zur Verfügung gestellt.</p>
 </div>
 <div class="paragraph">
 <p><em>Client Seitig</em> benutze ich <a href="http://getbootstrap.com//" target="_blank">bootstrap</a> für css,
@@ -557,8 +558,10 @@ Ein nettes Gimmick: github kann asciidoc Documente "on the fly" direkt aus dem R
 rendern. Live zu sehen unter <a href="https://github.com/man-at-home/totask2/blob/master/src/docs/totask2.article.asciidoc" class="bare">https://github.com/man-at-home/totask2/blob/master/src/docs/totask2.article.asciidoc</a></p>
 </div>
 <div class="paragraph">
-<p>Für das <em>Build Management</em> nutze ich <a href="http://www.gradle.org/" target="_blank">gradle</a>, mit einigen Plugins wie
-checkstyle, pmd, findbugs, asciidoctor. Ein Build-Server <a href="http://jenkins-ci.org/">jenkins</a> läuft in der cloud (openshift).</p>
+<p>Für das <em>Build Management</em> nutze ich <a href="http://www.gradle.org/" target="_blank">gradle</a>, mit einigen Plugins wie asciidoctor. Ein Build-Server <a href="http://jenkins-ci.org/">jenkins</a> läuft in der cloud (openshift).</p>
+</div>
+<div class="paragraph">
+<p>Qualitätsanalyse erfolgt mit diversen Tools die im build oder in der ide eingebunden sind: CheckStyle, FindBugs, PMD, jDepend, jacoco. Zudem als Analysewerkzeug <a href="http://www.sonarqube.org/">SonarQube</a>.</p>
 </div>
 <div class="paragraph">
 <p>Experimentell ist <a href="http://www.seleniumhq.org/">selenium</a> als Web Test Tool.</p>
@@ -760,10 +763,33 @@ checkstyle, pmd, findbugs, asciidoctor. Ein Build-Server <a href="http://jenkins
 </div>
 </div>
 <div class="sect1">
-<h2 id="_deployment">6. Deployment</h2>
+<h2 id="_qa">6. QA</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>diverse qa tools (findBugs, checkstyle, PMD) prüfen den Code statisch, hier als Beispiel checkstyle:</p>
+</div>
+<div id="img-checkstyle" class="imageblock">
+<div class="content">
+<img src="images/totask2.qa.checkstyle.png" alt="screenshot_QA_checkstyle" width="600" height="400">
+</div>
+<div class="title">Figure 20. checkstyle eclipse plugin</div>
+</div>
+<div class="paragraph">
+<p>das Ganze dann auch auswertbar mit Trends in einem SonarQube Server aufbereitet.</p>
+</div>
+<div id="img-sonar" class="imageblock">
+<div class="content">
+<img src="images/totask.qa.sonar.dashboard.png" alt="screenshot_QA_sonar" width="700" height="500">
+</div>
+<div class="title">Figure 21. sonar dashboard</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_deployment">7. Deployment</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_lokal">6.1. Lokal</h3>
+<h3 id="_lokal">7.1. Lokal</h3>
 <div class="paragraph">
 <p>Neben der einfachsten Ausführung als Stand Alone App hier ein Deployment
 im RedHat WildFly Application Server:</p>
@@ -772,11 +798,11 @@ im RedHat WildFly Application Server:</p>
 <div class="content">
 <img src="images/totask2.dev.wildfly.admin.png" alt="screenshot_EE" width="600" height="400">
 </div>
-<div class="title">Figure 20. lokale Installation im wildfly Container</div>
+<div class="title">Figure 22. lokale Installation im wildfly Container</div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_cloud">6.2. Cloud</h3>
+<h3 id="_cloud">7.2. Cloud</h3>
 <div class="paragraph">
 <p>Automatisierte Builds mit dem build Server <strong>jenkins</strong> finden in der <em>cloud</em> auf einer openShift Applikation
 (== Runtime Umgebung in der cloud von red hat) statt.
@@ -786,13 +812,13 @@ Der Build-Server holt sich den totask2 Source im master-Branch von github und ge
 <div class="content">
 <img src="images/totask2.cloud.jenkins.png" alt="screenshot_CLOUD_1" width="600" height="400">
 </div>
-<div class="title">Figure 21. jenkins on openshift</div>
+<div class="title">Figure 23. jenkins on openshift</div>
 </div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_weitere_details">7. weitere Details</h2>
+<h2 id="_weitere_details">8. weitere Details</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p><a href="totask2.developer-manual.html">dev docs</a></p>
@@ -800,10 +826,10 @@ Der Build-Server holt sich den totask2 Source im master-Branch von github und ge
 </div>
 </div>
 <div class="sect1">
-<h2 id="_erfahrungen">8. Erfahrungen</h2>
+<h2 id="_erfahrungen">9. Erfahrungen</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_positiv">8.1. positiv</h3>
+<h3 id="_positiv">9.1. positiv</h3>
 <div class="ulist">
 <ul>
 <li>
@@ -828,7 +854,7 @@ Der Build-Server holt sich den totask2 Source im master-Branch von github und ge
 </div>
 </div>
 <div class="sect2">
-<h3 id="_negativ">8.2. negativ</h3>
+<h3 id="_negativ">9.2. negativ</h3>
 <div class="paragraph">
 <p>Wo hakt es (noch?)</p>
 </div>
@@ -854,8 +880,8 @@ Der Build-Server holt sich den totask2 Source im master-Branch von github und ge
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 1.2<br>
-Last updated 2014-12-02 22:28:03 MEZ
+Version 1.3<br>
+Last updated 2014-12-06 00:44:27 MEZ
 </div>
 </div>
 </body>

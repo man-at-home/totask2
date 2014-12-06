@@ -16,6 +16,7 @@ apply plugin: "findbugs"
 apply plugin: "pmd"
 apply plugin: "jacoco"
 apply plugin: "jdepend"
+apply plugin: "sonar-runner"
 
 apply plugin: "build-dashboard"
 
@@ -134,16 +135,28 @@ tasks.withType(FindBugs) {
 
 jacocoTestReport {
     reports {
-        xml.enabled      = false
+        xml.enabled      = true
         csv.enabled      = false
-        html.destination = "${buildDir}/reports/jacoco"
+//        html.destination = "${buildDir}/reports/jacoco"
+    }
+}
+
+// configured for local sonarQube 4.5 installation (defaults)
+sonarRunner {
+    toolVersion = '2.4'
+    sonarProperties {
+        property "sonar.projectName",          "totask2 project time logging"
+        property "sonar.projectKey",           "totask2"
+        property "sonar.jacoco.reportPath",    "${buildDir}/jacoco/test.exec"
+        property "sonar.junit.reportsPath",    "${buildDir}/test-results/"
+        property "sonar.surefire.reportsPath", "${buildDir}/test-results/"
     }
 }
 
 
 asciidoctor {
-    sourceDir    = new File("$projectDir/src/docs")
-    outputDir    = new File("$buildDir/docs/asciidoc")
+    sourceDir    = new File("${projectDir}/src/docs")
+    outputDir    = new File("${buildDir}/docs/asciidoc")
     logDocuments = true
 } 
 
@@ -173,14 +186,14 @@ project.gradle.projectsEvaluated {
 task copyPlantUMLImages(type: Copy) {
     dependsOn    javadoc
     description "use diagrams from javadoc in asciidoc articles too"
-    from fileTree(dir: "$buildDir/docs/javadoc", include: "**/doc-files/*.png").files
-    into "$buildDir/docs/asciidoc/images/uml"
+    from fileTree(dir: "${buildDir}/docs/javadoc", include: "**/doc-files/*.png").files
+    into "${buildDir}/docs/asciidoc/images/uml"
 }
 
 // generate all documentation
 task allDocs {
     dependsOn asciidoctor, copyPlantUMLImages 
-    description "generation full documenation for totask2"
+    description "generation of full documenation for totask2"
 }
 
 
@@ -193,7 +206,7 @@ task wrapper(type: Wrapper) {
 task deployLocal(type: Copy) {
     dependsOn assemble
     description "deploy into app server (wildlfy 8.1 currently)"
-    from "$buildDir/libs"
+    from "${buildDir}/libs"
     include '*.war'
     into 'c:/dev/wildfly/standalone/deployments'
 }
@@ -202,7 +215,7 @@ task deployLocal(type: Copy) {
 task deployOpenShift(type: Copy) {
     dependsOn assemble
     description "deploy into app server (wildlfy 8.1 - called from action_hook/deploy)"
-    from "$buildDir/libs"
+    from "${buildDir}/libs"
     include '*.war'    
     into 'deployments'  
 //    rename { String fileName -> "ROOT.war" }
@@ -211,5 +224,6 @@ task deployOpenShift(type: Copy) {
 
 
 // reminder: start h2 console (start-menue) h2w.bat, connect to jdbc:h2:c:/data/projects/totask2/totask2.qa.db
-// reminder: run qa profile: >gradle bootRun -Dspring.profiles.active=qa
-    
+// reminder: run qa profile:    >gradle bootRun -Dspring.profiles.active=qa
+// reminder: run sonar server:  >\dev\sonarqube\bin\windows-x86-32\StartSonar
+

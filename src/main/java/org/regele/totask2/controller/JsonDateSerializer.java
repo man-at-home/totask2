@@ -1,10 +1,11 @@
 package org.regele.totask2.controller;
 
+
+import org.springframework.stereotype.Component;
+
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
-import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonProcessingException;

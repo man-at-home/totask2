@@ -1,4 +1,3 @@
-
 /** 
  * totask2 application.
  * 
@@ -16,6 +15,8 @@
  * @since  2014
  *
  */
+
+package org.regele.totask2;
 /*
  * 
 @startuml doc-files/totask2.design.modules.png
@@ -69,4 +70,3 @@ User <|-- Admin
 
 @enduml
  */
-package org.regele.totask2;

@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <fileset-config file-format-version="1.2.0" simple-config="true" sync-formatter="false">
-  <fileset name="all" enabled="true" check-config-name="totask2-checks" local="false">
+  <local-check-config name="totask2-checkstyle" location="C:\data\projects\toTask2\config\checkstyle\checkstyle.xml" type="external" description="">
+    <additional-data name="protect-config-file" value="false"/>
+  </local-check-config>
+  <fileset name="all" enabled="true" check-config-name="totask2-checkstyle" local="true">
     <file-match-pattern match-pattern="." include-pattern="true"/>
   </fileset>
+  <filter name="DerivedFiles" enabled="true"/>
+  <filter name="UnOpenedFiles" enabled="true"/>
 </fileset-config>

@@ -39,13 +39,15 @@ von github holen.
 
 == Build & Run
 
-Compile und Test des Projekts erfolgt mit => `%> gradle test`.
+Compile und Test des Projekts erfolgt mit => `%> gradlew test`.
 
-Dokumentation erstellen (einschließlich diesem Dokument hier) => `%> gradle allDocs`.
+Dokumentation erstellen (einschließlich diesem Dokument hier) => `%> gradlew allDocs`.
 
-Run mit InMemory Datenbank h2 => `%> gradle bootRun`
+Run mit InMemory Datenbank h2 => `%> gradlew bootRun`
 
-Run mit persistenter Datenbank (die Daten bleiben zwischen den Runs erhalten) => `%> gradle bootRun -Dspring.profiles.active=qa`
+Run mit persistenter Datenbank (die Daten bleiben zwischen den Runs erhalten) => `%> gradlew bootRun -Dspring.profiles.active=qa`
+
+QA Analyse incl. Tests und CodeCoverage: `%> gradlew sonarRunners`
 
 == Deployment
 

@@ -32,7 +32,7 @@ public class Authorisation {
         boolean isAdmin = 
                 auth != null && 
                 auth.isAuthenticated() &&
-                auth.getAuthorities().stream().anyMatch( a -> ROLE_ADMIN.equals(a.getAuthority()))  
+                auth.getAuthorities().stream().anyMatch(a -> ROLE_ADMIN.equals(a.getAuthority()))  
                 ;
         
         LOG.debug("Authentication checked: user " + auth + " is admin:" + isAdmin);
@@ -46,8 +46,9 @@ public class Authorisation {
      * */
     public static void require(final boolean requiredOption) {
         
-        if( ! requiredOption )
+        if (!requiredOption) {
             throw new NotAllowedException("not allowed");
+        }
     }
     
 }

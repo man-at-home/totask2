@@ -55,27 +55,27 @@ public class UserCachingService {
                 .stream()
                 .filter( u -> u.getId() == userId)
                 .findFirst()
-                .orElseThrow( () -> new UserNotFoundException("no user with id " + userId))
+                .orElseThrow(() -> new UserNotFoundException("no user with id " + userId))
                 ;
     }
 
-    /** find user by logged in user 
+    /** find user by logged in user.
      * 
      * @param authentication currently logged in user (spring security authentication).
      * */
     public User getCachedUser(final Authentication authentication) {
         
-        if( authentication == null || authentication.getName() == null)
+        if (authentication == null || authentication.getName() == null)
             throw new NullPointerException("no authentication user/no name [getCachedUser]");
         
-        if( authentication.getPrincipal() instanceof User)
+        if (authentication.getPrincipal() instanceof User)
             return (User) authentication.getPrincipal(); 
         
         return this.getCachedUsers()
                 .stream()
-                .filter( u -> u.getUsername().equalsIgnoreCase(authentication.getName()))
+                .filter(u -> u.getUsername().equalsIgnoreCase(authentication.getName()))
                 .findFirst()
-                .orElseThrow( () -> new UserNotFoundException("no user with id " + authentication.getName()))
+                .orElseThrow(() -> new UserNotFoundException("no user with id " + authentication.getName()))
                 ;
     }
     
@@ -87,13 +87,12 @@ public class UserCachingService {
      */
     public List<User> getCachedUsers(final String filter) {
         List<User> users;
-        if( filter == null || filter.length() == 0) {
+        if (filter == null || filter.length() == 0) {
             users = this.getCachedUsers();
-        }
-        else {
+        } else {
             users = this.getCachedUsers()
                     .stream()
-                    .filter( u -> u.getUsername().indexOf(filter) >= 0 || u.getDisplayName().indexOf(filter) >= 0)   
+                    .filter(u -> u.getUsername().indexOf(filter) >= 0 || u.getDisplayName().indexOf(filter) >= 0)   
                     .collect(Collectors.toCollection(ArrayList::new))
                    ;
         }

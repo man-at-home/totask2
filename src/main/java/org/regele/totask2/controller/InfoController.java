@@ -20,7 +20,7 @@ import com.wordnik.swagger.annotations.ApiOperation;
 
 /** admin/info web controller. */
 @Controller
-@Api(value="info REST-API", description = "totask2 info REST API")
+@Api(value = "info REST-API", description = "totask2 info REST API")
 public class InfoController {
     
     private static final Logger LOG = LoggerFactory.getLogger(InfoController.class);
@@ -31,8 +31,7 @@ public class InfoController {
     /** REST API. */
     @RequestMapping(value = "/REST/info", method = RequestMethod.GET)    
     @ApiOperation(value = "info", notes = "simple REST test call")
-    @ResponseBody public String restInfo()
-    {        
+    @ResponseBody public String restInfo() {        
         LOG.debug("info()");
         return "greeting from totask2 to you, the caller of this info REST API.";
     }

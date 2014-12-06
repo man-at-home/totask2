@@ -73,8 +73,7 @@ public class TaskInWeek {
         
         if (this.dailyEntries == null) { 
            return 0;       
-        }
-        else {
+        } else {
            double sum = 0;
            for (WorkEntry we : this.dailyEntries) {
                sum += we.getDuration();
@@ -85,10 +84,10 @@ public class TaskInWeek {
     
     public boolean isModifiedByUser() {
         
-        if( this.getDailyEntries() == null)
+        if (this.getDailyEntries() == null)
             return false;
         else
-            return Arrays.stream( this.getDailyEntries() ).anyMatch( de -> de.isModifiedByUser());
+            return Arrays.stream(this.getDailyEntries()).anyMatch(de -> de.isModifiedByUser());
     }
     
 

@@ -57,10 +57,9 @@ public class TaskController {
     
     
     
-    /** currently logged in @see user */
+    /** currently logged in @see user. */
     @ModelAttribute("user")
-    public User getUser()
-    {
+    public User getUser() {
         return userCachingService.getCachedUser(SecurityContextHolder.getContext().getAuthentication());
     }  
 
@@ -170,7 +169,7 @@ public class TaskController {
             return "editTask";
         }
                 
-        Authorisation.require( task.isEditAllowed(getUser()));               
+        Authorisation.require(task.isEditAllowed(getUser()));               
         Task savedTask  = this.taskRepository.saveAndFlush(task);
         model.clear();        
         

@@ -2,8 +2,6 @@ package org.regele.totask2.controller;
 
 import static org.junit.Assert.*;
 
-import java.util.List;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.regele.totask2.Application;
@@ -15,10 +13,13 @@ import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
-import com.wordnik.swagger.config.SwaggerConfig;
-
+import java.util.List;
 import javax.transaction.Transactional;
 
+import com.wordnik.swagger.config.SwaggerConfig;
+
+
+/** test data only. */
 @Transactional
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = { Application.class, SwaggerConfig.class })

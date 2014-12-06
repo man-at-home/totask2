@@ -1,11 +1,5 @@
 package org.regele.totask2.service;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-
 import org.hibernate.envers.AuditReader;
 import org.hibernate.envers.AuditReaderFactory;
 import org.hibernate.envers.query.AuditQuery;
@@ -15,6 +9,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
 
 /** 
  * query historic data on versioned domain models (e.g. projects, tasks..) 
@@ -32,8 +33,8 @@ public class AuditingService {
 
     
     /** revision holder. */
-    public class EntityRevision
-    {        
+    public static class EntityRevision {
+        
         private Number revision;
         private Object historicEntity;
         
@@ -43,14 +44,20 @@ public class AuditingService {
         }
 
         /** revision number. */
-        public Number getRevision() { return this.revision; }
+        public Number getRevision() { 
+            return this.revision; 
+        }
         
         /** domain model (historic values valid in given revision). */
-        public Object getEntity()   { return this.historicEntity; }
+        public Object getEntity()   { 
+            return this.historicEntity; 
+        }
         
         /** debug. */
         @Override
-        public String toString() { return "rev " + getRevision(); }
+        public String toString() { 
+            return "rev " + getRevision(); 
+        }
         
     }
     
@@ -65,7 +72,7 @@ public class AuditingService {
         
         List<Number> revNumbers = ar.getRevisions(Project.class, primaryKeyId);
         
-        for(Number rev : revNumbers) {
+        for (Number rev : revNumbers) {
             AuditQuery query = 
                     ar.createQuery()
                         .forEntitiesAtRevision(Project.class, rev)
@@ -75,7 +82,12 @@ public class AuditingService {
             revisions.add(new EntityRevision(rev, o));      
         }
         
-        LOG.debug("built full history on " + versionedDomainClass.getName() + "[" + primaryKeyId + "], with " + revisions.size() + "changes" );
+        LOG.debug("built full history on " 
+                + versionedDomainClass.getName() 
+                + "[" + primaryKeyId + "], with " 
+                + revisions.size() 
+                + "changes");
+        
         return revisions;
     }
 }

@@ -2,11 +2,6 @@ package org.regele.totask2.service;
 
 import static java.time.temporal.TemporalAdjusters.*;
 
-import java.time.DayOfWeek;
-import java.time.LocalDate;
-import java.util.Date;
-import java.util.List;
-import java.util.stream.Collectors;
 
 import org.regele.totask2.model.TaskAssignment;
 import org.regele.totask2.model.TaskAssignmentRepository;
@@ -20,6 +15,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
 
 /**
@@ -39,7 +40,7 @@ public class WeekEntryService {
     /** possible tasks. */
     @Autowired private TaskAssignmentRepository taskAssignmentRepository; 
 
-    /** .ctor */
+    /** .ctor. */
     public WeekEntryService() {
     }
     
@@ -53,10 +54,10 @@ public class WeekEntryService {
      */
     public List<TaskInWeek> getWorkWeek(final User user, final LocalDate dt) {
 
-        if( user == null)
+        if (user == null)
             throw new IllegalArgumentException("no user for WorkWeek retrieval");
         
-        if( dt == null)
+        if (dt == null)
             throw new IllegalArgumentException("no date for WorkWeek retrieval");
         
         LocalDate date  = dt.with(previousOrSame(DayOfWeek.MONDAY));
@@ -81,22 +82,20 @@ public class WeekEntryService {
         LOG.debug("possible tasks count: " + assignments.size());
         
         assignments.stream()
-                   .filter(ta -> ! tasksInWeek.stream().anyMatch( tw -> tw.getTask().getId() == ta.getTask().getId()) )
+                   .filter(ta -> !tasksInWeek.stream().anyMatch(tw -> tw.getTask().getId() == ta.getTask().getId()))
                    .distinct()
                    .forEach(found -> tasksInWeek.add(new TaskInWeek(found.getTask())))
                    ;
         
         LOG.debug("booked AND allowed tasks count: " + tasksInWeek.size());
         
-        for( TaskInWeek tiw : tasksInWeek)
-        {
-            for(int dayOffset = 0; dayOffset<=6 ;dayOffset++)
-            {
+        for (TaskInWeek tiw : tasksInWeek) {
+            for (int dayOffset = 0; dayOffset <= 6; dayOffset++) {
                 final long offset = dayOffset;
                 WorkEntry entryOfDay = entries.stream()
-                        .filter( we -> we.getTask().getId() == tiw.getTask().getId() && we.getAtDate().equals(date.plusDays(offset)) )
+                        .filter(we -> we.getTask().getId() == tiw.getTask().getId() && we.getAtDate().equals(date.plusDays(offset)))
                         .findFirst()
-                        .orElse( new WorkEntry(user, tiw.getTask(), date.plusDays(offset)));   // new empty entry
+                        .orElse(new WorkEntry(user, tiw.getTask(), date.plusDays(offset)));   // new empty entry
                 
                 tiw.getDailyEntries()[dayOffset] = entryOfDay;
             }
@@ -117,16 +116,14 @@ public class WeekEntryService {
         LOG.debug("saveWeek()");
         ApplicationAssert.assertNotNull("tasksInWeek", tasksInWeek);
         
-        for( TaskInWeek tiw : tasksInWeek)
-        {
-            if( tiw.isModifiedByUser() ) {
+        for (TaskInWeek tiw : tasksInWeek) {
+            if (tiw.isModifiedByUser()) {
                 LOG.debug("saveWeek() Task " + tiw.getTask().getName());
-                for(int dayOffset = 0; dayOffset<=6 ;dayOffset++)
-                {
+                for (int dayOffset = 0; dayOffset <= 6; dayOffset++) {
                     WorkEntry we = tiw.getDailyEntries()[dayOffset];
                     ApplicationAssert.assertNotNull("we", we);
                     
-                    if( we.isModifiedByUser()) {
+                    if (we.isModifiedByUser()) {
                         LOG.debug("  save workEntry: " + we);
                         we = this.workEntryRepository.save(we);
                         tiw.getDailyEntries()[dayOffset] = we;

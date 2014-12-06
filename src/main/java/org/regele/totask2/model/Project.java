@@ -1,5 +1,11 @@
 package org.regele.totask2.model;
 
+
+import org.hibernate.envers.AuditTable;
+import org.hibernate.envers.Audited;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
@@ -19,10 +25,6 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import org.hibernate.envers.AuditTable;
-import org.hibernate.envers.Audited;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.wordnik.swagger.annotations.ApiModel;
@@ -41,6 +43,7 @@ import com.wordnik.swagger.annotations.ApiModelProperty;
  * @author man-at-home
  * 
  */
+@Entity
 /*
 @startuml doc-files/totask2.design.datamodel.project.png
 
@@ -55,16 +58,11 @@ import com.wordnik.swagger.annotations.ApiModelProperty;
  
  @enduml
  */
-
 //tag::developer-manual-history-entity[]
-
-@Entity
 @Table(name = "TT_PROJECT")
-
 @Audited                                    // <1>
 @AuditTable("TT_PROJECT_HISTORY")           // <2>
-
-@ApiModel(value="Project", description="project to log work on tasks, containing *task*s and being administered by project leads")
+@ApiModel(value = "Project", description = "project to log work on tasks, containing *task*s and being administered by project leads")
 public class Project {
 
     private static final Logger LOG = LoggerFactory.getLogger(Project.class);  
@@ -92,7 +90,7 @@ public class Project {
     
     
     /** unique id of given project (PK). */
-    @ApiModelProperty(value="unique id of given project (PK).")
+    @ApiModelProperty(value = "unique id of given project (PK).")
     public long getId() { return this.id; }
     public void setId(long id) { this.id = id; }
     
@@ -120,15 +118,14 @@ public class Project {
         
 
     /** display name of this project, length: 2..250. */
-    @ApiModelProperty(value="display name of this project, length: 2..250", required=true)
+    @ApiModelProperty(value = "display name of this project, length: 2..250", required = true)
     public String getName() { return name; }
     public void setName(@NotNull final String name) { this.name = name; }
 
     
     
     /** access check (edit allowed for admin and project leads). */
-    public boolean isEditAllowed(final User user)
-    {
+    public boolean isEditAllowed(final User user) {
         return user != null &&
                (user.isAdmin() || this.getProjectLeads().stream().anyMatch(pl -> pl.equals(user)));
     }
@@ -143,8 +140,7 @@ public class Project {
     
     
     /** internal logging helper. */
-    public void dump() 
-    {
+    public void dump() {
         dump(this);
     }
     
@@ -152,9 +148,10 @@ public class Project {
     /** internal logging helper. */
     public static void dump(final Project project) {
         
-        if( project == null)
+        if (project == null) {
             LOG.debug("no project to dump");
-        else {
+        } else {
+
             LOG.debug("project........:  " + project.toString());
             LOG.debug(".......leads...:  " + 
                                 (

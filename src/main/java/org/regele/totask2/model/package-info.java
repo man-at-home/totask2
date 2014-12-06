@@ -10,34 +10,38 @@
  * @since  2014-11-07 
  *
  */
-// tag::developer-manual-plantuml[]
+
+//tag::developer-manual-plantuml[]
+
+package org.regele.totask2.model;
+
 /*
- * 
+* 
 @startuml doc-files/totask2.design.datamodel.png
 
- Project         "1" *-- "n" Task : contains
- Project         "n"  -- "n" User            : leads 
- Task            "1" *-- "n" TaskAssignment 
- TaskAssignment  "1" -- "n"  User : assigned to
- WorkEntry       "n" -- "1"  User 
- WorkEntry       "n" -- "1"  Task : worked on
+Project         "1" *-- "n" Task : contains
+Project         "n"  -- "n" User            : leads 
+Task            "1" *-- "n" TaskAssignment 
+TaskAssignment  "1" -- "n"  User : assigned to
+WorkEntry       "n" -- "1"  User 
+WorkEntry       "n" -- "1"  Task : worked on
 
- Project   : name
- Task      : name
- 
- User      : username
- User      : displayName
- User      : password
- User      : isAdmin : boolean
- 
- WorkEntry  : at       : Date
- WorkEntry  : duration : Hours 
- 
- TaskAssignment : from  : Date
- TaskAssignment : until : Date
- 
- 
- @enduml
- */
-package org.regele.totask2.model;
+Project   : name
+Task      : name
+
+User      : username
+User      : displayName
+User      : password
+User      : isAdmin : boolean
+
+WorkEntry  : at       : Date
+WorkEntry  : duration : Hours 
+
+TaskAssignment : from  : Date
+TaskAssignment : until : Date
+
+
+@enduml
+*/
+
 //end::developer-manual-plantuml[]

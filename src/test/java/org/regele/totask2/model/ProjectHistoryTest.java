@@ -2,11 +2,6 @@ package org.regele.totask2.model;
 
 import static org.junit.Assert.*;
 
-import java.util.List;
-
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-
 import org.hibernate.envers.AuditReader;
 import org.hibernate.envers.AuditReaderFactory;
 import org.hibernate.envers.query.AuditQuery;
@@ -27,6 +22,12 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.TransactionCallbackWithoutResult;
 import org.springframework.transaction.support.TransactionTemplate;
+
+import java.util.List;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
 
 /**
  * testing historical project data access.
@@ -155,14 +156,14 @@ public class ProjectHistoryTest {
                 assertNotNull(history);
                 assertTrue("no history found", history.size() >= 1);
                 
-                for(EntityRevision er : history) {
+                for (EntityRevision er : history) {
 
                     assertNotNull(er.getRevision());
                     assertNotNull(er.getEntity());
                     assertTrue("wrong class",  er.getEntity() instanceof Project);
                     Project p = (Project) er.getEntity();
                     
-                    LOG.debug("Revision " + er.getRevision() + ": " + p.getName() );
+                    LOG.debug("Revision " + er.getRevision() + ": " + p.getName());
                 }
                 
             }

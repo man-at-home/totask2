@@ -30,16 +30,17 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.wordnik.swagger.annotations.Api;
-import com.wordnik.swagger.annotations.ApiOperation;
-import com.wordnik.swagger.annotations.ApiResponse;
-import com.wordnik.swagger.annotations.ApiResponses;
-
 import java.util.List;
 import java.util.Set;
 
 import javax.validation.Valid;
 import javax.ws.rs.Produces;
+
+import com.wordnik.swagger.annotations.Api;
+import com.wordnik.swagger.annotations.ApiOperation;
+import com.wordnik.swagger.annotations.ApiResponse;
+import com.wordnik.swagger.annotations.ApiResponses;
+
 
 
 /** admin ui projects.
@@ -50,7 +51,7 @@ import javax.ws.rs.Produces;
  * @since  2014-08-14
  */
 @Controller
-@Api(value="project REST-API", description = "totask2 projects REST API")
+@Api(value = "project REST-API", description = "totask2 projects REST API")
 public class ProjectController {
 
     private static final Logger LOG = LoggerFactory.getLogger(ProjectController.class);
@@ -66,31 +67,27 @@ public class ProjectController {
     @RequestMapping(value = "/REST/projects", method = RequestMethod.GET)
     @Produces("application/json")
     @ApiOperation(value = "REST/projects", notes = "return all known projects")
-    @ApiResponses(value = { @ApiResponse( code = 200, message = "ok") })
-    @ResponseBody public List<Project> restProjects()
-    {
+    @ApiResponses(value = { @ApiResponse(code = 200, message = "ok") })
+    @ResponseBody public List<Project> restProjects() {
         return projectRepository.findAll();        
     }
     
     /** common choice list in view templates: users. */
     @ModelAttribute("projectLeads")
-    public List<User> getProjectLeads()
-    {
+    public List<User> getProjectLeads() {
         return userCachingService.getCachedUsers();
     }
    
     
     /** access rights. */
     @ModelAttribute("isNewAllowed")
-    public boolean isNewAllowed()
-    {
-        return Authorisation.isAdmin( SecurityContextHolder.getContext().getAuthentication());
+    public boolean isNewAllowed() {
+        return Authorisation.isAdmin(SecurityContextHolder.getContext().getAuthentication());
     }
 
-    /** currently logged in @see user */
+    /** currently logged in @see user. */
     @ModelAttribute("user")
-    public User getUser()
-    {
+    public User getUser() {
         return userCachingService.getCachedUser(SecurityContextHolder.getContext().getAuthentication());
     }    
     
@@ -145,7 +142,7 @@ public class ProjectController {
         ApplicationAssert.assertNotNull("projectLeads empty, project " + project.getId() , project.getProjectLeads().size());        
         Project.dump(project);
         model.addAttribute("project", project);  
-        model.addAttribute("isEditAllowed", project.isEditAllowed(getUser()) );
+        model.addAttribute("isEditAllowed", project.isEditAllowed(getUser()));
         
         LOG.debug("will show " + project);
         return "editProject";
@@ -159,7 +156,7 @@ public class ProjectController {
         
         Project project = new Project();
         model.addAttribute("project", project);        
-        model.addAttribute("isEditAllowed", isNewAllowed() );
+        model.addAttribute("isEditAllowed", isNewAllowed());
         
         LOG.debug("will edit new " + project);
         return "editProject";
@@ -183,8 +180,9 @@ public class ProjectController {
         this.projectRepository.saveAndFlush(project);
         model.clear();       
         
-        if( this.counterService != null ) 
-            counterService.increment("totask2.projects.changed");        
+        if (this.counterService != null) { 
+            counterService.increment("totask2.projects.changed"); 
+        }
         
         LOG.debug("saved " + project + ", now redirecting.");
         return "redirect:/projects";

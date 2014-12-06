@@ -101,7 +101,7 @@ public class WorkEntry {
     /** optional comment (prose). */
     public String getComment() { return comment; }
     public void setComment(final String comment) { 
-        if (this.comment != null && !this.comment.equals(this.comment)) {
+        if (this.comment != null && !this.comment.equals(comment)) {
             isModifiedByUser = true;
         }
         this.comment = comment; 
@@ -119,9 +119,13 @@ public class WorkEntry {
      * @deprecated use modern java8 methods instead. 
      */
     @Deprecated
-    public Date getAt() { return at; }
+    public Date getAt() { 
+        return new Date (at.getTime()); 
+    }
     @Deprecated
-    public void setAt(Date at) { this.at = at; }
+    public void setAt(final Date at) { 
+        this.at = new Date(at.getTime()); 
+    }
     
     /**
      * date the work was done. 
@@ -132,10 +136,14 @@ public class WorkEntry {
         return LocalDateConverter.toLocalDate(this.at);
     }
     
-    public void setAtDate(final LocalDate at) { this.at = LocalDateConverter.toDate(at); }
+    public void setAtDate(final LocalDate at) { 
+        this.at = LocalDateConverter.toDate(at); 
+    }
 
     /** duration of the logged work in hours. */
-    public float getDuration() { return duration; }
+    public float getDuration() { 
+        return duration; 
+    }
     
     public void setDuration(final float duration) { 
         if (duration != this.duration) {
@@ -145,7 +153,7 @@ public class WorkEntry {
         this.duration = duration; 
     }
 
-
+    /** debug. */
     @Override
     public String toString() {
         return "WorkEntry [at=" + at + ", duration=" + duration + "]";

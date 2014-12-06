@@ -3,7 +3,7 @@
 :icons:    font
 :toc:      left
 man-at-home
-v1.3, 2014-12-02
+v1.3, 2014-12-06
 
 totask: eine rudimentäre Projektzeiterfassung 
 
@@ -40,7 +40,7 @@ http://springmvc.org/[springmvc^] als serverseitiges Java _Web Framework_.
 
 SpringMVC Web Anwendungen werden natürlich in Java programmiert. Im vorliegenden Fall bereits mit https://java.com/de/[Java 8]
 da ich dabei Closures nutzen wollte. Als Templating Engine für HTML wird dabei http://www.thymeleaf.org/[thymeleaf] verwendet. 
-Logging erfolgt mit http://logback.qos.ch/[logback/slf4j], Unit Tests mit http://junit.org/[junit].
+Logging erfolgt mit http://logback.qos.ch/[logback/slf4j], Unit Tests mit http://junit.org/[junit]. Der REST Teil wird über http://swagger.io/[wagger] zur Verfügung gestellt.
 
 _Client Seitig_ benutze ich http://getbootstrap.com//[bootstrap^] für css, 
 http://bootstrapvalidator.com/[bootstrapvalidator^] für einige Client seitige Prüfungen, 
@@ -66,8 +66,9 @@ Markup erstellt. Einige Diagramme sind mit http://plantuml.sourceforge.net/[plan
 Ein nettes Gimmick: github kann asciidoc Documente "on the fly" direkt aus dem Repository im Browser als Html
 rendern. Live zu sehen unter https://github.com/man-at-home/totask2/blob/master/src/docs/totask2.article.asciidoc
 
-Für das _Build Management_ nutze ich http://www.gradle.org/[gradle^], mit einigen Plugins wie 
-checkstyle, pmd, findbugs, asciidoctor. Ein Build-Server http://jenkins-ci.org/[jenkins] läuft in der cloud (openshift).
+Für das _Build Management_ nutze ich http://www.gradle.org/[gradle^], mit einigen Plugins wie asciidoctor. Ein Build-Server http://jenkins-ci.org/[jenkins] läuft in der cloud (openshift).
+
+Qualitätsanalyse erfolgt mit diversen Tools die im build oder in der ide eingebunden sind: CheckStyle, FindBugs, PMD, jDepend, jacoco. Zudem als Analysewerkzeug http://www.sonarqube.org/[SonarQube].
 
 Experimentell ist http://www.seleniumhq.org/[selenium] als Web Test Tool.
 
@@ -203,7 +204,19 @@ git Repository und Versionierung:
 .git SourceTree UI
 image::images/totask2.dev.SourceTree.png[screenshot_DEV_20, 600, 400]
 
+== QA
 
+diverse qa tools (findBugs, checkstyle, PMD) prüfen den Code statisch, hier als Beispiel checkstyle:
+
+[[img-checkstyle]]
+.checkstyle eclipse plugin
+image::images/totask2.qa.checkstyle.png[screenshot_QA_checkstyle, 600, 400]
+
+das Ganze dann auch auswertbar mit Trends in einem SonarQube Server aufbereitet.
+
+[[img-sonar]]
+.sonar dashboard
+image::images/totask.qa.sonar.dashboard.png[screenshot_QA_sonar, 700, 500]
 
 == Deployment
 

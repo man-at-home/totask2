@@ -6,6 +6,4 @@
  * 
  * @author man-at-home
  */
-
-
 package org.regele.totask2.util;

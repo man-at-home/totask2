@@ -1,9 +1,10 @@
 package org.regele.totask2.util;
 
-import java.math.BigDecimal;
-import java.text.ParseException;
 
 import org.regele.totask2.model.WorkEntry;
+
+import java.math.BigDecimal;
+import java.text.ParseException;
 
 /** 
  * helper for duration conversion. 

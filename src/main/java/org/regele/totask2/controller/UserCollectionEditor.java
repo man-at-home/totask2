@@ -3,13 +3,14 @@
  */
 package org.regele.totask2.controller;
 
-import java.util.Collection;
 
 import org.regele.totask2.model.User;
 import org.regele.totask2.service.UserCachingService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.propertyeditors.CustomCollectionEditor;
+
+import java.util.Collection;
 
 /**
  * converting between Collections of {@link User} and user.id.
@@ -33,8 +34,7 @@ public class UserCollectionEditor extends CustomCollectionEditor {
     @SuppressWarnings("rawtypes")
     public UserCollectionEditor(
             final Class<? extends Collection> collectionType, 
-            final UserCachingService userCachingService) 
-    {
+            final UserCachingService userCachingService) {
         super(collectionType);
         this.userCachingService = userCachingService;
     }
@@ -47,7 +47,7 @@ public class UserCollectionEditor extends CustomCollectionEditor {
         }
         if (element instanceof String) {
             LOG.debug("Looking up user by id " + element);
-            User user = userCachingService.getCachedUserById( Long.parseLong(element + ""));
+            User user = userCachingService.getCachedUserById(Long.parseLong(element + ""));
             return user;
         }
         LOG.error("Don't know what to do with: " + element);

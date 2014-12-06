@@ -11,6 +11,8 @@
  * @since  2014-11-07 
  *
  */
+package org.regele.totask2.controller;
+
 /*
  * 
 @startuml doc-files/totask2.design.controllers.png
@@ -49,5 +51,3 @@ deactivate ViewTemplate
 
 @enduml
  */
-
-package org.regele.totask2.controller;

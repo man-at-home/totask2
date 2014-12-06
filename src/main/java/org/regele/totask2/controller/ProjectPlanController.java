@@ -1,9 +1,5 @@
 package org.regele.totask2.controller;
 
-import java.util.List;
-
-import javax.ws.rs.Produces;
-
 import org.regele.totask2.model.Project;
 import org.regele.totask2.model.ProjectRepository;
 import org.regele.totask2.service.ProjectPlanDataService;
@@ -19,6 +15,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.List;
+
+import javax.ws.rs.Produces;
+
 import com.wordnik.swagger.annotations.Api;
 
 
@@ -33,7 +33,7 @@ import com.wordnik.swagger.annotations.Api;
  * @since  2014-11-15
  */
 @Controller
-@Api(value="project plan REST-API", description = "totask2 projects gantt view chart data REST API")
+@Api(value = "project plan REST-API", description = "totask2 projects gantt view chart data REST API")
 public class ProjectPlanController {
     
     private static final Logger LOG = LoggerFactory.getLogger(ProjectPlanController.class);
@@ -77,8 +77,7 @@ public class ProjectPlanController {
     @RequestMapping(value = "/REST/plan/project/{id}", method = RequestMethod.GET)
     @Produces("application/json")
     @ResponseBody 
-    List<ProjectPlanData> plan(@PathVariable final long id) 
-    {        
+    List<ProjectPlanData> plan(@PathVariable final long id) {        
         LOG.debug("providing json plan2 data for project " + id);
         
         Project project = projectRepository.findOne(id); 

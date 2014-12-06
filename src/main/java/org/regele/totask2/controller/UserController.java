@@ -1,5 +1,6 @@
 package org.regele.totask2.controller;
 
+
 import org.regele.totask2.model.User;
 import org.regele.totask2.service.UserCachingService;
 import org.regele.totask2.util.Authorisation;
@@ -23,6 +24,7 @@ import java.util.List;
 
 import javax.ws.rs.Produces;
 
+
 /** 
  * REST controller, used as ajax endpoint providing users data for autocompletion. 
  * (used by TaskAssignment).
@@ -30,7 +32,7 @@ import javax.ws.rs.Produces;
  * @see TaskAssignmentController
  */
 @RestController
-@Api(value="user REST-API", description = "totask2 user REST API")
+@Api(value = "user REST-API", description = "totask2 user REST API")
 public class UserController {
     
     private static final Logger LOG = LoggerFactory.getLogger(UserController.class);
@@ -55,13 +57,12 @@ public class UserController {
     @RequestMapping(value = "REST/users", method = RequestMethod.GET)
     @Produces("application/json")
     @ApiOperation(value = "REST/users", notes = "return all known users given a search criteria *term*")
-    @ApiResponses(value = { @ApiResponse( code = 200, message = "ok") })
+    @ApiResponses(value = { @ApiResponse(code = 200, message = "ok") })
     public List<User> restUsers(
-            @ApiParam(value = "optional search term", required = false, defaultValue="", name="term")  
+            @ApiParam(value = "optional search term", required = false, defaultValue = "", name = "term")  
             @RequestParam(value = "term", defaultValue = "", required = false) 
             final String term
-            ) 
-    {
+            ) {
         LOG.debug("/REST/users, term=" + term);
         return userCachingService.getCachedUsers(term);        
     }

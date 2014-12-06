@@ -109,7 +109,7 @@ public final class User implements UserDetails {
     
     /** UserId used to login into this application.*/
     @Override
-    @ApiModelProperty(value = "unique username, used for login into totask2.", required=true)
+    @ApiModelProperty(value = "unique username, used for login into totask2.", required = true)
     public String getUsername() {
         return userName;
     }
@@ -119,7 +119,7 @@ public final class User implements UserDetails {
     }
 
     /** display friendly name of this user, shown in dialogs. */
-    @ApiModelProperty(value = "display friendly name of this user, shown in dialogs.", required=true)
+    @ApiModelProperty(value = "display friendly name of this user, shown in dialogs.", required = true)
     public String getDisplayName() {
         return displayName;
     }
@@ -273,16 +273,15 @@ public final class User implements UserDetails {
     /** internal logging helper. */
     public static void dumpAuthentication() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if( auth != null) {
+        if (auth != null) {
             LOG.debug("user: " + auth.getName() + " " + auth.isAuthenticated() + " roles " + auth.getAuthorities().size()); //get logged in username
  
             auth.getAuthorities()
             .stream().
-            forEach( ga ->  
+            forEach(ga ->  
                 LOG.debug("  user-role:" + ga)
             );
-        }
-        else {
+        } else {
             LOG.debug("no auth.user user");
         }           
     }

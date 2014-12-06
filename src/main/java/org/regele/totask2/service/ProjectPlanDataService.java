@@ -50,7 +50,7 @@ public class ProjectPlanDataService {
                 .map(t -> new ProjectPlanData(t))
                 .collect(Collectors.toList());
         
-        list.forEach( ppd -> ppd.SetSeries(taskAssignmentRepository));
+        list.forEach( ppd -> ppd.setSeries(taskAssignmentRepository));
         return list;
     }
 }

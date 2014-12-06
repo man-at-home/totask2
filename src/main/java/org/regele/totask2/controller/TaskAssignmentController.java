@@ -53,10 +53,9 @@ public class TaskAssignmentController {
     
     
 
-    /** currently logged in @see user */
+    /** currently logged in @see user. */
     @ModelAttribute("user")
-    public User getUser()
-    {
+    public User getUser() {
         return userCachingService.getCachedUser(SecurityContextHolder.getContext().getAuthentication());
     }    
    
@@ -68,7 +67,7 @@ public class TaskAssignmentController {
         LOG.debug("task assignments for task " + id);
   
         Task task = taskRepository.findOne(id);
-        Authorisation.require( task.isEditAllowed(getUser()));       
+        Authorisation.require(task.isEditAllowed(getUser()));       
 
         List<TaskAssignment> assignments = taskAssignmentRepository.findByTask(task);
         
@@ -93,7 +92,7 @@ public class TaskAssignmentController {
         }     
         
         long taskId = assignmentToDelete.getTask().getId();
-        Authorisation.require( assignmentToDelete.getTask().isEditAllowed(getUser()));       
+        Authorisation.require(assignmentToDelete.getTask().isEditAllowed(getUser()));       
         
         taskAssignmentRepository.delete(assignmentToDelete);
         taskAssignmentRepository.flush();
@@ -110,7 +109,7 @@ public class TaskAssignmentController {
         
         TaskAssignment assignment = taskAssignmentRepository.getOne(id);
         
-        Authorisation.require( assignment.getTask().isEditAllowed(getUser()));       
+        Authorisation.require(assignment.getTask().isEditAllowed(getUser()));       
         
         model.addAttribute("task", assignment.getTask());
         model.addAttribute("assignment", assignment);        
@@ -134,7 +133,7 @@ public class TaskAssignmentController {
         if (task == null) {
             throw new TaskNotFoundException("task " + taskId + " not found creating new assignment.");
         }
-        Authorisation.require( task.isEditAllowed(getUser()));    
+        Authorisation.require(task.isEditAllowed(getUser()));    
         
         TaskAssignment assignment = task.addAssignment(user);
         
@@ -158,7 +157,7 @@ public class TaskAssignmentController {
             return "editTaskAssignment";
         }
 
-        Authorisation.require( assignment.getTask().isEditAllowed(getUser()));       
+        Authorisation.require(assignment.getTask().isEditAllowed(getUser()));       
         
         TaskAssignment savedTaskAssignment  = this.taskAssignmentRepository.saveAndFlush(assignment);
         model.clear();        

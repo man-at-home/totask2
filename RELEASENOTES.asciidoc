@@ -4,6 +4,9 @@ totask2 releasenotes
 
 basic releasenotes for http://man-at-home.github.io/totask2/
 
+.2014-12-06
+- sonarCube qa metrics
+
 .2014-11-30
 - created wildfly cardridge on openshift for cloud deployment
 - tidy up javadoc warnings

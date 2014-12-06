@@ -21,11 +21,16 @@ import org.springframework.test.context.web.WebAppConfiguration;
 
 import com.wordnik.swagger.config.SwaggerConfig;
 
+
 import java.time.LocalDate;
+
 import java.util.Arrays;
 import java.util.List;
 
+
 import javax.transaction.Transactional;
+
+
 
 
 /** 
@@ -75,28 +80,28 @@ public class WeekEntryServiceTest {
         
         LOG.debug("retrieved tasks for week: " + tasksInWeek.size());
         
-        tasksInWeek.forEach( tiw -> LOG.debug( tiw.getTask() + ": " + tiw.getDuration() + " hours." ));
+        tasksInWeek.forEach(tiw -> LOG.debug(tiw.getTask() + ": " + tiw.getDuration() + " hours."));
         
-        for(TaskInWeek tiw : tasksInWeek)
-        {
+        for (TaskInWeek tiw : tasksInWeek) {
+            
            assertNotNull(tiw.getTask());
            assertNotNull(tiw.getDailyEntries());
            assertEquals("7 workdays for task", 7, tiw.getDailyEntries().length);
-           assertFalse("some entries null", Arrays.stream(tiw.getDailyEntries()).anyMatch( we -> we == null));
-           assertFalse("some entries.task null", Arrays.stream(tiw.getDailyEntries()).anyMatch( we -> we.getTask() == null));
-           assertFalse("some entries.user null", Arrays.stream(tiw.getDailyEntries()).anyMatch( we -> we.getUser() == null));
+           assertFalse("some entries null", Arrays.stream(tiw.getDailyEntries()).anyMatch(we -> we == null));
+           assertFalse("some entries.task null", Arrays.stream(tiw.getDailyEntries()).anyMatch(we -> we.getTask() == null));
+           assertFalse("some entries.user null", Arrays.stream(tiw.getDailyEntries()).anyMatch(we -> we.getUser() == null));
            
            LOG.debug("work entry " + tiw.getTask() + " Mo: " + tiw.getDailyEntries()[0] + ", Di: " + tiw.getDailyEntries()[1]);
         }
     }   
     
     
-    /** update */
+    /** update. */
     @Test   
     public void testUpdateTestEntries() {
 
         LocalDate dt   = LocalDate.now();        
-        User      user = userRepository.getOne( TestConstants.TEST_USER );
+        User      user = userRepository.getOne(TestConstants.TEST_USER);
                 
         List<TaskInWeek> tasksInWeek = weekEntryService.getWorkWeek(user, dt);
         assertEquals("0 update", 0, weekEntryService.saveWeek(tasksInWeek));
@@ -110,7 +115,7 @@ public class WeekEntryServiceTest {
         assertEquals("5 update", 5, weekEntryService.saveWeek(tasksInWeek));
         
         List<TaskInWeek> tasksInWeekReread = weekEntryService.getWorkWeek(user, dt);
-        assertEquals("updated 9.9f", 9.9f, tasksInWeekReread.get(0).getDailyEntries()[0].getDuration(),0);   
-        assertEquals("updated 6.6f", 6.6f, tasksInWeekReread.get(0).getDailyEntries()[3].getDuration(),0);  
+        assertEquals("updated 9.9f", 9.9f, tasksInWeekReread.get(0).getDailyEntries()[0].getDuration(), 0);   
+        assertEquals("updated 6.6f", 6.6f, tasksInWeekReread.get(0).getDailyEntries()[3].getDuration(), 0);  
     }
 }

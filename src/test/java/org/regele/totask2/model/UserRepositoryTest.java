@@ -13,10 +13,10 @@ import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
-import com.wordnik.swagger.config.SwaggerConfig;
-
 import java.util.List;
 import java.util.stream.Collectors;
+
+import com.wordnik.swagger.config.SwaggerConfig;
 
 
 /** testing db access. */
@@ -43,7 +43,7 @@ public class UserRepositoryTest {
     public void testReadUsers() {
         assertNotNull("user repo not injected", userRepository);
         LOG.debug("found " + userRepository.count() + " users in db.");
-        userRepository.findAll().stream().forEach( u -> LOG.debug("user in db: " + u));
+        userRepository.findAll().stream().forEach(u -> LOG.debug("user in db: " + u));
         assertTrue("user table access not possible" ,  userRepository.count() >= 1);
     }
 
@@ -103,10 +103,9 @@ public class UserRepositoryTest {
     @Test   
     public void testReadTestUser() {
         List<User> testUsers = userRepository.findByUserName("unit-test-user");
-        if( testUsers.size() != 1)
-        {
+        if (testUsers.size() != 1) {
             String s = "NOn unit-test-user FOUND in [";
-            s += userRepository.findAll().stream().map( User::getUsername ).collect(Collectors.joining(", ")) + "]";
+            s += userRepository.findAll().stream().map(User::getUsername).collect(Collectors.joining(", ")) + "]";
             fail(s);
         }
     }   

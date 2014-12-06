@@ -4,11 +4,12 @@ totask2 releasenotes
 
 basic releasenotes for http://man-at-home.github.io/totask2/
 
-.2014-12-07
+.2014-12-06
 - removed/fixed several sonarCube qa markers
 - favicon created
+- package rename
 
-.2014-12-06
+.2014-12-05
 - sonarCube qa metrics
 
 .2014-11-30

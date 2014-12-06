@@ -20,7 +20,7 @@
     </encoder>
   </appender>
   
-  <logger name="org.regele" level="DEBUG" />
+  <logger name="org.manathome" level="DEBUG" />
           
   <root level="WARN">
       <appender-ref ref="FILE" />

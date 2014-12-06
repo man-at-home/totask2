@@ -119,7 +119,7 @@ Datenbanktabellen.
 
 [source,java,indent=0]
 ----
-include::{sourcedir}/org/regele/totask2/model/Task.java[tags=developer-manual-model] 
+include::{sourcedir}/org/manathome/totask2/model/Task.java[tags=developer-manual-model] 
 ----
 <1> Task Klasse wird in die Tabelle tt_task gespeichert
 <2> Id Attribut entspricht in der Datenbank der Spalte id (primary key)
@@ -133,7 +133,7 @@ und schickt Antworten an den Browser zurück.
 [source,java,indent=0]
 .Task.java
 ----
-include::{sourcedir}/org/regele/totask2/controller/TaskController.java[tags=developer-manual-controller] 
+include::{sourcedir}/org/manathome/totask2/controller/TaskController.java[tags=developer-manual-controller] 
 ----
 <1> Zuständig für Browser Anfragen (GET request) mit URL /project/xx/tasks
 <2> Laden der Tasks zum Projekt aus der Datenbankload
@@ -189,7 +189,7 @@ Hier die REST Datenquelle in der UserController Klasse:
 [source,java,indent=0]
 .UserController.java
 ----
-include::{sourcedir}/org/regele/totask2/controller/UserController.java[tags=developer-manual-autocomplete-backend] 
+include::{sourcedir}/org/manathome/totask2/controller/UserController.java[tags=developer-manual-autocomplete-backend] 
 ----
 
 ==== chart
@@ -223,7 +223,7 @@ verwende ich hibernate-envers.
 [source,java,indent=0]
 .Project.java 
 ----
-include::{sourcedir}/org/regele/totask2/model/Project.java[tags=developer-manual-history-entity] 
+include::{sourcedir}/org/manathome/totask2/model/Project.java[tags=developer-manual-history-entity] 
 ----
 <1> Annotation um das Objekt zu versionieren.
 <2> Datenbanktabelle für historische Werte.
@@ -233,7 +233,7 @@ Auf alte Werte kann dann mit der envers API zugegriffen werden:
 [source,java,indent=0]
 .ProjectHistoryTest.java 
 ----
-include::{testdir}/org/regele/totask2/model/ProjectHistoryTest.java[tags=developer-manual-history-query] 
+include::{testdir}/org/manathome/totask2/model/ProjectHistoryTest.java[tags=developer-manual-history-query] 
 ----
 
 in der UI:
@@ -269,7 +269,7 @@ Diagramm im Quellcode:
 [source,java,indent=0]
 .package-info.java (plantuml documenentation for JavaDoc)
 ----
-include::{sourcedir}/org/regele/totask2/model/package-info.java[tags=developer-manual-plantuml] 
+include::{sourcedir}/org/manathome/totask2/model/package-info.java[tags=developer-manual-plantuml] 
 ----
 
 aufbereitet wird daraus:

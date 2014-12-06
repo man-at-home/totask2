@@ -13,7 +13,7 @@ public class TaskInWeek {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((task == null) ? 0 : new Long(task.getId()).hashCode());
+        result = prime * result + ((task == null) ? 0 : Long.valueOf(task.getId()).hashCode());
         return result;
     }
 

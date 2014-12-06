@@ -21,7 +21,7 @@ public final class ApplicationAssert {
 
     public static void assertNotNullOrEmpty(final String message, final String nonEmptyString) {
         // assert nonEmptyString != null && nonEmptyString.trim().length() > 0;
-        if (nonEmptyString == null || nonEmptyString.length() == 0 || nonEmptyString.trim().length() == 0) {
+        if (nonEmptyString == null || nonEmptyString.trim().length() == 0) {
             throw new AssertionError(message);
         }
     } 

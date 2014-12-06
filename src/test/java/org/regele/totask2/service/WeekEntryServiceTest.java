@@ -19,18 +19,13 @@ import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
-import com.wordnik.swagger.config.SwaggerConfig;
-
-
 import java.time.LocalDate;
-
 import java.util.Arrays;
 import java.util.List;
 
-
 import javax.transaction.Transactional;
 
-
+import com.wordnik.swagger.config.SwaggerConfig;
 
 
 /** 
@@ -72,7 +67,7 @@ public class WeekEntryServiceTest {
     public void testReadTestEntries() {
 
         LocalDate dt   = LocalDate.now();        
-        User      user = userRepository.getOne( TestConstants.TEST_USER );
+        User      user = userRepository.getOne(TestConstants.TEST_USER);
         
         List<TaskInWeek> tasksInWeek = weekEntryService.getWorkWeek(user, dt);
         

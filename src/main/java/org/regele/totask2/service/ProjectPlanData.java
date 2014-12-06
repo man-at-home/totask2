@@ -1,5 +1,7 @@
-package org.regele.totask2.controller;
+package org.regele.totask2.service;
 
+import org.regele.totask2.controller.JsonDateSerializer;
+import org.regele.totask2.controller.ProjectPlanController;
 import org.regele.totask2.model.Task;
 import org.regele.totask2.model.TaskAssignment;
 import org.regele.totask2.model.TaskAssignmentRepository;
@@ -19,6 +21,8 @@ import java.util.stream.Collectors;
 import javax.validation.constraints.NotNull;
 
 
+
+
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.wordnik.swagger.annotations.ApiModel;
 import com.wordnik.swagger.annotations.ApiModelProperty;
@@ -35,26 +39,28 @@ public class ProjectPlanData {
        
 
     private static final Logger LOG = LoggerFactory.getLogger(ProjectPlanData.class);    
+
+    private Task                task;
+    private List<PlanDataItem>  dataItems;
     
     @Autowired TaskAssignmentRepository taskAssignmentRepository;
     
+    
     /** JSON Wrapper of {@link Task} for ganttView. */
     @ApiModel(value = "ProjectPlanItem", description = "project task data for ganttView (one line of data")
-    public class PlanDataItem {
+    public static class PlanDataItem {
         private String name;
         private Date start;
         private Date end;
         
-        PlanDataItem(final TaskAssignment ta) {
-           this.name = ta.getUser().getDisplayName();
-           this.start = ta.getStartingFrom();
-           this.end   = ta.getValidUntil();
+        PlanDataItem(@NotNull final TaskAssignment ta) {
+           this(ta.getUser().getDisplayName(), ta.getStartingFrom(), ta.getValidUntil());
         }
         
         PlanDataItem(final String name, Date start, Date end) {
             this.name = name;
-            this.start = start;
-            this.end = end;
+            this.start = LocalDateConverter.cloneSave(start);
+            this.end = LocalDateConverter.cloneSave(end);
         }
         
         @ApiModelProperty(value = "task part name",  required = true, position = 1)
@@ -66,17 +72,17 @@ public class ProjectPlanData {
         @DateTimeFormat(iso = ISO.DATE)
         @JsonSerialize(using = JsonDateSerializer.class)
         public Date getStart() { 
-            return this.start; 
+            return LocalDateConverter.cloneSave(this.start); 
         }
         
         @ApiModelProperty(value = "end date", position = 3)
         @DateTimeFormat(iso = ISO.DATE)
         @JsonSerialize(using = JsonDateSerializer.class)
         public Date getEnd() { 
-            return this.end == null ? null : new Date(this.end.getTime()); 
+            return LocalDateConverter.cloneSave(this.end); 
         }
         public void setEnd(Date end) { 
-            this.end = end; 
+            this.end = LocalDateConverter.cloneSave(end); 
         }
         
         /** debug. */
@@ -85,12 +91,11 @@ public class ProjectPlanData {
         }
     }    
 
-    private Task task;
-    private List<PlanDataItem> dataItems;
     
+    /** ctor. */    
     public ProjectPlanData() {}
     
-        
+    /** ctor. */    
     public ProjectPlanData(@NotNull final Task task) {
         this();
         if (task == null) {

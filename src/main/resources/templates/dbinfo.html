@@ -5,17 +5,19 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     
     <link rel="stylesheet" type="text/css" href="css/totask2.css"/>
+	<link rel="icon" type="image/png" href="/realFavIconIncludedAtRuntime" th:replace="headerFooter :: favicon"/>
+
 </head>
 <body>
 	
     <h1 class="doc">current db state</h1>
     
     <p>
-    <b><span id="errmsg"></span></b>
+    <strong><span id="errmsg"></span></strong>
     </p>
     <p>
-    projects in database:&nbsp;	<b th:text="${projectCount}">5</b>	<br/>
-    tasks in database:&nbsp;	<b th:text="${taskCount}">3</b>		<br/>
+    projects in database:&nbsp;	<strong th:text="${projectCount}">5</strong>	<br/>
+    tasks in database:&nbsp;	<strong th:text="${taskCount}">3</strong>		<br/>
     </p>
 </body>
 </html>

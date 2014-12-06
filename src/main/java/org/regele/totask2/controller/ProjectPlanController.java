@@ -2,6 +2,7 @@ package org.regele.totask2.controller;
 
 import org.regele.totask2.model.Project;
 import org.regele.totask2.model.ProjectRepository;
+import org.regele.totask2.service.ProjectPlanData;
 import org.regele.totask2.service.ProjectPlanDataService;
 import org.regele.totask2.service.UserCachingService;
 import org.regele.totask2.util.ProjectNotFoundException;

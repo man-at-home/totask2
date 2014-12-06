@@ -1,27 +1,35 @@
 /*
  * gradle build script for totask2 project.
  *
+ * needing at least gradle 2.2 for compile!
+ *
+ * @see    http://man-at-home.github.io/totask2/
  * @author man-at-home
+ * @since  2014
  */
 
+// development
 apply plugin: "java"
+// apply plugin: "js"
 apply plugin: "war"
 apply plugin: "spring-boot"
-// apply plugin: "js"
-
 apply plugin: "eclipse"
+
  
-apply plugin: "checkstyle"   // not yet ready for closures
+// qa
+apply plugin: "checkstyle"
 apply plugin: "findbugs"     
-apply plugin: "pmd"
 apply plugin: "jacoco"
 apply plugin: "jdepend"
+apply plugin: "pmd"
 apply plugin: "sonar-runner"
 
+// documentation
 apply plugin: "build-dashboard"
-
 apply plugin: "org.asciidoctor.gradle.asciidoctor"
 apply plugin: "plantuml"
+
+// db
 apply plugin: "flyway"
 
 repositories {
@@ -160,8 +168,9 @@ asciidoctor {
     logDocuments = true
 } 
 
+
 flyway {
-    url = "jdbc:h2:totask2.qa.db"
+    url = "jdbc:h2:totask2.qa.db"  // makes no sense with the dev in memory db.
     user = 'sa'
 }
 
@@ -173,7 +182,7 @@ javadoc {
     options.addBooleanOption("Xdoclint:none").setValue(true)
 }
 
-// enable spring-boot profiles in gradle tasks
+// enable spring-boot profiles (dev and qa) in gradle tasks
 project.gradle.projectsEvaluated {
     applicationDefaultJvmArgs = ["-Dspring.profiles.active=${project.gradle.startParameter.systemPropertiesArgs['spring.profiles.active']}"]
 }
@@ -197,8 +206,9 @@ task allDocs {
 }
 
 
-// gradlew.bat script configuration
+// create gradlew script configuration
 task wrapper(type: Wrapper) {
+    description "gradle wrapper generation"
     gradleVersion = '2.2.1'
 }
 

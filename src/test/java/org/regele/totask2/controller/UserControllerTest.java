@@ -118,5 +118,6 @@ public class UserControllerTest {
         
         LOG.debug("response:" + result.getResponse().getContentAsString().replaceAll("\\r|\\n", ""));
     }
-        
+  
+
 }

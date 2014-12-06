@@ -53,5 +53,13 @@ public class DurationConverterTest {
         
        DurationConverter.parse("-1");
     }    
+    
+    @Test
+    public void testFormat() throws Exception {
+       assertEquals(
+               "formatting 3.2", 
+               "3.2",  
+               DurationConverter.format(new BigDecimal("3.2")));
+    } 
 
 }

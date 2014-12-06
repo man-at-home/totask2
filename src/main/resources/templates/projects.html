@@ -11,6 +11,8 @@
 	<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css" />
 	<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap-theme.min.css" />
 	<link rel="stylesheet" type="text/css" href="css/jquery.dataTables.css" />
+	
+	<link rel="icon" type="image/x-icon" href="/realFavIconIncludedAtRuntime" th:replace="headerFooter :: favicon"/>	
 </head>
 
 <body>
@@ -45,7 +47,7 @@
 	<form action="#" th:action="@{/editProject}" method="get">
 		<div style="width: 90%">
 
-			<table id="tableProjects" class="display compact cell-border" width="100%">
+			<table id="tableProjects" class="display compact cell-border" style="width:100%">
 				<thead>
 					<tr>
 						<th th:text="#{totask2.project.id.label}" 	class="dt-center">id</th>

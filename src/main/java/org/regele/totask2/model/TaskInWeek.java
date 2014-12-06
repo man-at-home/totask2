@@ -48,11 +48,13 @@ public class TaskInWeek {
     /** max seven slots a week for a given task. */
     private WorkEntry[] dailyEntries = null;
 
+    /** .ctor. */
     public TaskInWeek(Task task) {
         this.task = task;
         this.dailyEntries = new WorkEntry[7];
     }    
     
+    /** task to work on. */
     public Task getTask() {
         return task;
     }
@@ -69,6 +71,7 @@ public class TaskInWeek {
         this.dailyEntries = dailyEntries;
     }
     
+    /** sum of working hours in this week (and task, user). */
     public double getDuration() {
         
         if (this.dailyEntries == null) { 
@@ -82,15 +85,18 @@ public class TaskInWeek {
         }
     }
     
+    /** any entry of this weeks work changed an not persistet in database. */
     public boolean isModifiedByUser() {
         
-        if (this.getDailyEntries() == null)
+        if (this.getDailyEntries() == null) {
             return false;
-        else
+        } else {
             return Arrays.stream(this.getDailyEntries()).anyMatch(de -> de.isModifiedByUser());
+        }
     }
     
 
+    /** debug. */
     @Override
     public String toString() {
         return "TaskInWeek [task=" + task + "]";

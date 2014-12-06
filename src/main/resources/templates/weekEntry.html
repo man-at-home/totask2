@@ -11,6 +11,8 @@
 	<link rel="stylesheet" type="text/css" href="css/jquery.dataTables.css" />
 	<link rel="stylesheet" type="text/css" href="css/jquery-ui.min.css" />
 	<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrapValidator.min.css"/>		
+	
+	<link rel="icon" type="image/png" href="/realFavIconIncludedAtRuntime" th:replace="headerFooter :: favicon"/>
 </head>
 <body> 
 	<script type="text/javascript" charset="utf8" src="js/jquery-1.11.1.js"></script>
@@ -192,7 +194,7 @@
 				<span class="glyphicon glyphicon-chevron-left"></span>
 				<span th:text="#{totask2.weekEntry.action.previousWeek}">&lt;</span>				
 			</a>		
-			<b><span id="date" th:text="${#dates.format(date, 'dd.MM.yyyy')}"></span></b>
+			<strong><span id="date" th:text="${#dates.format(date, 'dd.MM.yyyy')}"></span></strong>
 			
 			<a th:href="@{/weekEntry/} + ${nextWeek}" class="btn btn-default">			
 				<span class="glyphicon glyphicon-chevron-right"></span>
@@ -264,23 +266,23 @@
 					</td>
 
 					<td>
-					<i>
+					<em>
 						<span id="task_" th:attrappend="id=${taskInWeek.task.id} + '_total'" th:text="${taskInWeek.duration}">13.3</span>
-					</i>
+					</em>
 					</td>					
 				</tr>
 			</tbody>
 			<tfoot>
 				<tr>
 					<td/>
-					<td><i><span id="day_0_total">3.0</span></i></td>
-					<td><i><span id="day_1_total">3.1</span></i></td>
-					<td><i><span id="day_2_total">3.2</span></i></td>
-					<td><i><span id="day_3_total">3.3</span></i></td>
-					<td><i><span id="day_4_total">3.4</span></i></td>
-					<td><i><span id="day_5_total">0.5</span></i></td>
-					<td><i><span id="day_6_total">0.6</span></i></td>
-					<td><i><span id="week_total">15.0</span></i></td>
+					<td><em><span id="day_0_total">3.0</span></em></td>
+					<td><em><span id="day_1_total">3.1</span></em></td>
+					<td><em><span id="day_2_total">3.2</span></em></td>
+					<td><em><span id="day_3_total">3.3</span></em></td>
+					<td><em><span id="day_4_total">3.4</span></em></td>
+					<td><em><span id="day_5_total">0.5</span></em></td>
+					<td><em><span id="day_6_total">0.6</span></em></td>
+					<td><em><span id="week_total">15.0</span></em></td>
 				</tr>
 			</tfoot>
 		</table>

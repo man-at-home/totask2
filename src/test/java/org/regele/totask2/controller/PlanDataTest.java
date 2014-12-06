@@ -7,6 +7,7 @@ import org.junit.runner.RunWith;
 import org.regele.totask2.Application;
 import org.regele.totask2.model.Project;
 import org.regele.totask2.model.ProjectRepository;
+import org.regele.totask2.service.ProjectPlanData;
 import org.regele.totask2.service.ProjectPlanDataService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
@@ -14,6 +15,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 import java.util.List;
+
 import javax.transaction.Transactional;
 
 import com.wordnik.swagger.config.SwaggerConfig;

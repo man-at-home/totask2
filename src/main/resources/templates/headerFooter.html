@@ -1,9 +1,20 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 
+<head>
+	<title>fragments to be included.</title>
+	
+	<th:block th:fragment="favicon">
+	 	<link rel="shortcut icon" th:href="@{/images/favicon.png}" type="image/png" />
+		<link rel="icon"          th:href="@{/images/favicon.png}" type="image/png" />
+	</th:block>
+</head>
 
-  <body>
-
+<body>
+  	<h1>favicon</h1>
+  	
+ 	<p>see header</p>
+ 
 	<h1>fragments</h1>
 	
 	<!--  fragments, commonly included in other templates -->

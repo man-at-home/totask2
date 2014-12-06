@@ -53,7 +53,7 @@ public class UserCachingService {
         
         return this.getCachedUsers()
                 .stream()
-                .filter( u -> u.getId() == userId)
+                .filter(u -> u.getId() == userId)
                 .findFirst()
                 .orElseThrow(() -> new UserNotFoundException("no user with id " + userId))
                 ;
@@ -65,11 +65,13 @@ public class UserCachingService {
      * */
     public User getCachedUser(final Authentication authentication) {
         
-        if (authentication == null || authentication.getName() == null)
+        if (authentication == null || authentication.getName() == null) {
             throw new NullPointerException("no authentication user/no name [getCachedUser]");
+        }
         
-        if (authentication.getPrincipal() instanceof User)
+        if (authentication.getPrincipal() instanceof User) {
             return (User) authentication.getPrincipal(); 
+        }
         
         return this.getCachedUsers()
                 .stream()

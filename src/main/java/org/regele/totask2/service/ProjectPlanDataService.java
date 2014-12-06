@@ -1,12 +1,7 @@
 package org.regele.totask2.service;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
-import javax.validation.constraints.NotNull;
 
 import org.regele.totask2.controller.ProjectPlanController;
-import org.regele.totask2.controller.ProjectPlanData;
 import org.regele.totask2.model.Project;
 import org.regele.totask2.model.Task;
 import org.regele.totask2.model.TaskAssignmentRepository;
@@ -15,6 +10,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+import javax.validation.constraints.NotNull;
 
 /** 
  * loading and converting {@link Project} data into suitable JSON Objects for gantt chart. 
@@ -50,7 +50,7 @@ public class ProjectPlanDataService {
                 .map(t -> new ProjectPlanData(t))
                 .collect(Collectors.toList());
         
-        list.forEach( ppd -> ppd.setSeries(taskAssignmentRepository));
+        list.forEach(ppd -> ppd.setSeries(taskAssignmentRepository));
         return list;
     }
 }

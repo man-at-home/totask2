@@ -36,11 +36,11 @@ public class ProjectTest {
         Validator validator = factory.getValidator();
         Set<ConstraintViolation<Project>> violations = validator.validate(p);
    
-        violations.stream().forEach( v -> LOG.debug("Violation: " + v.getMessage() + "/" + v.getPropertyPath() + "/" + v.getInvalidValue()));
+        violations.stream().forEach(v -> LOG.debug("Violation: " + v.getMessage() + "/" + v.getPropertyPath() + "/" + v.getInvalidValue()));
                
         assertTrue("validations did not fail", violations.size() > 0);
         assertTrue("validation for name=1 not failed", 
-                violations.stream().anyMatch( v -> v.getInvalidValue().equals("1") && v.getPropertyPath().toString().equals("name")));
+                violations.stream().anyMatch(v -> v.getInvalidValue().equals("1") && v.getPropertyPath().toString().equals("name")));
         
    }
 

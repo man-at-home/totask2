@@ -104,8 +104,12 @@ public final class User implements UserDetails {
 
     /** internal pk. */
     @ApiModelProperty(value = "unique id of user (PK)")
-    public long getId() { return id; }
-    public void setId(long id) { this.id = id; }
+    public long getId() { 
+        return id; 
+    }
+    public void setId(long id) { 
+        this.id = id;         
+    }
     
     /** UserId used to login into this application.*/
     @Override
@@ -224,10 +228,14 @@ public final class User implements UserDetails {
     } 
     
     /** editTaskAssignment.html#user will be used for autocompletion JSON. */
-    public String getValue() { return this.getLabel(); }
+    public String getValue() { 
+        return this.getLabel(); 
+    }
     
     /** editTaskAssignment.html#user will be used for autocompletion JSON. */
-    public String getLabel() { return this.getUsername() + ": " + this.getDisplayName(); }
+    public String getLabel() { 
+        return this.getUsername() + ": " + this.getDisplayName(); 
+    }
     
     /** 
      * password encoding algorithm.
@@ -253,18 +261,23 @@ public final class User implements UserDetails {
     /** needed implementation. */
     @Override
     public boolean equals(Object obj) {
-        if (this == obj)
+        if (this == obj) {
             return true;
-        if (obj == null)
+        }
+        if (obj == null) {
             return false;
-        if (getClass() != obj.getClass())
+        }
+        if (getClass() != obj.getClass()){
             return false;
+        }
         User other = (User) obj;
         if (userName == null) {
-            if (other.userName != null)
-                return false;
-        } else if (!userName.equals(other.userName))
+            if (other.userName != null) {
+                return false;            
+            }
+        } else if (!userName.equals(other.userName)) {
             return false;
+        }
         return true;
     }
     

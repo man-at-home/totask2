@@ -218,6 +218,13 @@ das Ganze dann auch auswertbar mit Trends in einem SonarQube Server aufbereitet.
 .sonar dashboard
 image::images/totask.qa.sonar.dashboard.png[screenshot_QA_sonar, 700, 500]
 
+.sonar ide integration
+image::images/totask.qa.sonar.eclipse.png[screenshot_QA_sonarIDE, 600, 400]
+
+.sonar jacobo test coverage
+image::images/totask.qa.sonar.coverage.png[screenshot_QA_sonarCoverate, 700, 600]
+
+
 == Deployment
 
 === Lokal
@@ -237,9 +244,12 @@ Der Build-Server holt sich den totask2 Source im master-Branch von github und ge
 
 [[img-jenkins]]
 .jenkins on openshift
-image::images/totask2.cloud.jenkins.png[screenshot_CLOUD_1, 600, 400]
+image::images/totask2.cloud.jenkins.gearbuild.png[screenshot_CLOUD_1, 700, 500]
 
 
+[[img-openShift-logs]]
+.totask2 running on openshift log tail
+image::images/totask2.cloud.rhc.png[screenshot_CLOUD_2, 700, 500]
 
 == weitere Details
 

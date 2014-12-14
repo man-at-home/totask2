@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -100,6 +101,7 @@ public class TaskAssignmentController {
     }
     
     /** show edit page for an existing taskAssignment. GET. */
+    @Transactional
     @RequestMapping(value = "/assignment/{id}", method = RequestMethod.GET)
     public String editAssignment(@PathVariable final long id, final Model model) {
         
@@ -121,6 +123,7 @@ public class TaskAssignmentController {
      * 
      * @exception TaskNotFoundException
      * */
+    @Transactional
     @RequestMapping(value = "task/{taskId}/assignment/new", method = RequestMethod.GET)
     public String newAssignment(@PathVariable final long taskId, final Model model) {       
         LOG.debug("new assignment for task " + taskId);
@@ -144,6 +147,7 @@ public class TaskAssignmentController {
     
     
     /** save edited assignment. POST. */
+    @Transactional
     @RequestMapping(value = "/assignment/save", method = RequestMethod.POST)
     public String editAssignmentSave(@Valid @ModelAttribute final TaskAssignment assignment, final BindingResult bindingResult, final ModelMap model) {        
         LOG.debug("editTaskAssignmentSave(" + assignment + ")");

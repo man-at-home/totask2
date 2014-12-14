@@ -1,25 +1,13 @@
 package org.manathome.totask2.model;
 
-import static java.time.temporal.TemporalAdjusters.nextOrSame;
-import static java.time.temporal.TemporalAdjusters.previousOrSame;
 import static org.junit.Assert.*;
 
-import java.time.DayOfWeek;
-import java.time.LocalDate;
-import java.util.Date;
-import java.util.List;
-
-import javax.transaction.Transactional;
+import static java.time.temporal.TemporalAdjusters.nextOrSame;
+import static java.time.temporal.TemporalAdjusters.previousOrSame;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.manathome.totask2.Application;
-import org.manathome.totask2.model.Task;
-import org.manathome.totask2.model.TaskAssignment;
-import org.manathome.totask2.model.TaskAssignmentRepository;
-import org.manathome.totask2.model.TaskRepository;
-import org.manathome.totask2.model.User;
-import org.manathome.totask2.model.UserRepository;
 import org.manathome.totask2.util.LocalDateConverter;
 import org.manathome.totask2.util.TestConstants;
 import org.slf4j.Logger;
@@ -29,9 +17,22 @@ import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
+
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.util.Date;
+import java.util.List;
+
+import javax.transaction.Transactional;
+
 import com.wordnik.swagger.config.SwaggerConfig;
 
-/** testing db access. */
+/** 
+ * testing db access. 
+ * 
+ * @see TaskAssignment
+ * @see TaskAssignmentRepository
+ * */
 @Transactional
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = { Application.class, SwaggerConfig.class })
@@ -47,6 +48,8 @@ public class TaskAssignmentRepositoryTest {
     @Autowired private UserRepository userRepository;
     @Autowired private TaskRepository taskRepository;
     
+    
+    /** test basic crud functionality. */
     @Test
     public void testStoreRetrieveDelete() {
         
@@ -62,13 +65,13 @@ public class TaskAssignmentRepositoryTest {
  
         // retrieve
         
-        TaskAssignment taRefetched = taskAssignmentRepository.findOne( taStored.getId());
+        TaskAssignment taRefetched = taskAssignmentRepository.findOne(taStored.getId());
         assertNotNull("entry found", taRefetched);
         assertEquals("taRefetched user", user.getId(), taRefetched.getUser().getId());       
         assertEquals("taRefetched task", task.getId(), taRefetched.getTask().getId());
         
         Task taskRefetched = taskRepository.findOne(task.getId());
-        assertTrue("task misses assignment" , taskRefetched.getAssignments().anyMatch( a -> a.getId() == taRefetched.getId()));
+        assertTrue("task misses assignment" , taskRefetched.getAssignments().anyMatch(a -> a.getId() == taRefetched.getId()));
         
         //delete
         taskAssignmentRepository.delete(taRefetched);
@@ -81,7 +84,7 @@ public class TaskAssignmentRepositoryTest {
         LocalDate until = LocalDate.now().plusDays(7);
         List<TaskAssignment> tas = taskAssignmentRepository.findByUserAndPeriod(TestConstants.ADMIN_USER, LocalDateConverter.toDate(from), LocalDateConverter.toDate(until));
         assertNotNull(tas);
-        tas.stream().forEach( a -> LOG.debug("found assignment: " + a));
+        tas.stream().forEach(a -> LOG.debug("found assignment: " + a));
         assertEquals("assignments unexpected", 2, tas.size());
     }
     
@@ -96,7 +99,7 @@ public class TaskAssignmentRepositoryTest {
         LOG.debug("find current for Testuser: " + from + " - " + until);
         List<TaskAssignment> tas = taskAssignmentRepository.findByUserAndPeriod(TestConstants.TEST_USER, from, until);
         assertNotNull(tas);        
-        tas.stream().forEach( a -> LOG.debug("found assignment: " + a));
+        tas.stream().forEach(a -> LOG.debug("found assignment: " + a));
         assertEquals("assignment count unexpected", 3, tas.size());
     }    
 
@@ -111,7 +114,7 @@ public class TaskAssignmentRepositoryTest {
         LOG.debug("find future for Testuser: " + from + " - " + until);
         List<TaskAssignment> tas = taskAssignmentRepository.findByUserAndPeriod(TestConstants.TEST_USER, from, until);
         assertNotNull(tas);        
-        tas.stream().forEach( a -> LOG.debug("found assignment: " + a));
+        tas.stream().forEach(a -> LOG.debug("found assignment: " + a));
         assertEquals("assignment count unexpected", 2, tas.size());
     }     
 

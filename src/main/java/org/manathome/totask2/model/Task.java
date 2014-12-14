@@ -1,5 +1,9 @@
 package org.manathome.totask2.model;
 
+import org.hibernate.envers.AuditTable;
+import org.hibernate.envers.Audited;
+
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.stream.Stream;
@@ -17,9 +21,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-
-import org.hibernate.envers.AuditTable;
-import org.hibernate.envers.Audited;
 
 // tag::developer-manual-model[] 
 
@@ -64,20 +65,35 @@ public class Task {
     }
     
     /** display name of this task. */
-    public String getName() { return name; }
-    public void setName(String name) { this.name = name; }  
+    public String getName() { 
+        return name; 
+    }
+    
+    public void setName(String name) { 
+        this.name = name; 
+    }  
     
     /* pk. */
-    public long getId() { return id; }
-    public void setId(long id) { this.id = id; }
+    public long getId() { 
+        return id; 
+    }    
+    public void setId(long id) { 
+        this.id = id; 
+    }
     
     /** project owning this task. */
-    public Project getProject() { return project; }
-    public void setProject(Project project) { this.project = project; }
+    public Project getProject() { 
+        return project; 
+    }
+    public void setProject(Project project) { 
+        this.project = project; 
+    }
 
     
     /** all {@link User} assignments for this task. */
-    public Stream<TaskAssignment> getAssignments() { return this.taskAssignments.stream(); }
+    public Stream<TaskAssignment> getAssignments() { 
+        return this.taskAssignments.stream(); 
+    }
     
     /** create new assignment for this task. */
     public TaskAssignment addAssignment(User user) {
@@ -93,8 +109,7 @@ public class Task {
     
     
     /** access check (edit allowed for admin and project leads). */
-    public boolean isEditAllowed(final User user)
-    {
+    public boolean isEditAllowed(final User user) {
         return user != null &&
                (user.isAdmin() || this.getProject().isEditAllowed(user));
     }

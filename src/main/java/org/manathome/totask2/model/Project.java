@@ -91,8 +91,12 @@ public class Project {
     
     /** unique id of given project (PK). */
     @ApiModelProperty(value = "unique id of given project (PK).")
-    public long getId() { return this.id; }
-    public void setId(long id) { this.id = id; }
+    public long getId() { 
+        return this.id; 
+    }
+    public void setId(long id) { 
+        this.id = id; 
+    }
     
     /** leads of this projects. These {@link User}s are allowed to create and administer {@link Task}s for this project. 
      *
@@ -102,12 +106,18 @@ public class Project {
      * @since 2014-11-11
      */
     @JsonIgnore
-    public Set<User> getProjectLeads() { return this.projectLeads; }
-    public void setProjectLeads(final Set<User> projectLeads) { this.projectLeads = projectLeads; }
+    public Set<User> getProjectLeads() { 
+        return this.projectLeads; 
+    }
+    public void setProjectLeads(final Set<User> projectLeads) { 
+        this.projectLeads = projectLeads; 
+    }
     
     /** all {@link Task}s belonging to this project. */
     @JsonIgnore
-    public Stream<Task> getTasks() { return this.tasks.stream(); }
+    public Stream<Task> getTasks() { 
+        return this.tasks.stream(); 
+    }
     
     /** create new {@link Task} below this project. */
     public Task createTask() {
@@ -119,8 +129,12 @@ public class Project {
 
     /** display name of this project, length: 2..250. */
     @ApiModelProperty(value = "display name of this project, length: 2..250", required = true)
-    public String getName() { return name; }
-    public void setName(@NotNull final String name) { this.name = name; }
+    public String getName() { 
+        return name; 
+    }
+    public void setName(@NotNull final String name) { 
+        this.name = name; 
+    }
 
     
     

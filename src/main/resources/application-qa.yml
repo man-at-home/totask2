@@ -20,7 +20,7 @@ spring:
     
    jpa:
       database: H2
-      show-sql: true
+   	  show-sql: true      
       hibernate:
          ddl-auto: none 
          dialect: org.hibernate.dialect.H2Dialect

@@ -19,7 +19,6 @@ spring:
       show-sql: true   
       hibernate:
          ddl-auto: create-drop
-      show-sql: true
 
 flyway:
    enabled: false

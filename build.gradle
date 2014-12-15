@@ -10,7 +10,7 @@
 
 // development
 apply plugin: "java"
-// apply plugin: "js"
+apply plugin: "js"
 apply plugin: "war"
 apply plugin: "spring-boot"
 apply plugin: "eclipse"
@@ -45,7 +45,7 @@ repositories {
 buildscript {
 
 	ext {
-		springBootVersion = '1.1.8.RELEASE'
+		springBootVersion = '1.2.0.RELEASE'
 	}
 	
     repositories {
@@ -57,15 +57,15 @@ buildscript {
     
     dependencies {
         classpath "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}"  
-	    classpath "org.flywaydb:flyway-gradle-plugin:3.0"	    	    
-	    classpath "org.asciidoctor:asciidoctor-gradle-plugin:1.5.0"
+	    classpath "org.flywaydb:flyway-gradle-plugin:3.1"	
+	    classpath "org.asciidoctor:asciidoctor-gradle-plugin:1.5.1"
 	    classpath "be.jlr-home.gradle:plantumlPlugin:0.1.1"	    
-//        classpath "com.eriwen:gradle-js-plugin:1.12.1"
+        classpath "com.eriwen:gradle-js-plugin:1.12.0"
     }
 }
 
 ext {
-	springVersion     = '4.1.1.RELEASE'
+	springVersion     = '4.1.3.RELEASE'
 	seleniumVersion   = '2.44.0'
 }
 
@@ -79,14 +79,14 @@ configurations {
 
 
 dependencies {
-    compile "org.apache.poi:poi:3.7"
+    compile "org.apache.poi:poi:3.10.1"
     compile "org.slf4j:slf4j-api:1.7.7"
     compile "ch.qos.logback:logback-classic"
-    compile "net.sf.jasperreports:jasperreports:5.6.0"  
+    compile "net.sf.jasperreports:jasperreports:5.6.1"  
     compile "com.h2database:h2"
     
     compile "org.ajar:swagger-spring-mvc-ui:0.2"
-	compile "com.mangofactory:swagger-springmvc:0.9.0"
+	compile "com.mangofactory:swagger-springmvc:0.9.1"  // newer version on hold cause of scala upgrade dependencies..
     
     compile "org.springframework:spring-context:${springVersion}"
     compile "org.springframework:spring-context-support:${springVersion}"
@@ -97,14 +97,12 @@ dependencies {
     compile "org.springframework.boot:spring-boot-starter-security"    
     compile "org.springframework.boot:spring-boot-starter-actuator"
     
-    compile "org.hibernate:hibernate-envers:4.3.6.Final"
+    compile "org.hibernate:hibernate-envers:4.3.7.Final"
         
     compile "org.flywaydb:flyway-core"    
     compile "org.seleniumhq.selenium:selenium-firefox-driver:${seleniumVersion}"
 
     testCompile "org.springframework.boot:spring-boot-starter-test" 
-
-//    providedRuntime("org.springframework.boot:spring-boot-starter-tomcat")
  }
 
 
@@ -176,7 +174,7 @@ flyway {
 
 javadoc {
 	failOnError         = false
-    options.overview    = "src/main/java/overview.html" // relative to source root
+    options.overview    = "${projectDir}/src/main/java/overview.html" // relative to source root
 	options.windowTitle = "totask2 api documentation ${version}"	
     options.links( "http://download.oracle.com/javase/8/docs/api/" )
     options.addBooleanOption("Xdoclint:none").setValue(true)
@@ -185,6 +183,35 @@ javadoc {
 // enable spring-boot profiles (dev and qa) in gradle tasks
 project.gradle.projectsEvaluated {
     applicationDefaultJvmArgs = ["-Dspring.profiles.active=${project.gradle.startParameter.systemPropertiesArgs['spring.profiles.active']}"]
+}
+
+
+javascript.source {
+    dev {
+        js {
+            srcDir "${projectDir}/src/main/webapp/js/totask2"
+            include "*.js"
+        }
+    }
+}
+
+// lint  javascript files
+jshint {
+    tasks.jshint.source = javascript.source.dev.js.files
+    tasks.jshint.dest = file("${buildDir}/jshint.out")
+    tasks.jshint.reporter = 'checkstyle'
+    tasks.jshint.ignoreExitCode=true
+    jshint.options = [bitwise:true]
+    jshint.predef=[
+    	"Ext"	:true, 
+    	'$'		:true
+    	]
+}
+
+// generate javascript docs
+jsdoc {
+    tasks.jsdoc.source         = javascript.source.dev.js.files
+    tasks.jsdoc.destinationDir = file("${buildDir}/jsdoc")
 }
 
 
@@ -201,7 +228,7 @@ task copyPlantUMLImages(type: Copy) {
 
 // generate all documentation
 task allDocs {
-    dependsOn asciidoctor, copyPlantUMLImages 
+    dependsOn javadoc, asciidoctor, copyPlantUMLImages, jsdoc 
     description "generation of full documenation for totask2"
 }
 

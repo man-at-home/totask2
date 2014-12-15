@@ -5,22 +5,24 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />	
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
-	<link rel="stylesheet" type="text/css" href="css/totask2.css" />
-	<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css" />
-	<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap-theme.min.css" />
-	<link rel="stylesheet" type="text/css" href="css/jquery.dataTables.css" />
-	<link rel="stylesheet" type="text/css" href="css/jquery-ui.min.css" />
-	<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrapValidator.min.css"/>		
+	<link rel="stylesheet" type="text/css" th:href="@{/css/totask2.css}" />
+	<link rel="stylesheet" type="text/css" th:href="@{/bootstrap/css/bootstrap.min.css}" />
+	<link rel="stylesheet" type="text/css" th:href="@{/bootstrap/css/bootstrap-theme.min.css}" />
+	<link rel="stylesheet" type="text/css" th:href="@{/css/jquery.dataTables.css}" />
+	<link rel="stylesheet" type="text/css" th:href="@{/css/jquery-ui.min.css}" />
+	<link rel="stylesheet" type="text/css" th:href="@{/bootstrap/css/bootstrapValidator.min.css}"/>		
 	
 	<link rel="icon" type="image/png" href="/realFavIconIncludedAtRuntime" th:replace="headerFooter :: favicon"/>
 </head>
 <body> 
-	<script type="text/javascript" charset="utf8" src="js/jquery-1.11.1.js"></script>
-	<script type="text/javascript" charset="utf8" src="js/jquery-ui.min.js"></script>
-	<script type="text/javascript" charset="utf8" src="js/jquery.dataTables.js"></script>	
-	<script type="text/javascript" charset="utf8" src="bootstrap/js/bootstrap.min.js"></script>
-	<script type="text/javascript" charset="utf8" src="bootstrap/js/bootstrapValidator.min.js"></script>
-	<script type="text/javascript" charset="utf8" src="js/Chart.min.js"></script>
+	<script type="text/javascript" charset="utf8" th:src="@{/js/jquery-1.11.1.js}"></script>
+	<script type="text/javascript" charset="utf8" th:src="@{/js/jquery-ui.min.js}"></script>
+	<script type="text/javascript" charset="utf8" th:src="@{/js/jquery.dataTables.js}"></script>	
+	<script type="text/javascript" charset="utf8" th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+	<script type="text/javascript" charset="utf8" th:src="@{/bootstrap/js/bootstrapValidator.min.js}"></script>
+	<script type="text/javascript" charset="utf8" th:src="@{/js/Chart.min.js}"></script>
+
+	<script type="text/javascript" charset="utf8" th:src="@{/js/totask2/weekEntry.js}"></script>
 
     <!--/* 
     	this is the main entry page, allowing logging all work for task for a given week and user.
@@ -56,25 +58,7 @@
 	        drawWeekEntryChart(dailyTotals);
 		});
     
-	    /** find all css class names for displayed task input fields. */
-        function findAllClassesForTasks()
-        {
-	    	var taskRegEx = /task_\d*$/g;  /* matches task_123 */
-	    	var classes = {};
-	    	
-			$('input').each(function() {
-			  if($(this).attr('class') !== undefined ) {
-				  
-					    $($(this).attr('class').split(' ')).each(function() { 
-					        if (this !== '' && taskRegEx.test(this) ) {
-					            classes[this] = this;
-					        }    
-				    });
-			   } 
-			});
-			
-			return classes;
-        }
+
 	    
 		/** sum up all week entries in sum field */
 	    function calculateTotal( isFirstCalculation ) 

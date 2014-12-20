@@ -257,6 +257,8 @@ link:totask2.developer-manual.html[dev docs]
 
 == Erfahrungen
 
+Details hoffentlich bald im blog https://totask2.wordpress.com/
+
 === positiv
 
 * kein Xml, einfach zu durchschauen, 

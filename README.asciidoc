@@ -1,12 +1,12 @@
 totask2
 =======
 :Author: man-at-home
-:Date:   2014-11-30	
+:Date:   2014-12-20
 
 demo application, testing ground for methods and technologies.
 port of my old totask grails app to spring mvc. 
 
-See homepage on http://man-at-home.github.io/totask2/
+See homepage on http://man-at-home.github.io/totask2/ and blog on https://totask2.wordpress.com/.
 
 
 image::src/docs/images/totask2.weekEntry.clientLogic.png[screenshot5, 600, 400]

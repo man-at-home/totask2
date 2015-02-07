@@ -28,8 +28,9 @@ import javax.validation.constraints.Size;
 /**
  * logged working hours for one user for a given task.
  * 
- * @author man-at-home
- * @since  2014-08-23 
+ * @author  man-at-home
+ * @since   2014-08-23 
+ * @version 2015-02-07
  */
 @Entity
 @Table(name = "TT_WORKENTRY")
@@ -89,17 +90,51 @@ public class WorkEntry {
     private float duration;
     
     /** some fields (duration, comment) can be edited on screen by user. changes are marked here.
-     * NON-PERSISTANT! */
+     * NON-PERSISTANT! 
+     */
     @Transient
     private boolean isModifiedByUser = false;
     
+    
+    /** UI Helper: is for current user and entry further editing allowed (valid assignment exists?).
+     * NON-PERSISTANT!
+     */
+    @Transient
+    private boolean isEditable = true;
+    
+
+    /**
+     * true: the user may change this entry (false if readonly). 
+     * 
+     * controls ui input/editables behavior weekEntry page for given work entry.
+     */
+    public boolean isEditable() {
+        return isEditable;
+    }
+
+
+    /**
+     * user may edit this entry.
+    */
+    public void setEditable(final boolean isEditable) {
+        this.isEditable = isEditable;
+    }
+
 
     /** pk. */
-    public long getId() { return id; }
-    public void setId(long id) { this.id = id; }
+    public long getId() {
+        return id;
+    }
+    
+    public void setId(long id) {
+        this.id = id;
+    }
 
     /** optional comment (prose). */
-    public String getComment() { return comment; }
+    public String getComment() { 
+        return comment; 
+    }
+    
     public void setComment(final String comment) { 
         if (this.comment != null && !this.comment.equals(comment)) {
             isModifiedByUser = true;
@@ -108,12 +143,20 @@ public class WorkEntry {
     }
 
     /** employee working on a given task. */
-    public User getUser() { return user; }
-    public void setUser(final User user) { this.user = user; }
+    public User getUser() { 
+        return user; 
+    }
+    public void setUser(final User user) { 
+        this.user = user; 
+    }
 
     /** task on which the work was done. */ 
-    public Task getTask() { return task; }
-    public void setTask(final Task task) { this.task = task; }
+    public Task getTask() { 
+        return task; 
+    }
+    public void setTask(final Task task) { 
+        this.task = task; 
+    }
 
     /** date the work was done. 
      * @deprecated use modern java8 methods instead. 
@@ -158,6 +201,16 @@ public class WorkEntry {
     public String toString() {
         return "WorkEntry [at=" + at + ", duration=" + duration + "]";
     }    
+    
+    /** html hint output. */
+    public String getTitleComment() {
+        return 
+                this.id + ": " + 
+                LocalDateConverter.format(this.getAtDate())  + " " + 
+                this.getComment() +
+                (this.isEditable() ? "" : " (currently no active assignment)")
+                ;
+    }
     
     /** instance is modified ("dirty") therefore needs to be saved to db. */
     public boolean isModifiedByUser() {

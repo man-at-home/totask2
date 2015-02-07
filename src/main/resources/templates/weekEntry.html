@@ -2,17 +2,18 @@
 <html xmlns:th="http://www.thymeleaf.org"> 
 <head>
 	<title th:text="#{totask2.appname}">totask2 projects</title>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />	
+	<meta http-equiv="Content-Type"    content="text/html; charset=UTF-8" />	
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<meta name="viewport"              content="width=device-width, initial-scale=1" />
+	<meta name="author"                content="man-at-home" />
 	<link rel="stylesheet" type="text/css" th:href="@{/css/totask2.css}" />
 	<link rel="stylesheet" type="text/css" th:href="@{/bootstrap/css/bootstrap.min.css}" />
 	<link rel="stylesheet" type="text/css" th:href="@{/bootstrap/css/bootstrap-theme.min.css}" />
 	<link rel="stylesheet" type="text/css" th:href="@{/css/jquery.dataTables.css}" />
 	<link rel="stylesheet" type="text/css" th:href="@{/css/jquery-ui.min.css}" />
-	<link rel="stylesheet" type="text/css" th:href="@{/bootstrap/css/bootstrapValidator.min.css}"/>		
+	<link rel="stylesheet" type="text/css" th:href="@{/bootstrap/css/bootstrapValidator.min.css}" />		
 	
-	<link rel="icon" type="image/png" href="/realFavIconIncludedAtRuntime" th:replace="headerFooter :: favicon"/>
+	<link rel="icon" type="image/png" href="/realFavIconIncludedAtRuntime" th:replace="headerFooter :: favicon" />
 </head>
 <body> 
 	<script type="text/javascript" charset="utf8" th:src="@{/js/jquery-1.11.1.js}"></script>
@@ -235,7 +236,8 @@
 					    	th:attrappend="name=${taskInWeek.task.id} + '_' + ${iterationStatus.index} " 
 					    	th:classappend="'day_' + ${iterationStatus.index} + ' task_' + ${taskInWeek.task.id}"
 					    	th:value="${dailyEntry.duration}" 
-					    	th:title="${dailyEntry.id} + ' ' + ${dailyEntry.atDate} + ' ' + ${dailyEntry.comment}"
+					    	th:readonly="! ${dailyEntry.editable}"
+					    	th:title="${dailyEntry.titleComment}"
 					    	value="1" 
 					    	step="0.1"
 					    	size="3"

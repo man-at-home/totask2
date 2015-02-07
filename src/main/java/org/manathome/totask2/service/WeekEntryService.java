@@ -53,11 +53,13 @@ public class WeekEntryService {
      */
     public List<TaskInWeek> getWorkWeek(final User user, final LocalDate dt) {
 
-        if (user == null)
+        if (user == null) {
             throw new IllegalArgumentException("no user for WorkWeek retrieval");
+        }
         
-        if (dt == null)
+        if (dt == null) {
             throw new IllegalArgumentException("no date for WorkWeek retrieval");
+        }
         
         LocalDate date  = dt.with(previousOrSame(DayOfWeek.MONDAY));
         
@@ -66,17 +68,19 @@ public class WeekEntryService {
         
         LOG.debug("retrieving entries for user " + user + " between " + from + " - " + until + " rep: " + workEntryRepository);        
         
+        // add all tasks with already existing workEntries from database        
         List<WorkEntry> entries = workEntryRepository.findForUserAndTimespan(user.getId(), from, until); 
         
-        // an entry for each task.
+        // create exactly one (distinct) taskInWeek (map) for every task with 0 or more entries
         List<TaskInWeek> tasksInWeek =        
          entries.stream()
-                .map( we -> new TaskInWeek( we.getTask()) )
+                .map(we -> new TaskInWeek(we.getTask()))
                 .distinct()
-                .collect( Collectors.toList() );
+                .collect(Collectors.toList());
         
         LOG.debug("given already booked week tasks count: " + tasksInWeek.size());
         
+        // add potential suitable tasks (with no workEntries yet).
         List<TaskAssignment> assignments = taskAssignmentRepository.findByUserAndPeriod(user.getId(), from, until);
         LOG.debug("possible tasks count: " + assignments.size());
         
@@ -88,13 +92,25 @@ public class WeekEntryService {
         
         LOG.debug("booked AND allowed tasks count: " + tasksInWeek.size());
         
+        // with each task: fill all seven weekdays wie existing workentry (or new 0 one) 
         for (TaskInWeek tiw : tasksInWeek) {
             for (int dayOffset = 0; dayOffset <= 6; dayOffset++) {
                 final long offset = dayOffset;
                 WorkEntry entryOfDay = entries.stream()
                         .filter(we -> we.getTask().getId() == tiw.getTask().getId() && we.getAtDate().equals(date.plusDays(offset)))
-                        .findFirst()
-                        .orElse(new WorkEntry(user, tiw.getTask(), date.plusDays(offset)));   // new empty entry
+                        .findFirst()                                                          // suitable entry for task and day OR
+                        .orElse(new WorkEntry(user, tiw.getTask(), date.plusDays(offset)));   // .. new empty entry for task
+                
+                // allows an current assignment to edit this entry (task/day)?
+                entryOfDay.setEditable(
+                                      assignments.stream()
+                                                 .anyMatch(a -> 
+                                                    a.getTask().getId() == entryOfDay.getTask().getId() &&   // assignment for task
+                                                    a.isInRange(entryOfDay.getAtDate())                      // and date
+                                                    )
+                                     );
+                
+                
                 
                 tiw.getDailyEntries()[dayOffset] = entryOfDay;
             }

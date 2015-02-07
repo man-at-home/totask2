@@ -4,6 +4,9 @@ totask2 releasenotes
 
 basic releasenotes for http://man-at-home.github.io/totask2/
 
+.2015-02-07
+- non editable days for task in week (therefore enable assignments with only part of a week)
+
 .2014-12-15
 - upgrade to spring-boot 1.2
 - upgrade other libraries

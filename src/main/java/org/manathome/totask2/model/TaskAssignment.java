@@ -34,8 +34,9 @@ import javax.validation.constraints.NotNull;
  *  <br>
  *  <img alt="project-uml" src="doc-files/totask2.design.datamodel.taskAssignment.png">
  * </p>
- * @author man-at-home
- * @since  2014-10-26 
+ * @author  man-at-home
+ * @since   2014-10-26 
+ * @version 2015-02-07
  */
 @Entity
 /*
@@ -170,11 +171,22 @@ public class TaskAssignment {
     public void setUntil(LocalDate until) { 
         this.until = until == null ? null : LocalDateConverter.toDate(until); 
     }
+
+    /** check if given date is between from and until. */
+    public boolean isInRange(@NotNull final LocalDate d) {
         
+        return  d != null &&
+                getFrom() != null &&
+                !d.isBefore(getFrom()) &&
+                (getUntil() == null || getUntil().isAfter(d));
+    }    
+    
     /** debug output. */
     @Override
     public String toString() {
         return "Assignment [id=" + id + ": task " + task + ", to be worked on by=" + user + " from " + startingFrom + " - " + until + "]";
     }
+
+
         
 }

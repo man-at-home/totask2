@@ -47,7 +47,7 @@ Run mit InMemory Datenbank h2 => `%> gradlew bootRun`
 
 Run mit persistenter Datenbank (die Daten bleiben zwischen den Runs erhalten) => `%> gradlew bootRun -Dspring.profiles.active=qa`
 
-QA Analyse incl. Tests und CodeCoverage: `%> gradlew sonarRunners`
+QA Analyse incl. Tests und CodeCoverage: `%> gradlew sonarRunners` (parallel muss StartSonar.bat gestartet sein als http://localhost:9000/)
 
 == Deployment
 

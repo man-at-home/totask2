@@ -115,7 +115,7 @@ public class TaskAssignmentRepositoryTest {
         List<TaskAssignment> tas = taskAssignmentRepository.findByUserAndPeriod(TestConstants.TEST_USER, from, until);
         assertNotNull(tas);        
         tas.stream().forEach(a -> LOG.debug("found assignment: " + a));
-        assertEquals("assignment count unexpected", 2, tas.size());
+        assertEquals("assignment count unexpected", 1, tas.size());
     }     
 
     @Test

@@ -6,6 +6,8 @@ basic releasenotes for http://man-at-home.github.io/totask2/
 
 .2015.02-19
 - added optional cloud logging (loggly.com, see https://totask2.wordpress.com/2015/02/19/logging-into-the-cloud-loggly-com/)
+- upgraded gradle to 2.3
+- fixed test (changed test data)
 
 .2015-02-07
 - non editable days for task in week (therefore enable assignments with only part of a week)

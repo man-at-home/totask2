@@ -239,7 +239,7 @@ task allDocs {
 // create gradlew script configuration
 task wrapper(type: Wrapper) {
     description "gradle wrapper generation"
-    gradleVersion = '2.2.1'
+    gradleVersion = '2.3'
 }
 
 // deploy into local running app server (wildlfy 8.1 currently)

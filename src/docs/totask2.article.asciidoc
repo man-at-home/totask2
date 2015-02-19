@@ -40,7 +40,7 @@ http://springmvc.org/[springmvc^] als serverseitiges Java _Web Framework_.
 
 SpringMVC Web Anwendungen werden natürlich in Java programmiert. Im vorliegenden Fall bereits mit https://java.com/de/[Java 8]
 da ich dabei Closures nutzen wollte. Als Templating Engine für HTML wird dabei http://www.thymeleaf.org/[thymeleaf] verwendet. 
-Logging erfolgt mit http://logback.qos.ch/[logback/slf4j], Unit Tests mit http://junit.org/[junit]. Der REST Teil wird über http://swagger.io/[wagger] zur Verfügung gestellt.
+Logging erfolgt mit http://logback.qos.ch/[logback/slf4j], optional in die cloud auf loggly.com, Unit Tests mit http://junit.org/[junit]. Der REST Teil wird über http://swagger.io/[wagger] zur Verfügung gestellt.
 
 _Client Seitig_ benutze ich http://getbootstrap.com//[bootstrap^] für css, 
 http://bootstrapvalidator.com/[bootstrapvalidator^] für einige Client seitige Prüfungen, 
@@ -236,6 +236,8 @@ im RedHat WildFly Application Server:
 .lokale Installation im wildfly Container 
 image::images/totask2.dev.wildfly.admin.png[screenshot_EE, 600, 400]
 
+see also: https://totask2.wordpress.com/2015/02/19/logging-into-the-cloud-loggly-com/
+
 === Cloud
 
 Automatisierte Builds mit dem build Server *jenkins* finden in der _cloud_ auf einer openShift Applikation 
@@ -250,6 +252,11 @@ image::images/totask2.cloud.jenkins.gearbuild.png[screenshot_CLOUD_1, 700, 500]
 [[img-openShift-logs]]
 .totask2 running on openshift log tail
 image::images/totask2.cloud.rhc.png[screenshot_CLOUD_2, 700, 500]
+
+[[img-loggly.com]]
+.totask2 logging into the cloud
+image::images/totask2.loggly.viewer.png[screenshot_loggly, 700, 500]
+
 
 == weitere Details
 

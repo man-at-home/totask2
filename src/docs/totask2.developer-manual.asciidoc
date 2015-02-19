@@ -11,7 +11,7 @@
 man-at-home
 v1.3, 2014-12-02
 
-== Ãœberblick
+== Überblick
 
 Das Dokument beschreibt *aus Entwicklersicht* das  Aufsetzen und Weiterentwickeln der Anwendung *totask2*.
 Die Anwendung ist eigentlich nur eine Entschuldigung diverse Bibliotheken und Tools einzusetzen um die 
@@ -51,10 +51,10 @@ QA Analyse incl. Tests und CodeCoverage: `%> gradlew sonarRunners`
 
 == Deployment
 
-FÃ¼r OpenShift
+Für OpenShift
 
 * generell wird ganz normal .\build.gradle wird verwendet
-* hooks fÃ¼r OpenShift sind folgende shell Scripte:
+* hooks für OpenShift sind folgende shell Scripte:
 ** .openshift\action_hooks\pre_build (cardridge vorbereiten fÃ¼r build)
 ** .openshift\action_hooks\build     (gradle assemble Aufruf)
 ** .openshift\action_hooks\deploy    (gradle deployOpenShift Aufruf)

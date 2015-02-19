@@ -56,11 +56,11 @@ buildscript {
     }
     
     dependencies {
-        classpath "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}"  
-	    classpath "org.flywaydb:flyway-gradle-plugin:3.1"	
-	    classpath "org.asciidoctor:asciidoctor-gradle-plugin:1.5.1"
-	    classpath "be.jlr-home.gradle:plantumlPlugin:0.1.1"	    
-        classpath "com.eriwen:gradle-js-plugin:1.12.0"
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}"  	
+	    classpath "org.flywaydb:flyway-gradle-plugin:3.1"				
+	    classpath "org.asciidoctor:asciidoctor-gradle-plugin:1.5.1"								// documentation engine
+	    classpath "be.jlr-home.gradle:plantumlPlugin:0.1.1"	    								// documentation graphing
+        classpath "com.eriwen:gradle-js-plugin:1.12.0"											// javascript build utilities
     }
 }
 
@@ -80,27 +80,30 @@ configurations {
 
 dependencies {
     compile "org.apache.poi:poi:3.10.1"
-    compile "org.slf4j:slf4j-api:1.7.7"
-    compile "ch.qos.logback:logback-classic"
-    compile "net.sf.jasperreports:jasperreports:5.6.1"  
-    compile "com.h2database:h2"
     
-    compile "org.ajar:swagger-spring-mvc-ui:0.2"
-	compile "com.mangofactory:swagger-springmvc:0.9.1"  // newer version on hold cause of scala upgrade dependencies..
+    compile "org.slf4j:slf4j-api:1.7.7"                       // logging api
+    compile "ch.qos.logback:logback-classic"                  // logging library
+    compile "org.logback-extensions:logback-ext-loggly:0.1.2" // log into the cloud
     
-    compile "org.springframework:spring-context:${springVersion}"
+    compile "net.sf.jasperreports:jasperreports:5.6.1"  	  // reporting engine
+    compile "com.h2database:h2"								  // dev database (usable in memory)
+    
+    compile "org.ajar:swagger-spring-mvc-ui:0.2"			  // rest tester
+	compile "com.mangofactory:swagger-springmvc:0.9.1"        // newer version on hold cause of scala upgrade dependencies..
+    
+    compile "org.springframework:spring-context:${springVersion}"				// spring
     compile "org.springframework:spring-context-support:${springVersion}"
     
-    compile "org.springframework.boot:spring-boot-starter-thymeleaf"
-	compile "org.springframework.boot:spring-boot-starter-web"
+    compile "org.springframework.boot:spring-boot-starter-thymeleaf"			// templating engine
+	compile "org.springframework.boot:spring-boot-starter-web"					// spring boot
     compile "org.springframework.boot:spring-boot-starter-data-jpa"
     compile "org.springframework.boot:spring-boot-starter-security"    
     compile "org.springframework.boot:spring-boot-starter-actuator"
     
-    compile "org.hibernate:hibernate-envers:4.3.7.Final"
+    compile "org.hibernate:hibernate-envers:4.3.7.Final"						// orm mapper history building
         
-    compile "org.flywaydb:flyway-core"    
-    compile "org.seleniumhq.selenium:selenium-firefox-driver:${seleniumVersion}"
+    compile "org.flywaydb:flyway-core"    										// database migration utility
+    compile "org.seleniumhq.selenium:selenium-firefox-driver:${seleniumVersion}"	// ui tester
 
     testCompile "org.springframework.boot:spring-boot-starter-test" 
  }

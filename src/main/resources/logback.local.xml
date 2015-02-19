@@ -1,0 +1,30 @@
+<configuration>
+
+  <!-- logback logging confiugration for totask2
+       @author man-at-home 
+    -->
+
+  <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+    <!-- encoders are assigned the type
+         ch.qos.logback.classic.encoder.PatternLayoutEncoder by default -->
+    <encoder>
+      <pattern>%-4relative [%thread] %-5level %logger{35} - %msg %n</pattern>
+    </encoder>
+  </appender> 
+   
+  <appender name="FILE" class="ch.qos.logback.core.FileAppender">
+    <file>build/totask2.logback.log</file>
+    <append>false</append>
+    <encoder>
+      <pattern>%-4r %-5level %logger{70}: %msg%n</pattern>
+    </encoder>
+  </appender>
+  
+  <logger name="org.manathome" level="DEBUG" />
+          
+  <root level="WARN">
+      <appender-ref ref="FILE" />
+      <appender-ref ref="STDOUT" />
+  </root> 
+ 
+</configuration>	

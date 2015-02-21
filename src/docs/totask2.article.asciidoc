@@ -76,6 +76,8 @@ Als "echter" Appserver für das Deployment fungiert der http://www.wildfly.org/[
 
 Hosting der Anwendung in der cloud erfolgt mit openShift in einer https://developers.openshift.com/en/wildfly-overview.html[WildFly Cardridge].
 
+Optionales Monitoring erfolgt mit http://www.newrelic.com/[newrelic]. Dazu ist der lokale wildfly Server instrumentiert
+und schickt Informationen an newrelic.
 
 === Anforderungen zum Entwickeln
 

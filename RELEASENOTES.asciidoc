@@ -4,7 +4,10 @@ totask2 releasenotes
 
 basic releasenotes for http://man-at-home.github.io/totask2/
 
-.2015.02-19
+.2015-02-20
+- integrated newrelic into wildfly (see https://totask2.wordpress.com/2015/02/21/integrating-newrelic-monitoring-into-totask2-demo/)
+
+.2015-02-19
 - added optional cloud logging (loggly.com, see https://totask2.wordpress.com/2015/02/19/logging-into-the-cloud-loggly-com/)
 - upgraded gradle to 2.3
 - fixed test (changed test data)

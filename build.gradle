@@ -1,11 +1,12 @@
 /*
  * gradle build script for totask2 project.
  *
- * needing at least gradle 2.2 for compile!
+ * uses gradle 2.3 for compile!
  *
- * @see    http://man-at-home.github.io/totask2/
- * @author man-at-home
- * @since  2014
+ * @see     http://man-at-home.github.io/totask2/
+ * @author  man-at-home
+ * @since   2014
+ * @version 2015
  */
 
 // development
@@ -73,10 +74,13 @@ war {
     archiveName = 'totask2.war'
 }
 
-configurations {
-    providedRuntime
-}
+// configurations {
+//    providedRuntime
+// }
 
+configurations {
+    compile.exclude module: "spring-boot-starter-tomcat"      // wildfly, undertow, otherwise remove hier and below
+}
 
 dependencies {
     compile "org.apache.poi:poi:3.10.1"
@@ -89,13 +93,16 @@ dependencies {
     compile "com.h2database:h2"								  // dev database (usable in memory)
     
     compile "org.ajar:swagger-spring-mvc-ui:0.2"			  // rest tester
-	compile "com.mangofactory:swagger-springmvc:0.9.1"        // newer version on hold cause of scala upgrade dependencies..
+    compile "com.mangofactory:swagger-springmvc:0.9.1"        // newer version on hold cause of scala upgrade dependencies..
     
     compile "org.springframework:spring-context:${springVersion}"				// spring
     compile "org.springframework:spring-context-support:${springVersion}"
     
     compile "org.springframework.boot:spring-boot-starter-thymeleaf"			// templating engine
-	compile "org.springframework.boot:spring-boot-starter-web"					// spring boot
+
+    compile "org.springframework.boot:spring-boot-starter-web" 
+    compile "org.springframework.boot:spring-boot-starter-undertow"				// wildfly/undertow, if not remove here and above
+
     compile "org.springframework.boot:spring-boot-starter-data-jpa"
     compile "org.springframework.boot:spring-boot-starter-security"    
     compile "org.springframework.boot:spring-boot-starter-actuator"
@@ -245,7 +252,7 @@ task wrapper(type: Wrapper) {
 // deploy into local running app server (wildlfy 8.1 currently)
 task deployLocal(type: Copy) {
     dependsOn assemble
-    description "deploy into app server (wildlfy 8.1 currently)"
+    description "deploy into app server (wildlfy 8.1 currently). start with wildfly/bin/standalone.bat"
     from "${buildDir}/libs"
     include '*.war'
     into 'c:/dev/wildfly/standalone/deployments'

@@ -11,7 +11,7 @@
 man-at-home
 v1.3, 2014-12-02
 
-== �berblick
+== Überblick
 
 Das Dokument beschreibt *aus Entwicklersicht* das  Aufsetzen und Weiterentwickeln der Anwendung *totask2*.
 Die Anwendung ist eigentlich nur eine Entschuldigung diverse Bibliotheken und Tools einzusetzen um die 
@@ -51,10 +51,18 @@ QA Analyse incl. Tests und CodeCoverage: `%> gradlew sonarRunners` (parallel mus
 
 == Deployment
 
-F�r OpenShift
+=== Für lokalen App Server WildFly
+
+* gradle deployLocal
+* Wildfly starten mit standalone Script.
+
+Hint: tomcat dependency muss entfernt sein im gradle build.
+Hint: newrelic Monitoring ist derzeit installiert (Agent wie auf der Homepage beschrieben für Wildlfy installiert).
+
+=== Für OpenShift (cloud)
 
 * generell wird ganz normal .\build.gradle wird verwendet
-* hooks f�r OpenShift sind folgende shell Scripte:
+* hooks für OpenShift sind folgende shell Scripte:
 ** .openshift\action_hooks\pre_build (cardridge vorbereiten für build)
 ** .openshift\action_hooks\build     (gradle assemble Aufruf)
 ** .openshift\action_hooks\deploy    (gradle deployOpenShift Aufruf)
@@ -362,3 +370,21 @@ gradle ist ein Groovy basierendes Build System, als Alternative zu den bekannter
 ----
 
 
+=== newRelic Monitoring
+
+bei Start des augmented wildFly werden Monitoring Informationen an die newelic Webseite gesendet.
+
+[source]
+.console with wildfly start output
+----
+C:\dev\wildfly\bin>standalone
+	Calling "C:\dev\wildfly\bin\standalone.conf.bat"
+	..
+	Feb 21, 2015 21:33:43 +0100 [6592 1] com.newrelic INFO: Agent is using Logback
+	Feb 21, 2015 21:33:43 +0100 [6592 1] com.newrelic INFO: Loading configuration file "C:\dev\wildfly\newrelic\.\newrelic.yml"
+	..
+----
+ 
+[[img-newrelic]]
+.monitoringdaten newrelic
+image::images/totask2.monitor.newrelic.1.png[screenshot.newrelic1, 200, 100]

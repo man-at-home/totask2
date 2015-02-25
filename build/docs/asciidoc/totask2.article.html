@@ -442,11 +442,12 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_cloud">7.2. Cloud</a></li>
 </ul>
 </li>
-<li><a href="#_weitere_details">8. weitere Details</a></li>
-<li><a href="#_erfahrungen">9. Erfahrungen</a>
+<li><a href="#_monitoring">8. Monitoring</a></li>
+<li><a href="#_weitere_details">9. weitere Details</a></li>
+<li><a href="#_erfahrungen">10. Erfahrungen</a>
 <ul class="sectlevel2">
-<li><a href="#_positiv">9.1. positiv</a></li>
-<li><a href="#_negativ">9.2. negativ</a></li>
+<li><a href="#_positiv">10.1. positiv</a></li>
+<li><a href="#_negativ">10.2. negativ</a></li>
 </ul>
 </li>
 </ul>
@@ -526,7 +527,7 @@ Entitäten wie Projekt, Task und Arbeitszeit (WorkEntry) und Taskzuordnung zu Us
 <div class="paragraph">
 <p>SpringMVC Web Anwendungen werden natürlich in Java programmiert. Im vorliegenden Fall bereits mit <a href="https://java.com/de/">Java 8</a>
 da ich dabei Closures nutzen wollte. Als Templating Engine für HTML wird dabei <a href="http://www.thymeleaf.org/">thymeleaf</a> verwendet.
-Logging erfolgt mit <a href="http://logback.qos.ch/">logback/slf4j</a>, Unit Tests mit <a href="http://junit.org/">junit</a>. Der REST Teil wird über <a href="http://swagger.io/">wagger</a> zur Verfügung gestellt.</p>
+Logging erfolgt mit <a href="http://logback.qos.ch/">logback/slf4j</a>, optional in die cloud auf loggly.com, Unit Tests mit <a href="http://junit.org/">junit</a>. Der REST Teil wird über <a href="http://swagger.io/">wagger</a> zur Verfügung gestellt.</p>
 </div>
 <div class="paragraph">
 <p><em>Client Seitig</em> benutze ich <a href="http://getbootstrap.com//" target="_blank">bootstrap</a> für css,
@@ -571,6 +572,10 @@ rendern. Live zu sehen unter <a href="https://github.com/man-at-home/totask2/blo
 </div>
 <div class="paragraph">
 <p>Hosting der Anwendung in der cloud erfolgt mit openShift in einer <a href="https://developers.openshift.com/en/wildfly-overview.html">WildFly Cardridge</a>.</p>
+</div>
+<div class="paragraph">
+<p>Optionales Monitoring erfolgt mit <a href="http://www.newrelic.com/">newrelic</a>. Dazu ist der lokale wildfly Server instrumentiert
+und schickt Informationen an newrelic.</p>
 </div>
 <div class="sect2">
 <h3 id="_anforderungen_zum_entwickeln">3.1. Anforderungen zum Entwickeln</h3>
@@ -812,6 +817,9 @@ im RedHat WildFly Application Server:</p>
 </div>
 <div class="title">Figure 24. lokale Installation im wildfly Container</div>
 </div>
+<div class="paragraph">
+<p>see also: <a href="https://totask2.wordpress.com/2015/02/19/logging-into-the-cloud-loggly-com/" class="bare">https://totask2.wordpress.com/2015/02/19/logging-into-the-cloud-loggly-com/</a></p>
+</div>
 </div>
 <div class="sect2">
 <h3 id="_cloud">7.2. Cloud</h3>
@@ -836,7 +844,33 @@ Der Build-Server holt sich den totask2 Source im master-Branch von github und ge
 </div>
 </div>
 <div class="sect1">
-<h2 id="_weitere_details">8. weitere Details</h2>
+<h2 id="_monitoring">8. Monitoring</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Option zur Logauswertung (direct in der cloud).</p>
+</div>
+<div id="img-loggly.com" class="imageblock">
+<div class="content">
+<img src="images/totask2.loggly.viewer.png" alt="screenshot_loggly" width="700" height="500">
+</div>
+<div class="title">Figure 27. totask2 logging into the cloud</div>
+</div>
+<div class="paragraph">
+<p>lokale Alternative dazu wäre die Kombi aus logstash, elasticsearch und kibana.</p>
+</div>
+<div class="paragraph">
+<p>Monitoring der lokalen Wildfly Instanz mit newrelic.</p>
+</div>
+<div id="img-newrelic.com" class="imageblock">
+<div class="content">
+<img src="images/totask2.monitor.newrelic.3.png" alt="screenshot_newrelic" width="700" height="500">
+</div>
+<div class="title">Figure 28. totask2 app monitoring into the cloud</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_weitere_details">9. weitere Details</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p><a href="totask2.developer-manual.html">dev docs</a></p>
@@ -844,10 +878,13 @@ Der Build-Server holt sich den totask2 Source im master-Branch von github und ge
 </div>
 </div>
 <div class="sect1">
-<h2 id="_erfahrungen">9. Erfahrungen</h2>
+<h2 id="_erfahrungen">10. Erfahrungen</h2>
 <div class="sectionbody">
+<div class="paragraph">
+<p>Details hoffentlich bald im blog <a href="https://totask2.wordpress.com/" class="bare">https://totask2.wordpress.com/</a></p>
+</div>
 <div class="sect2">
-<h3 id="_positiv">9.1. positiv</h3>
+<h3 id="_positiv">10.1. positiv</h3>
 <div class="ulist">
 <ul>
 <li>
@@ -872,7 +909,7 @@ Der Build-Server holt sich den totask2 Source im master-Branch von github und ge
 </div>
 </div>
 <div class="sect2">
-<h3 id="_negativ">9.2. negativ</h3>
+<h3 id="_negativ">10.2. negativ</h3>
 <div class="paragraph">
 <p>Wo hakt es (noch?)</p>
 </div>
@@ -899,7 +936,7 @@ Der Build-Server holt sich den totask2 Source im master-Branch von github und ge
 <div id="footer">
 <div id="footer-text">
 Version 1.3<br>
-Last updated 2014-12-09 22:53:15 MEZ
+Last updated 2015-02-26 00:02:37 MEZ
 </div>
 </div>
 </body>

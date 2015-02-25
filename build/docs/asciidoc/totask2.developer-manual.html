@@ -429,7 +429,12 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_notwendige_umgebung">2. Notwendige Umgebung</a></li>
 <li><a href="#_download">3. Download</a></li>
 <li><a href="#_build_run">4. Build &amp; Run</a></li>
-<li><a href="#_deployment">5. Deployment</a></li>
+<li><a href="#_deployment">5. Deployment</a>
+<ul class="sectlevel2">
+<li><a href="#_für_lokalen_app_server_wildfly">5.1. Für lokalen App Server WildFly</a></li>
+<li><a href="#_für_openshift_cloud">5.2. Für OpenShift (cloud)</a></li>
+</ul>
+</li>
 <li><a href="#_architektur">6. Architektur</a>
 <ul class="sectlevel2">
 <li><a href="#_datenmodell">6.1. Datenmodell</a></li>
@@ -448,6 +453,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_asciidoctor_dokumentation">7.8. asciidoctor Dokumentation</a></li>
 <li><a href="#_flyway_datenbank_migration">7.9. flyway Datenbank Migration</a></li>
 <li><a href="#_gradle_build">7.10. gradle Build</a></li>
+<li><a href="#_newrelic_monitoring">7.11. newRelic Monitoring</a></li>
 </ul>
 </li>
 </ul>
@@ -527,16 +533,32 @@ von github holen.</p>
 <p>Run mit persistenter Datenbank (die Daten bleiben zwischen den Runs erhalten) &#8658; <code>%&gt; gradlew bootRun -Dspring.profiles.active=qa</code></p>
 </div>
 <div class="paragraph">
-<p>QA Analyse incl. Tests und CodeCoverage: <code>%&gt; gradlew sonarRunners</code></p>
+<p>QA Analyse incl. Tests und CodeCoverage: <code>%&gt; gradlew sonarRunners</code> (parallel muss StartSonar.bat gestartet sein als <a href="http://localhost:9000/" class="bare">localhost:9000/</a>)</p>
 </div>
 </div>
 </div>
 <div class="sect1">
 <h2 id="_deployment">5. Deployment</h2>
 <div class="sectionbody">
-<div class="paragraph">
-<p>Für OpenShift</p>
+<div class="sect2">
+<h3 id="_für_lokalen_app_server_wildfly">5.1. Für lokalen App Server WildFly</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>gradle deployLocal</p>
+</li>
+<li>
+<p>Wildfly starten mit standalone Script.</p>
+</li>
+</ul>
 </div>
+<div class="paragraph">
+<p>Hint: tomcat dependency muss entfernt sein im gradle build.
+Hint: newrelic Monitoring ist derzeit installiert (Agent wie auf der Homepage beschrieben für Wildlfy installiert).</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_für_openshift_cloud">5.2. Für OpenShift (cloud)</h3>
 <div class="ulist">
 <ul>
 <li>
@@ -603,6 +625,7 @@ von github holen.</p>
 <img src="images/totask2.cloud.rhc.png" alt="screenshot.sftp" width="500" height="300">
 </div>
 <div class="title">Figure 2. rhc command line openShift</div>
+</div>
 </div>
 </div>
 </div>
@@ -1238,13 +1261,36 @@ aber mit Flyway verwaltet. Dieses kleine Tool verwaltet je Datenbank deren aktue
 </div>
 </div>
 </div>
+<div class="sect2">
+<h3 id="_newrelic_monitoring">7.11. newRelic Monitoring</h3>
+<div class="paragraph">
+<p>bei Start des augmented wildFly werden Monitoring Informationen an die newelic Webseite gesendet.</p>
+</div>
+<div class="listingblock">
+<div class="title">console with wildfly start output</div>
+<div class="content">
+<pre class="highlightjs highlight"><code>C:\dev\wildfly\bin&gt;standalone
+	Calling "C:\dev\wildfly\bin\standalone.conf.bat"
+	..
+	Feb 21, 2015 21:33:43 +0100 [6592 1] com.newrelic INFO: Agent is using Logback
+	Feb 21, 2015 21:33:43 +0100 [6592 1] com.newrelic INFO: Loading configuration file "C:\dev\wildfly\newrelic\.\newrelic.yml"
+	..</code></pre>
+</div>
+</div>
+<div id="img-newrelic" class="imageblock">
+<div class="content">
+<img src="images/totask2.monitor.newrelic.1.png" alt="screenshot.newrelic1" width="200" height="100">
+</div>
+<div class="title">Figure 13. monitoringdaten newrelic</div>
+</div>
+</div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
 Version 1.3<br>
-Last updated 2014-12-06 22:06:30 MEZ
+Last updated 2015-02-21 22:21:24 MEZ
 </div>
 </div>
 </body>

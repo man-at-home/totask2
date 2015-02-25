@@ -255,10 +255,21 @@ image::images/totask2.cloud.jenkins.gearbuild.png[screenshot_CLOUD_1, 700, 500]
 .totask2 running on openshift log tail
 image::images/totask2.cloud.rhc.png[screenshot_CLOUD_2, 700, 500]
 
+== Monitoring
+
+Option zur Logauswertung (direct in der cloud).
+
 [[img-loggly.com]]
 .totask2 logging into the cloud
 image::images/totask2.loggly.viewer.png[screenshot_loggly, 700, 500]
 
+lokale Alternative dazu wäre die Kombi aus logstash, elasticsearch und kibana.
+
+Monitoring der lokalen Wildfly Instanz mit newrelic.
+
+[[img-newrelic.com]]
+.totask2 app monitoring into the cloud
+image::images/totask2.monitor.newrelic.3.png[screenshot_newrelic, 700, 500]
 
 == weitere Details
 

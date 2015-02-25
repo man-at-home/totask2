@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 /** 
@@ -42,6 +43,7 @@ import javax.validation.Valid;
  * @author man-at-home
  * @since  2014-08-21
  */
+@Transactional
 @Controller
 public class TaskController {
     

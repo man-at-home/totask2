@@ -4,6 +4,13 @@ totask2 releasenotes
 
 basic releasenotes for http://man-at-home.github.io/totask2/
 
+.2015-02-22
+- some href url fixes
+- removing editing buttons on new entities ui.
+
+.2015-02-21
+- log analysis with logstash, elasticsearch and kibana https://totask2.wordpress.com/2015/02/25/alternative-fur-loggly-com-logstash-elasticsearch-und-kibana/
+
 .2015-02-20
 - integrated newrelic into wildfly (see https://totask2.wordpress.com/2015/02/21/integrating-newrelic-monitoring-into-totask2-demo/ )
 
@@ -28,7 +35,7 @@ basic releasenotes for http://man-at-home.github.io/totask2/
 - package rename
 
 .2014-12-05
-- sonarCube qa metrics
+- sonarCube qa metrics https://totask2.wordpress.com/2015/02/21/sonarcube-qa-statistics-for-totask2-recap/
 
 .2014-11-30
 - created wildfly cardridge on openshift for cloud deployment
@@ -39,7 +46,7 @@ basic releasenotes for http://man-at-home.github.io/totask2/
 - deployment wildfly 8.1 locally
 
 .2014-11-28
-- github homepage (gh-pages)
+- github homepage (gh-pages) on http://man-at-home.github.io/totask2/
 
 .2014-11-27
 - asciidoc documents refreshed

@@ -184,7 +184,7 @@ flyway {
 
 javadoc {
 	failOnError         = false
-    options.overview    = "${projectDir}/src/main/java/overview.html" // relative to source root
+//    options.overview    = "${projectDir}/src/main/java/overview.html" // relative to source root
 	options.windowTitle = "totask2 api documentation ${version}"	
     options.links( "http://download.oracle.com/javase/8/docs/api/" )
     options.addBooleanOption("Xdoclint:none").setValue(true)
@@ -220,8 +220,8 @@ jshint {
 
 // generate javascript docs
 jsdoc {
-    tasks.jsdoc.source         = javascript.source.dev.js.files
-    tasks.jsdoc.destinationDir = file("${buildDir}/jsdoc")
+   tasks.jsdoc.source         = javascript.source.dev.js.files
+   tasks.jsdoc.destinationDir = file("${buildDir}/jsdoc")
 }
 
 
@@ -238,7 +238,7 @@ task copyPlantUMLImages(type: Copy) {
 
 // generate all documentation
 task allDocs {
-    dependsOn javadoc, asciidoctor, copyPlantUMLImages, jsdoc 
+    dependsOn javadoc, asciidoctor, copyPlantUMLImages 
     description "generation of full documenation for totask2"
 }
 

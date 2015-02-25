@@ -4,10 +4,10 @@ import org.manathome.totask2.model.Project;
 import org.manathome.totask2.model.ProjectRepository;
 import org.manathome.totask2.model.User;
 import org.manathome.totask2.service.AuditingService;
-import org.manathome.totask2.service.ReportGenerator;
-import org.manathome.totask2.service.UserCachingService;
 import org.manathome.totask2.service.AuditingService.EntityRevision;
+import org.manathome.totask2.service.ReportGenerator;
 import org.manathome.totask2.service.ReportGenerator.ReportOutputFormat;
+import org.manathome.totask2.service.UserCachingService;
 import org.manathome.totask2.util.ApplicationAssert;
 import org.manathome.totask2.util.Authorisation;
 import org.manathome.totask2.util.ProjectNotFoundException;
@@ -33,6 +33,7 @@ import org.springframework.web.servlet.ModelAndView;
 import java.util.List;
 import java.util.Set;
 
+import javax.transaction.Transactional;
 import javax.validation.Valid;
 import javax.ws.rs.Produces;
 
@@ -50,6 +51,7 @@ import com.wordnik.swagger.annotations.ApiResponses;
  * @author man-at-home
  * @since  2014-08-14
  */
+@Transactional
 @Controller
 @Api(value = "project REST-API", description = "totask2 projects REST API")
 public class ProjectController {

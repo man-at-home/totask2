@@ -6,21 +6,21 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	
-	<link rel="stylesheet" type="text/css" href="../css/totask2.css" />
-	<link rel="stylesheet" type="text/css" href="../bootstrap/css/bootstrap.min.css" />
-	<link rel="stylesheet" type="text/css" href="../bootstrap/css/bootstrap-theme.min.css" />
-	<link rel="stylesheet" type="text/css" href="../bootstrap/css/bootstrapValidator.min.css"/>
-	<link rel="stylesheet" type="text/css" href="../css/jquery.dataTables.css" />
-	<link rel="stylesheet" type="text/css" href="../css/selectize.bootstrap3.css" />
+	<link rel="stylesheet" type="text/css" th:href="@{/css/totask2.css}" />
+	<link rel="stylesheet" type="text/css" th:href="@{/bootstrap/css/bootstrap.min.css}" />
+	<link rel="stylesheet" type="text/css" th:href="@{/bootstrap/css/bootstrap-theme.min.css}" />
+	<link rel="stylesheet" type="text/css" th:href="@{/bootstrap/css/bootstrapValidator.min.css}"/>
+	<link rel="stylesheet" type="text/css" th:href="@{/css/jquery.dataTables.css}" />
+	<link rel="stylesheet" type="text/css" th:href="@{/css/selectize.bootstrap3.css}" />
 
 	<link rel="icon" type="image/png" href="/realFavIconIncludedAtRuntime" th:replace="headerFooter :: favicon"/>
 	
 </head>
 <body>
-	<script type="text/javascript" charset="utf8" src="../js/jquery-1.11.1.js"></script>
-	<script type="text/javascript" charset="utf8" src="../bootstrap/js/bootstrap.min.js"></script>
-	<script type="text/javascript" charset="utf8" src="../bootstrap/js/bootstrapValidator.min.js"></script>
-	<script type="text/javascript" charset="utf8" src="../js/selectize.js"></script>
+	<script type="text/javascript" charset="utf8" th:src="@{/js/jquery-1.11.1.js}"></script>
+	<script type="text/javascript" charset="utf8" th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+	<script type="text/javascript" charset="utf8" th:src="@{/bootstrap/js/bootstrapValidator.min.js}"></script>
+	<script type="text/javascript" charset="utf8" th:src="@{/js/selectize.js}"></script>
 
 	<script type="text/javascript">
 		/*<![CDATA[*/
@@ -119,12 +119,22 @@
 		
 		<div class="form-group">
 		<div class="col-sm-offset-2 col-sm-10">
-			<br/><br/>
-			<a th:href="@{/project/{id}/tasks(id=${project.id})}"  class="btn btn-default"  th:text="#{totask2.project.action.tasks}">tasks..</a>
-			<br/><br/>
-			<a th:href="@{/plan/project/{id}(id=${project.id})}"   class="btn btn-default"  th:text="#{totask2.project.action.projectPlan}">show plan</a>
-			<br/><br/>
-			<a th:href="@{/project/{id}/history(id=${project.id})}" class="btn btn-default" target="_blank" th:text="#{totask2.project.action.projectHistory}">show history..</a>
+			<br/>
+			<a th:href="@{/project/{id}/tasks(id=${project.id})}"  
+				class="btn btn-default"  
+				th:if="${project.id}"
+				th:text="#{totask2.project.action.tasks}">tasks..</a>
+
+			<a th:href="@{/plan/project/{id}(id=${project.id})}"   
+				class="btn btn-default"  
+				th:if="${project.id}"
+				th:text="#{totask2.project.action.projectPlan}">show plan</a>
+
+			<a th:href="@{/project/{id}/history(id=${project.id})}" 
+				class="btn btn-default" 
+				target="_blank" 
+				th:if="${project.id}"
+				th:text="#{totask2.project.action.projectHistory}">show history..</a>
 		</div>
 		</div>
 		

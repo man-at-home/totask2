@@ -1,7 +1,8 @@
 <configuration>
 
-  <!-- logback logging confiugration for totask2
-       @author man-at-home 
+  <!-- basic dev logback logging configuration for totask2
+       @author man-at-home
+       @version 2015-02-24s 
     -->
 
   <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">

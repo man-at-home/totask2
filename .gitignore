@@ -12,3 +12,4 @@
 deployments/
 /sonar.cmd
 .sonar/
+gradle.properties

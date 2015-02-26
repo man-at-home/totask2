@@ -45,7 +45,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             LOG.info("user <" + userName + "> not found: " + users.size());
             throw new UsernameNotFoundException(userName + " no found.");
         } else {
-            LOG.debug("found user: " + users.get(0) + " with pw: " + users.get(0).getPassword());
+            LOG.debug("found user: " + users.get(0));
         }
  
         return users.get(0);

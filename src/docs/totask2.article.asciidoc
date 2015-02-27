@@ -273,7 +273,8 @@ image::images/totask2.monitor.newrelic.3.png[screenshot_newrelic, 700, 500]
 
 == weitere Details
 
-link:totask2.developer-manual.html[dev docs]
+link:totask2.developer-manual.html[dev docs] and
+link:totask2.manual.html[basic user docs]
 
 == Erfahrungen
 

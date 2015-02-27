@@ -4,6 +4,9 @@ totask2 releasenotes
 
 basic releasenotes for http://man-at-home.github.io/totask2/
 
+.2015-02-27
+- added basic user manual (totask2.manual.asciidoc)
+
 .2015-02-22
 - some href url fixes
 - removing editing buttons on new entities ui.

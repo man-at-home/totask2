@@ -46,8 +46,7 @@ import java.util.stream.Collectors;
 @Controller
 public class WeekEntryController {
 
-    private static final Logger LOG = LoggerFactory
-            .getLogger(WeekEntryController.class);
+    private static final Logger LOG = LoggerFactory.getLogger(WeekEntryController.class);
 
     /** work entry repository. */
     @Autowired

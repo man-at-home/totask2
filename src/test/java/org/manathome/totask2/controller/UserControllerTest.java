@@ -87,10 +87,9 @@ public class UserControllerTest {
                 MediaType.APPLICATION_JSON.getSubtype(),                        
                 Charset.forName("utf8")                     
                 )))
-        .andExpect(content().string(containsString("\"displayName\":\"predefined admin user\"")))
-        .andExpect(content().string(containsString("\"username\":\"admin\"")))
-        .andExpect(content().string(containsString("\"displayName\":\"unit-test user\"")))
-        .andExpect(content().string(containsString("\"username\":\"unit-test-user\"")))
+        .andExpect(content().string(containsString("\"displayName\"")))
+        .andExpect(content().string(containsString("\"predefined admin user\"")))
+        .andExpect(content().string(containsString("\"unit-test user\"")))
         .andReturn();
         
         LOG.debug("response:" + result.getResponse().getContentAsString().replaceAll("\\r|\\n", ""));
@@ -110,9 +109,10 @@ public class UserControllerTest {
             .with(user("unit-test-admin")
             .roles("ADMIN", "USER")))
         .andExpect(status().isOk())
-        .andExpect(content().string(containsString("\"displayName\":\"predefined admin user\"")))
-        .andExpect(content().string(containsString("\"username\":\"admin\"")))
-        .andExpect(content().string(not(containsString("\"username\":\"unit-test-user\""))))
+        .andExpect(content().string(containsString("\"displayName\"")))
+        .andExpect(content().string(containsString("\"predefined admin user\"")))
+        .andExpect(content().string(containsString("\"admin\"")))
+        .andExpect(content().string(not(containsString("\"unit-test-user\"")))) // other user in db.
         .andReturn();
         
         LOG.debug("response:" + result.getResponse().getContentAsString().replaceAll("\\r|\\n", ""));

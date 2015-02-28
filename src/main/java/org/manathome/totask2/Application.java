@@ -1,10 +1,10 @@
 package org.manathome.totask2;
 
+
 import org.manathome.totask2.controller.AppController;
 import org.manathome.totask2.service.UserCachingService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-// import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.EnableCaching;
@@ -13,8 +13,11 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+
+import java.text.SimpleDateFormat;
 
 import com.mangofactory.swagger.plugin.EnableSwagger;
 
@@ -61,4 +64,12 @@ public class Application  extends WebMvcConfigurerAdapter  {
         return "man-at-homes test spring project";
     }
     
+    
+    /** used serializing json from WorkEntry.getAt instances. */
+    @Bean
+    public Jackson2ObjectMapperBuilder jacksonBuilder() {
+        Jackson2ObjectMapperBuilder builder = new Jackson2ObjectMapperBuilder();
+        builder.indentOutput(true).dateFormat(new SimpleDateFormat("yyyy-MM-dd"));
+        return builder;
+    }
 }

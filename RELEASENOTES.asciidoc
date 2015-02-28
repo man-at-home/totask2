@@ -4,6 +4,10 @@ totask2 releasenotes
 
 basic releasenotes for http://man-at-home.github.io/totask2/
 
+.2015-02-28
+- added new workEntry REST Endpoint
+- upgraded spring to 4.1.5.RELEASE and spring-boot to 1.2.2
+
 .2015-02-27
 - added basic user manual (totask2.manual.asciidoc)
 

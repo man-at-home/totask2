@@ -3,6 +3,7 @@ package org.manathome.totask2.model;
 import org.manathome.totask2.util.LocalDateConverter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 import java.util.Date;
@@ -24,6 +25,11 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.wordnik.swagger.annotations.ApiModelProperty;
+
 
 /**
  * logged working hours for one user for a given task.
@@ -108,6 +114,7 @@ public class WorkEntry {
      * 
      * controls ui input/editables behavior weekEntry page for given work entry.
      */
+    @JsonIgnore
     public boolean isEditable() {
         return isEditable;
     }
@@ -122,6 +129,7 @@ public class WorkEntry {
 
 
     /** pk. */
+    @ApiModelProperty(value = "Id", required = true, notes = "primary key of given workEntry(may be 0 only if not saved yet.)")
     public long getId() {
         return id;
     }
@@ -143,6 +151,7 @@ public class WorkEntry {
     }
 
     /** employee working on a given task. */
+    @JsonIgnore
     public User getUser() { 
         return user; 
     }
@@ -151,6 +160,7 @@ public class WorkEntry {
     }
 
     /** task on which the work was done. */ 
+    @JsonIgnore
     public Task getTask() { 
         return task; 
     }
@@ -158,9 +168,28 @@ public class WorkEntry {
         this.task = task; 
     }
 
+    /** task.name. */
+    @ApiModelProperty(value = "TaskName", required = true, notes = "task.name of task worked on")    
+    public String getTaskName() {
+        return this.task == null ? "" : this.task.getName();
+    }
+
+    /** task.id. */
+    @ApiModelProperty(value = "TaskId", required = true, notes = "task.id of task worked on")
+    public long getTaskId() {
+        return this.task == null ? 0L : this.task.getId();
+    }
+    
+    
     /** date the work was done. 
+     * 
+     * needs an Jackson2ObjectMapperBuilder to be serialized properly as date.
+     * 
      * @deprecated use modern java8 methods instead. 
      */
+    @ApiModelProperty(value = "At", required = true, notes = "date of work (without time part). Required field.")
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) // no effect unfortunately
+    @JsonSerialize()
     @Deprecated
     public Date getAt() { 
         return new Date (at.getTime()); 
@@ -174,6 +203,7 @@ public class WorkEntry {
      * date the work was done. 
      * LocalDate -> Date. 
      */
+    @JsonIgnore
     public LocalDate getAtDate() { 
         assert at != null;
         return LocalDateConverter.toLocalDate(this.at);
@@ -184,6 +214,7 @@ public class WorkEntry {
     }
 
     /** duration of the logged work in hours. */
+    @ApiModelProperty(value = "Duration", required = true, notes = "duration of work on this day and task. d >=0.")
     public float getDuration() { 
         return duration; 
     }
@@ -199,10 +230,11 @@ public class WorkEntry {
     /** debug. */
     @Override
     public String toString() {
-        return "WorkEntry [at=" + at + ", duration=" + duration + "]";
+        return "WorkEntry [at:" + at + ", duration: " + duration + "h, task: " + getTaskId() + ", " + getTaskName() + "]";
     }    
     
     /** html hint output. */
+    @JsonIgnore
     public String getTitleComment() {
         return 
                 this.id + ": " + 
@@ -213,6 +245,7 @@ public class WorkEntry {
     }
     
     /** instance is modified ("dirty") therefore needs to be saved to db. */
+    @JsonIgnore
     public boolean isModifiedByUser() {
         return this.isModifiedByUser;
     }

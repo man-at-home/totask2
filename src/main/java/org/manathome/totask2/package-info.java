@@ -26,8 +26,10 @@ package "Controller" {
   HTTP - [ProjectController]
   HTTP - [TaskController]
   HTTP - [WeekEntryController]
-  HTTP - [UserController]
   HTTP - [Spring-Security]
+  
+  REST - [UserController]
+  REST - [WorkEntryController]
 }
 
 package "Model" {

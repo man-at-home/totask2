@@ -5,6 +5,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.manathome.totask2.controller.SecurityRequestPostProcessors.user;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -93,6 +94,7 @@ public class WorkEntryControllerTest {
             .perform(get("/REST/workEntries/" + day)
             .with(user("unit-test-user")
             .roles("USER")))
+        .andDo(print())                       // output system.out
         .andExpect(status().isOk())
         .andExpect(content().contentType(new MediaType(MediaType.APPLICATION_JSON.getType(),
                 MediaType.APPLICATION_JSON.getSubtype(),                        
@@ -106,7 +108,6 @@ public class WorkEntryControllerTest {
         .andReturn();
         
         String response = result.getResponse().getContentAsString();
-        LOG.debug("workentry GOT JSON response:" + response);
         assertNotNull(response);
         
         ObjectMapper objectMapper = new ObjectMapper();
@@ -127,5 +128,7 @@ public class WorkEntryControllerTest {
         }
         );
     }
+    
+
     
 }

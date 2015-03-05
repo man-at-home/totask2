@@ -3,6 +3,7 @@ package org.manathome.totask2;
 
 import org.manathome.totask2.controller.AppController;
 import org.manathome.totask2.service.UserCachingService;
+import org.manathome.totask2.util.LoggingFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -18,6 +19,8 @@ import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 import java.text.SimpleDateFormat;
+
+import javax.servlet.Filter;
 
 import com.mangofactory.swagger.plugin.EnableSwagger;
 
@@ -56,6 +59,12 @@ public class Application  extends WebMvcConfigurerAdapter  {
     @Bean
     public CacheManager cacheManager() {
         return new ConcurrentMapCacheManager("users");
+    }
+    
+    /** enhanced logging information. */
+    @Bean
+    public Filter getLoggingFilter() {
+       return new LoggingFilter();
     }
     
     /** dummy message. */

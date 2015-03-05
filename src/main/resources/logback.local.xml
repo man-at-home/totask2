@@ -2,14 +2,14 @@
 
   <!-- basic dev logback logging configuration for totask2
        @author man-at-home
-       @version 2015-02-24s 
+       @version 2015-03-05
     -->
 
   <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
     <!-- encoders are assigned the type
          ch.qos.logback.classic.encoder.PatternLayoutEncoder by default -->
     <encoder>
-      <pattern>%-4relative [%thread] %-5level %logger{35} - %msg %n</pattern>
+      <pattern>%-4relative [%thread] %-5level %logger{35} :: %mdc{user:-XXX} :: %msg %n</pattern>
     </encoder>
   </appender> 
    
@@ -17,7 +17,7 @@
     <file>build/totask2.logback.log</file>
     <append>false</append>
     <encoder>
-      <pattern>%-4r %-5level %logger{70}: %msg%n</pattern>
+      <pattern>%-6r %-5level %logger{70}: %X{user} :: %msg%n</pattern>
     </encoder>
   </appender>
   

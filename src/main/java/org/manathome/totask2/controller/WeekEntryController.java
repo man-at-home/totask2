@@ -9,12 +9,14 @@ import org.manathome.totask2.service.ReportGenerator.ReportOutputFormat;
 import org.manathome.totask2.service.UserDetailsServiceImpl;
 import org.manathome.totask2.service.WeekEntryService;
 import org.manathome.totask2.util.ApplicationAssert;
+import org.manathome.totask2.util.Authorisation;
 import org.manathome.totask2.util.DurationConverter;
 import org.manathome.totask2.util.InvalidClientArgumentsException;
 import org.manathome.totask2.util.LocalDateConverter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,10 +26,22 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+
+
+
+
+
+
 import java.text.ParseException;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import javax.transaction.Transactional;
+
+import com.codahale.metrics.Histogram;
+import com.codahale.metrics.MetricRegistry;
+import com.codahale.metrics.Timer;
 
 /**
  * main entry page for uses.
@@ -43,11 +57,12 @@ import java.util.stream.Collectors;
  * @author man-at-home
  * @since 2014-08-09
  */
+@Transactional
 @Controller
 public class WeekEntryController {
 
     private static final Logger LOG = LoggerFactory.getLogger(WeekEntryController.class);
-
+    
     /** work entry repository. */
     @Autowired
     private WorkEntryRepository workEntryRepository;
@@ -62,6 +77,17 @@ public class WeekEntryController {
 
     @Autowired
     private WeekEntryService weekEntryService;
+    
+
+    private final Histogram      tasksPerWeekHistogramm;
+    private final Timer          weekEntryGetResponseTimer;
+    
+    @Autowired
+    public WeekEntryController(final MetricRegistry metricRegistry) {
+            this.tasksPerWeekHistogramm    = metricRegistry.histogram("TOTASK2XX.controller.weekEntry.TaskInWeek.hist");
+            this.weekEntryGetResponseTimer = metricRegistry.timer("TOTASK2XX.controller.weekEntry.request.get.timed");
+    }
+    
 
     private WeekEntryService getService() {
         return weekEntryService;
@@ -84,15 +110,20 @@ public class WeekEntryController {
         model.addAttribute("previousWeek", dt.minusWeeks(1).toString());
         model.addAttribute("nextWeek", dt.plusWeeks(1).toString());
         model.addAttribute("date", LocalDateConverter.toDate(dt));
-
+        
         try {
-            model.addAttribute("tasksInWeek", getWeek(dt));
+            List<TaskInWeek> tiw = getWeek(dt);
+            model.addAttribute("tasksInWeek", tiw);
+            
+            if (tasksPerWeekHistogramm != null) {
+                tasksPerWeekHistogramm.update(tiw.size());
+            }
         } catch (Exception ex) {
             LOG.error("error getting week data", ex);
             model.addAttribute("flashMessage", ex.getMessage());
         }
 
-        LOG.debug("model has weekEntry for " + dt);
+        LOG.debug("model has weekEntry with for " + dt);
     }
 
     /**
@@ -101,10 +132,10 @@ public class WeekEntryController {
      * 
      * @see org.manathome.totask2.model.WorkEntry
      */
+    @Secured(Authorisation.ROLE_USER)
     @RequestMapping(value = "/weekEntry", method = RequestMethod.GET)
     public String weekEntry(final Model model) {
         LOG.debug("weekEntry(default)");
-
         LocalDate dt = LocalDate.now();
         return weekEntry(model, dt.toString());
     }
@@ -117,13 +148,16 @@ public class WeekEntryController {
      *            dateString of week to display.
      * @see org.manathome.totask2.model.WorkEntry
      */
+    @Secured(Authorisation.ROLE_USER)
     @RequestMapping(value = "/weekEntry/{dateString}", method = RequestMethod.GET)
     public String weekEntry(final Model model,
             @PathVariable final String dateString) {
         LOG.debug("weekEntry( " + dateString + ")");
 
-        buildWeekModel(model, LocalDate.parse(dateString));
-        return "weekEntry";
+        try (Timer.Context context = (weekEntryGetResponseTimer == null) ? null : weekEntryGetResponseTimer.time()) {
+            buildWeekModel(model, LocalDate.parse(dateString));
+            return "weekEntry";
+        } 
     }
 
     /**
@@ -133,6 +167,7 @@ public class WeekEntryController {
      * @see org.manathome.totask2.model.WorkEntry
      * @exception InvalidClientArgumentsException
      * */
+    @Secured(Authorisation.ROLE_USER)
     @RequestMapping(value = "/weekEntry/{dateString}", method = RequestMethod.POST)
     public String saveWeekEntry(final Model model,
             @PathVariable final String dateString,
@@ -198,6 +233,7 @@ public class WeekEntryController {
      * 
      * @see ReportGenerator
      */
+    @Secured(Authorisation.ROLE_USER)
     @RequestMapping(value = "/weekEntry/report/{reportFormat}/{dateString}", method = RequestMethod.GET, produces = "application/vnd.ms-excel")
     public ModelAndView getWeekEntryReport(
             @PathVariable final String reportFormat,

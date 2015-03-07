@@ -27,6 +27,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 
 
+
+
+
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -181,6 +184,7 @@ public final class User implements UserDetails {
             GrantedAuthority adminRole = new SimpleGrantedAuthority(Authorisation.ROLE_ADMIN);
             authorities.add(adminRole);
         }
+        authorities.add( new SimpleGrantedAuthority(Authorisation.ROLE_USER));
         
         LOG.debug("authorities of user " + this.getDisplayName() + " requested: " + authorities.size());
         return authorities;
@@ -193,9 +197,9 @@ public final class User implements UserDetails {
         
         if (this.password == null || this.password.length() <= 0) {
             LOG.debug("START-password of user " + this.getDisplayName() + " requested.");        
-            return getPasswordEncoder().encode("123456");
+            return getPasswordEncoder().encode("123456");           
         } else {
-            LOG.debug("custom-password of user " + this.getDisplayName() + " requested.");        
+            LOG.debug("custom-password of user " + this.getDisplayName() + " requested.");  
             return this.password;
         }
     }

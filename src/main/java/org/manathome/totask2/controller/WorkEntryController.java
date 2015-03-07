@@ -11,10 +11,12 @@ import org.manathome.totask2.model.WorkEntryTransfer;
 import org.manathome.totask2.service.UserDetailsServiceImpl;
 import org.manathome.totask2.service.WeekEntryService;
 import org.manathome.totask2.util.InvalidClientArgumentsException;
+import org.manathome.totask2.util.LocalDateConverter;
 import org.manathome.totask2.util.TaskNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.actuate.metrics.CounterService;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -48,10 +50,12 @@ public class WorkEntryController {
     
     private static final Logger LOG = LoggerFactory.getLogger(WorkEntryController.class);
     
-    @Autowired private WeekEntryService weekEntryService;    
-    @Autowired private UserRepository   userRepository;
-    @Autowired private TaskRepository   taskRepository;
-    @Autowired private WorkEntryRepository workEntryRepository;
+    @Autowired private CounterService       counterService;
+    @Autowired private WeekEntryService     weekEntryService;    
+
+    @Autowired private UserRepository       userRepository;
+    @Autowired private TaskRepository       taskRepository;
+    @Autowired private WorkEntryRepository  workEntryRepository;
     
     /** REST API insert / update WorkEntry.
      * 
@@ -83,6 +87,7 @@ public class WorkEntryController {
             entry = new WorkEntry();
             entry.setUser(user);
             entry.setTask(task);
+            counterService.increment("TOTASK2XX.controller.workEntry.REST.created");
             
         } else {
             // update
@@ -92,10 +97,11 @@ public class WorkEntryController {
             if (entryToSave.getTaskId() != entry.getTaskId()) {
                 throw new InvalidClientArgumentsException("task for entry(" + entryToSave.getId() + " must not change, is: " + entry.getTaskId());
             }            
+            counterService.increment("TOTASK2XX.controller.workEntry.REST.changed");
         }
         
         entry.setDuration(entryToSave.getDuration());
-        entry.setAt(entryToSave.getAt());
+        entry.setAtDate(LocalDateConverter.toLocalDate(entryToSave.getAt()));
         entry.setComment(entryToSave.getComment());
         
         workEntryRepository.save(entry);

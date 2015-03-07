@@ -3,7 +3,7 @@
 :icons:    font
 :toc:      left
 man-at-home
-v1.3, 2014-12-06
+v1.4, 2015-03-07
 
 totask: eine rudimentäre Projektzeiterfassung 
 
@@ -40,7 +40,10 @@ http://springmvc.org/[springmvc^] als serverseitiges Java _Web Framework_.
 
 SpringMVC Web Anwendungen werden natürlich in Java programmiert. Im vorliegenden Fall bereits mit https://java.com/de/[Java 8]
 da ich dabei Closures nutzen wollte. Als Templating Engine für HTML wird dabei http://www.thymeleaf.org/[thymeleaf] verwendet. 
-Logging erfolgt mit http://logback.qos.ch/[logback/slf4j], optional in die cloud auf loggly.com, Unit Tests mit http://junit.org/[junit]. Der REST Teil wird über http://swagger.io/[wagger] zur Verfügung gestellt.
+
+Logging erfolgt mit http://logback.qos.ch/[logback/slf4j], optional in die cloud auf loggly.com, 
+
+Unit Tests mit http://junit.org/[junit]. Der REST Teil wird über http://swagger.io/[wagger] zur Verfügung gestellt.
 
 _Client Seitig_ benutze ich http://getbootstrap.com//[bootstrap^] für css, 
 http://bootstrapvalidator.com/[bootstrapvalidator^] für einige Client seitige Prüfungen, 
@@ -76,7 +79,8 @@ Als "echter" Appserver für das Deployment fungiert der http://www.wildfly.org/[
 
 Hosting der Anwendung in der cloud erfolgt mit openShift in einer https://developers.openshift.com/en/wildfly-overview.html[WildFly Cardridge].
 
-Optionales Monitoring erfolgt mit http://www.newrelic.com/[newrelic]. Dazu ist der lokale wildfly Server instrumentiert
+Metriken sind mit boot-actuator und mit https://dropwizard.github.io/metrics[dropwizard metrics] bereitgestellt, derzeit als REST Endpoint. 
+Optionales weiteres Monitoring erfolgt mit http://www.newrelic.com/[newrelic]. Dazu ist der lokale wildfly Server instrumentiert
 und schickt Informationen an newrelic.
 
 === Anforderungen zum Entwickeln

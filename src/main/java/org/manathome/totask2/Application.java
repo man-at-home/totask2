@@ -67,6 +67,7 @@ public class Application  extends WebMvcConfigurerAdapter  {
        return new LoggingFilter();
     }
     
+    
     /** dummy message. */
     public static String getInfo() {
         LOG.debug("getInfo");

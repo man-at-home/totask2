@@ -1,6 +1,7 @@
 package org.manathome.totask2.util;
 
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
 import org.springframework.security.core.context.SecurityContextImpl;
 
@@ -26,9 +27,11 @@ import ch.qos.logback.classic.ClassicConstants;
  * @since  2015-03-05
  */
 public class LoggingFilter implements Filter {
+    
+  private static final Logger LOG = LoggerFactory.getLogger(LoggingFilter.class);
 
   public void destroy() {
-    // do nothing
+      LOG.debug("destroy filter");
   }
 
   /** logback data enrichment. */
@@ -58,28 +61,27 @@ public class LoggingFilter implements Filter {
           SecurityContextImpl sci = (SecurityContextImpl) session.getAttribute("SPRING_SECURITY_CONTEXT");
               
           if (sci != null) {
-              MDC.put("user", sci.getAuthentication().getName());
+              MDC.put("log.user", sci.getAuthentication().getName());
           } else {
-              MDC.put("user", session == null ? "*nosci" : session.getId());
+              MDC.put("log.user", session == null ? "*nosci" : session.getId());
           }
       } else {
-          MDC.put("user", session == null ? "*nosession" : session.getId());           
+          MDC.put("log.user", session == null ? "*nosession" : session.getId());           
       }
       
     } else {
-        MDC.put("user", "*norequest"); 
+        MDC.put("log.user", "*norequest"); 
     }
     
-
   }
 
   /** remove additional logging data after request. */
   void clearMDC() {
     MDC.remove(ClassicConstants.REQUEST_REMOTE_HOST_MDC_KEY);
-    MDC.remove(ClassicConstants.USER_MDC_KEY);
+    MDC.remove("log.user");
   }
 
   public void init(FilterConfig fc) throws ServletException {
-    // do nothing
+      LOG.debug("init filter" + (fc == null ? "?" : fc.getFilterName()));
   }
 }

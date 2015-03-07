@@ -5,7 +5,6 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.manathome.totask2.Application;
-import org.manathome.totask2.service.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -33,8 +32,10 @@ public class UserServiceTest {
     public void testLoadUserDetails() {
         
         UserDetails u = userService.loadUserByUsername("unit-test-admin");
-        assertNotNull(u);
-        assertEquals(1, u.getAuthorities().size());        
+        assertNotNull("user not found", u);
+        assertNotNull("user name", u.getUsername());
+        assertNotNull("user pw", u.getPassword());
+        assertEquals("admin and user role expected, but got " + u, 2, u.getAuthorities().size());        
     }
 
 }

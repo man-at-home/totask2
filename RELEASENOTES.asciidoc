@@ -4,8 +4,11 @@ totask2 releasenotes
 
 basic releasenotes for http://man-at-home.github.io/totask2/
 
+.2015-03-06
+- enhanced metrics with dropwizard https://totask2.wordpress.com/2015/03/06/dropwizard-metrics-integriert-in-spring-boot-fur-mehr-optionen/
+
 .2015-03-5
-- enhance logback logging output (user/session) %M{user} via custom ServletFilter
+- enhance logback logging output (user/session) %M{log.user} via custom ServletFilter (see http://logback.qos.ch/manual/mdc.html)
 
 .2015-02-28
 - added new workEntry REST Endpoint

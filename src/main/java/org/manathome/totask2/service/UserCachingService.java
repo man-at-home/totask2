@@ -7,6 +7,7 @@ import org.manathome.totask2.util.UserNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.actuate.metrics.GaugeService;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
@@ -31,7 +32,8 @@ public class UserCachingService {
     private static final Logger LOG = LoggerFactory.getLogger(UserCachingService.class); 
 
     /** user. */
-    @Autowired private UserRepository userRepository;      
+    @Autowired private UserRepository userRepository;  
+    @Autowired private GaugeService   gaugeService;
     
     /** 
      * cached {@link User} access.
@@ -43,6 +45,7 @@ public class UserCachingService {
     public List<User> getCachedUsers() {
         List<User> users = userRepository.findAll();
         LOG.debug("getCachedUsers() -> " + users.size() + " hits.");
+        gaugeService.submit("TOTASK2XX.service.user.chache.cached", users.size());
         return users;
     }
     

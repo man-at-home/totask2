@@ -7,6 +7,7 @@ import org.manathome.totask2.util.Authorisation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.actuate.metrics.GaugeService;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -18,6 +19,7 @@ import java.util.List;
 import javax.ws.rs.Produces;
 
 import com.mangofactory.swagger.annotations.ApiIgnore;
+
 import com.wordnik.swagger.annotations.Api;
 import com.wordnik.swagger.annotations.ApiOperation;
 import com.wordnik.swagger.annotations.ApiParam;
@@ -38,7 +40,7 @@ public class UserController {
     private static final Logger LOG = LoggerFactory.getLogger(UserController.class);
     
     @Autowired private UserCachingService userCachingService;
-    
+    @Autowired private GaugeService       gaugeService;    
     
 // tag::developer-manual-autocomplete-backend[]
     
@@ -48,7 +50,9 @@ public class UserController {
     @RequestMapping(value = "/users", method = RequestMethod.GET)
     public List<User> getUsers(@RequestParam(value = "term", defaultValue = "") final String term) {
         LOG.debug("/users, term=" + term);
-        return userCachingService.getCachedUsers(term);        
+        List<User> foundUsers = userCachingService.getCachedUsers(term);
+        gaugeService.submit("TOTASK2XX.controller.user.REST.ajaxui.result.count", foundUsers.size());               
+        return foundUsers;        
     }
     
 //  end::developer-manual-autocomplete-backend[]
@@ -63,8 +67,12 @@ public class UserController {
             @RequestParam(value = "term", defaultValue = "", required = false) 
             final String term
             ) {
+        
         LOG.debug("/REST/users, term=" + term);
-        return userCachingService.getCachedUsers(term);        
+        List<User> foundUsers = userCachingService.getCachedUsers(term);    
+               
+        gaugeService.submit("TOTASK2XX.controller.user.REST.search.result.count", foundUsers.size());
+        return foundUsers;
     }
 
     

@@ -177,13 +177,18 @@ public class ProjectController {
         }
                 
         Project.dump(project);
+        boolean isNew = project.getId() <= 0;
 
         Authorisation.require(isNewAllowed());
         this.projectRepository.saveAndFlush(project);
         model.clear();       
         
         if (this.counterService != null) { 
-            counterService.increment("totask2.projects.changed"); 
+            if (isNew) {
+                counterService.increment("TOTASK2XX.model.project.created");
+            } else {
+                counterService.increment("TOTASK2XX.model.project.changed"); 
+            }
         }
         
         LOG.debug("saved " + project + ", now redirecting.");

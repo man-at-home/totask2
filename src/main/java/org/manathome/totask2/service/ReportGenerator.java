@@ -66,9 +66,8 @@ public class ReportGenerator {
 
     private static final Logger LOG = LoggerFactory.getLogger(ReportGenerator.class);
     
-    @Autowired private ApplicationContext appContext;
-    
-    @Autowired private CounterService counterService;
+    @Autowired private ApplicationContext   appContext;   
+    @Autowired private CounterService       counterService;
 
     /** render. 
      * @exception EnvironmentException 
@@ -105,9 +104,15 @@ public class ReportGenerator {
                    exporter.setExporterInput(new SimpleExporterInput(jp));
                    exporter.setExporterOutput(new SimpleOutputStreamExporterOutput(outputStream));                  
                    exporter.exportReport();
+                   if (counterService != null) {
+                       counterService.increment("TOTASK2XX.service.reporting.excel.created");
+                   }
                    break;
                case pdf:
                    JasperExportManager.exportReportToPdfStream(jp, outputStream);
+                   if (counterService != null) {
+                       counterService.increment("TOTASK2XX.service.reporting.pdf.created");
+                   }
                    break;                 
                default:
                    throw new IllegalArgumentException("not a valid report output format: " + outputFormat);
@@ -167,7 +172,7 @@ public class ReportGenerator {
         params.put("jasperReportsDataKey", reportData);
         
         if (this.counterService != null) { 
-            counterService.increment("totask2.report.invoked");
+            counterService.increment("TOTASK2XX.service.report.invoked");
         }
     
         LOG.debug("rendering " + reportOutputFormat + ":" + view.getUrl() + " with " + reportData.size() + " rows of data");

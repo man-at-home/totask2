@@ -21,6 +21,9 @@ public class Authorisation {
     
     /** User.isAdmin. */
     public static final String ROLE_ADMIN = "ROLE_ADMIN";
+
+    /** always "on". */
+    public static final String ROLE_USER = "ROLE_USER";
     
     /** 
      * user has admin role. 

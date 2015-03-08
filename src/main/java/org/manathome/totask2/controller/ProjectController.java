@@ -8,7 +8,6 @@ import org.manathome.totask2.service.AuditingService.EntityRevision;
 import org.manathome.totask2.service.ReportGenerator;
 import org.manathome.totask2.service.ReportGenerator.ReportOutputFormat;
 import org.manathome.totask2.service.UserCachingService;
-import org.manathome.totask2.util.ApplicationAssert;
 import org.manathome.totask2.util.Authorisation;
 import org.manathome.totask2.util.ProjectNotFoundException;
 import org.slf4j.Logger;
@@ -141,7 +140,6 @@ public class ProjectController {
             throw new ProjectNotFoundException("project " + id + " not found to show.");            
         }
         
-        ApplicationAssert.assertNotNull("projectLeads empty, project " + project.getId() , project.getProjectLeads().size());        
         Project.dump(project);
         model.addAttribute("project", project);  
         model.addAttribute("isEditAllowed", project.isEditAllowed(getUser()));

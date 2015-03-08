@@ -2,7 +2,7 @@ package org.manathome.totask2.model;
 
 import org.hibernate.envers.AuditTable;
 import org.hibernate.envers.Audited;
-import org.manathome.totask2.util.ApplicationAssert;
+import org.manathome.totask2.util.AAssert;
 import org.manathome.totask2.util.LocalDateConverter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -134,8 +134,7 @@ public class TaskAssignment {
     }
     
     public void setStartingFrom(@NotNull final Date from) { 
-        ApplicationAssert.assertNotNull("from must not be null", from);
-        this.startingFrom = from == null ? null : new Date(from.getTime()); 
+        this.startingFrom = new Date(AAssert.checkNotNull(from).getTime()); 
     }
     
     /** working on this task is allowed beginning from "from" for given user. */    
@@ -146,9 +145,8 @@ public class TaskAssignment {
     }
     
     /** set from date, not null! */
-    public void setFrom(@NotNull LocalDate from) { 
-        ApplicationAssert.assertNotNull("from must not be null", from);
-        this.startingFrom = LocalDateConverter.toDate(from); 
+    public void setFrom(@NotNull final LocalDate from) { 
+        this.startingFrom = LocalDateConverter.toDate(AAssert.checkNotNull(from, "from must not be null")); 
     }
     
     @DateTimeFormat(iso = ISO.DATE)

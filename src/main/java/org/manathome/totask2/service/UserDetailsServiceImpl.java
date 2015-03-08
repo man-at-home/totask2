@@ -3,7 +3,7 @@ package org.manathome.totask2.service;
 
 import org.manathome.totask2.model.User;
 import org.manathome.totask2.model.UserRepository;
-import org.manathome.totask2.util.ApplicationAssert;
+import org.manathome.totask2.util.AAssert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +14,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
+import javax.validation.constraints.NotNull;
 
 /**
  * connect spring-security with home grown tt_user/user of totask2.
@@ -37,7 +39,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
      * @see org.springframework.security.core.userdetails.UserDetailsService#loadUserByUsername(java.lang.String)
      */
     @Override
-    public UserDetails loadUserByUsername(String userName)
+    public UserDetails loadUserByUsername(@NotNull final String userName)
             throws UsernameNotFoundException {
         
         List<User> users = userRepository.findByUserName(userName);
@@ -55,9 +57,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     public static String getCurrentUserName() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         
-        ApplicationAssert.assertNotNull("principal", principal);
-        
-        if (principal instanceof UserDetails) {
+        if (AAssert.checkNotNull(principal, "principal") instanceof UserDetails) {
           return ((UserDetails) principal).getUsername();
         } else {
           return principal.toString();

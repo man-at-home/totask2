@@ -30,4 +30,22 @@ public class AAssert {
         }
         return reference;
     }
+    
+    /**
+     * check.
+     * 
+     * @throws NullPointerException if null
+     * @throws AssertionError if empty
+     * 
+     * @param nonEmptyString (may not be null or "")
+     * @param msg error message
+     * @return nonEmptyString unchanged
+     */
+    public static String checkNotNullOrEmpty(final String nonEmptyString, @NotNull final String msg) {
+        // assert nonEmptyString != null && nonEmptyString.trim().length() > 0;
+        if (checkNotNull(nonEmptyString, msg).trim().length() == 0) {
+            throw new AssertionError(msg);
+        }
+        return msg;
+    } 
 }

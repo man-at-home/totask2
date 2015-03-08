@@ -8,7 +8,7 @@ import org.manathome.totask2.service.ReportGenerator;
 import org.manathome.totask2.service.ReportGenerator.ReportOutputFormat;
 import org.manathome.totask2.service.UserDetailsServiceImpl;
 import org.manathome.totask2.service.WeekEntryService;
-import org.manathome.totask2.util.ApplicationAssert;
+import org.manathome.totask2.util.AAssert;
 import org.manathome.totask2.util.Authorisation;
 import org.manathome.totask2.util.DurationConverter;
 import org.manathome.totask2.util.InvalidClientArgumentsException;
@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 
 
 
@@ -175,7 +176,7 @@ public class WeekEntryController {
             final WebRequest request) {
         LOG.debug("saveWeekEntry( " + dateString + ") -> db");
 
-        ApplicationAssert.assertNotNullOrEmpty("no date given", dateString);
+        AAssert.checkNotNullOrEmpty(dateString, "no date given");
         LocalDate dt = LocalDate.parse(dateString);
 
         List<TaskInWeek> tasksInWeek = getWeek(dt);

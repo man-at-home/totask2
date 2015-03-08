@@ -8,7 +8,7 @@ import org.manathome.totask2.model.TaskInWeek;
 import org.manathome.totask2.model.User;
 import org.manathome.totask2.model.WorkEntry;
 import org.manathome.totask2.model.WorkEntryRepository;
-import org.manathome.totask2.util.ApplicationAssert;
+import org.manathome.totask2.util.AAssert;
 import org.manathome.totask2.util.LocalDateConverter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,6 +20,8 @@ import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import javax.validation.constraints.NotNull;
 
 
 /**
@@ -48,20 +50,13 @@ public class WeekEntryService {
      * 
      *  @param user given user to log work for.
      *  @param dt   date in week (always full week is returned MON-SUN)
-     *  @throws IllegalArgumentException
      *  @author man-at-home
      */
-    public List<TaskInWeek> getWorkWeek(final User user, final LocalDate dt) {
+    public List<TaskInWeek> getWorkWeek(@NotNull final User user, @NotNull final LocalDate dt) {
 
-        if (user == null) {
-            throw new IllegalArgumentException("no user for WorkWeek retrieval");
-        }
-        
-        if (dt == null) {
-            throw new IllegalArgumentException("no date for WorkWeek retrieval");
-        }
-        
-        LocalDate date  = dt.with(previousOrSame(DayOfWeek.MONDAY));
+        AAssert.checkNotNull(user, "no user for WorkWeek retrieval");        
+        LocalDate date  = AAssert.checkNotNull(dt, "no date for WorkWeek retrieval")
+                            .with(previousOrSame(DayOfWeek.MONDAY));
         
         Date from  = LocalDateConverter.toDate(date);
         Date until = LocalDateConverter.toDate(date.with(nextOrSame(DayOfWeek.SUNDAY)));
@@ -124,21 +119,20 @@ public class WeekEntryService {
      * 
      * @return count of saved workEntries.
      * */
-    public int saveWeek(List<TaskInWeek> tasksInWeek) {
+    public int saveWeek(@NotNull List<TaskInWeek> tasksInWeek) {
         
         int saveCount = 0;
         
+        AAssert.checkNotNull(tasksInWeek, "tasksInWeek");
         LOG.debug("saveWeek()");
-        ApplicationAssert.assertNotNull("tasksInWeek", tasksInWeek);
         
         for (TaskInWeek tiw : tasksInWeek) {
             if (tiw.isModifiedByUser()) {
                 LOG.debug("saveWeek() Task " + tiw.getTask().getName());
                 for (int dayOffset = 0; dayOffset <= 6; dayOffset++) {
                     WorkEntry we = tiw.getDailyEntries()[dayOffset];
-                    ApplicationAssert.assertNotNull("we", we);
                     
-                    if (we.isModifiedByUser()) {
+                    if (AAssert.checkNotNull(we, "we").isModifiedByUser()) {
                         LOG.debug("  save workEntry: " + we);
                         we = this.workEntryRepository.save(we);
                         tiw.getDailyEntries()[dayOffset] = we;

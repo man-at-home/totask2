@@ -14,7 +14,7 @@ import org.springframework.security.config.annotation.web.servlet.configuration.
 
 
 /**
- * security configuration for this web application.
+ * security configuration for the totask2 web application.
  * 
  * @see UserDetailsServiceImpl
  * @see <a href="http://projects.spring.io/spring-security/">http://projects.spring.io/spring-security/</a>
@@ -51,6 +51,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .logout()
                 .permitAll();
         
+        http.csrf().disable();  // w/ rest posts APP/REST/WorkEntry
+        
         http
             .exceptionHandling()
             .accessDeniedPage("/403");
@@ -65,11 +67,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         LOG.debug("configuring userDetailsService " + userDetailsServiceImpl);
         auth.userDetailsService(userDetailsServiceImpl)
             .passwordEncoder(User.getPasswordEncoder())
-            ;
-       
+            ;  
     }
-    
-    
-
    
 }

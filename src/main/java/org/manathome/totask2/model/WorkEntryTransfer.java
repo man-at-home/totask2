@@ -2,8 +2,10 @@ package org.manathome.totask2.model;
 
 import java.util.Date;
 
+import com.wordnik.swagger.annotations.ApiModelProperty;
+
 /** 
- * data resulting out of WorkEntry json serializing.
+ * data resulting out of WorkEntry json serializing (transfer via json to mobile app).
  * 
  * @see    WorkEntry
  * @author man-at-home
@@ -21,6 +23,7 @@ public class WorkEntryTransfer {
     /**
      * @return the id
      */
+    @ApiModelProperty(value = "workEntry id, required for update, 0 for insert", required = false)
     public final long getId() {
         return id;
     }
@@ -33,6 +36,7 @@ public class WorkEntryTransfer {
     /**
      * @return the at
      */
+    @ApiModelProperty(value = "date of work entry", required = true)
     public final Date getAt() {
         return at;
     }
@@ -45,6 +49,7 @@ public class WorkEntryTransfer {
     /**
      * @return the duration
      */
+    @ApiModelProperty(value = "duration of work in hours", required = true)
     public final float getDuration() {
         return duration;
     }
@@ -57,6 +62,7 @@ public class WorkEntryTransfer {
     /**
      * @return the taskName
      */
+    @ApiModelProperty(value = "task.name, not required for save", required = false)
     public final String getTaskName() {
         return taskName;
     }
@@ -69,6 +75,7 @@ public class WorkEntryTransfer {
     /**
      * @return the taskId
      */
+    @ApiModelProperty(value = "task.id, required for save", required = true)
     public final long getTaskId() {
         return taskId;
     }
@@ -79,6 +86,7 @@ public class WorkEntryTransfer {
         this.taskId = taskId;
     }
     
+    @ApiModelProperty(value = "optional comment", required = false)
     public String getComment() {
         return comment;
     }

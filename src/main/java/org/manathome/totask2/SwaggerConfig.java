@@ -18,7 +18,7 @@ import com.mangofactory.swagger.plugin.SwaggerSpringMvcPlugin;
 import com.wordnik.swagger.model.ApiInfo;
 
 /** 
- * /REST/* URLs provided by swapper configuration. 
+ * /REST/* and /APP/REST/.* URLs provided by swapper configuration. 
  * 
  * @see <a href="http://swagger.io/">http://swagger.io/</a>
  * @see <a href="http://localhost:8080/sdoc.jsp>http://localhost:8080/sdoc.jsp</a>
@@ -43,7 +43,7 @@ public class SwaggerConfig extends WebMvcConfigurerAdapter {
        return new SwaggerSpringMvcPlugin(this.springSwaggerConfig)
              .apiInfo(apiInfo())
              .swaggerGroup("totask2")
-             .includePatterns("/REST/.*");
+             .includePatterns("/REST/.*", "/APP/REST/.*");
     }
 
      private ApiInfo apiInfo() {
@@ -57,8 +57,7 @@ public class SwaggerConfig extends WebMvcConfigurerAdapter {
          );
        return apiInfo;
      }   
-    
-     
+
      // starting from here: swagger ui. */
      
      @Override

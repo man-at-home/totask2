@@ -19,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.actuate.metrics.CounterService;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -57,19 +58,28 @@ public class WorkEntryController {
     @Autowired private TaskRepository       taskRepository;
     @Autowired private WorkEntryRepository  workEntryRepository;
     
-    /** REST API insert / update WorkEntry.
+    /** REST API APP/REST/workEntry POST, insert / update WorkEntry.
      * 
-     *  @see WorkEntry
+     *  hint: http.csrf().disable(); required.
+     *  
+     *  @param entryToSave     entry to save, sent from mobile app.
+     *  @return                saved entry (including workEntry.id
+     *  
+     *  @see WorkEntry         saved data
+     *  @see WorkEntryTransfer tranfered data
      */
-    @RequestMapping(value = "REST/workEntry", method = RequestMethod.POST)
+    @RequestMapping(value = "APP/REST/workEntry", method = RequestMethod.POST)
     @Produces("application/json")
-    @ApiOperation(value = "REST/workEntriy", notes = "insert or update one workentry", httpMethod = "POST")
+    @ApiOperation(value = "APP/REST/workEntry", notes = "insert or update one workentry")
     public WorkEntry restSave
     (
             @ApiParam(value = "new or updated work entry data", required = true, name = "entryToSave")
             @Validated 
+            @RequestBody
             final WorkEntryTransfer entryToSave
-    ) {        
+    ) {     
+        LOG.debug("/APP/REST/workEntry(" + entryToSave + ") POST");
+        
         User user = userRepository
                 .findByUserName(UserDetailsServiceImpl.getCurrentUserName())
                 .stream().findFirst().get(); 
@@ -79,7 +89,7 @@ public class WorkEntryController {
         if (entryToSave.getId() <= 0) {
             // new
             LOG.debug("insert new WorkEntry(" + entryToSave.getId() + "): " + entryToSave);
-            Task task = taskRepository.findOne(entryToSave.getId());
+            Task task = taskRepository.findOne(entryToSave.getTaskId());
             if (task == null) {
                 throw new TaskNotFoundException("task for entry(" + entryToSave.getId() + " not found, unknown id: " + entryToSave.getTaskId());
             }
@@ -105,19 +115,40 @@ public class WorkEntryController {
         entry.setComment(entryToSave.getComment());
         
         workEntryRepository.save(entry);
-        LOG.debug("saved entry: " + entry);
+        LOG.debug("saved and returning workEntry: " + entry);
         
         return entry;
     }   
+    
+    
+    /** REST API. get all workEntries for user and current day (including dummy entries for not yet logged ones).
+     * 
+     * @return List of WorkEntries of all possible work entries (created and potentially created, later hav id of 0).
+     */ 
+    @RequestMapping(value = "APP/REST/workEntries", method = RequestMethod.GET)
+    @Produces("application/json")
+    @ApiOperation(value = "APP/REST/workEntries", notes = "return all workentries for user on current day", httpMethod = "GET")
+    @ApiResponses(value = { @ApiResponse(code = 200, message = "ok") })
+    public List<WorkEntry> restWorkEntries() {
+        
+        LOG.debug("APP/REST/workEntries, today");
+        
+        User user = userRepository
+                    .findByUserName(UserDetailsServiceImpl.getCurrentUserName())
+                    .stream().findFirst().get(); 
+                                             
+        return getWorkEntries(user, LocalDate.now());        
+    }
+    
 
     /** REST API. get all workEntries for user and given day (including dummy entries for not yet logged ones).
      * 
      * @param day date, formatted YYYY-MM-DD.
      * @return List of WorkEntries of all possible work entries (created and potentially created, later hav id of 0).
      */ 
-    @RequestMapping(value = "REST/workEntries/{day}", method = RequestMethod.GET)
+    @RequestMapping(value = "APP/REST/workEntries/{day}", method = RequestMethod.GET)
     @Produces("application/json")
-    @ApiOperation(value = "REST/workEntries", notes = "return all workentries for user and day", httpMethod = "GET")
+    @ApiOperation(value = "APP/REST/workEntries", notes = "return all workentries for user and day", httpMethod = "GET")
     @ApiResponses(value = { @ApiResponse(code = 200, message = "ok") })
     public List<WorkEntry> restWorkEntries(
             @ApiParam(value = "day (selection criteria)", required = true, name = "day")  
@@ -125,7 +156,7 @@ public class WorkEntryController {
             final String day
             ) {
         
-        LOG.debug("/REST/workEntries, day=" + day);
+        LOG.debug("APP/REST/workEntries, day=" + day);
         
         LocalDate dt = LocalDate.parse(day);
         
@@ -133,6 +164,10 @@ public class WorkEntryController {
                     .findByUserName(UserDetailsServiceImpl.getCurrentUserName())
                     .stream().findFirst().get(); 
                                              
+        return getWorkEntries(user, dt);
+    }
+    
+    private List<WorkEntry> getWorkEntries(User user, LocalDate dt) {
         List<TaskInWeek> tasksInWeek = weekEntryService.getWorkWeek(user, dt);
         LOG.debug("Tasks in week " + dt + ": " + tasksInWeek.size());
                 
@@ -146,6 +181,6 @@ public class WorkEntryController {
         LOG.debug("workEntries at day " + dt + ": " + wes.size());
         wes.forEach(we -> LOG.debug("retuned workentry: " + we));
         
-        return wes;
+        return wes;    
     }
 }

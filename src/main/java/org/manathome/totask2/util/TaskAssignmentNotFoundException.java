@@ -9,10 +9,12 @@ public final class TaskAssignmentNotFoundException extends ToTaskExceptionBase {
 
     private static final long serialVersionUID = 1L;
 
+    /** ctor. */
     public TaskAssignmentNotFoundException() {
         super();
     }
 
+    /** ctor. */
     public TaskAssignmentNotFoundException(String message) {
         super(message);
     }

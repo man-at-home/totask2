@@ -55,7 +55,7 @@ public abstract class LocalDateConverter {
         return toDate(LocalDate.now().plusDays(days));        
     }    
     
-    
+    /** format. */
     public static String format(final LocalDate ld) {
         return ld == null ? "" : ld.toString();
     }

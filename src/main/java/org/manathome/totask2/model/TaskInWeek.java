@@ -1,6 +1,9 @@
 package org.manathome.totask2.model;
 
-import java.util.Arrays;
+import org.manathome.totask2.util.AAssert;
+
+import java.util.ArrayList;
+import java.util.stream.Stream;
 
 /**
  * Holder, one week of workEntries for a specific task.
@@ -46,12 +49,15 @@ public class TaskInWeek {
     private Task task = null;
 
     /** max seven slots a week for a given task. */
-    private WorkEntry[] dailyEntries = null;
+    private ArrayList<WorkEntry> dailyEntries = null;
 
     /** .ctor. */
     public TaskInWeek(Task task) {
         this.task = task;
-        this.dailyEntries = new WorkEntry[7];
+        this.dailyEntries = new ArrayList<WorkEntry>();
+        for (int i = 0; i < 7; i++) {
+            this.dailyEntries.add(null);    // simulate array behavior            
+        }
     }    
     
     /** task to work on. */
@@ -59,17 +65,31 @@ public class TaskInWeek {
         return task;
     }
 
-    public void setTask(Task task) {
+    /** change task. */
+    public void setTask(final Task task) {
         this.task = task;
     }
-
-    public WorkEntry[] getDailyEntries() {
-        return dailyEntries;
+    
+    /** set or replace entry. */
+    public void setDailyEntry(int index, final WorkEntry we) {
+        this.dailyEntries.set(AAssert.checkIndex(this.dailyEntries.size(), index), we);
+    }
+    
+    /** get entry. */
+    public WorkEntry getDailyEntry(int index) {
+        return this.dailyEntries.get(AAssert.checkIndex(this.dailyEntries.size(), index));
     }
 
-    public void setDailyEntries(WorkEntry[] dailyEntries) {
-        this.dailyEntries = dailyEntries;
+    /** get a copy of all entries. */
+    public Stream<WorkEntry> getDailyEntries() {
+        return this.dailyEntries.stream();
     }
+
+    /** replace all day entries. 
+    public void setDailyEntries(@NotNull final WorkEntry[] dailyEntries) {
+        this.dailyEntries = new ArrayList<WorkEntry>(Arrays.asList(dailyEntries));
+    }
+    */
     
     /** sum of working hours in this week (and task, user). */
     public double getDuration() {
@@ -79,20 +99,15 @@ public class TaskInWeek {
         } else {
            double sum = 0;
            for (WorkEntry we : this.dailyEntries) {
-               sum += we.getDuration();
+               sum += we == null ? 0 : we.getDuration();
            }
            return sum;        
         }
     }
     
-    /** any entry of this weeks work changed an not persistet in database. */
-    public boolean isModifiedByUser() {
-        
-        if (this.getDailyEntries() == null) {
-            return false;
-        } else {
-            return Arrays.stream(this.getDailyEntries()).anyMatch(de -> de.isModifiedByUser());
-        }
+    /** any entry of this weeks work changed and is not yet persisted into database. */
+    public boolean isModifiedByUser() {        
+           return this.getDailyEntries().anyMatch(de -> de.isModifiedByUser());
     }
     
 

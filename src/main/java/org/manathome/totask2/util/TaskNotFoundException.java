@@ -9,10 +9,12 @@ public final class TaskNotFoundException extends ToTaskExceptionBase {
 
     private static final long serialVersionUID = 1L;
 
+    /** ctor. */
     public TaskNotFoundException() {
         super();
     }
 
+    /** ctor. */
     public TaskNotFoundException(String message) {
         super(message);
     }

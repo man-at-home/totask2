@@ -107,7 +107,7 @@ public class WeekEntryService {
                 
                 
                 
-                tiw.getDailyEntries()[dayOffset] = entryOfDay;
+                tiw.setDailyEntry(dayOffset, entryOfDay);
             }
         }
         
@@ -130,12 +130,12 @@ public class WeekEntryService {
             if (tiw.isModifiedByUser()) {
                 LOG.debug("saveWeek() Task " + tiw.getTask().getName());
                 for (int dayOffset = 0; dayOffset <= 6; dayOffset++) {
-                    WorkEntry we = tiw.getDailyEntries()[dayOffset];
+                    WorkEntry we = tiw.getDailyEntry(dayOffset);
                     
                     if (AAssert.checkNotNull(we, "we").isModifiedByUser()) {
                         LOG.debug("  save workEntry: " + we);
                         we = this.workEntryRepository.save(we);
-                        tiw.getDailyEntries()[dayOffset] = we;
+                        tiw.setDailyEntry(dayOffset, we);
                         saveCount++;
                     }
                 }

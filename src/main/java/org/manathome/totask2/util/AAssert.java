@@ -2,12 +2,13 @@ package org.manathome.totask2.util;
 
 import javax.validation.constraints.NotNull;
 
-/** checking arguments (convenience class). */
+/** checking arguments (convenience class). 
+ * 
+ * @author man-at-home
+ * */
 public class AAssert {
 
-    private AAssert() {
-    }
-    
+    private AAssert() {}
     
     /** argument checking.
      *  
@@ -47,5 +48,27 @@ public class AAssert {
             throw new AssertionError(msg);
         }
         return msg;
+    }
+
+
+    /** 
+     * assert condition. 
+     * 
+     * @throws AssertionError
+     * */
+    public static void assertTrue(@NotNull final String message, final boolean condition) {
+        if (!condition){
+            throw new AssertionError(message);
+        }
+    }
+    
+    /** check index bound, requires index >= arraySize-1. 
+     * @throws IndexOutOfBoundsException 
+     */
+    public static int checkIndex(int arraySize, int index) {
+        if (index < 0 || index > arraySize - 1) {
+            throw new IndexOutOfBoundsException("Index " + index + " not in bounds [0.." + arraySize + "]");
+        }
+        return index;
     } 
 }

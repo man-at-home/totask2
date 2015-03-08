@@ -4,6 +4,8 @@ import org.hibernate.envers.AuditTable;
 import org.hibernate.envers.Audited;
 
 
+import org.manathome.totask2.util.AAssert;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.stream.Stream;
@@ -26,8 +28,9 @@ import javax.validation.constraints.Size;
 
 /** 
  * a working task of a {@link Project} that needs to be worked on. 
+ * 
  * @author man-at-home
- * */
+ */
 @Entity                                                     // <1>
 @Audited
 @Table(name = "TT_TASK")
@@ -55,13 +58,14 @@ public class Task {
     
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "task")
     private Collection<TaskAssignment> taskAssignments = new ArrayList<TaskAssignment>();     
-    
+   
+    /** ctor. */
     public Task() {}
     
     /** create new task. */
-    Task(Project project) {
+    Task(@NotNull final Project project) {
         this();
-        this.project = project;
+        this.project = AAssert.checkNotNull(project);
     }
     
     /** display name of this task. */
@@ -69,15 +73,18 @@ public class Task {
         return name; 
     }
     
-    public void setName(String name) { 
+    /** change task name. */
+    public void setName(@NotNull final String name) { 
         this.name = name; 
     }  
     
-    /* pk. */
+    /** pk (task.id). 0 with new, unsaved tasks. */
     public long getId() { 
         return id; 
     }    
-    public void setId(long id) { 
+    
+    /** change id. */
+    protected void setId(long id) { 
         this.id = id; 
     }
     
@@ -85,7 +92,9 @@ public class Task {
     public Project getProject() { 
         return project; 
     }
-    public void setProject(Project project) { 
+    
+    /** change project parent. */
+    public void setProject(final Project project) { 
         this.project = project; 
     }
 

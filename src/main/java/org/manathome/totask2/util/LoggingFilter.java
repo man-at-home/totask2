@@ -20,6 +20,7 @@ import ch.qos.logback.classic.ClassicConstants;
 
 /**
  * a servlet filter that inserts various values into the logback logging MDC.
+ * 
  * - %M{user} and 
  * - %M{REQUEST_REMOTE_HOST_MDC_KEY}.
  * 
@@ -30,6 +31,7 @@ public class LoggingFilter implements Filter {
     
   private static final Logger LOG = LoggerFactory.getLogger(LoggingFilter.class);
 
+  /** tear down. */
   public void destroy() {
       LOG.debug("destroy filter");
   }
@@ -47,7 +49,7 @@ public class LoggingFilter implements Filter {
     }
   }
 
-  /** insert additional logging information. */
+  /** insert additional logging (MDC) information for logback. */
   void insertIntoMDC(ServletRequest request) {
 
     MDC.put(ClassicConstants.REQUEST_REMOTE_HOST_MDC_KEY, request.getRemoteHost());
@@ -63,10 +65,10 @@ public class LoggingFilter implements Filter {
           if (sci != null) {
               MDC.put("log.user", sci.getAuthentication().getName());
           } else {
-              MDC.put("log.user", session == null ? "*nosci" : session.getId());
+              MDC.put("log.user", session.getId());
           }
       } else {
-          MDC.put("log.user", session == null ? "*nosession" : session.getId());           
+          MDC.put("log.user", "*nosession");           
       }
       
     } else {
@@ -81,6 +83,7 @@ public class LoggingFilter implements Filter {
     MDC.remove("log.user");
   }
 
+  /** enable. */
   public void init(FilterConfig fc) throws ServletException {
       LOG.debug("init filter" + (fc == null ? "?" : fc.getFilterName()));
   }

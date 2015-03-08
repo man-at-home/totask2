@@ -25,7 +25,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDate;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -173,13 +172,13 @@ public class WorkEntryController {
                 
         List<WorkEntry> wes = tasksInWeek
                 .stream()
-                .flatMap(tiw -> Arrays.stream(tiw.getDailyEntries())
-                                      .filter(we -> we.getAtDate().isEqual(dt))   // only of correct day
+                .flatMap(tiw ->  tiw.getDailyEntries())
+                                    .filter(we -> we.getAtDate().isEqual(dt)   // only of correct day
                         )
                 .collect(Collectors.toList());
                 
         LOG.debug("workEntries at day " + dt + ": " + wes.size());
-        wes.forEach(we -> LOG.debug("retuned workentry: " + we));
+        wes.forEach(we -> LOG.debug("retuned workEntry: " + we));
         
         return wes;    
     }

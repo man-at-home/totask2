@@ -21,6 +21,8 @@ import javax.persistence.PersistenceContext;
  * query historic data on versioned domain models (e.g. projects, tasks..) 
  * 
  * @see AuditReader
+ * 
+ * @author man-at-home
  * */
 @Service
 @Transactional
@@ -29,8 +31,6 @@ public class AuditingService {
     private static final Logger LOG = LoggerFactory.getLogger(AuditingService.class);
     
     @PersistenceContext private EntityManager entityManager;
-
-
     
     /** revision holder. */
     public static class EntityRevision {
@@ -38,6 +38,7 @@ public class AuditingService {
         private Number revision;
         private Object historicEntity;
         
+        /** ctor. */
         public EntityRevision(Number revision, Object historicEntity) {
             this.revision = revision;
             this.historicEntity = historicEntity;
@@ -57,13 +58,18 @@ public class AuditingService {
         @Override
         public String toString() { 
             return "rev " + getRevision(); 
-        }
-        
+        }        
     }
     
     
 
-    /** get revision log for given entity id. */
+    /** 
+     * get revision log for given entity id. 
+     * 
+     * @param versionedDomainClass class to version
+     * @param primaryKeyId         pk
+     * @return list of historic data
+     * */
     public List<EntityRevision> retrieveHistory(Class<?> versionedDomainClass, long primaryKeyId) {
         
         List<EntityRevision>  revisions = new ArrayList<EntityRevision>();

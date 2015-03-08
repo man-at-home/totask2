@@ -94,7 +94,8 @@ public class Project {
     public long getId() { 
         return this.id; 
     }
-    public void setId(long id) { 
+    
+    protected void setId(long id) { 
         this.id = id; 
     }
     
@@ -109,6 +110,7 @@ public class Project {
     public Set<User> getProjectLeads() { 
         return this.projectLeads; 
     }
+    /** change leads. */
     public void setProjectLeads(final Set<User> projectLeads) { 
         this.projectLeads = projectLeads; 
     }
@@ -132,6 +134,8 @@ public class Project {
     public String getName() { 
         return name; 
     }
+    
+    /** change name of project. */
     public void setName(@NotNull final String name) { 
         this.name = name; 
     }

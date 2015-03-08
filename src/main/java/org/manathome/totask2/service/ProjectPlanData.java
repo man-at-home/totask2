@@ -54,21 +54,25 @@ public class ProjectPlanData {
         private Date start;
         private Date end;
         
+        /** ctor. */
         PlanDataItem(@NotNull final TaskAssignment ta) {
            this(ta.getUser().getDisplayName(), ta.getStartingFrom(), ta.getValidUntil());
         }
         
-        PlanDataItem(final String name, Date start, Date end) {
+        /** ctor. */
+        PlanDataItem(final String name, final Date start, final Date end) {
             this.name = name;
             this.start = LocalDateConverter.cloneSave(start);
             this.end = LocalDateConverter.cloneSave(end);
         }
         
+        /** get name. */
         @ApiModelProperty(value = "task part name",  required = true, position = 1)
         public String getName() { 
             return this.name; 
         }       
         
+        /** starting from. */
         @ApiModelProperty(value = "start date", position = 2)
         @DateTimeFormat(iso = ISO.DATE)
         @JsonSerialize(using = JsonDateSerializer.class)
@@ -76,12 +80,15 @@ public class ProjectPlanData {
             return LocalDateConverter.cloneSave(this.start); 
         }
         
+        /** ending at. */
         @ApiModelProperty(value = "end date", position = 3)
         @DateTimeFormat(iso = ISO.DATE)
         @JsonSerialize(using = JsonDateSerializer.class)
         public Date getEnd() { 
             return LocalDateConverter.cloneSave(this.end); 
         }
+        
+        /** change ending. */
         public void setEnd(Date end) { 
             this.end = LocalDateConverter.cloneSave(end); 
         }
@@ -106,21 +113,25 @@ public class ProjectPlanData {
         this.task = task;
     }
     
+    /** task.id. */
     @ApiModelProperty(value = "unique task id", required = true, position = 0)
     public long getId() { 
         return this.task.getId(); 
     }
 
+    /** task name. */
     @ApiModelProperty(value = "task name", required = true, position = 1)
     public String getName() { 
         return this.task.getName(); 
     }
     
+    /** get items. */
     @ApiModelProperty(value = "subtask timeline data", position = 2)
     public List<PlanDataItem> getSeries() { 
         return this.dataItems;
     }
     
+    /** load all assignments for task. */
     public void setSeries(final TaskAssignmentRepository taskAssignmentRepository)
     {
         if (taskAssignmentRepository == null) {
@@ -149,7 +160,7 @@ public class ProjectPlanData {
         LOG.debug("created task " + this.getName() + " data series with: " + dataItems.size() + " rows.");
     }
 
-    
+    /** debug output. */
     @Override
     public String toString() {
         return "[" + getId() +  ", " + getName() + "]";

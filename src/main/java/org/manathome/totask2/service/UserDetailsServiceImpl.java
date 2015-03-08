@@ -35,7 +35,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     /** user. */
     @Autowired private UserRepository userRepository;    
     
-    /* (non-Javadoc)
+    /** 
+     * used by spring security.
+     * 
+     * @param userName username to find.
      * @see org.springframework.security.core.userdetails.UserDetailsService#loadUserByUsername(java.lang.String)
      */
     @Override
@@ -53,7 +56,12 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         return users.get(0);
     }
         
-    
+    /** 
+     * retrieves current user name of logged in user (web app only).
+     * 
+     * @see UserDetails#getUsername()
+     * @return principal.toString() or UserDetails.getUserName
+     */    
     public static String getCurrentUserName() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         

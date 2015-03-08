@@ -6,12 +6,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.manathome.totask2.Application;
-import org.manathome.totask2.model.Task;
-import org.manathome.totask2.model.TaskRepository;
-import org.manathome.totask2.model.User;
-import org.manathome.totask2.model.UserRepository;
-import org.manathome.totask2.model.WorkEntry;
-import org.manathome.totask2.model.WorkEntryRepository;
 import org.manathome.totask2.util.LocalDateConverter;
 import org.manathome.totask2.util.TestConstants;
 import org.slf4j.Logger;
@@ -21,16 +15,15 @@ import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
-import com.wordnik.swagger.config.SwaggerConfig;
-
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
 import javax.transaction.Transactional;
 
+import com.wordnik.swagger.config.SwaggerConfig;
 
-/** testing db access. */
+/** testing db access for workEntries. */
 @Transactional
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = { Application.class, SwaggerConfig.class })
@@ -114,12 +107,12 @@ public class WorkEntryRepositoryTest {
         LOG.debug("retrieving entries for user 2L and date " + dt);
         List<WorkEntry> entries = workEntryRepository.findForUserAndDay(TestConstants.TEST_USER, dt);
         
-        entries.stream().forEach( e -> LOG.debug("entry: " + e));
+        entries.stream().forEach(e -> LOG.debug("entry: " + e));
         
         assertTrue("not enough entries found: " + entries.size(), entries.size() >= 2);
         
-        assertTrue(" entry 1 found", entries.stream().anyMatch( we -> we.getId() == 1L && we.getComment().equals("entry 4.0 dev") ));
-        assertTrue(" entry 10 found", entries.stream().anyMatch( we -> we.getId() == 10L && we.getComment().equals("entry 5.0 test") ));        
+        assertTrue("entry 1 with task 4 not found", entries.stream().anyMatch(we -> we.getId() == 1L && we.getTask().getId() == 4));
+        assertTrue("entry 10 found", entries.stream().anyMatch(we -> we.getId() == 10L && we.getComment().equals("entry 5.0 test")));        
     }   
     
 }

@@ -1,6 +1,11 @@
 package org.manathome.totask2.model;
 
+import org.manathome.totask2.util.AAssert;
+
+import java.io.Serializable;
 import java.util.Date;
+
+import javax.validation.constraints.NotNull;
 
 import com.wordnik.swagger.annotations.ApiModelProperty;
 
@@ -11,7 +16,10 @@ import com.wordnik.swagger.annotations.ApiModelProperty;
  * @author man-at-home
  * @since  2015-02-28
  */
-public class WorkEntryTransfer {
+public class WorkEntryTransfer implements Serializable{
+    
+    /** serialization. */
+    private static final long serialVersionUID = 1L;
     
     private long    id;
     private Date    at;
@@ -21,7 +29,7 @@ public class WorkEntryTransfer {
     private String  comment;
     
     /**
-     * @return the id
+     * @return the id (0 for new entries).
      */
     @ApiModelProperty(value = "workEntry id, required for update, 0 for insert", required = false)
     public final long getId() {
@@ -38,13 +46,13 @@ public class WorkEntryTransfer {
      */
     @ApiModelProperty(value = "date of work entry", required = true)
     public final Date getAt() {
-        return at;
+        return at == null ? null : new Date(at.getTime());
     }
     /**
      * @param at the at to set
      */
-    public final void setAt(Date at) {
-        this.at = at;
+    public final void setAt(@NotNull final Date at) {
+        this.at = new Date(AAssert.checkNotNull(at.getTime()));
     }
     /**
      * @return the duration
@@ -59,6 +67,7 @@ public class WorkEntryTransfer {
     public final void setDuration(float duration) {
         this.duration = duration;
     }
+    
     /**
      * @return the taskName
      */
@@ -66,6 +75,7 @@ public class WorkEntryTransfer {
     public final String getTaskName() {
         return taskName;
     }
+    
     /**
      * @param taskName the taskName to set
      */
@@ -79,18 +89,27 @@ public class WorkEntryTransfer {
     public final long getTaskId() {
         return taskId;
     }
+    
     /**
+     * task to work on.
+     * 
      * @param taskId the taskId to set
      */
     public final void setTaskId(long taskId) {
         this.taskId = taskId;
     }
     
+    /** optional comment. */
     @ApiModelProperty(value = "optional comment", required = false)
     public String getComment() {
         return comment;
     }
     
+    /**
+     * set optional comment.
+     * 
+     * @param comment text
+     */
     public void setComment(String comment) {
         this.comment = comment;
     }

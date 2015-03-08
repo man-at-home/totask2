@@ -44,18 +44,21 @@ public class WorkEntry {
     
     private static final Logger LOG = LoggerFactory.getLogger(WorkEntry.class);  
     
+    /** ctor. */
     public WorkEntry() {
         setAtDate(LocalDate.now());
     }
 
 
-    public WorkEntry(User user, Task task) {
+    /** ctor. */
+    public WorkEntry(final User user, final Task task) {
         this();
         this.user = user;
         this.task = task;
     }
     
-    public WorkEntry(User user, Task task, LocalDate dt) {
+    /** ctor. */
+    public WorkEntry(final User user, final Task task, final LocalDate dt) {
         this(user, task);
         this.setAtDate(dt);
     }    
@@ -134,7 +137,8 @@ public class WorkEntry {
         return id;
     }
     
-    public void setId(long id) {
+    /** change pk. */
+    protected void setId(long id) {
         this.id = id;
     }
 
@@ -143,6 +147,7 @@ public class WorkEntry {
         return comment; 
     }
     
+    /** change comment. */
     public void setComment(final String comment) { 
         if (this.comment != null && !this.comment.equals(comment)) {
             isModifiedByUser = true;
@@ -155,6 +160,8 @@ public class WorkEntry {
     public User getUser() { 
         return user; 
     }
+    
+    /** change user. */
     public void setUser(final User user) { 
         this.user = user; 
     }
@@ -164,6 +171,8 @@ public class WorkEntry {
     public Task getTask() { 
         return task; 
     }
+    
+    /** change task. */
     public void setTask(final Task task) { 
         this.task = task; 
     }
@@ -194,6 +203,12 @@ public class WorkEntry {
     public Date getAt() { 
         return new Date (at.getTime()); 
     }
+    
+    /** 
+     * change date. 
+     * 
+     * @deprecated use {@link #setAtDate(LocalDate)} instead.
+     * */
     @Deprecated
     public void setAt(final Date at) { 
         this.at = new Date(at.getTime()); 
@@ -209,6 +224,7 @@ public class WorkEntry {
         return LocalDateConverter.toLocalDate(this.at);
     }
     
+    /** change date. */
     public void setAtDate(final LocalDate at) { 
         this.at = LocalDateConverter.toDate(at); 
     }
@@ -219,12 +235,14 @@ public class WorkEntry {
         return duration; 
     }
     
-    public void setDuration(final float duration) { 
+    /** change duration. returns this for method chaining. */
+    public WorkEntry setDuration(final float duration) { 
         if (duration != this.duration) {
             LOG.debug("change duration: " + this.duration + " ->" + duration);
             isModifiedByUser = true;
         }
         this.duration = duration; 
+        return this;
     }
 
     /** debug. */

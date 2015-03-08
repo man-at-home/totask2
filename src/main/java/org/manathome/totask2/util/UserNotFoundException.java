@@ -10,9 +10,10 @@ public class UserNotFoundException extends ToTaskExceptionBase {
 
     private static final long serialVersionUID = 1L;
 
-    public UserNotFoundException() {
-    }
+    /** ctor. */
+    public UserNotFoundException() {}
 
+    /** ctor. */
     public UserNotFoundException(String message) {
         super(message);
     }

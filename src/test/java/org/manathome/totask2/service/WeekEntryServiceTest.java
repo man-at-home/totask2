@@ -1,6 +1,5 @@
 package org.manathome.totask2.service;
 
-
 import static org.junit.Assert.*;
 
 import org.junit.BeforeClass;
@@ -11,7 +10,6 @@ import org.manathome.totask2.model.TaskInWeek;
 import org.manathome.totask2.model.User;
 import org.manathome.totask2.model.UserRepository;
 import org.manathome.totask2.model.WorkEntryRepository;
-import org.manathome.totask2.service.WeekEntryService;
 import org.manathome.totask2.util.TestConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,7 +19,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 import java.time.LocalDate;
-import java.util.Arrays;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -82,12 +79,12 @@ public class WeekEntryServiceTest {
             
            assertNotNull(tiw.getTask());
            assertNotNull(tiw.getDailyEntries());
-           assertEquals("7 workdays for task", 7, tiw.getDailyEntries().length);
-           assertFalse("some entries null", Arrays.stream(tiw.getDailyEntries()).anyMatch(we -> we == null));
-           assertFalse("some entries.task null", Arrays.stream(tiw.getDailyEntries()).anyMatch(we -> we.getTask() == null));
-           assertFalse("some entries.user null", Arrays.stream(tiw.getDailyEntries()).anyMatch(we -> we.getUser() == null));
+           assertEquals("7 workdays for task", 7, tiw.getDailyEntries().count());
+           assertFalse("some entries null", tiw.getDailyEntries().anyMatch(we -> we == null));
+           assertFalse("some entries.task null", tiw.getDailyEntries().anyMatch(we -> we.getTask() == null));
+           assertFalse("some entries.user null", tiw.getDailyEntries().anyMatch(we -> we.getUser() == null));
            
-           LOG.debug("work entry " + tiw.getTask() + " Mo: " + tiw.getDailyEntries()[0] + ", Di: " + tiw.getDailyEntries()[1]);
+           LOG.debug("work entry " + tiw.getTask() + " Mo: " + tiw.getDailyEntry(0) + ", Di: " + tiw.getDailyEntry(1));
         }
     }   
     
@@ -102,16 +99,16 @@ public class WeekEntryServiceTest {
         List<TaskInWeek> tasksInWeek = weekEntryService.getWorkWeek(user, dt);
         assertEquals("0 update", 0, weekEntryService.saveWeek(tasksInWeek));
         
-        tasksInWeek.get(0).getDailyEntries()[0].setDuration(9.9f);
-        tasksInWeek.get(0).getDailyEntries()[1].setDuration(8.8f);
-        tasksInWeek.get(0).getDailyEntries()[2].setDuration(7.7f);
-        tasksInWeek.get(0).getDailyEntries()[3].setDuration(6.6f);
-        tasksInWeek.get(0).getDailyEntries()[4].setDuration(5.5f);
+        tasksInWeek.get(0).setDailyEntry(0, tasksInWeek.get(0).getDailyEntry(0).setDuration(9.9f));
+        tasksInWeek.get(0).setDailyEntry(1, tasksInWeek.get(0).getDailyEntry(1).setDuration(8.8f));
+        tasksInWeek.get(0).setDailyEntry(2, tasksInWeek.get(0).getDailyEntry(2).setDuration(7.7f));
+        tasksInWeek.get(0).setDailyEntry(3, tasksInWeek.get(0).getDailyEntry(3).setDuration(6.6f));
+        tasksInWeek.get(0).setDailyEntry(4, tasksInWeek.get(0).getDailyEntry(4).setDuration(5.5f));
         
         assertEquals("5 update", 5, weekEntryService.saveWeek(tasksInWeek));
         
         List<TaskInWeek> tasksInWeekReread = weekEntryService.getWorkWeek(user, dt);
-        assertEquals("updated 9.9f", 9.9f, tasksInWeekReread.get(0).getDailyEntries()[0].getDuration(), 0);   
-        assertEquals("updated 6.6f", 6.6f, tasksInWeekReread.get(0).getDailyEntries()[3].getDuration(), 0);  
+        assertEquals("updated 9.9f", 9.9f, tasksInWeekReread.get(0).getDailyEntry(0).getDuration(), 0);   
+        assertEquals("updated 6.6f", 6.6f, tasksInWeekReread.get(0).getDailyEntry(3).getDuration(), 0);  
     }
 }

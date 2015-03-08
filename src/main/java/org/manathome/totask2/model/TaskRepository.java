@@ -10,6 +10,7 @@ import java.util.List;
 /** data access layer for tasks. */
 public interface TaskRepository extends JpaRepository<Task, Long>  {
 
+    /** find tasks with specified name. */
     List<Task> findByName(String name);
     
     /** find all tasks for the given project. */

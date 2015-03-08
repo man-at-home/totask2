@@ -33,11 +33,13 @@ public class SwaggerConfig extends WebMvcConfigurerAdapter {
     
     @Autowired private SpringSwaggerConfig springSwaggerConfig;
     
+    /** ctor. */
     public SwaggerConfig() {
         LOG.debug("creating swagger config");
     }
    
 
+    /** configure api urls. */
     @Bean //Don't forget the @Bean annotation
     public SwaggerSpringMvcPlugin customImplementation(){
        return new SwaggerSpringMvcPlugin(this.springSwaggerConfig)
@@ -60,6 +62,7 @@ public class SwaggerConfig extends WebMvcConfigurerAdapter {
 
      // starting from here: swagger ui. */
      
+     /** ui. */
      @Override
      public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler(WEB_JAR_RESOURCE_PATTERNS)
@@ -67,6 +70,7 @@ public class SwaggerConfig extends WebMvcConfigurerAdapter {
                 .setCachePeriod(0);
      }
 
+     /** ui. */
      @Bean
      public InternalResourceViewResolver getInternalResourceViewResolver() {
         InternalResourceViewResolver resolver = new InternalResourceViewResolver();
@@ -76,6 +80,7 @@ public class SwaggerConfig extends WebMvcConfigurerAdapter {
         return resolver;
      }
 
+     /** ui. */
      @Override
      public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
         configurer.enable();

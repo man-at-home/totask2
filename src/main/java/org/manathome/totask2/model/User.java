@@ -103,7 +103,7 @@ public final class User implements UserDetails {
     @Version    
     private long version;
     
-    
+    /** ctor. */
     public User() {}
 
     /** internal pk. */
@@ -111,7 +111,8 @@ public final class User implements UserDetails {
     public long getId() { 
         return id; 
     }
-    public void setId(long id) { 
+    
+    protected void setId(long id) { 
         this.id = id;         
     }
     
@@ -122,7 +123,8 @@ public final class User implements UserDetails {
         return userName;
     }
 
-    public void setUsername(String userName) {
+    /** change name. */
+    public void setUsername(@NotNull final String userName) {
         this.userName = userName;
     }
 
@@ -132,7 +134,8 @@ public final class User implements UserDetails {
         return displayName;
     }
 
-    public void setDisplayName(String displayName) {
+    /** change display name. */
+    public void setDisplayName(@NotNull final String displayName) {
         this.displayName = displayName;
     }
 
@@ -142,7 +145,8 @@ public final class User implements UserDetails {
         return active;
     }
     
-    public void setActive(boolean active) {
+    /** enable/disable user. */
+    public void setActive(final boolean active) {
         this.active = active;
         if (!active) {            
             LOG.debug("deactivating {0}" + this.userName);
@@ -155,7 +159,8 @@ public final class User implements UserDetails {
         return this.isAdmin;
     }    
 
-    public void setAdmin(boolean isAdmin) {
+    /** make user admin. */
+    public void setAdmin(final boolean isAdmin) {
         this.isAdmin = isAdmin;
     }
     
@@ -184,7 +189,7 @@ public final class User implements UserDetails {
             GrantedAuthority adminRole = new SimpleGrantedAuthority(Authorisation.ROLE_ADMIN);
             authorities.add(adminRole);
         }
-        authorities.add( new SimpleGrantedAuthority(Authorisation.ROLE_USER));
+        authorities.add(new SimpleGrantedAuthority(Authorisation.ROLE_USER));
         
         LOG.debug("authorities of user " + this.getDisplayName() + " requested: " + authorities.size());
         return authorities;

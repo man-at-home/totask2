@@ -3,6 +3,7 @@ package org.manathome.totask2.controller;
 import org.manathome.totask2.model.TaskInWeek;
 import org.manathome.totask2.model.User;
 import org.manathome.totask2.model.UserRepository;
+import org.manathome.totask2.model.WorkEntry;
 import org.manathome.totask2.model.WorkEntryRepository;
 import org.manathome.totask2.service.ReportGenerator;
 import org.manathome.totask2.service.ReportGenerator.ReportOutputFormat;
@@ -25,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 
 
 
@@ -83,6 +85,7 @@ public class WeekEntryController {
     private final Histogram      tasksPerWeekHistogramm;
     private final Timer          weekEntryGetResponseTimer;
     
+    /** ctor. */
     @Autowired
     public WeekEntryController(final MetricRegistry metricRegistry) {
             this.tasksPerWeekHistogramm    = metricRegistry.histogram("TOTASK2XX.controller.weekEntry.TaskInWeek.hist");
@@ -191,15 +194,16 @@ public class WeekEntryController {
                 try {
                     float newDuration = DurationConverter.parse(
                             newDurationString).floatValue();
-                    if (newDuration != taskRow.getDailyEntries()[i]
+                    if (newDuration != taskRow.getDailyEntry(i)
                             .getDuration()) {
                         LOG.debug(taskRow.getTask().getName() + "[" + i + "]: "
                                 + newDurationString + "h == " + newDuration
                                 + ", old value was:"
-                                + taskRow.getDailyEntries()[i]);
-                        taskRow.getDailyEntries()[i]
-                                .setDuration(DurationConverter.parse(
-                                        newDurationString).floatValue());
+                                + taskRow.getDailyEntry(i));
+                        
+                        WorkEntry we = taskRow.getDailyEntry(i);
+                        we.setDuration(DurationConverter.parse(newDurationString).floatValue());
+                        taskRow.setDailyEntry(i, we);
                     }
                 } catch (ParseException pex) {
                     // rely on client side validation for "pretty" user

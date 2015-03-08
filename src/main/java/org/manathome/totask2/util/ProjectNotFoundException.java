@@ -9,10 +9,12 @@ public final class ProjectNotFoundException extends ToTaskExceptionBase {
 
     private static final long serialVersionUID = 1L;
 
+    /** ctor. */
     public ProjectNotFoundException() {
         super();
     }
 
+    /** ctor. */
     public ProjectNotFoundException(String message) {
         super(message);
     }

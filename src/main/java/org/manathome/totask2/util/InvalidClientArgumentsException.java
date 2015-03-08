@@ -10,13 +10,16 @@ public class InvalidClientArgumentsException extends ToTaskExceptionBase {
 
     private static final long serialVersionUID = 1L;
 
+    /** ctor. */
     public InvalidClientArgumentsException() {
     }
 
+    /** ctor. */
     public InvalidClientArgumentsException(String message, Throwable cause) {
         super(message, cause);
     }
 
+    /** ctor. */
     public InvalidClientArgumentsException(String message) {
         super(message);
     }

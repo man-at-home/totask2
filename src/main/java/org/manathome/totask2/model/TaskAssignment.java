@@ -86,7 +86,7 @@ public class TaskAssignment {
     @DateTimeFormat(iso = ISO.DATE)
     private Date until;
     
-
+    /** ctor. */
     public TaskAssignment() {
         this.startingFrom = LocalDateConverter.toDate(LocalDate.now());
     }
@@ -101,11 +101,13 @@ public class TaskAssignment {
     }
     
     
-    /* pk. */
+    /** pk. */
     public long getId() { 
         return id; 
     }
-    public void setId(long id) { 
+    
+    /** change pk. */
+    protected void setId(long id) { 
         this.id = id; 
     }
 
@@ -114,6 +116,7 @@ public class TaskAssignment {
         return this.user; 
     }
     
+    /** set user. */
     public void setUser(@NotNull final  User user) { 
         LOG.debug("assigning task to user: " + user);
         this.user = user; 
@@ -123,16 +126,19 @@ public class TaskAssignment {
     public Task getTask() { 
         return this.task; 
     }
+    
+    /** change task. */
     public void setTask(final Task task) { 
         LOG.debug("assigning task: " + task);
         this.task = task; 
     }
     
-    
+    /** assignment valid from. */
     public Date getStartingFrom() { 
         return this.startingFrom == null ? null : new Date(this.startingFrom.getTime()); 
     }
     
+    /** change assignment start. */
     public void setStartingFrom(@NotNull final Date from) { 
         this.startingFrom = new Date(AAssert.checkNotNull(from).getTime()); 
     }
@@ -149,11 +155,13 @@ public class TaskAssignment {
         this.startingFrom = LocalDateConverter.toDate(AAssert.checkNotNull(from, "from must not be null")); 
     }
     
+    /** assignment ends. */
     @DateTimeFormat(iso = ISO.DATE)
     public Date getValidUntil() { 
         return this.until == null ? null : new Date(this.until.getTime()); 
     }
     
+    /** change end of assignment. */
     @DateTimeFormat(iso = ISO.DATE)
     public void setValidUntil(final Date until) { 
         this.until = until == null ? null : new Date(until.getTime());
@@ -166,7 +174,8 @@ public class TaskAssignment {
                 LocalDateConverter.toLocalDate(this.until); 
     }
     
-    public void setUntil(LocalDate until) { 
+    /** change end of assignment. */
+    public void setUntil(final LocalDate until) { 
         this.until = until == null ? null : LocalDateConverter.toDate(until); 
     }
 
@@ -185,6 +194,4 @@ public class TaskAssignment {
         return "Assignment [id=" + id + ": task " + task + ", to be worked on by=" + user + " from " + startingFrom + " - " + until + "]";
     }
 
-
-        
 }

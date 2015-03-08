@@ -3,7 +3,6 @@ package org.manathome.totask2.util;
 import static org.junit.Assert.*;
 
 import org.junit.Test;
-import org.manathome.totask2.util.DurationConverter;
 
 import java.math.BigDecimal;
 
@@ -43,13 +42,13 @@ public class DurationConverterTest {
     }
 
 
-    @Test(expected = java.text.ParseException.class)
+    @Test(expected = InvalidDurationException.class)
     public void testMaxLimits() throws Exception {
         
        DurationConverter.parse("25");
     }    
     
-    @Test(expected = java.text.ParseException.class)
+    @Test(expected = InvalidDurationException.class)
     public void testMinLimits() throws Exception {
         
        DurationConverter.parse("-1");

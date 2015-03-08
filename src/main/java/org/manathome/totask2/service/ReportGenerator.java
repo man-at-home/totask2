@@ -15,14 +15,9 @@ import net.sf.jasperreports.engine.xml.JRXmlLoader;
 import net.sf.jasperreports.export.SimpleExporterInput;
 import net.sf.jasperreports.export.SimpleOutputStreamExporterOutput;
 
-
-
-
-
-
-import org.eclipse.jdt.internal.core.Assert;
 import org.manathome.totask2.controller.ProjectController;
 import org.manathome.totask2.controller.WeekEntryController;
+import org.manathome.totask2.util.AAssert;
 import org.manathome.totask2.util.EnvironmentException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,6 +36,8 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
+
+import javax.validation.constraints.NotNull;
 
 
 /**
@@ -72,9 +69,9 @@ public class ReportGenerator {
     /** render. 
      * @exception EnvironmentException 
      */ 
-    public void render(final String reportTemplateName, final ReportOutputFormat outputFormat, final Collection<?> pojoDataSource, OutputStream outputStream) throws EnvironmentException {
+    public void render(@NotNull final String reportTemplateName, final ReportOutputFormat outputFormat, final Collection<?> pojoDataSource, OutputStream outputStream) throws EnvironmentException {
         try {
-            String reportName = "/reports/" + reportTemplateName;
+            String reportName = "/reports/" + AAssert.checkNotNull(reportTemplateName, "report template required");
             
             HashMap<String, Object> reportParams = new HashMap<String, Object>();
             reportParams.put("reportTitle", "totask2 User Report");
@@ -141,10 +138,10 @@ public class ReportGenerator {
      * @param reportName jasperReports template filename (example: reportGeneratorTestReport.jrxml)
      * @param reportData pojo collection as datasource generating the report.
      * */
-    public ModelAndView createReportModelView(final String reportName, final ReportOutputFormat reportOutputFormat, final Collection<?> reportData)
+    public ModelAndView createReportModelView(@NotNull final String reportName, final ReportOutputFormat reportOutputFormat, @NotNull final Collection<?> reportData)
     {
-        Assert.isNotNull(reportName, "reportName");
-        Assert.isNotNull(reportData, "reportData");
+        AAssert.checkNotNull(reportName, "reportName");
+        AAssert.checkNotNull(reportData, "reportData");
         
         AbstractJasperReportsSingleFormatView view = reportOutputFormat == ReportOutputFormat.excel ? 
                     new JasperReportsXlsView() : 

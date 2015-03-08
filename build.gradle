@@ -24,6 +24,7 @@ apply plugin: "jacoco"
 apply plugin: "jdepend"
 apply plugin: "pmd"
 apply plugin: "sonar-runner"
+apply plugin: "groovy"
 
 // documentation
 apply plugin: "build-dashboard"
@@ -96,7 +97,6 @@ dependencies {
     compile "com.mangofactory:swagger-springmvc:0.9.1"        // newer version on hold cause of scala upgrade dependencies..
     
     compile "io.dropwizard.metrics:metrics-core:3.1.0"        // more metric types than spring boot alone
-//    compile "io.dropwizard.metrics:metrics-annotation:3.1.0"  // more metric types than spring boot alone
         
     compile "org.springframework:spring-context:${springVersion}"				// spring
     compile "org.springframework:spring-context-support:${springVersion}"
@@ -110,12 +110,13 @@ dependencies {
     compile "org.springframework.boot:spring-boot-starter-security"    
     compile "org.springframework.boot:spring-boot-starter-actuator"
     
-    compile "org.hibernate:hibernate-envers:4.3.7.Final"						// orm mapper history building
+    compile "org.hibernate:hibernate-envers:4.3.7.Final"							// orm mapper history building
         
-    compile "org.flywaydb:flyway-core"    										// database migration utility
+    compile "org.flywaydb:flyway-core"    											// database migration utility
     compile "org.seleniumhq.selenium:selenium-firefox-driver:${seleniumVersion}"	// ui tester
 
-    testCompile "org.springframework.boot:spring-boot-starter-test" 
+    testCompile "org.springframework.boot:spring-boot-starter-test" 				// helper for unit testing spring boot
+    testCompile "org.spockframework:spock-spring"									// groovy unit test addone
  }
 
 

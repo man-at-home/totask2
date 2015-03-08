@@ -6,6 +6,8 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.Date;
 
+import javax.validation.constraints.NotNull;
+
 /** LocalDate to util.Date conversion. 
  * 
  *  @see LocalDate
@@ -23,14 +25,17 @@ public abstract class LocalDateConverter {
         return dateToBeCloned == null ? null : new Date(dateToBeCloned.getTime());
     }
     
-    /** localdate (java8) to util.Date conversion. */
-    public static Date toDate(LocalDate date) {
-        return Date.from(date.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
+    /** local date (java8) to util.Date conversion. */
+    public static Date toDate(@NotNull final LocalDate date) {
+        return Date.from(AAssert.checkNotNull(date)
+                   .atStartOfDay()
+                   .atZone(ZoneId.systemDefault())
+                   .toInstant());
     }
 
     /** util.Date to LocalDate (java8) conversion. */
-    public static LocalDate toLocalDate(Date at) {
-        Instant instant = new Date(at.getTime()).toInstant(); 
+    public static LocalDate toLocalDate(@NotNull final Date at) {
+        Instant instant = new Date(AAssert.checkNotNull(at).getTime()).toInstant(); 
         ZonedDateTime zdt = instant.atZone(ZoneId.systemDefault());
         LocalDate ld = zdt.toLocalDate();
         return ld;
@@ -45,7 +50,7 @@ public abstract class LocalDateConverter {
      * @param days to add to current Date
      * @return now + days
      */
-    public static Date getDate(int days) {
+    public static Date getDate(final int days) {
         
         return toDate(LocalDate.now().plusDays(days));        
     }    

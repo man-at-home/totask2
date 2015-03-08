@@ -3,6 +3,7 @@ package org.manathome.totask2.service;
 import org.manathome.totask2.controller.UserController;
 import org.manathome.totask2.model.User;
 import org.manathome.totask2.model.UserRepository;
+import org.manathome.totask2.util.AAssert;
 import org.manathome.totask2.util.UserNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,6 +16,8 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import javax.validation.constraints.NotNull;
 
 
 /**
@@ -66,11 +69,10 @@ public class UserCachingService {
      * 
      * @param authentication currently logged in user (spring security authentication).
      * */
-    public User getCachedUser(final Authentication authentication) {
+    public User getCachedUser(@NotNull final Authentication authentication) {
         
-        if (authentication == null || authentication.getName() == null) {
-            throw new NullPointerException("no authentication user/no name [getCachedUser]");
-        }
+        AAssert.checkNotNull(authentication, "no authentication user");
+        AAssert.checkNotNull(authentication.getName(), "no authentication.name");
         
         if (authentication.getPrincipal() instanceof User) {
             return (User) authentication.getPrincipal(); 

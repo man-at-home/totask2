@@ -9,27 +9,36 @@ import java.text.ParseException;
 /** 
  * helper for duration conversion. 
  * 
- * @see WorkEntry#getDuration()
+ * @see    WorkEntry#getDuration()
+ * @author man-at-home
  * */
 public final class DurationConverter {
     
-    /** needs work. */
+    /** parse duration from text. 
+     * 
+     * @throws ParseException
+     * @throws InvalidDurationException
+     * */
     public static BigDecimal parse(final String durationString) throws ParseException {
+        
+        if (durationString == null || durationString.length() == 0) {
+            return new BigDecimal("0");
+        }
         
         BigDecimal duration = new BigDecimal(durationString);   
         if (duration.doubleValue() < 0) {
-            throw new ParseException("duration must be positive, not " + durationString, 0);
+            throw new InvalidDurationException("duration must be positive, not " + durationString);
         } else if (duration.doubleValue() > 24) {
-            throw new ParseException("duration must be within a day (24h), not " + durationString, 0);
+            throw new InvalidDurationException("duration must be within a day (24h), not " + durationString);
         } else {
             duration = duration.setScale(1, BigDecimal.ROUND_HALF_UP);
             return duration;
         }
     }
 
-    /** dummy. */
+    /** duration.toString() or "". */
     public static String format(final BigDecimal duration) {
-          return duration.toString();
+          return duration == null ? "" : duration.toString();
     }  
 
 }

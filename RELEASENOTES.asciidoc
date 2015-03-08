@@ -4,6 +4,10 @@ totask2 releasenotes
 
 basic releasenotes for http://man-at-home.github.io/totask2/
 
+.2015-03-07
+- added spock test example, see https://totask2.wordpress.com/2015/03/07/adding-spock-to-junit-mix/
+- guava inspired checkNotNull introduced.
+
 .2015-03-06
 - enhanced metrics with dropwizard https://totask2.wordpress.com/2015/03/06/dropwizard-metrics-integriert-in-spring-boot-fur-mehr-optionen/
 

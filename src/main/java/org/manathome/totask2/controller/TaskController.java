@@ -112,7 +112,7 @@ public class TaskController {
      * @param id  task.id to delete.
      * @exception TaskNotFoundException
      */
-    @RequestMapping(value = "task/delete", method = RequestMethod.POST)
+    @RequestMapping(value = "/task/delete", method = RequestMethod.POST)
     public String deleteTask(@RequestParam long id, final Model model) {
         
         LOG.debug("delete task " + id);

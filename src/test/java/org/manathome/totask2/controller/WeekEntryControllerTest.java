@@ -2,8 +2,9 @@ package org.manathome.totask2.controller;
 
 import static org.hamcrest.Matchers.containsString;
 import static org.manathome.totask2.controller.SecurityRequestPostProcessors.user;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -22,58 +23,54 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-
 /**
- * testing basic spring mvc InfoController.
+ * testing basic spring mvc WeekEntryController.
+ * 
+ * @see    WeekEntryController
  * @author man-at-home
+ * @since  2015-03-09
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = Application.class)
 @WebAppConfiguration
-public class InfoControllerTest {
-    
-    private static final Logger LOG = LoggerFactory.getLogger(InfoControllerTest.class);
+public class WeekEntryControllerTest {
 
-    @Autowired
-    private InfoController infoController;
+    private static final Logger LOG = LoggerFactory.getLogger(WeekEntryControllerTest.class);
 
-    @Autowired
-    private WebApplicationContext wac;
-    
-    @Autowired
-    private FilterChainProxy springSecurityFilterChain;    
-
+    @Autowired private WebApplicationContext    wac;
+    @Autowired private FilterChainProxy         springSecurityFilterChain; 
 
     private MockMvc mockMvc;
 
     @Before
-    public void setup(){
-
-        // Process mock annotations
-        MockitoAnnotations.initMocks(this);
-
-        // Setup Spring test in webapp-mode (same config as spring-boot)
+    public void setup() {        
+        MockitoAnnotations.initMocks(this); // process mock annotations        
         this.mockMvc = MockMvcBuilders
                 .webAppContextSetup(wac)
-                .addFilters(this.springSecurityFilterChain)    
-                .build();
+                .addFilters(this.springSecurityFilterChain)
+                .build(); // setup spring test in web mode (same config as spring-boot)
     }
    
-    /** testing /dbinfo. */
+    /** testing GET /weekEntry. 
+     * 
+     * @see WeekEntryController#weekEntry(org.springframework.ui.Model) under test.
+     * */
     @Test
-    public void testGetDbInfo() throws Exception {
+    public void testCurrentWeekEntry() throws Exception {
         
-        LOG.debug("request /dbinfo");
+        LOG.debug("request /weekEntry");
         
         MvcResult result =
-        this.mockMvc.perform(get("/dbinfo")
-                .with(user("unit-test-admin").roles("ADMIN"))                
+        this.mockMvc.perform(get("/weekEntry")
+                .with(user("unit-test-user").roles("USER"))                
                 )
         .andExpect(status().isOk())
-        .andExpect(content().string(containsString("tasks in database:")))
+        .andExpect(content().string(containsString("enter this")))
+        .andExpect(content().string(containsString("save this week")))
+        .andExpect(content().string(containsString("form id=\"weekForm\"")))        
         .andReturn();
         
         LOG.debug("response:" + result.getResponse().getContentAsString().replaceAll("\\r|\\n", ""));
     }
-    
+        
 }

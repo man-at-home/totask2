@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -32,12 +33,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired private UserDetailsServiceImpl userDetailsServiceImpl;
     
     
-    
     /** secure most pages. Exceptions are index.html and javascript / css resources.  */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         
-        LOG.info("enabling security (configure)");
+        LOG.info("WEB: enabling security (configure form based login)");
         
         http
             .authorizeRequests()
@@ -51,7 +51,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .logout()
                 .permitAll();
         
-        http.csrf().disable();  // w/ rest posts APP/REST/WorkEntry
+//        http.csrf().disable();  // w/ rest posts APP/REST/WorkEntry, but usefull on web pages.
         
         http
             .exceptionHandling()
@@ -64,10 +64,45 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(AuthenticationManagerBuilder auth)
             throws Exception {
         
-        LOG.debug("configuring userDetailsService " + userDetailsServiceImpl);
+        LOG.debug("WEB: configuring userDetailsService " + userDetailsServiceImpl);
         auth.userDetailsService(userDetailsServiceImpl)
             .passwordEncoder(User.getPasswordEncoder())
             ;  
     }
+    
+    
+    /** second configuration: using basic authentication for totask2.mobile's REST API. */
+    @Configuration
+    @Order(1) 
+    public static class RestApiWebSecurityConfigurationAdapter extends WebSecurityConfigurerAdapter {
+        
+        @Autowired private UserDetailsServiceImpl userDetailsServiceImpl;        
+        
+        /** use basic authentication for /APP/REST URLs. */
+        protected void configure(HttpSecurity http) throws Exception {
+            
+            LOG.info("WEB/REST-API: enabling security (configure basic auth)");
+            
+            http
+                .antMatcher("/APP/REST/**")
+                .authorizeRequests()
+                .antMatchers("/APP/REST/**").hasRole("USER")
+                .and()
+                .httpBasic();
+
+            http.csrf().disable();  // w/ rest posts APP/REST/WorkEntry
+        }
+        
+        /** use same users as web application. */
+        @Override
+        protected void configure(AuthenticationManagerBuilder auth)
+                throws Exception {
+            
+            LOG.debug("WEB/REST-API: configuring userDetailsService " + userDetailsServiceImpl);
+            auth.userDetailsService(userDetailsServiceImpl)
+                .passwordEncoder(User.getPasswordEncoder())
+                ;
+        }
+    }//static inner class
    
-}
+}//class

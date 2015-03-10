@@ -1,18 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <configuration debug="true">
 
-	<!-- logback logging confiugration for totask2 
-	     (logging into the cloud to loggly.com 
-	     @author man-at-home 
-	 -->
+   <!-- logback logging configuration for totask2 (logging into the cloud to loggly.com -->
 
-	<appender name="loggly" class="ch.qos.logback.ext.loggly.LogglyAppender">
-		<endpointUrl>http://logs-01.loggly.com/inputs/{replace-this-with-loggly-com-tag}/tag/logback
-		</endpointUrl>
-		<pattern>%d{ISO8601} %p %t %c{0}.%M - %m%n</pattern>
-	</appender>
-	<root level="info">
-		<appender-ref ref="loggly" />
-	</root>
+  <appender name="loggly" class="ch.qos.logback.ext.loggly.LogglyAppender">
+    <endpointUrl>http://logs-01.loggly.com/inputs/{replace-this-with-loggly-com-tag}/tag/logback
+    </endpointUrl>
+    <pattern>%d{ISO8601} %p %t %c{0}.%M - %m%n</pattern>
+  </appender>
+  <root level="info">
+    <appender-ref ref="loggly" />
+  </root>
 
-	<logger name="org.manathome" level="DEBUG" />
+  <logger name="org.manathome" level="DEBUG" />
 </configuration>

@@ -5,11 +5,9 @@ import static org.junit.Assert.*;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
 import org.manathome.totask2.Application;
-import org.manathome.totask2.model.Project;
-import org.manathome.totask2.model.ProjectRepository;
-import org.manathome.totask2.model.Task;
-import org.manathome.totask2.model.TaskRepository;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,9 +15,9 @@ import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
-import com.wordnik.swagger.config.SwaggerConfig;
-
 import javax.transaction.Transactional;
+
+import com.wordnik.swagger.config.SwaggerConfig;
 
 
 /** testing db access. */
@@ -89,7 +87,11 @@ public class TaskRepositoryTest {
     public void testReadTasksInProject() {
         Project totask2Project = projectRepository.findByName("totask2").get(0);
         assertEquals("all tasks in project ", 3,  totask2Project.getTasks().count());
-        totask2Project.getTasks().allMatch( t -> t.getProject().getName().equals("develop") || t.getProject().getName().equals("support"));
+        
+        totask2Project.getTasks().allMatch(t -> 
+            t.getProject().getName().equals("develop") || 
+            t.getProject().getName().equals("support")
+            );
     
         assertEquals("support task not found" , 1, taskRepository.findByName("support").size());
     }

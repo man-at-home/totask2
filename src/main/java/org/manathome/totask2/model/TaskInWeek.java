@@ -3,6 +3,8 @@ package org.manathome.totask2.model;
 import org.manathome.totask2.util.AAssert;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.stream.Stream;
 
 /**
@@ -12,6 +14,7 @@ import java.util.stream.Stream;
  */
 public class TaskInWeek {
 
+    /** hashCode. */
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -20,6 +23,7 @@ public class TaskInWeek {
         return result;
     }
 
+    /** equals by taskId. */
     @Override
     public boolean equals(Object obj) {
         if (this == obj){       
@@ -84,12 +88,12 @@ public class TaskInWeek {
     public Stream<WorkEntry> getDailyEntries() {
         return this.dailyEntries.stream();
     }
-
-    /** replace all day entries. 
-    public void setDailyEntries(@NotNull final WorkEntry[] dailyEntries) {
-        this.dailyEntries = new ArrayList<WorkEntry>(Arrays.asList(dailyEntries));
+    
+    /** used in thymeleaf weekEntry.html template (does not work with java8-streams yet). */
+    public List<WorkEntry> getIterableEntries() {
+        return Collections.unmodifiableList(this.dailyEntries);
     }
-    */
+
     
     /** sum of working hours in this week (and task, user). */
     public double getDuration() {

@@ -104,7 +104,7 @@ public class WorkEntryRepositoryTest {
         assertNotNull("entry 1 found" , entry);
         
         Date dt = LocalDateConverter.toDate(LocalDate.now());
-        LOG.debug("retrieving entries for user 2L and date " + dt);
+        LOG.debug("retrieving entries for TEST_USER and date " + dt);
         List<WorkEntry> entries = workEntryRepository.findForUserAndDay(TestConstants.TEST_USER, dt);
         
         entries.stream().forEach(e -> LOG.debug("entry: " + e));

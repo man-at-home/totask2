@@ -41,7 +41,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
- * testing APP/REST Controller used by mobile app.
+ * testing APP/REST API Controller used by mobile app.
  * 
  * @author man-at-home
  * @since 2015-02-28
@@ -58,6 +58,7 @@ public class WorkEntryControllerTest {
     @Autowired private FilterChainProxy         springSecurityFilterChain; 
     @Autowired private UserCachingService       userCachingService;
    
+    /** mock setup. */
     @Before
     public void setup() {        
         MockitoAnnotations.initMocks(this); // process mock annotations        
@@ -254,10 +255,11 @@ public class WorkEntryControllerTest {
         assertTrue("saved id is returned", savedWet.getId() > 0);
     }
   
+    /** some constants. */
+    static final MediaType APPLICATION_JSON_UTF8 = new MediaType(MediaType.APPLICATION_JSON.getType(), MediaType.APPLICATION_JSON.getSubtype(), Charset.forName("utf8"));
     
-    public static final MediaType APPLICATION_JSON_UTF8 = new MediaType(MediaType.APPLICATION_JSON.getType(), MediaType.APPLICATION_JSON.getSubtype(), Charset.forName("utf8"));
-    
-    public static byte[] convertObjectToJsonBytes(Object jsonObject) throws IOException {
+    /** json conversion. */
+    static byte[] convertObjectToJsonBytes(Object jsonObject) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
         LOG.debug("convertObject() to json:" + mapper.writeValueAsString(jsonObject));
         return mapper.writeValueAsBytes(jsonObject);

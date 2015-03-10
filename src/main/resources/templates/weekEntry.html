@@ -226,7 +226,7 @@
 						<span th:id="'task_' + ${taskInWeek.task.id} + '_label'" class="abel label-info" th:text="#{totask2.weekEntry.task.modifiedLabel}">not saved</span>
 					</td>
 					
-					<td th:each="dailyEntry, iterationStatus : ${taskInWeek.dailyEntries}">
+					<td th:each="dailyEntry, iterationStatus : ${taskInWeek.iterableEntries}">
 						<div class="form-group">
 						<label for="workEntry_" th:attrappend="for=${taskInWeek.task.id} + '_' + ${iterationStatus.index} "></label>
 					    <input 

@@ -35,7 +35,7 @@ public class SwaggerConfig extends WebMvcConfigurerAdapter {
     
     /** ctor. */
     public SwaggerConfig() {
-        LOG.debug("creating swagger config");
+        LOG.trace("creating swagger config");
     }
    
 
@@ -76,7 +76,7 @@ public class SwaggerConfig extends WebMvcConfigurerAdapter {
         InternalResourceViewResolver resolver = new InternalResourceViewResolver();
         resolver.setPrefix(WEB_JAR_VIEW_RESOLVER_PREFIX);
         resolver.setSuffix(WEB_JAR_VIEW_RESOLVER_SUFFIX);
-        LOG.debug("creating jsp view resolver for swagger " + resolver);
+        LOG.trace("created jsp view resolver for swagger " + resolver);
         return resolver;
      }
 

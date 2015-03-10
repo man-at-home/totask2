@@ -1,6 +1,9 @@
 package org.manathome.totask2.service;
 
 
+import static org.manathome.totask2.util.AAssert.checkNotNull;
+import static org.manathome.totask2.util.AAssert.checkNotNullOrEmpty;
+
 import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperCompileManager;
@@ -77,7 +80,7 @@ public class ReportGenerator {
             reportParams.put("reportTitle", "totask2 User Report");
 
             // 2. Retrieve template
-            LOG.debug("loading report..: " + this.getClass().getResource(reportName));
+            LOG.trace("loading report..: " + this.getClass().getResource(reportName));
             InputStream reportStream = this.getClass().getResourceAsStream(reportName);
 
             // 3. Convert template to JasperDesign
@@ -140,8 +143,8 @@ public class ReportGenerator {
      * */
     public ModelAndView createReportModelView(@NotNull final String reportName, final ReportOutputFormat reportOutputFormat, @NotNull final Collection<?> reportData)
     {
-        AAssert.checkNotNull(reportName, "reportName");
-        AAssert.checkNotNull(reportData, "reportData");
+        checkNotNullOrEmpty(reportName, "reportName");
+        checkNotNull(reportData, "reportData");
         
         AbstractJasperReportsSingleFormatView view = reportOutputFormat == ReportOutputFormat.excel ? 
                     new JasperReportsXlsView() : 

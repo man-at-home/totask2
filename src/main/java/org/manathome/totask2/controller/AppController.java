@@ -27,11 +27,13 @@ public class AppController {
     /** landing page /. */
     @RequestMapping("/")
     public String index(Model model) {        
-        LOG.debug("index" + this.environment);
+        
+        LOG.trace("index" + this.environment);
         
         model.addAttribute("name", this.environment.getName());
         model.addAttribute("description", this.environment.getDescription());
         model.addAttribute("version", this.environment.getVersion());
+        
         
         return "index";
     }
@@ -39,7 +41,7 @@ public class AppController {
     /** not allowed (spring security / http 403). */
     @RequestMapping("/403")
     public String notAllowed() {        
-        LOG.debug("not allowed page");
+        LOG.trace("not allowed page");
         return "403";
     }
     

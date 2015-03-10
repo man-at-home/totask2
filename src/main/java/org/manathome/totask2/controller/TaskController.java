@@ -73,7 +73,7 @@ public class TaskController {
     @RequestMapping(value = "/project/{id}/tasks", method = RequestMethod.GET)          // <1>
     public String tasksForProject(@PathVariable final long id, final Model model) {
         
-        LOG.debug("tasks for project " + id);
+        LOG.trace("tasks for project " + id);
    
         Project project  = projectRepository.findOne(id);
         List<Task> tasks = taskRepository.findByProjectId(id);                          // <2>
@@ -95,7 +95,7 @@ public class TaskController {
     @RequestMapping(value = "/task/{id}", method = RequestMethod.GET)
     public String editTask(@PathVariable final long id, final Model model) {
         
-        LOG.debug("edit task " + id);
+        LOG.trace("edit task " + id);
         
         Task task = taskRepository.findOne(id);
         boolean isEditAllowed = task.isEditAllowed(getUser());
@@ -115,7 +115,7 @@ public class TaskController {
     @RequestMapping(value = "/task/delete", method = RequestMethod.POST)
     public String deleteTask(@RequestParam long id, final Model model) {
         
-        LOG.debug("delete task " + id);
+        LOG.trace("delete task " + id);
         
         Task taskToDelete = taskRepository.findOne(id);
         if (taskToDelete == null) {
@@ -140,7 +140,7 @@ public class TaskController {
      * */
     @RequestMapping(value = "project/{projectId}/task/new", method = RequestMethod.GET)
     public String newTask(@PathVariable final long projectId, final Model model) {       
-        LOG.debug("new task for project " + projectId);
+        LOG.trace("new task for project " + projectId);
         
         Project project = this.projectRepository.findOne(projectId);
         if (project == null) {
@@ -162,7 +162,7 @@ public class TaskController {
      * */
     @RequestMapping(value = "/task/save", method = RequestMethod.POST)
     public String editTaskSave(@Valid final Task task, final BindingResult bindingResult, final ModelMap model) {        
-        LOG.debug("editTaskSave(" + task + ")");
+        LOG.trace("editTaskSave(" + task + ")");
         
         User.dumpAuthentication();
         if (bindingResult.hasErrors()) {

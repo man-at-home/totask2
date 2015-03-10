@@ -6,10 +6,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.manathome.totask2.Application;
-import org.manathome.totask2.model.Project;
-import org.manathome.totask2.model.ProjectRepository;
-import org.manathome.totask2.model.User;
-import org.manathome.totask2.model.UserRepository;
 import org.manathome.totask2.util.TestConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -49,7 +45,7 @@ public class ProjectRepositoryTest {
         assertNotNull("project repo not injected", projectRepository);
         
         LOG.debug("read all projects..");
-        projectRepository.findAll().stream().forEach( p -> LOG.debug(" findAll-projects: " + p.getName() + "/" + p.getId()));
+        projectRepository.findAll().stream().forEach(p -> LOG.debug(" findAll-projects: " + p.getName() + "/" + p.getId()));
         LOG.debug("read all projects done.");
         assertTrue("project table access not possible" ,  projectRepository.count() >= 1);
     }
@@ -103,7 +99,7 @@ public class ProjectRepositoryTest {
         assertEquals("project not found", 1, totask2Projects.size());
         Project p = totask2Projects.get(0);
         LOG.debug("found totask2 project: " + p);
-        assertNotNull("project leads set null", p.getProjectLeads() );
+        assertNotNull("project leads set null", p.getProjectLeads());
         assertTrue("0 or more leads" , p.getProjectLeads().size() >= 0);
         
         LOG.debug("found: " + p + 
@@ -137,8 +133,8 @@ public class ProjectRepositoryTest {
         assertEquals("name stored", project.getName() , refetchedProject.getName());
         
         assertEquals("2 leads", 2, refetchedProject.getProjectLeads().size());        
-        assertTrue("admin as lead", refetchedProject.getProjectLeads().stream().anyMatch( u -> u.getId() == TestConstants.ADMIN_USER));
-        assertTrue("user as lead", refetchedProject.getProjectLeads().stream().anyMatch( u -> u.getId() == TestConstants.TEST_USER));
+        assertTrue("admin as lead", refetchedProject.getProjectLeads().stream().anyMatch(u -> u.getId() == TestConstants.ADMIN_USER));
+        assertTrue("user as lead", refetchedProject.getProjectLeads().stream().anyMatch(u -> u.getId() == TestConstants.TEST_USER));
         
         projectRepository.delete(refetchedProject);
     }

@@ -25,7 +25,7 @@ public class ContainerApplication extends SpringBootServletInitializer {
 
     /** start standalone. */
     public static void main(String[] args) {
-        LOG.debug("starting application");
+        LOG.info("starting application (ContainerApplciation)");
         
         SpringApplication app = new SpringApplication(Application.class);
         app.setShowBanner(false);

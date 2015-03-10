@@ -77,7 +77,7 @@ public class WorkEntryController {
             @RequestBody
             final WorkEntryTransfer entryToSave
     ) {     
-        LOG.debug("/APP/REST/workEntry(" + entryToSave + ") POST");
+        LOG.trace("/APP/REST/workEntry(" + entryToSave + ") POST");
         
         User user = userRepository
                 .findByUserName(UserDetailsServiceImpl.getCurrentUserName())
@@ -130,7 +130,7 @@ public class WorkEntryController {
     @ApiResponses(value = { @ApiResponse(code = 200, message = "ok") })
     public List<WorkEntry> restWorkEntries() {
         
-        LOG.debug("APP/REST/workEntries, today");
+        LOG.trace("APP/REST/workEntries, today");
         
         User user = userRepository
                     .findByUserName(UserDetailsServiceImpl.getCurrentUserName())
@@ -155,7 +155,7 @@ public class WorkEntryController {
             final String day
             ) {
         
-        LOG.debug("APP/REST/workEntries, day=" + day);
+        LOG.trace("APP/REST/workEntries, day=" + day);
         
         LocalDate dt = LocalDate.parse(day);
         
@@ -168,7 +168,7 @@ public class WorkEntryController {
     
     private List<WorkEntry> getWorkEntries(User user, LocalDate dt) {
         List<TaskInWeek> tasksInWeek = weekEntryService.getWorkWeek(user, dt);
-        LOG.debug("Tasks in week " + dt + ": " + tasksInWeek.size());
+        LOG.trace("Tasks in week " + dt + ": " + tasksInWeek.size());
                 
         List<WorkEntry> wes = tasksInWeek
                 .stream()

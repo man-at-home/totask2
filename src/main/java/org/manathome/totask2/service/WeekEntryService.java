@@ -123,10 +123,9 @@ public class WeekEntryService {
         
         int saveCount = 0;
         
-        AAssert.checkNotNull(tasksInWeek, "tasksInWeek");
-        LOG.debug("saveWeek()");
+        LOG.trace("saveWeek()");
         
-        for (TaskInWeek tiw : tasksInWeek) {
+        for (TaskInWeek tiw : AAssert.checkNotNull(tasksInWeek)) {
             if (tiw.isModifiedByUser()) {
                 LOG.debug("saveWeek() Task " + tiw.getTask().getName());
                 for (int dayOffset = 0; dayOffset <= 6; dayOffset++) {

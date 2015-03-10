@@ -1,9 +1,11 @@
 package org.manathome.totask2.service;
 
+
+import static org.manathome.totask2.util.AAssert.checkNotNull;
+
 import org.manathome.totask2.controller.UserController;
 import org.manathome.totask2.model.User;
 import org.manathome.totask2.model.UserRepository;
-import org.manathome.totask2.util.AAssert;
 import org.manathome.totask2.util.UserNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -71,8 +73,8 @@ public class UserCachingService {
      * */
     public User getCachedUser(@NotNull final Authentication authentication) {
         
-        AAssert.checkNotNull(authentication, "no authentication user");
-        AAssert.checkNotNull(authentication.getName(), "no authentication.name");
+        checkNotNull(authentication, "no authentication user");
+        checkNotNull(authentication.getName(), "no authentication.name");
         
         if (authentication.getPrincipal() instanceof User) {
             return (User) authentication.getPrincipal(); 

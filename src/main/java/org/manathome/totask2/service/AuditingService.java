@@ -5,6 +5,7 @@ import org.hibernate.envers.AuditReaderFactory;
 import org.hibernate.envers.query.AuditQuery;
 import org.hibernate.envers.query.criteria.internal.IdentifierEqAuditExpression;
 import org.manathome.totask2.model.Project;
+import org.manathome.totask2.util.AAssert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -39,7 +40,7 @@ public class AuditingService {
         private Object historicEntity;
         
         /** ctor. */
-        public EntityRevision(Number revision, Object historicEntity) {
+        public EntityRevision(final Number revision, final Object historicEntity) {
             this.revision = revision;
             this.historicEntity = historicEntity;
         }
@@ -70,7 +71,9 @@ public class AuditingService {
      * @param primaryKeyId         pk
      * @return list of historic data
      * */
-    public List<EntityRevision> retrieveHistory(Class<?> versionedDomainClass, long primaryKeyId) {
+    public List<EntityRevision> retrieveHistory(final Class<?> versionedDomainClass, final long primaryKeyId) {
+        
+        LOG.trace("retrieveHistory(" + AAssert.checkNotNull(versionedDomainClass).getName() + ", " + primaryKeyId);
         
         List<EntityRevision>  revisions = new ArrayList<EntityRevision>();
         
@@ -84,8 +87,9 @@ public class AuditingService {
                         .forEntitiesAtRevision(Project.class, rev)
                         .add(new IdentifierEqAuditExpression(primaryKeyId, true));
             
-            Object o = query.getResultList().get(0);            
-            revisions.add(new EntityRevision(rev, o));      
+            EntityRevision er = new EntityRevision(rev, query.getResultList().get(0));         
+            LOG.debug("found: " + er);
+            revisions.add(er);      
         }
         
         LOG.debug("built full history on " 

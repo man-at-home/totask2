@@ -1,5 +1,7 @@
 package org.manathome.totask2.controller;
 
+import static org.manathome.totask2.util.AAssert.*;
+
 import org.manathome.totask2.model.Project;
 import org.manathome.totask2.model.ProjectRepository;
 import org.manathome.totask2.model.User;
@@ -113,7 +115,7 @@ public class ProjectController {
     /** list all {@link Project}s. */
     @RequestMapping("/projects")
     public String projects(final Model model) {       
-        LOG.debug("projects");       
+        LOG.trace("projects");       
         
         List<Project> projects = projectRepository.findAll();
         model.addAttribute("projects", projects);        
@@ -133,7 +135,7 @@ public class ProjectController {
     @RequestMapping(value = "/project/{id}", method = RequestMethod.GET)
     public String showProject(@PathVariable final long id, final Model model) {
         
-        LOG.debug("show project " + id);
+        LOG.trace("show project {0}.", id);
         
         Project project = projectRepository.findOne(id);
         if (project == null) {
@@ -152,7 +154,7 @@ public class ProjectController {
     @Secured(Authorisation.ROLE_ADMIN)
     @RequestMapping(value = "/project/new", method = RequestMethod.GET)
     public String newProject(final Model model) {       
-        LOG.debug("new project");
+        LOG.trace("new project");
         
         Project project = new Project();
         model.addAttribute("project", project);        
@@ -166,7 +168,7 @@ public class ProjectController {
     @Secured(Authorisation.ROLE_ADMIN)
     @RequestMapping(value = "/project/save", method = RequestMethod.POST)
     public String saveProject(@Valid final Project project, final BindingResult bindingResult, final ModelMap model) {        
-        LOG.debug("saveProject(" + project +  ")");
+        LOG.trace("saveProject(" + project +  ")");
         
         User.dumpAuthentication();
         
@@ -174,7 +176,7 @@ public class ProjectController {
             return "editProject";
         }
                 
-        Project.dump(project);
+        Project.dump(checkNotNull(project));
         boolean isNew = project.getId() <= 0;
 
         Authorisation.require(isNewAllowed());

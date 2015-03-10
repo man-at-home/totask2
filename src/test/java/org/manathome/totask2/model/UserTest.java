@@ -6,10 +6,11 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/** testing User data Model. 
+/**
+ * testing User data Model.
  * 
- * @see     User
- * @author  man-at-home
+ * @see User
+ * @author man-at-home
  * */
 public class UserTest {
 
@@ -22,10 +23,10 @@ public class UserTest {
         User.dumpAuthentication();
         assertNotNull(user.toString());
     }
-    
+
     @Test
     public void testUserCreation() {
-    
+
         User user = new User();
         user.setDisplayName("test user transient");
         user.setId(2);
@@ -42,27 +43,56 @@ public class UserTest {
         assertFalse(user.isEnabled());
         user.setActive(true);
         assertTrue(user.isEnabled());
-        assertTrue(user.isActive() == user.isEnabled() == user.isAccountNonExpired() == user.isAccountNonLocked());
-        
+        assertTrue(user.isActive() == user.isEnabled() == user
+                .isAccountNonExpired() == user.isAccountNonLocked());
+
         user.changePasswort("xx2");
         assertFalse(user.getPassword().equals("xx"));
         String oldpw = user.getPassword();
         user.changePasswort("2342343242");
         assertNotEquals(oldpw, user.getPassword());
-        
+
     }
-    
-    public void changeUser() {
+
+    @Test
+    public void testChangeUser() {
         User user = new User();
         user.setDisplayName("test user transient");
 
-        user.changePasswort("new pw"); 
-        
+        user.changePasswort("new pw");
+
         user.setAdmin(false);
-        assertEquals("no admin role" , 0, user.getAuthorities().size()); // no admin        
+        assertEquals("no admin role", 1, user.getAuthorities().size()); // user. no admin
         user.setAdmin(true);
-        assertEquals("admin role" , 1, user.getAuthorities().size()); // admin
+        assertEquals("admin role", 2, user.getAuthorities().size()); // admin + user
         LOG.debug("user: " + user);
+    }
+
+    /** test overridden hash and equals. */
+    @Test
+    public void testCompare() {
+        User user = new User();
+        user.setDisplayName("test user to compare");
+        user.setId(2);
+        user.setUsername("tst");
+
+        User userb = new User();
+        userb.setDisplayName("test user to compare");
+        userb.setId(2);
+        userb.setUsername("tst");
+
+        assertEquals("hashCodes of users", user.hashCode(), userb.hashCode());
+        assertTrue(user.equals(userb));
+        assertTrue(userb.equals(user));
+
+        assertTrue(!user.equals("no user"));
+        assertTrue(!user.equals(null));
+
+        userb.setUsername("tst other");
+
+        assertNotEquals(user.hashCode(), userb.hashCode());
+        assertTrue(!user.equals(userb));
+        assertTrue(!userb.equals(user));
     }
 
 }

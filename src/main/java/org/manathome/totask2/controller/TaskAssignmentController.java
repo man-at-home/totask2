@@ -63,7 +63,7 @@ public class TaskAssignmentController {
     @RequestMapping(value = "/task/{id}/assignments", method = RequestMethod.GET)
     public String assignmentsForTask(@PathVariable final long id, final Model model) {
         
-        LOG.debug("task assignments for task " + id);
+        LOG.trace("task assignments for task " + id);
   
         Task task = taskRepository.findOne(id);
         Authorisation.require(task.isEditAllowed(getUser()));       
@@ -83,7 +83,7 @@ public class TaskAssignmentController {
     @RequestMapping(value = "assignment/delete", method = RequestMethod.POST)
     public String deleteAssignment(@RequestParam final long id, final Model model) {
         
-        LOG.debug("delete taskAssignment " + id);
+        LOG.trace("delete taskAssignment " + id);
         
         TaskAssignment assignmentToDelete = taskAssignmentRepository.findOne(id);
         if (assignmentToDelete == null) {
@@ -105,7 +105,7 @@ public class TaskAssignmentController {
     @RequestMapping(value = "/assignment/{id}", method = RequestMethod.GET)
     public String editAssignment(@PathVariable final long id, final Model model) {
         
-        LOG.debug("edit task assignment " + id);
+        LOG.trace("edit task assignment " + id);
         
         TaskAssignment assignment = taskAssignmentRepository.getOne(id);
         
@@ -126,7 +126,7 @@ public class TaskAssignmentController {
     @Transactional
     @RequestMapping(value = "task/{taskId}/assignment/new", method = RequestMethod.GET)
     public String newAssignment(@PathVariable final long taskId, final Model model) {       
-        LOG.debug("new assignment for task " + taskId);
+        LOG.trace("new assignment for task " + taskId);
 
         User user = getUser();               
         Task task = this.taskRepository.findOne(taskId);
@@ -150,7 +150,7 @@ public class TaskAssignmentController {
     @Transactional
     @RequestMapping(value = "/assignment/save", method = RequestMethod.POST)
     public String editAssignmentSave(@Valid @ModelAttribute final TaskAssignment assignment, final BindingResult bindingResult, final ModelMap model) {        
-        LOG.debug("editTaskAssignmentSave(" + assignment + ")");
+        LOG.trace("editTaskAssignmentSave(" + assignment + ")");
                 
         if (bindingResult.hasErrors()) {
             LOG.debug("editTaskAssignmentSave validation errors " + bindingResult);

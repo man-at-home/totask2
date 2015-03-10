@@ -1,15 +1,20 @@
 package org.manathome.totask2.util;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.fail;
+import static org.manathome.totask2.util.AAssert.checkNotNullOrEmpty;
 
 import org.junit.Test;
+
 import java.math.BigDecimal;
 
 
-/** testing AAssert. 
+/** 
+ * testing AAssert. 
  * 
  * @see AAssert
- * */
+ */
 public class AAssertTest {
 
     /** test checkNotNull.*/
@@ -27,6 +32,27 @@ public class AAssertTest {
         
         AAssert.checkNotNull(null);
         fail("no exception");
+    }
+    
+    
+
+    /** test checkNotNull(null).*/
+    @Test
+    public void testCheckNotOrEmpty() {
+        
+        assertNotNull(checkNotNullOrEmpty("filled", "valid"));
+    }
+    /** test checkNotNull(null).*/
+    @Test(expected = NullPointerException.class)
+    public void testCheckNotOrEmptyFailed() {
+        
+        assertNotNull(checkNotNullOrEmpty(null, "invalid"));
+    }
+    /** test checkNotNull(null).*/
+    @Test(expected = AssertionError.class)
+    public void testCheckNotOrEmptyFailedEmpty() {
+        
+        assertNotNull(checkNotNullOrEmpty("", "invalid"));
     }
 
     /** 0 to large.*/
@@ -60,14 +86,17 @@ public class AAssertTest {
         assertEquals(4, AAssert.checkIndex(5, 4));
     }
     
+    /** testing assertTrue (true). */
     @Test
     public void testTrue() {
-       AAssert.assertTrue("true", true);
+       AAssert.checkTrue(true, "true");
     }
     
+    
+    /** testing assertTrue(false). */
     @Test(expected = AssertionError.class)
     public void testFalseException() {
-       AAssert.assertTrue("throws exception", false);
+       AAssert.checkTrue(false, "throws exception");
     }
     
 }

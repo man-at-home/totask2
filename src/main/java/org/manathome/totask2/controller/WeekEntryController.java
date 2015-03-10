@@ -1,5 +1,7 @@
 package org.manathome.totask2.controller;
 
+import static org.manathome.totask2.util.AAssert.*;
+
 import org.manathome.totask2.model.TaskInWeek;
 import org.manathome.totask2.model.User;
 import org.manathome.totask2.model.UserRepository;
@@ -9,7 +11,6 @@ import org.manathome.totask2.service.ReportGenerator;
 import org.manathome.totask2.service.ReportGenerator.ReportOutputFormat;
 import org.manathome.totask2.service.UserDetailsServiceImpl;
 import org.manathome.totask2.service.WeekEntryService;
-import org.manathome.totask2.util.AAssert;
 import org.manathome.totask2.util.Authorisation;
 import org.manathome.totask2.util.DurationConverter;
 import org.manathome.totask2.util.InvalidClientArgumentsException;
@@ -139,7 +140,7 @@ public class WeekEntryController {
     @Secured(Authorisation.ROLE_USER)
     @RequestMapping(value = "/weekEntry", method = RequestMethod.GET)
     public String weekEntry(final Model model) {
-        LOG.debug("weekEntry(default)");
+        LOG.trace("weekEntry(default)");
         LocalDate dt = LocalDate.now();
         return weekEntry(model, dt.toString());
     }
@@ -156,7 +157,7 @@ public class WeekEntryController {
     @RequestMapping(value = "/weekEntry/{dateString}", method = RequestMethod.GET)
     public String weekEntry(final Model model,
             @PathVariable final String dateString) {
-        LOG.debug("weekEntry( " + dateString + ")");
+        LOG.trace("weekEntry( " + dateString + ")");
 
         try (Timer.Context context = (weekEntryGetResponseTimer == null) ? null : weekEntryGetResponseTimer.time()) {
             buildWeekModel(model, LocalDate.parse(dateString));
@@ -177,10 +178,10 @@ public class WeekEntryController {
             @PathVariable final String dateString,
             final RedirectAttributes redirectAttributes,
             final WebRequest request) {
-        LOG.debug("saveWeekEntry( " + dateString + ") -> db");
+        
+        LOG.trace("saveWeekEntry( " + dateString + ") -> db");
 
-        AAssert.checkNotNullOrEmpty(dateString, "no date given");
-        LocalDate dt = LocalDate.parse(dateString);
+        LocalDate dt = LocalDate.parse(checkNotNullOrEmpty(dateString, "no date given"));
 
         List<TaskInWeek> tasksInWeek = getWeek(dt);
 
@@ -244,7 +245,7 @@ public class WeekEntryController {
             @PathVariable final String reportFormat,
             @PathVariable final String dateString) {
 
-        LOG.debug("getProjectsReport(" + reportFormat + ", " + dateString + ")");
+        LOG.trace("getProjectsReport(" + reportFormat + ", " + dateString + ")");
         LocalDate dt = LocalDate.parse(dateString);
 
         return reportGenerator

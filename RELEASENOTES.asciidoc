@@ -4,6 +4,9 @@ totask2 releasenotes
 
 basic releasenotes for http://man-at-home.github.io/totask2/
 
+.2015-03-10
+- added custom health indicator shown on /health endpoint
+
 .2015-03-09
 - basic authentication for rest api, see https://totask2.wordpress.com/2015/03/09/spring-boot-basic-authentication-side-by-side-with-form-login/
 

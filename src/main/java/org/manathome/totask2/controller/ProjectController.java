@@ -173,6 +173,7 @@ public class ProjectController {
         User.dumpAuthentication();
         
         if (bindingResult.hasErrors()) {
+            LOG.debug("has errors " + bindingResult.getErrorCount());
             return "editProject";
         }
                 

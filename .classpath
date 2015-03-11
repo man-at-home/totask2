@@ -4,7 +4,7 @@
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="src" path="src/main/resources"/>
 	<classpathentry kind="src" path="src/test/java"/>
-	<classpathentry exported="true" kind="con" path="GROOVY_DSL_SUPPORT"/>
+	<classpathentry kind="con" path="GROOVY_DSL_SUPPORT"/>
 	<classpathentry exported="true" kind="lib" path="C:/dev/gradle_home/caches/modules-2/files-2.1/org.apache.poi/poi/3.10.1/95174823e13aa828cb715b542e647e56096ffcb2/poi-3.10.1.jar" sourcepath="C:/dev/gradle_home/caches/modules-2/files-2.1/org.apache.poi/poi/3.10.1/dcbcab74270ee3f68da61ef13c6f0858fb532e52/poi-3.10.1-sources.jar"/>
 	<classpathentry exported="true" kind="lib" path="C:/dev/gradle_home/caches/modules-2/files-2.1/ch.qos.logback/logback-classic/1.1.2/b316e9737eea25e9ddd6d88eaeee76878045c6b2/logback-classic-1.1.2.jar" sourcepath="C:/dev/gradle_home/caches/modules-2/files-2.1/ch.qos.logback/logback-classic/1.1.2/decd76e2c461157804473468bbdc6b8eb6d6121b/logback-classic-1.1.2-sources.jar"/>
 	<classpathentry exported="true" kind="lib" path="C:/dev/gradle_home/caches/modules-2/files-2.1/org.logback-extensions/logback-ext-loggly/0.1.2/54c8aca7a6fe674b05077c2bf62300a32a4e65ca/logback-ext-loggly-0.1.2.jar" sourcepath="C:/dev/gradle_home/caches/modules-2/files-2.1/org.logback-extensions/logback-ext-loggly/0.1.2/17b64606a7a14385c580e4e9e643190d8ff2b76c/logback-ext-loggly-0.1.2-sources.jar"/>

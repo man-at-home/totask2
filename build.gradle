@@ -116,6 +116,7 @@ dependencies {
     compile "org.seleniumhq.selenium:selenium-firefox-driver:${seleniumVersion}"	// ui tester
 
     testCompile "org.springframework.boot:spring-boot-starter-test" 				// helper for unit testing spring boot
+ //   testCompile "org.springframework.security:spring-security-test:4.0.0.M1"
     testCompile "org.spockframework:spock-spring"									// groovy unit test addone
  }
 

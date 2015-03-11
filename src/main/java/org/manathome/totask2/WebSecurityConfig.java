@@ -51,7 +51,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .logout()
                 .permitAll();
         
-//        http.csrf().disable();  // w/ rest posts APP/REST/WorkEntry, but usefull on web pages.
+        http.csrf().disable();  // w/ unit-tests, waiting on spring-security-test!.
         
         http
             .exceptionHandling()

@@ -80,7 +80,7 @@ public class TaskAssignmentController {
     }   
     
     /** delete an existing assignment. POST. */
-    @RequestMapping(value = "assignment/delete", method = RequestMethod.POST)
+    @RequestMapping(value = "/assignment/delete", method = RequestMethod.POST)
     public String deleteAssignment(@RequestParam final long id, final Model model) {
         
         LOG.trace("delete taskAssignment " + id);

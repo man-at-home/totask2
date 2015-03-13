@@ -11,7 +11,8 @@ public class ExceptionDummyTest {
     public void testEnvironmentException() {
         Exception ex = new EnvironmentException("x");
         assertEquals("x", ex.getMessage());
-        throw new EnvironmentException();
+        ex = new EnvironmentException();
+        throw new EnvironmentException("nested test ex", ex);
     }
 
     @Test(expected = ProjectNotFoundException.class)
@@ -36,9 +37,25 @@ public class ExceptionDummyTest {
     }
     
     @Test(expected = NotAllowedException.class)
-    public void testInvalidClientArgumentsException() {    
+    public void testNotAllowedException() {    
         throw new NotAllowedException();
     }
 
+    
+    @Test(expected = TaskAssignmentNotFoundException.class)
+    public void testTaskAssignmentNotFoundException() {
+        Exception ex = new TaskAssignmentNotFoundException("xy");
+        assertEquals("xy", ex.getMessage());
+        throw new TaskAssignmentNotFoundException();
+    }  
+    
+
+    @Test(expected = InvalidClientArgumentsException.class)
+    public void testInvalidClientArgumentsException() {
+        Exception ex = new InvalidClientArgumentsException("xy");
+        assertEquals("xy", ex.getMessage());
+        throw new InvalidClientArgumentsException();
+    }  
+    
     
 }

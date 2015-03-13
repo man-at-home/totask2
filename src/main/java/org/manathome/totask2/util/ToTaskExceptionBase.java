@@ -1,6 +1,6 @@
 package org.manathome.totask2.util;
 
-/** base class. */
+/** abstract runtime exception base class for all totask2 exceptions. */
 public abstract class ToTaskExceptionBase extends RuntimeException {
 
     private static final long serialVersionUID = 1L;
@@ -11,12 +11,6 @@ public abstract class ToTaskExceptionBase extends RuntimeException {
      }
 
     /** ctor base. */
-    public ToTaskExceptionBase(String message, Throwable cause,
-            boolean enableSuppression, boolean writableStackTrace) {
-        super(message, cause, enableSuppression, writableStackTrace);
-    }
-
-    /** ctor base. */
     public ToTaskExceptionBase(String message, Throwable cause) {
         super(message, cause);
     }
@@ -25,10 +19,4 @@ public abstract class ToTaskExceptionBase extends RuntimeException {
     public ToTaskExceptionBase(String message) {
         super(message);
     }
-
-    /** ctor base. */
-    public ToTaskExceptionBase(Throwable cause) {
-        super(cause);
-    }
-
 }

@@ -71,6 +71,35 @@ public abstract class AAssert {
         }
     }
     
+    
+    /** validate number to valueLargerThanZero > 0.
+     * 
+     * @param valueLargerThanZero
+     * @return the given number
+     * @throws AssertionError if <= 0
+     */
+    public static int checkPositive(final int valueLargerThanZero) {
+        if (valueLargerThanZero <= 0){
+            LOG.error("checkPositiv(" + valueLargerThanZero + ") not satisfied");
+            throw new AssertionError("Value " + valueLargerThanZero + " not positive.");
+        }
+        return valueLargerThanZero;
+    }
+ 
+    /** validate number to valueLargerThanZero > 0.
+     * 
+     * @param valueLargerThanZero
+     * @return the given number
+     * @throws AssertionError if <= 0
+     */    
+    public static long checkPositive(final long valueLargerThanZero) {
+        if (valueLargerThanZero <= 0){
+            LOG.error("checkPositiv(" + valueLargerThanZero + ") not satisfied");
+            throw new AssertionError("Value " + valueLargerThanZero + " not positive.");
+        }
+        return valueLargerThanZero;
+    }    
+    
     /** 
      * check index bound, requires index >= arraySize-1.
      * 

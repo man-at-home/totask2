@@ -1,8 +1,8 @@
 package org.manathome.totask2.util;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.fail;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.*;
+
 import static org.manathome.totask2.util.AAssert.checkNotNullOrEmpty;
 
 import org.junit.Test;
@@ -13,6 +13,9 @@ import java.math.BigDecimal;
 /** 
  * testing AAssert. 
  * 
+ * uses for syntactical sugar hamcrest matchers.
+ * 
+ * @see <a href="https://code.google.com/p/hamcrest/">hamcrest</a>
  * @see AAssert
  */
 public class AAssertTest {
@@ -20,78 +23,59 @@ public class AAssertTest {
     /** test checkNotNull.*/
     @Test
     public void testCheckNotNull() {
-        
-        assertEquals("xx", AAssert.checkNotNull("xx"));
-        assertEquals("", AAssert.checkNotNull(""));
-        assertEquals(55, AAssert.checkNotNull(new BigDecimal("55")).intValue());
+        assertThat(AAssert.checkNotNull("xx"), is("xx"));
+        assertThat(AAssert.checkNotNull(""), is(""));
+        assertThat("check 54 should return 54", AAssert.checkNotNull(new BigDecimal("54")).intValue(), is(54));
     }
     
     /** test checkNotNull(null).*/
     @Test(expected = NullPointerException.class)
     public void testCheckNotNullWithNull() {
-        
         AAssert.checkNotNull(null);
-        fail("no exception");
     }
-    
-    
 
     /** test checkNotNull(null).*/
     @Test
     public void testCheckNotOrEmpty() {
-        
-        assertNotNull(checkNotNullOrEmpty("filled", "valid"));
+        assertThat(AAssert.checkNotNullOrEmpty("filled", "valid"), notNullValue());
     }
+    
     /** test checkNotNull(null).*/
     @Test(expected = NullPointerException.class)
     public void testCheckNotOrEmptyFailed() {
         
-        assertNotNull(checkNotNullOrEmpty(null, "invalid"));
+        assertThat(checkNotNullOrEmpty(null, "invalid"), notNullValue());
     }
     /** test checkNotNull(null).*/
     @Test(expected = AssertionError.class)
     public void testCheckNotOrEmptyFailedEmpty() {
-        
-        assertNotNull(checkNotNullOrEmpty("", "invalid"));
+        assertThat(checkNotNullOrEmpty("", "invalid"), notNullValue());
     }
 
     /** 0 to large.*/
     @Test(expected = IndexOutOfBoundsException.class)
-    public void testIndex0AboveBounds() {
-        
+    public void testIndex0AboveBounds() {        
         AAssert.checkIndex(0, 0);
-        fail("no exception");
     }
     
     /** 1 to large.*/
     @Test(expected = IndexOutOfBoundsException.class)
     public void testIndexAboveBounds() {
-        
         AAssert.checkIndex(1, 1);
-        fail("no exception");
     }
     
     /** -1 never. */
     @Test(expected = IndexOutOfBoundsException.class)
-    public void testIndexBelowBounds() {
-        
+    public void testIndexBelowBounds() {        
         AAssert.checkIndex(1, -1);
-        fail("no exception");
     }
     
     /** 4 is in bounds. */
     @Test
     public void testIndexInBounds() {
-        
-        assertEquals(4, AAssert.checkIndex(5, 4));
+        assertThat(AAssert.checkIndex(5, 4), is(4));
     }
-    
-    /** testing assertTrue (true). */
-    @Test
-    public void testTrue() {
-       AAssert.checkTrue(true, "true");
-    }
-    
+  
     
     /** testing assertTrue(false). */
     @Test(expected = AssertionError.class)

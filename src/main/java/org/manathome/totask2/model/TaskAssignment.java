@@ -107,7 +107,8 @@ public class TaskAssignment {
     }
     
     /** change pk. */
-    protected void setId(long id) { 
+    public void setId(long id) { 
+        AAssert.checkZero(this.id, "taskAssignment.id already set");        
         this.id = id; 
     }
 

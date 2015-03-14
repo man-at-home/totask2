@@ -7,7 +7,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.manathome.totask2.Application;
-import org.manathome.totask2.service.ReportGenerator;
+import org.manathome.totask2.SwaggerConfig;
 import org.manathome.totask2.service.ReportGenerator.ReportOutputFormat;
 import org.manathome.totask2.util.SampleData;
 import org.slf4j.Logger;
@@ -17,8 +17,6 @@ import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.web.servlet.ModelAndView;
-
-import com.wordnik.swagger.config.SwaggerConfig;
 
 import java.io.File;
 import java.io.FileOutputStream;

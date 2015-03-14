@@ -28,7 +28,6 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import javax.ws.rs.Produces;
 
 import com.wordnik.swagger.annotations.Api;
 import com.wordnik.swagger.annotations.ApiOperation;
@@ -68,7 +67,6 @@ public class WorkEntryController {
      *  @see WorkEntryTransfer tranfered data
      */
     @RequestMapping(value = "APP/REST/workEntry", method = RequestMethod.POST)
-    @Produces("application/json")
     @ApiOperation(value = "APP/REST/workEntry", notes = "insert or update one workentry")
     public WorkEntry restSave
     (
@@ -125,7 +123,6 @@ public class WorkEntryController {
      * @return List of WorkEntries of all possible work entries (created and potentially created, later hav id of 0).
      */ 
     @RequestMapping(value = "APP/REST/workEntries", method = RequestMethod.GET)
-    @Produces("application/json")
     @ApiOperation(value = "APP/REST/workEntries", notes = "return all workentries for user on current day", httpMethod = "GET")
     @ApiResponses(value = { @ApiResponse(code = 200, message = "ok") })
     public List<WorkEntry> restWorkEntries() {
@@ -146,7 +143,6 @@ public class WorkEntryController {
      * @return List of WorkEntries of all possible work entries (created and potentially created, later hav id of 0).
      */ 
     @RequestMapping(value = "APP/REST/workEntries/{day}", method = RequestMethod.GET)
-    @Produces("application/json")
     @ApiOperation(value = "APP/REST/workEntries", notes = "return all workentries for user and day", httpMethod = "GET")
     @ApiResponses(value = { @ApiResponse(code = 200, message = "ok") })
     public List<WorkEntry> restWorkEntries(

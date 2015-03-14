@@ -36,7 +36,6 @@ import java.util.Set;
 
 import javax.transaction.Transactional;
 import javax.validation.Valid;
-import javax.ws.rs.Produces;
 
 import com.wordnik.swagger.annotations.Api;
 import com.wordnik.swagger.annotations.ApiOperation;
@@ -68,7 +67,6 @@ public class ProjectController {
     
     /** REST API: /REST/Projects. */
     @RequestMapping(value = "/REST/projects", method = RequestMethod.GET)
-    @Produces("application/json")
     @ApiOperation(value = "REST/projects", notes = "return all known projects")
     @ApiResponses(value = { @ApiResponse(code = 200, message = "ok") })
     @ResponseBody public List<Project> restProjects() {

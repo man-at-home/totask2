@@ -16,8 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-import javax.ws.rs.Produces;
-
 import com.mangofactory.swagger.annotations.ApiIgnore;
 
 import com.wordnik.swagger.annotations.Api;
@@ -59,7 +57,6 @@ public class UserController {
 
     /** REST API. get all users the fit the given "term". */
     @RequestMapping(value = "REST/users", method = RequestMethod.GET)
-    @Produces("application/json")
     @ApiOperation(value = "REST/users", notes = "return all known users given a search criteria *term*")
     @ApiResponses(value = { @ApiResponse(code = 200, message = "ok") })
     public List<User> restUsers(

@@ -5,6 +5,7 @@ import org.hibernate.envers.AuditTable;
 import org.hibernate.envers.Audited;
 import org.manathome.totask2.service.UserCachingService;
 import org.manathome.totask2.service.UserDetailsServiceImpl;
+import org.manathome.totask2.util.AAssert;
 import org.manathome.totask2.util.Authorisation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,6 +15,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 
 
 
@@ -112,7 +114,9 @@ public final class User implements UserDetails {
         return id; 
     }
     
-    protected void setId(long id) { 
+    /** internal pk. */
+    public void setId(long id) { 
+        AAssert.checkZero(this.id, "user.id already set"); 
         this.id = id;         
     }
     

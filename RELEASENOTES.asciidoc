@@ -4,6 +4,13 @@ totask2 releasenotes
 
 basic releasenotes for http://man-at-home.github.io/totask2/
 
+.2015-03-14
+- upgrade swagger api to 1.0
+
+.2015-03-13
+- more test coverage
+- hamcrest usage in junit tests
+
 .2015-03-10
 - added custom health indicator shown on /health endpoint
 

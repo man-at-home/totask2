@@ -88,13 +88,13 @@ dependencies {
     
     compile "org.slf4j:slf4j-api:1.7.7"                       // logging api
     compile "ch.qos.logback:logback-classic"                  // logging library
-    compile "org.logback-extensions:logback-ext-loggly:0.1.2" // log into the cloud
+ //   compile "org.logback-extensions:logback-ext-loggly:0.1.2" // log into the cloud
     
     compile "net.sf.jasperreports:jasperreports:5.6.1"  	  // reporting engine
     compile "com.h2database:h2"								  // dev database (usable in memory)
     
-    compile "org.ajar:swagger-spring-mvc-ui:0.2"			  // rest tester
-    compile "com.mangofactory:swagger-springmvc:0.9.1"        // newer version on hold cause of scala upgrade dependencies..
+    compile "org.ajar:swagger-spring-mvc-ui:0.4"			  // rest tester
+    compile "com.mangofactory:swagger-springmvc:1.0.0"        // newer version on hold cause of scala upgrade dependencies..
     
     compile "io.dropwizard.metrics:metrics-core:3.1.0"        // more metric types than spring boot alone
         

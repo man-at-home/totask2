@@ -15,6 +15,29 @@ public abstract class AAssert {
     
     private static final Logger LOG = LoggerFactory.getLogger(AAssert.class);
     
+    
+    /** 
+     * test zero == 0.
+     *  
+     * @throws AssertionError if zero != 0
+     * */
+    public static long checkZero(final long zero) {
+        return checkZero(zero, "value must be 0");
+    }
+    
+    /** 
+     * test zero == 0.
+     *  
+     * @throws AssertionError if zero != 0
+     * */
+    public static long checkZero(final long zero, @NotNull String msg) {
+        if (zero != 0) {
+            LOG.error("checkZero(" + zero + ", " + msg + ") not satisfied");
+            throw new AssertionError(msg);
+        }
+        return 0;   
+    }
+    
     /** argument checking.
      *  
      * @throws NullPointerException
@@ -22,6 +45,8 @@ public abstract class AAssert {
     public static <T> T checkNotNull(T reference) {
         return checkNotNull(reference, "not null reference required.");
     }
+    
+    
 
     /** 
     * argument notNull checking.

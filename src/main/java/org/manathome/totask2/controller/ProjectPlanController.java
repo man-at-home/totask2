@@ -18,8 +18,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 
-import javax.ws.rs.Produces;
-
 import com.wordnik.swagger.annotations.Api;
 
 
@@ -76,7 +74,6 @@ public class ProjectPlanController {
      * 
      */
     @RequestMapping(value = "/REST/plan/project/{id}", method = RequestMethod.GET)
-    @Produces("application/json")
     @ResponseBody 
     List<ProjectPlanData> plan(@PathVariable final long id) {        
         LOG.debug("providing json plan2 data for project " + id);

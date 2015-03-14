@@ -3,6 +3,7 @@ package org.manathome.totask2.model;
 
 import org.hibernate.envers.AuditTable;
 import org.hibernate.envers.Audited;
+import org.manathome.totask2.util.AAssert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,6 +25,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -95,7 +97,8 @@ public class Project {
         return this.id; 
     }
     
-    protected void setId(long id) { 
+    public void setId(long id) { 
+        AAssert.checkZero(this.id, "project id already set");
         this.id = id; 
     }
     

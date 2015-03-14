@@ -1,13 +1,13 @@
 package org.manathome.totask2.model;
 
 import static org.junit.Assert.*;
-
 import static java.time.temporal.TemporalAdjusters.nextOrSame;
 import static java.time.temporal.TemporalAdjusters.previousOrSame;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.manathome.totask2.Application;
+import org.manathome.totask2.SwaggerConfig;
 import org.manathome.totask2.util.LocalDateConverter;
 import org.manathome.totask2.util.TestConstants;
 import org.slf4j.Logger;
@@ -18,14 +18,13 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 
+
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
 import javax.transaction.Transactional;
-
-import com.wordnik.swagger.config.SwaggerConfig;
 
 /** 
  * testing db access. 

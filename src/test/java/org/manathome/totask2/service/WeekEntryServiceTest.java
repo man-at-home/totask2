@@ -6,6 +6,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.manathome.totask2.Application;
+import org.manathome.totask2.SwaggerConfig;
 import org.manathome.totask2.model.TaskInWeek;
 import org.manathome.totask2.model.User;
 import org.manathome.totask2.model.UserRepository;
@@ -22,8 +23,6 @@ import java.time.LocalDate;
 import java.util.List;
 
 import javax.transaction.Transactional;
-
-import com.wordnik.swagger.config.SwaggerConfig;
 
 
 /** 

@@ -84,7 +84,8 @@ public class Task {
     }    
     
     /** change id. */
-    protected void setId(long id) { 
+    public void setId(long id) { 
+        AAssert.checkZero(this.id, "task.id already set");
         this.id = id; 
     }
     

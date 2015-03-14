@@ -6,6 +6,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.manathome.totask2.Application;
+import org.manathome.totask2.SwaggerConfig;
 import org.manathome.totask2.util.LocalDateConverter;
 import org.manathome.totask2.util.TestConstants;
 import org.slf4j.Logger;
@@ -20,8 +21,6 @@ import java.util.Date;
 import java.util.List;
 
 import javax.transaction.Transactional;
-
-import com.wordnik.swagger.config.SwaggerConfig;
 
 /** testing db access for workEntries. */
 @Transactional

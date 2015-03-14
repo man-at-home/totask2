@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.manathome.totask2.Application;
+import org.manathome.totask2.SwaggerConfig;
 import org.manathome.totask2.model.Project;
 import org.manathome.totask2.model.ProjectRepository;
 import org.manathome.totask2.service.ProjectPlanData;
@@ -17,8 +18,6 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import java.util.List;
 
 import javax.transaction.Transactional;
-
-import com.wordnik.swagger.config.SwaggerConfig;
 
 
 /** test data only. */

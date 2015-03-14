@@ -1,5 +1,6 @@
 package org.manathome.totask2.model;
 
+import org.manathome.totask2.util.AAssert;
 import org.manathome.totask2.util.LocalDateConverter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -138,7 +139,9 @@ public class WorkEntry {
     }
     
     /** change pk. */
-    protected void setId(long id) {
+    public void setId(long id) {
+        AAssert.checkZero(this.id, "workEntry.id already set");
+        
         this.id = id;
     }
 

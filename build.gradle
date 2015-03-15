@@ -63,6 +63,7 @@ buildscript {
 	    classpath "org.asciidoctor:asciidoctor-gradle-plugin:1.5.1"								// documentation engine
 	    classpath "be.jlr-home.gradle:plantumlPlugin:0.1.1"	    								// documentation graphing
         classpath "com.eriwen:gradle-js-plugin:1.12.0"											// javascript build utilities
+        classpath "com.wordnik:swagger-codegen:2.1.2-M1"                                        // optional swagger doc generation
     }
 }
 
@@ -272,6 +273,15 @@ task deployOpenShift(type: Copy) {
     into 'deployments'  
 //    rename { String fileName -> "ROOT.war" }
 }
+
+task genSwagger(type: JavaExec) {
+    description "generate swagger doc or clients via codgen package and gradle" 
+    // needing buildscript dependency  classpath "com.wordnik:swagger-codegen:2.1.2-M1" (see http://swagger.io)
+    classpath = buildscript.configurations.classpath
+    args      = ["-i", "http://localhost:8080/api-docs/totask2/workentry-rest-api", "-o", "${buildDir}/docs/rest-api", "-l", "java"]
+    main      = "com.wordnik.swagger.codegen.Codegen"
+}
+
 
 
 

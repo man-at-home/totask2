@@ -41,8 +41,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         
         http
             .authorizeRequests()
-                .antMatchers("/", "/index.html", "/js/*", "/css/*", "/bootstrap/**/*", "/images/*").permitAll()
-                .anyRequest().authenticated();
+                .antMatchers("/", "/index.html", "/js/*", "/css/*", "/bootstrap/**/*", "/images/*", "/api-docs", "/api-docs/**/*").permitAll()
+                .anyRequest().authenticated();  // no login: static ressources (html, css, javascript) including swagger rest ddl.
         http
             .formLogin()
                 .loginPage("/login")

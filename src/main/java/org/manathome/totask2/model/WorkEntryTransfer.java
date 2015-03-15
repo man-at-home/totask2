@@ -21,12 +21,13 @@ public class WorkEntryTransfer implements Serializable{
     /** serialization. */
     private static final long serialVersionUID = 1L;
     
-    private long    id;
+    private long    id = 0;
     private Date    at;
     private float   duration;
     private String  taskName;
     private long    taskId;
     private String  comment;
+    
     
     /**
      * @return the id (0 for new entries).
@@ -122,6 +123,12 @@ public class WorkEntryTransfer implements Serializable{
         return "WorkEntryTransfer [id=" + id + ", at=" + at + ", duration="
                 + duration + ", taskName=" + taskName + ", taskId=" + taskId
                 + ", comment=" + comment + "]";
+    }
+    
+    /** validations technically. */
+    public void check() {
+        AAssert.checkNotNull(this.at, "at is missing");
+        AAssert.checkPositive(this.taskId);
     }
       
 }

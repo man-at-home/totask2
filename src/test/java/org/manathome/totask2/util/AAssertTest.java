@@ -83,4 +83,32 @@ public class AAssertTest {
        AAssert.checkTrue(false, "throws exception");
     }
     
+    @Test(expected = AssertionError.class)
+    public void testNotPositive() {
+        AAssert.checkPositive(0);
+    }
+    
+    @Test
+    public void testPositive() {
+        assertThat(AAssert.checkPositive(1), is(1));
+    }
+
+    @Test(expected = AssertionError.class)
+    public void testNotZero() {
+        AAssert.checkZero(1);
+    }
+    @Test
+    public void testZero() {
+        assertThat(AAssert.checkZero(0), is(0));
+    }
+    
+    @Test(expected = AssertionError.class)
+    public void testNotLongZero() {
+        AAssert.checkZero(-1L);
+    }
+
+    @Test
+    public void testLongZero() {
+        assertThat(AAssert.checkZero(2342342345234L), is(0));
+    }
 }

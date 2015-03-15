@@ -14,6 +14,11 @@ import java.util.List;
  * */
 public interface WorkEntryRepository extends JpaRepository<WorkEntry, Long>  {
 
+    /** find all done work an a task. */
+    @Query("select we from WorkEntry we where we.task.id = :taskId order by we.id desc")
+    List<WorkEntry> findForTask(@Param("taskId") long taskId);   
+     
+    
     /** find all tasks for the given project and day. */
     @Query("select we from WorkEntry we where we.user.id = :userId and we.at = :at order by we.task.id asc, we.id desc")
     List<WorkEntry> findForUserAndDay(@Param("userId") long userId, @Param("at") Date at);   

@@ -153,6 +153,7 @@ public class WorkEntry {
     /** change comment. */
     public void setComment(final String comment) { 
         if (this.comment != null && !this.comment.equals(comment)) {
+            LOG.debug("change comment: " + this.comment + " ->" + comment);
             isModifiedByUser = true;
         }
         this.comment = comment; 
@@ -222,9 +223,8 @@ public class WorkEntry {
      * LocalDate -> Date. 
      */
     @JsonIgnore
-    public LocalDate getAtDate() { 
-        assert at != null;
-        return LocalDateConverter.toLocalDate(this.at);
+    public LocalDate getAtDate() {         
+        return this.at == null ? null : LocalDateConverter.toLocalDate(this.at);
     }
     
     /** change date. */
@@ -251,7 +251,7 @@ public class WorkEntry {
     /** debug. */
     @Override
     public String toString() {
-        return "WorkEntry [at:" + at + ", duration: " + duration + "h, task: " + getTaskId() + ", " + getTaskName() + "]";
+        return "WorkEntry [" + id + ", at:" + at + ", duration: " + duration + "h, task: " + getTaskId() + ", " + getTaskName() + "]";
     }    
     
     /** html hint output. */
@@ -269,5 +269,17 @@ public class WorkEntry {
     @JsonIgnore
     public boolean isModifiedByUser() {
         return this.isModifiedByUser;
+    }
+    
+    /** return basic data transfer object. */
+    public WorkEntryTransfer asTransfer() {
+        WorkEntryTransfer wet = new WorkEntryTransfer();
+        wet.setId(this.getId());
+        wet.setTaskId(this.getTaskId());
+        wet.setTaskName(this.getTaskName());
+        wet.setComment(this.getComment());
+        wet.setDuration(this.getDuration());
+        wet.setAt(this.at);
+        return wet;
     }
 }

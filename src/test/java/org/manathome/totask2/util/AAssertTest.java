@@ -88,27 +88,33 @@ public class AAssertTest {
         AAssert.checkPositive(0);
     }
     
+    @Test(expected = AssertionError.class)
+    public void testNotLongPositive() {
+        AAssert.checkPositive(-234230L);
+    }
+    
     @Test
     public void testPositive() {
         assertThat(AAssert.checkPositive(1), is(1));
     }
 
-    @Test(expected = AssertionError.class)
-    public void testNotZero() {
-        AAssert.checkZero(1);
-    }
     @Test
-    public void testZero() {
-        assertThat(AAssert.checkZero(0), is(0));
+    public void testLongPositive() {
+        assertThat(AAssert.checkPositive(1234L), is(1234L));
+    }
+    
+    @Test
+    public void testLongZeroMsg() {
+        assertThat(AAssert.checkZero(0, "should pass"), is(0L));
     }
     
     @Test(expected = AssertionError.class)
-    public void testNotLongZero() {
-        AAssert.checkZero(-1L);
+    public void testNotLongZeroMsg() {
+        AAssert.checkZero(-1L, "will fail");
     }
 
-    @Test
-    public void testLongZero() {
-        assertThat(AAssert.checkZero(2342342345234L), is(0));
+    @Test(expected = AssertionError.class)
+    public void testNotLongZero() {
+        AAssert.checkZero(2342342345234L);
     }
 }

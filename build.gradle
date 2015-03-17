@@ -278,7 +278,7 @@ task genSwagger(type: JavaExec) {
     description "generate swagger doc or clients via codgen package and gradle" 
     // needing buildscript dependency  classpath "com.wordnik:swagger-codegen:2.1.2-M1" (see http://swagger.io)
     classpath = buildscript.configurations.classpath
-    args      = ["-i", "http://localhost:8080/api-docs/totask2/workentry-rest-api", "-o", "${buildDir}/docs/rest-api", "-l", "java"]
+    args      = ["-i", "http://localhost:8080/api-docs/totask2/workentry-rest-api", "-o", "${buildDir}/docs/rest-api", "-l", "android"]
     main      = "com.wordnik.swagger.codegen.Codegen"
 }
 

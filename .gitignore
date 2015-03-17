@@ -13,3 +13,5 @@ deployments/
 /sonar.cmd
 .sonar/
 gradle.properties
+toTask2.iml
+.idea/

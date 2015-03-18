@@ -218,7 +218,7 @@ public class WeekEntryController {
         }
 
         String changedTaskNames = tasksInWeek.stream()
-                .filter(t -> t.isModifiedByUser())
+                .filter(t -> t.isNewOrModified())
                 .map(tiw -> tiw.getTask().getName())
                 .collect(Collectors.joining(", "));
 

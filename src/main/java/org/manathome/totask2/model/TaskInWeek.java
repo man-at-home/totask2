@@ -110,8 +110,8 @@ public class TaskInWeek {
     }
     
     /** any entry of this weeks work changed and is not yet persisted into database. */
-    public boolean isModifiedByUser() {        
-           return this.getDailyEntries().anyMatch(de -> de.isModifiedByUser());
+    public boolean isNewOrModified() {        
+           return this.getDailyEntries().anyMatch(de -> de.isModifiedByUser() || de.isNew());
     }
     
 

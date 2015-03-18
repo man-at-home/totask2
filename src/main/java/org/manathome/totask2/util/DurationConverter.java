@@ -22,7 +22,7 @@ public final class DurationConverter {
     public static BigDecimal parse(final String durationString) throws ParseException {
         
         if (durationString == null || durationString.length() == 0) {
-            return new BigDecimal("0");
+            return BigDecimal.ZERO;
         }
         
         BigDecimal duration = new BigDecimal(durationString);   

@@ -2,12 +2,11 @@ package org.manathome.totask2;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.manathome.totask2.Application;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.Assert;
 
-/** unit test. */
+/** unit test demo. */
 public class SimpleTest {
 
 	public static final Logger LOG = LoggerFactory.getLogger(SimpleTest.class);

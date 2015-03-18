@@ -112,6 +112,7 @@ dependencies {
     compile "org.springframework.boot:spring-boot-starter-actuator"
     
     compile "org.hibernate:hibernate-envers:4.3.7.Final"							// orm mapper history building
+//	compile "javax.interceptor:javax.interceptor-api:1.+"							// workaround javadoc exception InterceptorBinding
         
     compile "org.flywaydb:flyway-core"    											// database migration utility
     compile "org.seleniumhq.selenium:selenium-firefox-driver:${seleniumVersion}"	// ui tester
@@ -145,6 +146,7 @@ findbugs {
 
 checkstyle {
    ignoreFailures = true      
+   toolVersion    = "6.0"    // java8 support
 }
 
 

@@ -3,7 +3,6 @@ package org.manathome.totask2.model;
 import static org.junit.Assert.*;
 
 import org.junit.Test;
-import org.manathome.totask2.model.Project;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

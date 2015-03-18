@@ -10,8 +10,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.manathome.totask2.Application;
-import org.manathome.totask2.model.Project;
-import org.manathome.totask2.model.ProjectRepository;
 import org.manathome.totask2.service.AuditingService;
 import org.manathome.totask2.service.AuditingService.EntityRevision;
 import org.slf4j.Logger;

@@ -1,16 +1,15 @@
 package org.manathome.totask2.selenium;
 
-import java.util.concurrent.TimeUnit;
-
-import org.junit.*;
-
 import static org.junit.Assert.*;
 
+import org.junit.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.concurrent.TimeUnit;
 
 /** 
  * selenium tests. 
@@ -78,6 +77,4 @@ public class LoginProjectsLogout {
       fail(verificationErrorString);
     }
   }
-
-
 }

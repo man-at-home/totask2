@@ -265,10 +265,16 @@ public class WorkEntry {
                 ;
     }
     
-    /** instance is modified ("dirty") therefore needs to be saved to db. */
+    /** instance is modified ("dirty") therefore needs to be updated to db. */
     @JsonIgnore
     public boolean isModifiedByUser() {
         return this.isModifiedByUser;
+    }
+    
+    /** instance is new (not yet saved) therefore needs to be inserted into db. */
+    @JsonIgnore
+    public boolean isNew() {
+        return this.getId() <= 0 && this.duration != 0;
     }
     
     /** return basic data transfer object. */

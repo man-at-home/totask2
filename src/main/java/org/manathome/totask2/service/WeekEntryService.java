@@ -126,13 +126,13 @@ public class WeekEntryService {
         LOG.trace("saveWeek()");
         
         for (TaskInWeek tiw : AAssert.checkNotNull(tasksInWeek)) {
-            if (tiw.isModifiedByUser()) {
+            if (tiw.isNewOrModified()) {
                 LOG.debug("saveWeek() Task " + tiw.getTask().getName());
                 for (int dayOffset = 0; dayOffset <= 6; dayOffset++) {
                     WorkEntry we = tiw.getDailyEntry(dayOffset);
                     
-                    if (AAssert.checkNotNull(we, "we").isModifiedByUser()) {
-                        LOG.debug("  save workEntry: " + we);
+                    if (AAssert.checkNotNull(we, "we").isModifiedByUser() || we.isNew()) {
+                        LOG.debug("  save workEntry: " + we + " insert: " + we.isNew());
                         we = this.workEntryRepository.save(we);
                         tiw.setDailyEntry(dayOffset, we);
                         saveCount++;

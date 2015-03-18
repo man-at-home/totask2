@@ -3,8 +3,6 @@ package org.manathome.totask2.util;
 import static org.junit.Assert.*;
 
 import org.junit.Test;
-import org.manathome.totask2.util.Authorisation;
-import org.manathome.totask2.util.NotAllowedException;
 
 /** 
  * test the authorization helper. 

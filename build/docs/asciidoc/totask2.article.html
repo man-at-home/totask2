@@ -416,8 +416,8 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h1>totask2 Überblick</h1>
 <div class="details">
 <span id="author" class="author">man-at-home</span><br>
-<span id="revnumber">version 1.3,</span>
-<span id="revdate">2014-12-06</span>
+<span id="revnumber">version 1.4,</span>
+<span id="revdate">2015-03-07</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
@@ -526,8 +526,13 @@ Entitäten wie Projekt, Task und Arbeitszeit (WorkEntry) und Taskzuordnung zu Us
 </div>
 <div class="paragraph">
 <p>SpringMVC Web Anwendungen werden natürlich in Java programmiert. Im vorliegenden Fall bereits mit <a href="https://java.com/de/">Java 8</a>
-da ich dabei Closures nutzen wollte. Als Templating Engine für HTML wird dabei <a href="http://www.thymeleaf.org/">thymeleaf</a> verwendet.
-Logging erfolgt mit <a href="http://logback.qos.ch/">logback/slf4j</a>, optional in die cloud auf loggly.com, Unit Tests mit <a href="http://junit.org/">junit</a>. Der REST Teil wird über <a href="http://swagger.io/">wagger</a> zur Verfügung gestellt.</p>
+da ich dabei Closures nutzen wollte. Als Templating Engine für HTML wird dabei <a href="http://www.thymeleaf.org/">thymeleaf</a> verwendet.</p>
+</div>
+<div class="paragraph">
+<p>Logging erfolgt mit <a href="http://logback.qos.ch/">logback/slf4j</a>, optional in die cloud auf loggly.com,</p>
+</div>
+<div class="paragraph">
+<p>Unit Tests mit <a href="http://junit.org/">junit</a>. Der REST Teil wird über <a href="http://swagger.io/">wagger</a> zur Verfügung gestellt.</p>
 </div>
 <div class="paragraph">
 <p><em>Client Seitig</em> benutze ich <a href="http://getbootstrap.com//" target="_blank">bootstrap</a> für css,
@@ -574,7 +579,8 @@ rendern. Live zu sehen unter <a href="https://github.com/man-at-home/totask2/blo
 <p>Hosting der Anwendung in der cloud erfolgt mit openShift in einer <a href="https://developers.openshift.com/en/wildfly-overview.html">WildFly Cardridge</a>.</p>
 </div>
 <div class="paragraph">
-<p>Optionales Monitoring erfolgt mit <a href="http://www.newrelic.com/">newrelic</a>. Dazu ist der lokale wildfly Server instrumentiert
+<p>Metriken sind mit boot-actuator und mit <a href="https://dropwizard.github.io/metrics">dropwizard metrics</a> bereitgestellt, derzeit als REST Endpoint.
+Optionales weiteres Monitoring erfolgt mit <a href="http://www.newrelic.com/">newrelic</a>. Dazu ist der lokale wildfly Server instrumentiert
 und schickt Informationen an newrelic.</p>
 </div>
 <div class="sect2">
@@ -936,8 +942,8 @@ Der Build-Server holt sich den totask2 Source im master-Branch von github und ge
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 1.3<br>
-Last updated 2015-02-28 00:38:28 MEZ
+Version 1.4<br>
+Last updated 2015-03-07 00:31:12 MEZ
 </div>
 </div>
 </body>

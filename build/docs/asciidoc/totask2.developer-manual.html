@@ -687,8 +687,9 @@ Datenbanktabellen.</p>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-java" data-lang="java">/**
  * a working task of a {@link Project} that needs to be worked on.
+ *
  * @author man-at-home
- * */
+ */
 @Entity                                                     <i class="conum" data-value="1"></i><b>(1)</b>
 @Audited
 @Table(name = "TT_TASK")
@@ -739,7 +740,7 @@ und schickt Antworten an den Browser zurück.</p>
 @RequestMapping(value = "/project/{id}/tasks", method = RequestMethod.GET)          <i class="conum" data-value="1"></i><b>(1)</b>
 public String tasksForProject(@PathVariable final long id, final Model model) {
 
-    LOG.debug("tasks for project " + id);
+    LOG.trace("tasks for project " + id);
 
     Project project  = projectRepository.findOne(id);
     List&lt;Task&gt; tasks = taskRepository.findByProjectId(id);                          <i class="conum" data-value="2"></i><b>(2)</b>
@@ -936,7 +937,9 @@ public String tasksForProject(@PathVariable final long id, final Model model) {
 @RequestMapping(value = "/users", method = RequestMethod.GET)
 public List&lt;User&gt; getUsers(@RequestParam(value = "term", defaultValue = "") final String term) {
     LOG.debug("/users, term=" + term);
-    return userCachingService.getCachedUsers(term);
+    List&lt;User&gt; foundUsers = userCachingService.getCachedUsers(term);
+    gaugeService.submit("TOTASK2XX.controller.user.REST.ajaxui.result.count", foundUsers.size());
+    return foundUsers;
 }</code></pre>
 </div>
 </div>

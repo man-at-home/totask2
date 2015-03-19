@@ -46,7 +46,7 @@ public class WorkEntryControllerTest extends ControllerTestBase {
     public void testRestWorkEntriesForUser() throws Exception {
         
         LocalDate dt = LocalDate.now(); 
-        String day   = LocalDateConverter.format(dt);      
+        String day   = LocalDateConverter.isoFormat(dt);      
 
         LOG.debug("request APP/REST/workEntries/{day} with day: " + day);
         

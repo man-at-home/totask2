@@ -142,7 +142,7 @@ public class WeekEntryController {
     public String weekEntry(final Model model) {
         LOG.trace("weekEntry(default)");
         LocalDate dt = LocalDate.now();
-        return weekEntry(model, dt.toString());
+        return weekEntry(model, LocalDateConverter.isoFormat(dt));
     }
 
     /**

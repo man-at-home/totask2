@@ -4,7 +4,10 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
+
+
 
 import javax.validation.constraints.NotNull;
 
@@ -16,6 +19,11 @@ import javax.validation.constraints.NotNull;
  *  @author man-at-home
  */
 public abstract class LocalDateConverter {
+    
+    /** german/austrian/swiss formatting dd.MM.yyyy. */
+    private static final DateTimeFormatter DE_DATE_FORMATTER = DateTimeFormatter.ofPattern("d.M.yyyy");
+    private static final DateTimeFormatter ISO_DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    
     
     /** either copy of dateToBeCloned or null.
      * @param dateToBeCloned
@@ -55,8 +63,41 @@ public abstract class LocalDateConverter {
         return toDate(LocalDate.now().plusDays(days));        
     }    
     
-    /** format. */
+    /** format DE_de. */
     public static String format(final LocalDate ld) {
-        return ld == null ? "" : ld.toString();
+        return ld == null ? "" :  ld.format(DE_DATE_FORMATTER);
+    }
+
+    /** 
+     * parse DE_de.
+     * 
+     * @param localDateString local date, format shall be: dd.mm.yyyy 
+     * @return LocalDate or null (if string was null or empty)
+     */
+    public static LocalDate parse(String localDateString) {
+        
+        if (localDateString == null || localDateString.length() == 0) {
+            return null;
+        } else {
+            return LocalDate.parse(localDateString, DE_DATE_FORMATTER);
+        }
+    }
+
+    /** format to yyyy.Mm.dd. */
+    public static String isoFormat(LocalDate ld) {
+        if (ld == null) {
+            return null;
+        } else {
+            return ld.format(ISO_DATE_FORMATTER);
+        }
+    }
+    
+    /** format to yyyy.Mm.dd. */
+    public static LocalDate parseIso(String isoDateString) {
+        if (isoDateString == null || isoDateString.length() == 0) {
+            return null;
+        } else {
+            return LocalDate.parse(isoDateString, ISO_DATE_FORMATTER);
+        }
     }
 }

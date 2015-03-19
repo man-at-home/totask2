@@ -79,7 +79,7 @@ public class WorkEntryMobileRestCallTest {
         RestTemplate restTemplate = new TestRestTemplate(TestConstants.TEST_USER_NAME, TestConstants.TEST_USER_PW);
         LocalDate day   = LocalDate.now().plusDays(1);      
         
-        String url = baseUrl + "workEntries/" + LocalDateConverter.format(day);
+        String url = baseUrl + "workEntries/" + LocalDateConverter.isoFormat(day);
         LOG.trace("calling out: " + url);
         ResponseEntity<WorkEntryTransfer[]> response = restTemplate.getForEntity(url, WorkEntryTransfer[].class);
         assertThat("http ok expected", response.getStatusCode(), is(HttpStatus.OK));   

@@ -1,5 +1,6 @@
 package org.manathome.totask2.util;
 
+import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.*;
 
 import org.junit.Test;
@@ -8,9 +9,7 @@ import org.slf4j.LoggerFactory;
 
 import java.time.LocalDate;
 import java.time.Month;
-import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import java.time.format.FormatStyle;
 import java.time.temporal.TemporalAdjusters;
 import java.util.Date;
 
@@ -26,12 +25,48 @@ public class DateHandlingTest {
     /** logging. */
     private static final Logger LOG = LoggerFactory.getLogger(DateHandlingTest.class);
 
+    /** german parsing of dates. */
     @Test
-    public void testDateParsing() {
+    public void testValidDateParsing() {
         LocalDate ref = LocalDate.of(2014, Month.AUGUST, 14);        
-        LocalDate dt = LocalDate.parse("14.08.2014", DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM));
+        LocalDate dt = LocalDateConverter.parse("14.08.2014");
         LOG.debug(ref + " vs. " + dt);
-        assertTrue("correct date parsed " + ref , dt.compareTo(ref) == 0);
+        assertThat("correct date parsed ", dt, is(ref));
+        
+        ref = LocalDate.of(2015, Month.DECEMBER, 30);        
+        dt = LocalDateConverter.parse("30.12.2015");
+        LOG.debug(ref + " vs. " + dt);
+        assertThat("correct date parsed ", dt, is(ref));
+
+        ref = LocalDate.of(1999, Month.JANUARY, 1);        
+        dt = LocalDateConverter.parse("01.01.1999");
+        LOG.debug(ref + " vs. " + dt);
+        assertThat("correct date parsed ", dt, is(ref));
+        
+        ref = LocalDate.of(1999, Month.JANUARY, 2);        
+        dt = LocalDateConverter.parse("2.1.1999");
+        LOG.debug(ref + " vs. " + dt);
+        assertThat("correct date parsed ", dt, is(ref));
+    }
+    
+    /** german formatting of dates. */
+    @Test
+    public void testValidDateFormatting() {
+
+        String ref = "14.8.1911";        
+        String dt =  LocalDateConverter.format(LocalDate.of(1911, Month.AUGUST, 14));
+        LOG.debug(ref + " vs. " + dt);
+        assertThat("correct date formatted ", dt , is(ref));
+        
+        ref = "14.1.2015";        
+        dt =  LocalDateConverter.format(LocalDate.of(2015, Month.JANUARY, 14));
+        LOG.debug(ref + " vs. " + dt);
+        assertThat("correct date formatted ", dt , is(ref));
+
+        ref = "1.11.2015";        
+        dt =  LocalDateConverter.format(LocalDate.of(2015, Month.NOVEMBER, 1));
+        LOG.debug(ref + " vs. " + dt);
+        assertThat("correct date formatted ", dt , is(ref));
     }
     
     @Test
@@ -66,7 +101,7 @@ public class DateHandlingTest {
 
     @Test(expected = DateTimeParseException.class)
     public void testInvalidParsing() {
-        LocalDate dt = LocalDate.parse("x1.2.2011");
+        LocalDate dt = LocalDateConverter.parse("x1.2.2011");
         fail("parse exception expected not " + dt);
     }    
     

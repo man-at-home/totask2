@@ -6,7 +6,11 @@ totask2
 demo application, testing ground for methods and technologies.
 port of my old totask grails app to spring mvc. 
 
-See github page on http://man-at-home.github.io/totask2/ and blog on https://totask2.wordpress.com/.
+image:https://travis-ci.org/man-at-home/totask2.svg?branch=master["Build Status", link="https://travis-ci.org/man-at-home/totask2"]
+
+See 
+- github page on http://man-at-home.github.io/totask2/ and 
+- blog on https://totask2.wordpress.com/.
 
 
 image::src/docs/images/totask2.weekEntry.clientLogic.png[screenshot5, 600, 400]

@@ -4,6 +4,9 @@ totask2 releasenotes
 
 basic releasenotes for http://man-at-home.github.io/totask2/
 
+.2015-03-20
+- deploy to heroku, see https://totask2.wordpress.com/2015/03/20/second-runtime-use-heroku-as-cloud-container-for-totask2/
+
 .2015-03-19
 
 - use travis-ci.org build in the cloud

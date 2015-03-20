@@ -284,8 +284,14 @@ task genSwagger(type: JavaExec) {
     main      = "com.wordnik.swagger.codegen.Codegen"
 }
 
+task prepareHerokuSlug(type: Delete) {
+	description "free space"
+	delete 	"${buildDir}/classes", "${buildDir}/distributions", "${buildDir}/libs/toTask2.jar.original", 
+			"${buildDir}/libs/toTask2.war.original", "${buildDir}/libs/totask2.war"
+}
+
 task stage {
-	dependsOn assemble
+	dependsOn assemble, prepareHerokuSlug
 	description "heroku deployment (cloud)"
 }
 

@@ -284,6 +284,11 @@ task genSwagger(type: JavaExec) {
     main      = "com.wordnik.swagger.codegen.Codegen"
 }
 
+task stage {
+	dependsOn assemble
+	description "heroku deployment (cloud)"
+}
+
 
 
 

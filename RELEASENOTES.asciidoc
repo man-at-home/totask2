@@ -5,10 +5,13 @@ totask2 releasenotes
 basic releasenotes for http://man-at-home.github.io/totask2/
 
 .2015-03-19
+
 - use travis-ci.org build in the cloud
+- use coverty qa checks in the cloud (triggered by travis, see https://totask2.wordpress.com/2015/03/19/coverity-added-to-the-mix/)
+- use codeship as secondary ci server int the cloud (see https://totask2.wordpress.com/2015/03/19/totask2-builds-now-on-codeship-com-too/)
 
 .2015-03-18
-- postman rest test
+- postman rest test (see https://totask2.wordpress.com/2015/03/17/testing-your-spring-boot-rest-services-tooling/)
 
 .2015-03-14
 - upgrade swagger api to 1.0

@@ -1,8 +1,10 @@
 package org.manathome.totask2.util;
 
+import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.*;
 
-import org.junit.Test;
+
+import org.junit.Test; 
 
 /** 
  * test the authorization helper. 
@@ -20,7 +22,11 @@ public class AuthorisationTest {
     @Test(expected = NotAllowedException.class)     
     public void testRequiredFalse() {
         Authorisation.require(false);
-        fail("NotAuthorised expected");
+    }
+
+    /** base test only. */
+    public void testIsAuthenticated() {
+        assertThat(Authorisation.isAdmin(null), is(false));
     }
     
 }

@@ -15,5 +15,5 @@ addons:
       description: "totask2 project task time logging"
     notification_email: man.from.home@gmail.com
     build_command_prepend: "./gradlew clean"
-    build_command:   "./gradlew compile"
+    build_command:   "./gradlew assemble"
     branch_pattern: qa_branch

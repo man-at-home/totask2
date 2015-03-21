@@ -285,7 +285,7 @@ task genSwagger(type: JavaExec) {
 }
 
 task prepareHerokuSlug(type: Delete) {
-	description "free space"
+	description "free space before heroku deployment (space issues)"
 	delete 	"${buildDir}/classes", "${buildDir}/distributions", "${buildDir}/libs/toTask2.jar.original", 
 			"${buildDir}/libs/toTask2.war.original", "${buildDir}/libs/totask2.war"
 }

@@ -89,7 +89,8 @@ dependencies {
     
     compile "org.slf4j:slf4j-api:1.7.7"                       // logging api
     compile "ch.qos.logback:logback-classic"                  // logging library
- //   compile "org.logback-extensions:logback-ext-loggly:0.1.2" // log into the cloud
+ // compile "org.logback-extensions:logback-ext-loggly:0.1.2" // log into the cloud, loggly.com
+    compile "com.papertrailapp:logback-syslog4j:1.0.0"        // log into the cloud, papertrail.com
     
     compile "net.sf.jasperreports:jasperreports:5.6.1"  	  // reporting engine
     compile "com.h2database:h2"								  // dev database (usable in memory)

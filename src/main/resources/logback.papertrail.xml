@@ -1,0 +1,50 @@
+<configuration>
+
+  <!-- basic dev logback logging configuration for totask2
+       @author man-at-home
+       @version 2015-03-05
+    -->
+
+  <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+    <!-- encoders are assigned the type
+         ch.qos.logback.classic.encoder.PatternLayoutEncoder by default -->
+    <encoder>
+      <pattern>%-4relative [%thread] %-5level %logger{35} [%X{log.user}]: %msg %n</pattern>
+    </encoder>
+  </appender> 
+   
+  <appender name="FILE" class="ch.qos.logback.core.FileAppender">
+    <file>build/totask2.logback.log</file>
+    <append>false</append>
+    <encoder>
+      <pattern>%-6r %-5level %logger{70} [%X{log.user}]: %msg%n</pattern>
+    </encoder>
+  </appender>
+  
+  <appender name="SYSLOG-TLS" class="com.papertrailapp.logback.Syslog4jAppender">
+  
+    <!-- syslog to papertrail.com -->
+  
+    <layout class="ch.qos.logback.classic.PatternLayout">
+      <pattern>%-5level %logger{35}: %m%n%xEx</pattern>
+    </layout>
+
+    <syslogConfig class="org.productivity.java.syslog4j.impl.net.tcp.ssl.SSLTCPNetSyslogConfig">
+      <!-- remote system to log to -->
+      <host>logs2.papertrailapp.com</host>
+      <!-- remote port to log to -->
+      <port>3****</port>
+      <!-- program name to log as -->
+      <ident>totask****</ident>
+    </syslogConfig>
+  </appender>
+  
+  <logger name="org.manathome" level="DEBUG" />
+          
+  <root level="WARN">
+    <appender-ref ref="FILE" />
+    <appender-ref ref="STDOUT" />
+    <appender-ref ref="SYSLOG-TLS" />
+  </root> 
+ 
+</configuration>	

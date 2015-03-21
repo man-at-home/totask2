@@ -41,9 +41,10 @@ http://springmvc.org/[springmvc^] als serverseitiges Java _Web Framework_.
 SpringMVC Web Anwendungen werden natürlich in Java programmiert. Im vorliegenden Fall bereits mit https://java.com/de/[Java 8]
 da ich dabei Closures nutzen wollte. Als Templating Engine für HTML wird dabei http://www.thymeleaf.org/[thymeleaf] verwendet. 
 
-Logging erfolgt mit http://logback.qos.ch/[logback/slf4j], optional in die cloud auf loggly.com, 
+Logging erfolgt mit http://logback.qos.ch/[logback/slf4j], optional in die cloud auf http://loggly.com[loggly.com], 
 
-Unit Tests mit http://junit.org/[junit]. Der REST Teil wird über http://swagger.io/[wagger] zur Verfügung gestellt.
+Unit Tests mit http://junit.org/[junit]. Der REST Teil wird über http://swagger.io/[wagger] zur Verfügung gestellt,
+alternativ erfolgen Tests der REST Aufrufe über https://www.getpostman.com/[Postman]
 
 _Client Seitig_ benutze ich http://getbootstrap.com//[bootstrap^] für css, 
 http://bootstrapvalidator.com/[bootstrapvalidator^] für einige Client seitige Prüfungen, 
@@ -94,7 +95,7 @@ Monitoring der bei heroku laufenden Anwendung erfolgt mit http://monitor.us[moni
 android und iphone apps herfür bereitstellen.
 
 Als Kommunikation (mit mir selber: "ha ha") generieren Codeänderungen (github) und Blob-Eitnräge (wordpress) twitter tweets auf
-https://twitter.com/totask2tweeter[@totask2tweeter].
+https://twitter.com/totask2tweeter[@totask2tweeter], andere Tools probiere ich gerade (Slack, HipChat).
 
 === Anforderungen zum Entwickeln
 

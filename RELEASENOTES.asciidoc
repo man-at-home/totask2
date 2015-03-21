@@ -4,8 +4,12 @@ totask2 releasenotes
 
 basic releasenotes for http://man-at-home.github.io/totask2/
 
+.2015-03-21
+- monitoring (non invasive) with monitor.us, see https://totask2.wordpress.com/2015/03/21/free-basic-monitoring-with-monitor-us-web-app/
+
 .2015-03-20
 - deploy to heroku, see https://totask2.wordpress.com/2015/03/20/second-runtime-use-heroku-as-cloud-container-for-totask2/
+- deployment is done with the second ci-server on codeship.
 
 .2015-03-19
 

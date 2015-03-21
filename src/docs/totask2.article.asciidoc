@@ -60,28 +60,41 @@ um Excel und PDF Auswertungen zu generieren.
 _Versionierung_ ist mit http://git-scm.com/[git] gelöst. Das Repository ist auf https://github.com/[github^] gehostet.
  
 _Datenhaltung_ wird mit der integrierten  http://www.h2database.com/[h2^] 
-in-Memory Datenbank gelöst, zumindest während der Entwicklung. Eine separate qa Datenbank wird mit dem QA Profil angesprochen,
+in-Memory Datenbank gelöst, zumindest während der Entwicklung. 
+Eine separate qa Datenbank wird mit dem QA Profil angesprochen,
 deren Tabellenstruktur (DDLs) wird mit "Migrations" durch http://flywaydb.org/[flyway^] gepflegt.
-Einige Tabellen/Daten sind historisiert, dies wird mit http://de.slideshare.net/jdegler/hibernate-envers[hibernate-envers] realisiert.
+Einige Tabellen/Daten sind historisiert, dies wird mit http://de.slideshare.net/jdegler/hibernate-envers[hibernate-envers] 
+realisiert.
 
 Dieser Artikel und weitere _Dokumentation_ ist mit http://asciidoctor.org/docs/asciidoc-writers-guide/[asciidoc^] 
 Markup erstellt. Einige Diagramme sind mit http://plantuml.sourceforge.net/[plantuml^] erstellt und generiert.
 Ein nettes Gimmick: github kann asciidoc Documente "on the fly" direkt aus dem Repository im Browser als Html
 rendern. Live zu sehen unter https://github.com/man-at-home/totask2/blob/master/src/docs/totask2.article.asciidoc
 
-Für das _Build Management_ nutze ich http://www.gradle.org/[gradle^], mit einigen Plugins wie asciidoctor. Ein Build-Server http://jenkins-ci.org/[jenkins] läuft in der cloud (openshift).
+Für das _Build Management_ nutze ich http://www.gradle.org/[gradle^], mit einigen Plugins wie asciidoctor. 
+Diverse Build-Server laufen in der Cloud, auf openshift http://jenkins-ci.org/[jenkins], 
+dazu https://travis-ci.org/[travis-ci] und https://codeship.com/[codeship]
 
-Qualitätsanalyse erfolgt mit diversen Tools die im build oder in der ide eingebunden sind: CheckStyle, FindBugs, PMD, jDepend, jacoco. Zudem als Analysewerkzeug http://www.sonarqube.org/[SonarQube].
+Qualitätsanalyse erfolgt mit diversen Tools die im build oder in der ide eingebunden sind: CheckStyle, FindBugs, 
+PMD, jDepend, jacoco. Zudem als Analysewerkzeug http://www.sonarqube.org/[SonarQube].
+Zusätzlich triggert der travis-ci Server eine cloud-basierte Codeprüfung auf an https://scan.coverity.com/[coverity.com]
 
 Experimentell ist http://www.seleniumhq.org/[selenium] als Web Test Tool.
 
 Als "echter" Appserver für das Deployment fungiert der http://www.wildfly.org/[WildFly Application Server] von redhat - sowohl lokal installiert als auch in der cloud.
 
-Hosting der Anwendung in der cloud erfolgt mit openShift in einer https://developers.openshift.com/en/wildfly-overview.html[WildFly Cardridge].
+Hosting der Anwendung in der cloud erfolgt mit openShift in einer https://developers.openshift.com/en/wildfly-overview.html[WildFly Cardridge],
+zudem automatisiert über den codeship ci-server auf einen dyno in der heroku cloud.
 
 Metriken sind mit boot-actuator und mit https://dropwizard.github.io/metrics[dropwizard metrics] bereitgestellt, derzeit als REST Endpoint. 
 Optionales weiteres Monitoring erfolgt mit http://www.newrelic.com/[newrelic]. Dazu ist der lokale wildfly Server instrumentiert
 und schickt Informationen an newrelic.
+
+Monitoring der bei heroku laufenden Anwendung erfolgt mit http://monitor.us[monitor.us], die neben web charts und alert mails auch 
+android und iphone apps herfür bereitstellen.
+
+Als Kommunikation (mit mir selber: "ha ha") generieren Codeänderungen (github) und Blob-Eitnräge (wordpress) twitter tweets auf
+https://twitter.com/totask2tweeter[@totask2tweeter].
 
 === Anforderungen zum Entwickeln
 
@@ -230,6 +243,8 @@ image::images/totask.qa.sonar.eclipse.png[screenshot_QA_sonarIDE, 600, 400]
 .sonar jacobo test coverage
 image::images/totask.qa.sonar.coverage.png[screenshot_QA_sonarCoverate, 700, 600]
 
+.coverity static analyse in der cloud
+image::images/totask2.qa.coverity.png[screenshot_QA_coverity, 700, 600]
 
 == Deployment
 
@@ -259,6 +274,12 @@ image::images/totask2.cloud.jenkins.gearbuild.png[screenshot_CLOUD_1, 700, 500]
 .totask2 running on openshift log tail
 image::images/totask2.cloud.rhc.png[screenshot_CLOUD_2, 700, 500]
 
+
+[[img-codeship2heroku-logs]]
+.totask2 ci-server codeship catches changes on github, builds totask2, deploying result afterwards on heroku dyno.
+image::images/totask2.cloud.codeship2heroku.png[screenshot_CLOUD_HEROKU, 700, 500]
+
+
 == Monitoring
 
 Option zur Logauswertung (direct in der cloud).
@@ -274,6 +295,10 @@ Monitoring der lokalen Wildfly Instanz mit newrelic.
 [[img-newrelic.com]]
 .totask2 app monitoring into the cloud
 image::images/totask2.monitor.newrelic.3.png[screenshot_newrelic, 700, 500]
+
+[[img-monitor-us.com]]
+.totask2 app monitoring into the cloud
+image::images/totask2.monitor.monitorus.web.png[screenshot_monitor-us, 700, 500]
 
 == weitere Details
 

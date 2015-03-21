@@ -1,3 +1,9 @@
+# ====================================================================
+# travis.yml: controls ci-server at travis-ci.org
+#             build totask2 and analyse (qa_branch only) with coverity
+#             notification goes to slack
+# ====================================================================
+
 language: java
 jdk:
   - oraclejdk8
@@ -17,3 +23,6 @@ addons:
     build_command_prepend: "./gradlew clean"
     build_command:   "./gradlew assemble"
     branch_pattern: qa_branch
+
+notifications:
+  slack: totask2:4qoHFcqOGzGhSbRQin6qXnIP

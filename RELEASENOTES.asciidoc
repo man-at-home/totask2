@@ -7,6 +7,7 @@ basic releasenotes for http://man-at-home.github.io/totask2/
 .2015-03-21
 - monitoring (non invasive) with monitor.us, see https://totask2.wordpress.com/2015/03/21/free-basic-monitoring-with-monitor-us-web-app/
 - logging to papertrail.com (not impressed), using another logback-appender, transmitting as syslog with tls.
+- dependency version update check with versioneye https://totask2.wordpress.com/2015/03/21/track-dependency-versions-with-versioneye/
 
 .2015-03-20
 - deploy to heroku, see https://totask2.wordpress.com/2015/03/20/second-runtime-use-heroku-as-cloud-container-for-totask2/

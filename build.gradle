@@ -69,7 +69,7 @@ buildscript {
 
 ext {
 	springVersion     = '4.1.5.RELEASE'
-	seleniumVersion   = '2.44.0'
+	seleniumVersion   = '2.45.0'
 }
 
 war {
@@ -85,20 +85,20 @@ configurations {
 }
 
 dependencies {
-    compile "org.apache.poi:poi:3.10.1"
+    compile "org.apache.poi:poi:3.11"
     
-    compile "org.slf4j:slf4j-api:1.7.7"                       // logging api
+    compile "org.slf4j:slf4j-api:1.7.10"                      // logging api
     compile "ch.qos.logback:logback-classic"                  // logging library
  // compile "org.logback-extensions:logback-ext-loggly:0.1.2" // log into the cloud, loggly.com
-    compile "com.papertrailapp:logback-syslog4j:1.0.0"        // log into the cloud, papertrail.com
+ // compile "com.papertrailapp:logback-syslog4j:1.0.0"        // log into the cloud, papertrail.com
     
-    compile "net.sf.jasperreports:jasperreports:5.6.1"  	  // reporting engine
+    compile "net.sf.jasperreports:jasperreports:6.0.3"  	  // reporting engine
     compile "com.h2database:h2"								  // dev database (usable in memory)
     
     compile "org.ajar:swagger-spring-mvc-ui:0.4"			  // rest tester
     compile "com.mangofactory:swagger-springmvc:1.0.0"        // newer version on hold cause of scala upgrade dependencies..
     
-    compile "io.dropwizard.metrics:metrics-core:3.1.0"        // more metric types than spring boot alone
+    compile "io.dropwizard.metrics:metrics-core:3.1.1"        // more metric types than spring boot alone
         
     compile "org.springframework:spring-context:${springVersion}"				// spring
     compile "org.springframework:spring-context-support:${springVersion}"
@@ -112,7 +112,7 @@ dependencies {
     compile "org.springframework.boot:spring-boot-starter-security"    
     compile "org.springframework.boot:spring-boot-starter-actuator"
     
-    compile "org.hibernate:hibernate-envers:4.3.7.Final"							// orm mapper history building
+    compile "org.hibernate:hibernate-envers:4.3.8.Final"							// orm mapper history building
 //	compile "javax.interceptor:javax.interceptor-api:1.+"							// workaround javadoc exception InterceptorBinding
         
     compile "org.flywaydb:flyway-core"    											// database migration utility

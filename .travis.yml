@@ -2,9 +2,12 @@
 # travis.yml: controls ci-server at travis-ci.org
 #             build totask2 and analyse (qa_branch only) with coverity
 #             notification goes to slack
+#
+# @author man-at-home
 # ====================================================================
 
 language: java
+
 jdk:
   - oraclejdk8
 

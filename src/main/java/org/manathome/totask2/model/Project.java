@@ -97,6 +97,7 @@ public class Project {
         return this.id; 
     }
     
+    /** setting the pk, shall not be called directly. */
     public void setId(long id) { 
         AAssert.checkZero(this.id, "project id already set");
         this.id = id; 

@@ -20,15 +20,18 @@ before_script:
    - update-alternatives --set java $java_path
    - java -version
    - mkdir -p shippable/testresults
+#  - mkdir -p shippable/codecoverage
 	
 install:
    - ./gradlew clean assemble
 
 script:
-   - ./gradlew check
+   - ./gradlew check 
+#  - ./gradlew cobertura
 
 after_script:
     - cp -r build/test-results/* shippable/testresults/
+#	- cp -r build/reports/cobertura/* shippable/codecoverage/
 	
 notifications:
     email:

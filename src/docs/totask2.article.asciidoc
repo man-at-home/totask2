@@ -74,7 +74,7 @@ rendern. Live zu sehen unter https://github.com/man-at-home/totask2/blob/master/
 
 Für das _Build Management_ nutze ich http://www.gradle.org/[gradle^], mit einigen Plugins wie asciidoctor. 
 Diverse Build-Server laufen in der Cloud, auf openshift http://jenkins-ci.org/[jenkins], 
-dazu https://travis-ci.org/[travis-ci] und https://codeship.com/[codeship]
+dazu https://travis-ci.org/[travis-ci] und https://codeship.com/[codeship] sowie https://app.shippable.com[shippable]
 
 Qualitätsanalyse erfolgt mit diversen Tools die im build oder in der ide eingebunden sind: CheckStyle, FindBugs, 
 PMD, jDepend, jacoco. Zudem als Analysewerkzeug http://www.sonarqube.org/[SonarQube].

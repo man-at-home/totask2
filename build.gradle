@@ -21,6 +21,7 @@ apply plugin: "eclipse"
 apply plugin: "checkstyle"
 apply plugin: "findbugs"     
 apply plugin: "jacoco"
+// apply plugin: "cobertura"
 apply plugin: "jdepend"
 apply plugin: "pmd"
 apply plugin: "sonar-runner"
@@ -46,11 +47,7 @@ repositories {
 
 buildscript {
 
-	ext {
-		springBootVersion = '1.2.2.RELEASE'
-	}
-	
-    repositories {
+   repositories {
         maven { url "http://repo.spring.io/libs-release" }
         mavenLocal()
         mavenCentral()
@@ -58,18 +55,18 @@ buildscript {
     }
     
     dependencies {
-        classpath "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}"  	
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:1.2.2.RELEASE"  	
 	    classpath "org.flywaydb:flyway-gradle-plugin:3.1"				
 	    classpath "org.asciidoctor:asciidoctor-gradle-plugin:1.5.1"								// documentation engine
 	    classpath "be.jlr-home.gradle:plantumlPlugin:0.1.1"	    								// documentation graphing
         classpath "com.eriwen:gradle-js-plugin:1.12.0"											// javascript build utilities
         classpath "com.wordnik:swagger-codegen:2.1.2-M1"                                        // optional swagger doc generation
+//      classpath "net.saliman:gradle-cobertura-plugin:2.2.7"                                   // coverage for shippable.com build
     }
 }
 
 ext {
 	springVersion     = '4.1.5.RELEASE'
-	seleniumVersion   = '2.45.0'
 }
 
 war {
@@ -116,7 +113,7 @@ dependencies {
 //	compile "javax.interceptor:javax.interceptor-api:1.+"							// workaround javadoc exception InterceptorBinding
         
     compile "org.flywaydb:flyway-core"    											// database migration utility
-    compile "org.seleniumhq.selenium:selenium-firefox-driver:${seleniumVersion}"	// ui tester
+    compile "org.seleniumhq.selenium:selenium-firefox-driver:2.45.0"	            // ui tester
 
     testCompile "org.springframework.boot:spring-boot-starter-test" 				// helper for unit testing spring boot
  //   testCompile "org.springframework.security:spring-security-test:4.0.0.M1"
@@ -165,6 +162,11 @@ jacocoTestReport {
 //        html.destination = "${buildDir}/reports/jacoco"
     }
 }
+
+// cobertura {
+//   coverageReportDir = file("${buildDir}/reports/cobertura")
+//   coverageFormats = ["xml"]
+// }
 
 // configured for local sonarQube 4.5 installation (defaults)
 sonarRunner {

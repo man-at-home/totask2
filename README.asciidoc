@@ -8,6 +8,8 @@ port of my old totask grails app to spring mvc.
 
 image:https://travis-ci.org/man-at-home/totask2.svg?branch=master["travis Build Status", link="https://travis-ci.org/man-at-home/totask2"]
 
+image:https://api.shippable.com/projects/550eae595ab6cc1352a75046/badge?branchName=master["shippable bild status", link="https://app.shippable.com"]
+
 image:https://codeship.com/projects/8f031ed0-b006-0132-a853-0e5ba92aabbb/status?branch=master["codeship Build Status", link="https://codeship.com/projects/69454"]
 
 See

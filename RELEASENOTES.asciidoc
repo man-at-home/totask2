@@ -4,6 +4,9 @@ totask2 releasenotes
 
 basic releasenotes for http://man-at-home.github.io/totask2/
 
+.2015-03-22
+- added circleci ci-server building qa_branch (including reports as artifacts)
+
 .2015-03-21
 - monitoring (non invasive) with monitor.us, see https://totask2.wordpress.com/2015/03/21/free-basic-monitoring-with-monitor-us-web-app/
 - logging to papertrail.com (not impressed), using another logback-appender, transmitting as syslog with tls.

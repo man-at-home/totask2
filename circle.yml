@@ -17,7 +17,9 @@ test:
    override:
       - ./gradlew check jacocoTestReport
    post:
-      - cp -R build/reports/* $CIRCLE_ARTIFACTS
+      - cp -R build/reports/*      $CIRCLE_ARTIFACTS
+      - mkdir -p $CIRCLE_TEST_REPORTS/junit/
+      - find . -type f -regex ".*/build/test-results/.*xml" -exec cp {} $CIRCLE_TEST_REPORTS/junit/ \;      
          
 general:
    branches:

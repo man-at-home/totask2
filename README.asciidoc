@@ -12,6 +12,8 @@ image:https://api.shippable.com/projects/550eae595ab6cc1352a75046/badge?branchNa
 
 image:https://codeship.com/projects/8f031ed0-b006-0132-a853-0e5ba92aabbb/status?branch=master["codeship Build Status", link="https://codeship.com/projects/69454"]
 
+image:https://circleci.com/gh/man-at-home/totask2/tree/qa_branch.svg?style=svg["Circle CI", link="https://circleci.com/gh/man-at-home/totask2/tree/qa_branch"]
+
 See
 
 * github page on http://man-at-home.github.io/totask2/ and 

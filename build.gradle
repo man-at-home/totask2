@@ -29,11 +29,14 @@ apply plugin: "groovy"
 
 // documentation
 apply plugin: "build-dashboard"
-apply plugin: "org.asciidoctor.gradle.asciidoctor"
 apply plugin: "plantuml"
+apply plugin: "announce"
+apply plugin: "org.asciidoctor.gradle.asciidoctor"
+apply plugin: "org.standardout.versioneye"
 
 // db
-apply plugin: "flyway"
+apply plugin: "org.flywaydb.flyway"
+
 
 repositories {
         maven{ url "http://repo.spring.io/libs-release" }
@@ -55,13 +58,14 @@ buildscript {
     }
     
     dependencies {
-        classpath "org.springframework.boot:spring-boot-gradle-plugin:1.2.2.RELEASE"  	
-	    classpath "org.flywaydb:flyway-gradle-plugin:3.1"				
-	    classpath "org.asciidoctor:asciidoctor-gradle-plugin:1.5.1"								// documentation engine
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:1.2.2.RELEASE"  			// spring boot with gradle
+        classpath "org.flywaydb:flyway-gradle-plugin:3.2.1"										// db migration
+	    classpath "org.asciidoctor:asciidoctor-gradle-plugin:1.5.2"								// documentation engine
 	    classpath "be.jlr-home.gradle:plantumlPlugin:0.1.1"	    								// documentation graphing
         classpath "com.eriwen:gradle-js-plugin:1.12.0"											// javascript build utilities
         classpath "com.wordnik:swagger-codegen:2.1.2-M1"                                        // optional swagger doc generation
 //      classpath "net.saliman:gradle-cobertura-plugin:2.2.7"                                   // coverage for shippable.com build
+ 		classpath "org.standardout:gradle-versioneye-plugin:1.0.1"								// versioneye gradle analysis
     }
 }
 
@@ -112,7 +116,7 @@ dependencies {
     compile "org.hibernate:hibernate-envers:4.3.8.Final"							// orm mapper history building
 //	compile "javax.interceptor:javax.interceptor-api:1.+"							// workaround javadoc exception InterceptorBinding
         
-    compile "org.flywaydb:flyway-core"    											// database migration utility
+    compile "org.flywaydb:flyway-core:3.2"    										// database migration utility
     compile "org.seleniumhq.selenium:selenium-firefox-driver:2.45.0"	            // ui tester
 
     testCompile "org.springframework.boot:spring-boot-starter-test" 				// helper for unit testing spring boot
@@ -120,6 +124,10 @@ dependencies {
     testCompile "org.spockframework:spock-spring"									// groovy unit test addone
  }
 
+
+jdepend {
+	toolVersion = "2.9.1"
+}
 
 jdependMain {
    reports {
@@ -136,7 +144,7 @@ jdependTest {
 }
 
 findbugs {
-        toolVersion    = "3.0.0"
+        toolVersion    = "3.0.1"
         ignoreFailures = true
         effort         = "max"
         reportLevel    = "high"
@@ -144,7 +152,11 @@ findbugs {
 
 checkstyle {
    ignoreFailures = true      
-   toolVersion    = "6.0"    // java8 support
+   toolVersion    = "6.4.1"    // java8 support
+}
+
+pmd {
+	toolVersion = "5.2.3"
 }
 
 
@@ -235,6 +247,15 @@ jsdoc {
    tasks.jsdoc.destinationDir = file("${buildDir}/jsdoc")
 }
 
+announce {  
+  // twitter
+  username = "totask2tweeter"
+}
+
+versioneye {
+  exclude      "testCompile", "testRuntime" , "buildscript", "rhino", "jdepend", "jacocoAnt", "jacocoAgent"
+}
+
 
 // CUSTOM TASKS
 // ============
@@ -294,11 +315,17 @@ task prepareHerokuSlug(type: Delete) {
 }
 
 task stage {
-	dependsOn assemble, prepareHerokuSlug
 	description "heroku deployment (cloud)"
+	dependsOn assemble, prepareHerokuSlug
 }
 
-
+ 
+test.doLast {  
+//    announce.announce "gradle $it.name done", "twitter"
+    announce.announce "gradle $it.name done", "local"
+}
+ 
+ 
 
 
 // reminder: start h2 console (start-menue) h2w.bat, connect to jdbc:h2:c:/data/projects/totask2/totask2.qa.db

@@ -1,4 +1,4 @@
-package org.manathome.totask2.service;
+     package org.manathome.totask2.service;
 
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.*;
@@ -98,20 +98,32 @@ public class WeekEntryServiceTest {
                 
         List<TaskInWeek> tasksInWeek = weekEntryService.getWorkWeek(user, dt);
         
-        LOG.debug("loaded: " + tasksInWeek);
+        int tasksCount = tasksInWeek.size();
+        LOG.debug("loaded: " + tasksCount + " tasks: "  + tasksInWeek);
         assertThat("0 updates/inserts on new read", weekEntryService.saveWeek(tasksInWeek), is(0));
-        LOG.debug("change entry: " + tasksInWeek.get(0).getDailyEntry(0) + " to 9.9");
-        tasksInWeek.get(0).setDailyEntry(0, tasksInWeek.get(0).getDailyEntry(0).setDuration(0.8f));
-        LOG.debug("change entry: " + tasksInWeek.get(0).getDailyEntry(1) + " to 8.8");
-        tasksInWeek.get(0).setDailyEntry(1, tasksInWeek.get(0).getDailyEntry(1).setDuration(1.7f));
-        LOG.debug("change entry: " + tasksInWeek.get(0).getDailyEntry(2) + " to 7.7");
-        tasksInWeek.get(0).setDailyEntry(2, tasksInWeek.get(0).getDailyEntry(2).setDuration(2.6f));
-        LOG.debug("change entry: " + tasksInWeek.get(0).getDailyEntry(3) + " to 6.6");
-        tasksInWeek.get(0).setDailyEntry(3, tasksInWeek.get(0).getDailyEntry(3).setDuration(3.5f));
-        LOG.debug("change entry: " + tasksInWeek.get(0).getDailyEntry(4) + " to 5.5");
-        tasksInWeek.get(0).setDailyEntry(4, tasksInWeek.get(0).getDailyEntry(4).setDuration(4.4f));
+        assertThat("at least 5 entries", tasksInWeek.get(0).getDailyEntries().count(), greaterThan(4L));
         
-        assertThat("5 changed durations", tasksInWeek.get(0).getDailyEntries().filter(de -> de.isModifiedByUser() || de.isNew()).count(), is(5L));
+        LOG.debug("change entry: " + tasksInWeek.get(0).getDailyEntry(0) + " to 0.8");
+        tasksInWeek.get(0).setDailyEntry(0, tasksInWeek.get(0).getDailyEntry(0).setDuration(0.8f));
+        assertThat("entry 0 modified", tasksInWeek.get(0).getDailyEntry(0).isModifiedByUser(), is(true));
+        
+        LOG.debug("change entry 1: " + tasksInWeek.get(0).getDailyEntry(1) + " to 8.8");
+        tasksInWeek.get(0).setDailyEntry(1, tasksInWeek.get(0).getDailyEntry(1).setDuration(8.8f));
+        assertThat("entry 1 modified", tasksInWeek.get(0).getDailyEntry(1).isModifiedByUser(), is(true));
+        
+        LOG.debug("change entry 2: " + tasksInWeek.get(0).getDailyEntry(2) + " to 7.7");
+        tasksInWeek.get(0).setDailyEntry(2, tasksInWeek.get(0).getDailyEntry(2).setDuration(7.7f));
+        assertThat("entry 1 modified", tasksInWeek.get(0).getDailyEntry(2).isModifiedByUser(), is(true));
+
+        LOG.debug("change entry 3: " + tasksInWeek.get(0).getDailyEntry(3) + " to 3.5");
+        tasksInWeek.get(0).setDailyEntry(3, tasksInWeek.get(0).getDailyEntry(3).setDuration(3.5f));
+        assertThat("entry 1 modified", tasksInWeek.get(0).getDailyEntry(3).isModifiedByUser(), is(true));
+
+        LOG.debug("change entry 4: " + tasksInWeek.get(0).getDailyEntry(4) + " to 4.2");
+        tasksInWeek.get(0).setDailyEntry(4, tasksInWeek.get(0).getDailyEntry(4).setDuration(4.2f));
+        assertThat("entry 4 modified", tasksInWeek.get(0).getDailyEntry(4).isModifiedByUser(), is(true));
+        
+        assertThat("changed 5 days on task 0: ", tasksInWeek.get(0).getDailyEntries().filter(de -> de.isModifiedByUser() || de.isNew()).count(), is(5L));
         
         assertThat("5 updated entries", weekEntryService.saveWeek(tasksInWeek), is(5));
         

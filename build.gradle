@@ -156,7 +156,7 @@ checkstyle {
 }
 
 pmd {
-	toolVersion = "5.2.3"
+//	toolVersion = "5.2.3"
 }
 
 
@@ -253,7 +253,7 @@ announce {
 }
 
 versioneye {
-  exclude      "testCompile", "testRuntime" , "buildscript", "rhino", "jdepend", "jacocoAnt", "jacocoAgent"
+  exclude      "testCompile", "testRuntime" , "buildscript", "rhino", "jdepend", "jacocoAnt", "jacocoAgent", "pmd"
 }
 
 

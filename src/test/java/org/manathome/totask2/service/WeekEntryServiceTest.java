@@ -93,6 +93,7 @@ public class WeekEntryServiceTest {
     @Test   
     public void testUpdateTestEntries() {
 
+        float oldValue = 0;
         LocalDate dt   = LocalDate.now();        
         User      user = userRepository.getOne(TestConstants.TEST_USER);
                 
@@ -103,24 +104,29 @@ public class WeekEntryServiceTest {
         assertThat("0 updates/inserts on new read", weekEntryService.saveWeek(tasksInWeek), is(0));
         assertThat("at least 5 entries", tasksInWeek.get(0).getDailyEntries().count(), greaterThan(4L));
         
-        LOG.debug("change entry: " + tasksInWeek.get(0).getDailyEntry(0) + " to 0.8");
-        tasksInWeek.get(0).setDailyEntry(0, tasksInWeek.get(0).getDailyEntry(0).setDuration(0.8f));
+        float oldValue0 = tasksInWeek.get(0).getDailyEntry(0).getDuration();
+        LOG.debug("change entry 0: " + tasksInWeek.get(0).getDailyEntry(0) + " to " + oldValue0 + 1);
+        tasksInWeek.get(0).setDailyEntry(0, tasksInWeek.get(0).getDailyEntry(0).setDuration(oldValue0 + 1));
         assertThat("entry 0 modified", tasksInWeek.get(0).getDailyEntry(0).isModifiedByUser(), is(true));
         
         LOG.debug("change entry 1: " + tasksInWeek.get(0).getDailyEntry(1) + " to 8.8");
         tasksInWeek.get(0).setDailyEntry(1, tasksInWeek.get(0).getDailyEntry(1).setDuration(8.8f));
         assertThat("entry 1 modified", tasksInWeek.get(0).getDailyEntry(1).isModifiedByUser(), is(true));
         
-        LOG.debug("change entry 2: " + tasksInWeek.get(0).getDailyEntry(2) + " to 7.7");
-        tasksInWeek.get(0).setDailyEntry(2, tasksInWeek.get(0).getDailyEntry(2).setDuration(7.7f));
+        oldValue = tasksInWeek.get(0).getDailyEntry(2).getDuration();
+        LOG.debug("change entry 2: " + tasksInWeek.get(0).getDailyEntry(2) + " to " + oldValue + 1);
+        tasksInWeek.get(0).setDailyEntry(2, tasksInWeek.get(0).getDailyEntry(2).setDuration(oldValue + 1));
         assertThat("entry 1 modified", tasksInWeek.get(0).getDailyEntry(2).isModifiedByUser(), is(true));
 
-        LOG.debug("change entry 3: " + tasksInWeek.get(0).getDailyEntry(3) + " to 3.5");
-        tasksInWeek.get(0).setDailyEntry(3, tasksInWeek.get(0).getDailyEntry(3).setDuration(3.5f));
+        float oldValue3 = tasksInWeek.get(0).getDailyEntry(3).getDuration();
+        LOG.debug("change entry 3: " + tasksInWeek.get(0).getDailyEntry(3) + " to " + oldValue3 + 1);
+        tasksInWeek.get(0).setDailyEntry(3, tasksInWeek.get(0).getDailyEntry(3).setDuration(oldValue3 + 1));
         assertThat("entry 1 modified", tasksInWeek.get(0).getDailyEntry(3).isModifiedByUser(), is(true));
 
-        LOG.debug("change entry 4: " + tasksInWeek.get(0).getDailyEntry(4) + " to 4.2");
-        tasksInWeek.get(0).setDailyEntry(4, tasksInWeek.get(0).getDailyEntry(4).setDuration(4.2f));
+        
+        oldValue = tasksInWeek.get(0).getDailyEntry(4).getDuration();
+        LOG.debug("change entry 4: " + tasksInWeek.get(0).getDailyEntry(4) + " to " + oldValue + 1);
+        tasksInWeek.get(0).setDailyEntry(4, tasksInWeek.get(0).getDailyEntry(4).setDuration(oldValue + 1));
         assertThat("entry 4 modified", tasksInWeek.get(0).getDailyEntry(4).isModifiedByUser(), is(true));
         
         assertThat("changed 5 days on task 0: ", tasksInWeek.get(0).getDailyEntries().filter(de -> de.isModifiedByUser() || de.isNew()).count(), is(5L));
@@ -128,7 +134,7 @@ public class WeekEntryServiceTest {
         assertThat("5 updated entries", weekEntryService.saveWeek(tasksInWeek), is(5));
         
         List<TaskInWeek> tasksInWeekReread = weekEntryService.getWorkWeek(user, dt);
-        assertThat("updated to 0.8f", tasksInWeekReread.get(0).getDailyEntry(0).getDuration(), is(0.8f));   
-        assertThat("updated to 3.5f", tasksInWeekReread.get(0).getDailyEntry(3).getDuration(), is(3.5f));  
+        assertThat("updated 0 entry to " + oldValue0 + 1, tasksInWeekReread.get(0).getDailyEntry(0).getDuration(), is(oldValue0 + 1));   
+        assertThat("updated 3 entry to " + oldValue3 + 1, tasksInWeekReread.get(0).getDailyEntry(3).getDuration(), is(oldValue3 + 1));  
     }
 }

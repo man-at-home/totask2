@@ -56,9 +56,9 @@ public class LoginProjectsLogout {
     // type | name=username | unit-test-user
     driver.findElement(By.name("username")).clear();
     driver.findElement(By.name("username")).sendKeys("unit-test-user");
-    // type | name=password | 123456
+    // type | name=password | t123456
     driver.findElement(By.name("password")).clear();
-    driver.findElement(By.name("password")).sendKeys("123456");
+    driver.findElement(By.name("password")).sendKeys("t123456");
     // click | css=button.btn.btn-primary | 
     driver.findElement(By.cssSelector("button.btn.btn-primary")).click();
     // assertText | css=h1 | currently defined projects*

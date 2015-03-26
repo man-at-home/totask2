@@ -7,7 +7,7 @@ public final class TestConstants {
     public static final long TEST_USER  = 2L;
     
     public static final String TEST_USER_NAME = "unit-test-user";
-    public static final String TEST_USER_PW   = "123456";
+    public static final String TEST_USER_PW   = "t123456";
     
     public static final long TEST_PROJECT = 2L;
     

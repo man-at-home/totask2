@@ -41,8 +41,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         
         http
             .authorizeRequests()
-                .antMatchers("/", "/index.html", "/js/*", "/css/*", "/bootstrap/**/*", "/images/*", "/api-docs", "/api-docs/**/*").permitAll()
-                .anyRequest().authenticated();  // no login: static ressources (html, css, javascript) including swagger rest ddl.
+                .antMatchers("/", "/index.html", "/js/*", "/css/*", "/bootstrap/**/*", "/images/*", "/api-docs", "/api-docs/**/*")
+                .permitAll()    // no login: static ressources (html, css, javascript) including swagger rest ddl.
+                .anyRequest()
+                .authenticated();  
         http
             .formLogin()
                 .loginPage("/login")
@@ -89,7 +91,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/APP/REST/**").hasRole("USER")
                 .and()
                 .httpBasic();
-
+            
             http.csrf().disable();  // w/ rest posts APP/REST/WorkEntry
         }
         
@@ -104,5 +106,39 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 ;
         }
     }//static inner class
-   
+
+    
+    /** third configuration: using basic authentication for metrics REST. */
+    @Configuration
+    @Order(2) 
+    public static class MonitoringApiWebSecurityConfigurationAdapter extends WebSecurityConfigurerAdapter {
+        
+        @Autowired private UserDetailsServiceImpl userDetailsServiceImpl;        
+        
+        /** use basic authentication for /APP/REST URLs. */
+        protected void configure(HttpSecurity http) throws Exception {
+            
+            LOG.info("metrics/REST-API: enabling security (configure basic auth)");
+            
+            http
+                .antMatcher("/health")
+                .authorizeRequests()
+                .antMatchers("/health").hasRole("ADMIN")
+                .and()
+                .httpBasic();
+            
+            http.csrf().disable();  // w/ rest posts APP/REST/WorkEntry
+        }
+        
+        /** use same users as web application. */
+        @Override
+        protected void configure(AuthenticationManagerBuilder auth)
+                throws Exception {
+            
+            LOG.debug("metrics/REST-API: configuring userDetailsService " + userDetailsServiceImpl);
+            auth.userDetailsService(userDetailsServiceImpl)
+                .passwordEncoder(User.getPasswordEncoder())
+                ;
+        }
+    }//static inner class
 }//class

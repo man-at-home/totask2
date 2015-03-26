@@ -4,6 +4,10 @@ totask2 releasenotes
 
 basic releasenotes for http://man-at-home.github.io/totask2/
 
+.2015-03-26
+- added soapUI REST Script (targeted for AlertSite UXM)
+- added AlertSite UXM monitoring on heroku hosted totask2
+
 .2015-03-25
 - added anturis web and web transaktion monitoring on heroku hosted totask2
 - added ruxit client side tracking on heroku hosted totask2 (see https://totask2.wordpress.com/2015/03/25/ruxit-monitoring-included-in-heroku-hosted-totask2/)

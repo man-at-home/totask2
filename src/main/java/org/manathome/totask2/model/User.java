@@ -206,7 +206,7 @@ public final class User implements UserDetails {
         
         if (this.password == null || this.password.length() <= 0) {
             LOG.debug("START-password of user " + this.getDisplayName() + " requested.");        
-            return getPasswordEncoder().encode("123456");           
+            return getPasswordEncoder().encode("t123456");           
         } else {
             LOG.debug("custom-password of user " + this.getDisplayName() + " requested.");  
             return this.password;

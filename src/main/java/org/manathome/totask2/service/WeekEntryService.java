@@ -40,6 +40,9 @@ public class WeekEntryService {
     
     /** possible tasks. */
     @Autowired private TaskAssignmentRepository taskAssignmentRepository; 
+    
+    /** analyze usage. */
+    @Autowired private AnalyticService          analyticService;
 
     /** .ctor. */
     public WeekEntryService() {
@@ -141,6 +144,8 @@ public class WeekEntryService {
                 this.workEntryRepository.flush();   // per task..
             }
         } 
+        
+        analyticService.logData("weekData", "save", "" + saveCount);
         return saveCount;
     }
 

@@ -5,6 +5,7 @@ import static org.manathome.totask2.util.AAssert.*;
 import org.manathome.totask2.model.Project;
 import org.manathome.totask2.model.ProjectRepository;
 import org.manathome.totask2.model.User;
+import org.manathome.totask2.service.AnalyticService;
 import org.manathome.totask2.service.AuditingService;
 import org.manathome.totask2.service.AuditingService.EntityRevision;
 import org.manathome.totask2.service.ReportGenerator;
@@ -63,6 +64,7 @@ public class ProjectController {
     @Autowired private CounterService       counterService;
     @Autowired private UserCachingService   userCachingService;
     @Autowired private AuditingService      auditingService;
+    @Autowired private AnalyticService      analyticService;
  
     
     /** REST API: /REST/Projects. */
@@ -189,6 +191,8 @@ public class ProjectController {
                 counterService.increment("TOTASK2XX.model.project.changed"); 
             }
         }
+        
+        analyticService.logMasterDataChanges("project", project.getId(), project.getName());
         
         LOG.debug("saved " + project + ", now redirecting.");
         return "redirect:/projects";

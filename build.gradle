@@ -1,7 +1,7 @@
 /*
  * gradle build script for totask2 project.
  *
- * uses gradle 2.3 for compile!
+ * uses gradle 2.3 for compile (or provided gradlew script).
  *
  * @see     http://man-at-home.github.io/totask2/
  * @author  man-at-home
@@ -21,7 +21,7 @@ apply plugin: "eclipse"
 apply plugin: "checkstyle"
 apply plugin: "findbugs"     
 apply plugin: "jacoco"
-// apply plugin: "cobertura"
+// apply plugin: "cobertura"	// not yet there with java8 it seems, jacoco works though
 apply plugin: "jdepend"
 apply plugin: "pmd"
 apply plugin: "sonar-runner"
@@ -69,10 +69,6 @@ buildscript {
     }
 }
 
-// ext {
-//	springVersion     = '4.1.5.RELEASE'				// commented out for versioneye analysis
-// }
-
 war {
     archiveName = 'totask2.war'
 }
@@ -93,20 +89,20 @@ dependencies {
  // compile "org.logback-extensions:logback-ext-loggly:0.1.2" // log into the cloud, loggly.com
  // compile "com.papertrailapp:logback-syslog4j:1.0.0"        // log into the cloud, papertrail.com
     
-    compile "net.sf.jasperreports:jasperreports:6.0.3"  	  // reporting engine
+    compile "net.sf.jasperreports:jasperreports:6.0.3"  	  // reporting engine (excel, pdf generation)
     compile "com.h2database:h2:1.4.186"						  // dev database (usable in memory)
     
-    compile "org.ajar:swagger-spring-mvc-ui:0.4"			  // rest tester
+    compile "org.ajar:swagger-spring-mvc-ui:0.4"			  // rest tester ui integrated in web app
     compile "com.mangofactory:swagger-springmvc:1.0.0"        // newer version on hold cause of scala upgrade dependencies..
     
     compile "io.dropwizard.metrics:metrics-core:3.1.1"        // more metric types than spring boot alone
+    compile "io.keen:keen-client-api-java:2.1.1"              // analytic data for keen.io 
         
-    compile "org.springframework:spring-context:4.1.5.RELEASE"				// spring
+    compile "org.springframework:spring-context:4.1.5.RELEASE"					// spring
     compile "org.springframework:spring-context-support:4.1.5.RELEASE"
     
+    compile "org.springframework.boot:spring-boot-starter-web" 					// spring boot
     compile "org.springframework.boot:spring-boot-starter-thymeleaf"			// templating engine
-
-    compile "org.springframework.boot:spring-boot-starter-web" 
     compile "org.springframework.boot:spring-boot-starter-undertow"				// wildfly/undertow, if not remove here and above
 
     compile "org.springframework.boot:spring-boot-starter-data-jpa"
@@ -114,11 +110,10 @@ dependencies {
     compile "org.springframework.boot:spring-boot-starter-actuator"
     
     compile "org.hibernate:hibernate-envers:4.3.8.Final"							// orm mapper history building
-//	compile "javax.interceptor:javax.interceptor-api:1.+"							// workaround javadoc exception InterceptorBinding
-        
+//	compile "javax.interceptor:javax.interceptor-api:1.+"							// workaround javadoc exception InterceptorBinding        
     compile "org.flywaydb:flyway-core:3.2"    										// database migration utility
-    compile "org.seleniumhq.selenium:selenium-firefox-driver:2.45.0"	            // ui tester
-
+    
+    testCompile "org.seleniumhq.selenium:selenium-firefox-driver:2.45.0"	        // ui tester
     testCompile "org.springframework.boot:spring-boot-starter-test" 				// helper for unit testing spring boot
  //   testCompile "org.springframework.security:spring-security-test:4.0.0.M1"
     testCompile "org.spockframework:spock-spring"									// groovy unit test addone
@@ -152,7 +147,7 @@ findbugs {
 
 checkstyle {
    ignoreFailures = true      
-   toolVersion    = "6.4.1"    // java8 support
+   toolVersion    = "6.4.1"    // with java8 support
 }
 
 pmd {
@@ -237,7 +232,7 @@ jshint {
     jshint.options = [bitwise:true]
     jshint.predef=[
     	"Ext"	:true, 
-    	'$'		:true
+    	'$'		:true			// jquery
     	]
 }
 
@@ -249,7 +244,7 @@ jsdoc {
 
 announce {  
   // twitter
-  username = "totask2tweeter"
+  username = "totask2tweeter"	// currently not active..
 }
 
 versioneye {
@@ -260,31 +255,30 @@ versioneye {
 // CUSTOM TASKS
 // ============
 
-// use diagrams from javadoc in asciidoc articles too
 task copyPlantUMLImages(type: Copy) {
-    dependsOn    javadoc
     description "use diagrams from javadoc in asciidoc articles too"
+    dependsOn    javadoc
     from fileTree(dir: "${buildDir}/docs/javadoc", include: "**/doc-files/*.png").files
     into "${buildDir}/docs/asciidoc/images/uml"
 }
 
 // generate all documentation
 task allDocs {
+    description "generation of full documenation for totask2 (asciidoc and javadoc"
     dependsOn javadoc, asciidoctor, copyPlantUMLImages 
-    description "generation of full documenation for totask2"
 }
 
 
 // create gradlew script configuration
 task wrapper(type: Wrapper) {
-    description "gradle wrapper generation"
+    description "gradle wrapper generation (call if gradle version changes)"
     gradleVersion = '2.3'
 }
 
-// deploy into local running app server (wildlfy 8.1 currently)
+
 task deployLocal(type: Copy) {
-    dependsOn assemble
     description "deploy into app server (wildlfy 8.1 currently). start with wildfly/bin/standalone.bat"
+    dependsOn assemble
     from "${buildDir}/libs"
     include '*.war'
     into 'c:/dev/wildfly/standalone/deployments'
@@ -292,12 +286,12 @@ task deployLocal(type: Copy) {
 
 // deploy into cloud server (wildlfy cardridge currently)
 task deployOpenShift(type: Copy) {
-    dependsOn assemble
     description "deploy into app server (wildlfy 8.1 - called from action_hook/deploy)"
+    dependsOn assemble
     from "${buildDir}/libs"
     include '*.war'    
     into 'deployments'  
-//    rename { String fileName -> "ROOT.war" }
+//    rename { String fileName -> "ROOT.war" }  // if you neet the application running as root url /
 }
 
 task genSwagger(type: JavaExec) {

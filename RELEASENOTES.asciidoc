@@ -4,16 +4,19 @@ totask2 releasenotes
 
 basic releasenotes for http://man-at-home.github.io/totask2/
 
+.2015-03-28
+- addes keen.io analytic data logging (https://totask2.wordpress.com/2015/03/28/feeding-analytical-data-into-keen-io/)
+
 .2015-03-26
 - added soapUI REST Script (targeted for AlertSite UXM)
-- added AlertSite UXM monitoring on heroku hosted totask2
+- added AlertSite UXM monitoring on heroku hosted totask2 (see https://totask2.wordpress.com/2015/03/26/alertsite-uxm-monitoring-for-totask2/)
 
 .2015-03-25
 - added anturis web and web transaktion monitoring on heroku hosted totask2
 - added ruxit client side tracking on heroku hosted totask2 (see https://totask2.wordpress.com/2015/03/25/ruxit-monitoring-included-in-heroku-hosted-totask2/)
 
 .2015-03-22
-- added circleci ci-server building qa_branch (including reports as artifacts)
+- added circleci ci-server building qa_branch (including reports as artifacts), see https://totask2.wordpress.com/2015/03/23/circleci-build-server-added-qa_branch/
 
 .2015-03-21
 - monitoring (non invasive) with monitor.us, see https://totask2.wordpress.com/2015/03/21/free-basic-monitoring-with-monitor-us-web-app/

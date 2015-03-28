@@ -9,7 +9,7 @@
     <!-- encoders are assigned the type
          ch.qos.logback.classic.encoder.PatternLayoutEncoder by default -->
     <encoder>
-      <pattern>%-4relative [%thread] %-5level %logger{35} :: %mdc{user:-XXX} :: %msg %n</pattern>
+      <pattern>%-4relative [%thread] %-5level %logger{35} :: %mdc{log.user:-XXX} :: %msg %n</pattern>
     </encoder>
   </appender> 
    
@@ -17,7 +17,7 @@
     <file>build/totask2.logback.log</file>
     <append>false</append>
     <encoder>
-      <pattern>%-6r %-5level %logger{70}: %X{user} :: %msg%n</pattern>
+      <pattern>%-6r %-5level %logger{70}: %X{log.user} :: %msg%n</pattern>
     </encoder>
   </appender>
   

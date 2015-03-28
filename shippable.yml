@@ -1,6 +1,8 @@
 # --------------------------------------------------------------------
 # shippable.yml:  build configuration for ci-server at shippable.com
 #                 build and test totask2 project on github with gradle
+# 
+# @see    https://totask2.wordpress.com/2015/03/22/shippable-ci-server-added-to-the-mix/
 # @author man-at-home
 # @since  2015-03-22
 # --------------------------------------------------------------------

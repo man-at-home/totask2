@@ -75,12 +75,12 @@ public abstract class AAssert {
      * @return nonEmptyString unchanged
      */
     public static String checkNotNullOrEmpty(final String nonEmptyString, @NotNull final String msg) {
-        // assert nonEmptyString != null && nonEmptyString.trim().length() > 0;
+        
         if (checkNotNull(nonEmptyString, msg).trim().length() == 0) {
             LOG.error("checkNotNullOrEmpty(" + nonEmptyString + ") not satisfied ->" + msg);
             throw new AssertionError(msg);
         }
-        return msg;
+        return nonEmptyString;
     }
 
 

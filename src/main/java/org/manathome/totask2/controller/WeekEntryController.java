@@ -28,14 +28,6 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-
-
-
-
-
-
-
-
 import java.text.ParseException;
 import java.time.LocalDate;
 import java.util.List;
@@ -65,8 +57,9 @@ import com.codahale.metrics.Timer;
 @Controller
 public class WeekEntryController {
 
-    private static final Logger LOG = LoggerFactory.getLogger(WeekEntryController.class);
-    
+    private static final Logger LOG = LoggerFactory
+            .getLogger(WeekEntryController.class);
+
     /** work entry repository. */
     @Autowired
     private WorkEntryRepository workEntryRepository;
@@ -81,18 +74,18 @@ public class WeekEntryController {
 
     @Autowired
     private WeekEntryService weekEntryService;
-    
 
-    private final Histogram      tasksPerWeekHistogramm;
-    private final Timer          weekEntryGetResponseTimer;
-    
+    private final Histogram tasksPerWeekHistogramm;
+    private final Timer weekEntryGetResponseTimer;
+
     /** ctor. */
     @Autowired
     public WeekEntryController(final MetricRegistry metricRegistry) {
-            this.tasksPerWeekHistogramm    = metricRegistry.histogram("TOTASK2XX.controller.weekEntry.TaskInWeek.hist");
-            this.weekEntryGetResponseTimer = metricRegistry.timer("TOTASK2XX.controller.weekEntry.request.get.timed");
+        this.tasksPerWeekHistogramm = metricRegistry
+                .histogram("TOTASK2XX.controller.weekEntry.TaskInWeek.hist");
+        this.weekEntryGetResponseTimer = metricRegistry
+                .timer("TOTASK2XX.controller.weekEntry.request.get.timed");
     }
-    
 
     private WeekEntryService getService() {
         return weekEntryService;
@@ -115,11 +108,11 @@ public class WeekEntryController {
         model.addAttribute("previousWeek", dt.minusWeeks(1).toString());
         model.addAttribute("nextWeek", dt.plusWeeks(1).toString());
         model.addAttribute("date", LocalDateConverter.toDate(dt));
-        
+
         try {
             List<TaskInWeek> tiw = getWeek(dt);
             model.addAttribute("tasksInWeek", tiw);
-            
+
             if (tasksPerWeekHistogramm != null) {
                 tasksPerWeekHistogramm.update(tiw.size());
             }
@@ -132,8 +125,8 @@ public class WeekEntryController {
     }
 
     /**
-     * GET: provide {@link org.manathome.totask2.model.WorkEntry} data of current
-     * week and {@link org.manathome.totask2.model.User}.
+     * GET: provide {@link org.manathome.totask2.model.WorkEntry} data of
+     * current week and {@link org.manathome.totask2.model.User}.
      * 
      * @see org.manathome.totask2.model.WorkEntry
      */
@@ -159,15 +152,16 @@ public class WeekEntryController {
             @PathVariable final String dateString) {
         LOG.trace("weekEntry( " + dateString + ")");
 
-        try (Timer.Context context = (weekEntryGetResponseTimer == null) ? null : weekEntryGetResponseTimer.time()) {
+        try (Timer.Context context = (weekEntryGetResponseTimer == null) ? null
+                : weekEntryGetResponseTimer.time()) {
             buildWeekModel(model, LocalDate.parse(dateString));
             return "weekEntry";
-        } 
+        }
     }
 
     /**
-     * POST: save all {@link org.manathome.totask2.model.WorkEntry} data for given
-     * week and {@link org.manathome.totask2.model.User}.
+     * POST: save all {@link org.manathome.totask2.model.WorkEntry} data for
+     * given week and {@link org.manathome.totask2.model.User}.
      * 
      * @see org.manathome.totask2.model.WorkEntry
      * @exception InvalidClientArgumentsException
@@ -178,60 +172,69 @@ public class WeekEntryController {
             @PathVariable final String dateString,
             final RedirectAttributes redirectAttributes,
             final WebRequest request) {
-        
+
         LOG.trace("saveWeekEntry( " + dateString + ") -> db");
 
-        LocalDate dt = LocalDate.parse(checkNotNullOrEmpty(dateString, "no date given"));
+        try {
 
-        List<TaskInWeek> tasksInWeek = getWeek(dt);
+            LocalDate dt = LocalDate.parse(checkNotNullOrEmpty(dateString, "no date given"));
 
-        // each task row
-        for (TaskInWeek taskRow : tasksInWeek) {
-            for (int i = 0; i <= 6; i++) {
-                // each of 7 days for current task)
-                String newDurationString = request.getParameter("workEntry_"
-                        + taskRow.getTask().getId() + "_" + i);
+            List<TaskInWeek> tasksInWeek = getWeek(dt);
 
-                try {
-                    float newDuration = DurationConverter.parse(
-                            newDurationString).floatValue();
-                    if (newDuration != taskRow.getDailyEntry(i)
-                            .getDuration()) {
-                        LOG.debug(taskRow.getTask().getName() + "[" + i + "]: "
-                                + newDurationString + "h == " + newDuration
-                                + ", old value was:"
-                                + taskRow.getDailyEntry(i));
-                        
-                        WorkEntry we = taskRow.getDailyEntry(i);
-                        we.setDuration(DurationConverter.parse(newDurationString).floatValue());
-                        taskRow.setDailyEntry(i, we);
+            // each task row
+            for (TaskInWeek taskRow : tasksInWeek) {
+                for (int i = 0; i <= 6; i++) {
+                    // each of 7 days for current task)
+                    String newDurationString = request
+                            .getParameter("workEntry_"
+                                    + taskRow.getTask().getId() + "_" + i);
+
+                    try {
+                        float newDuration = DurationConverter.parse(
+                                newDurationString).floatValue();
+                        if (newDuration != taskRow.getDailyEntry(i)
+                                .getDuration()) {
+                            LOG.debug(taskRow.getTask().getName() + "[" + i
+                                    + "]: " + newDurationString + "h == "
+                                    + newDuration + ", old value was:"
+                                    + taskRow.getDailyEntry(i));
+
+                            WorkEntry we = taskRow.getDailyEntry(i);
+                            we.setDuration(DurationConverter.parse(
+                                    newDurationString).floatValue());
+                            taskRow.setDailyEntry(i, we);
+                        }
+                    } catch (ParseException pex) {
+                        // rely on client side validation for "pretty" user
+                        // feedback..
+                        throw new InvalidClientArgumentsException(
+                                "invalid duration " + newDurationString
+                                        + " for task "
+                                        + taskRow.getTask().getName(), pex);
                     }
-                } catch (ParseException pex) {
-                    // rely on client side validation for "pretty" user
-                    // feedback..
-                    throw new InvalidClientArgumentsException(
-                            "invalid duration " + newDurationString
-                                    + " for task "
-                                    + taskRow.getTask().getName(), pex);
                 }
             }
+
+            String changedTaskNames = tasksInWeek.stream()
+                    .filter(t -> t.isNewOrModified())
+                    .map(tiw -> tiw.getTask().getName())
+                    .collect(Collectors.joining(", "));
+
+            LOG.debug("updating: " + changedTaskNames);
+
+            getService().saveWeek(tasksInWeek);
+
+            String updateMessage = changedTaskNames != null
+                    && changedTaskNames.length() > 1 ? "changed values for: "
+                    + changedTaskNames : "no change.";
+            redirectAttributes.addFlashAttribute("flashMessage", updateMessage);
+
+            return "redirect:/weekEntry";
+
+        } catch (Exception ex) {
+            LOG.error(dateString, ex);
+            throw ex;
         }
-
-        String changedTaskNames = tasksInWeek.stream()
-                .filter(t -> t.isNewOrModified())
-                .map(tiw -> tiw.getTask().getName())
-                .collect(Collectors.joining(", "));
-
-        LOG.debug("updating: " + changedTaskNames);
-
-        getService().saveWeek(tasksInWeek);
-
-        String updateMessage = changedTaskNames != null
-                && changedTaskNames.length() > 1 ? "changed values for: "
-                + changedTaskNames : "no change.";
-        redirectAttributes.addFlashAttribute("flashMessage", updateMessage);
-
-        return "redirect:/weekEntry";
     }
 
     /**

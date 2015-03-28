@@ -5,6 +5,7 @@ import org.manathome.totask2.model.ProjectRepository;
 import org.manathome.totask2.model.Task;
 import org.manathome.totask2.model.TaskRepository;
 import org.manathome.totask2.model.User;
+import org.manathome.totask2.service.AnalyticService;
 import org.manathome.totask2.service.UserCachingService;
 import org.manathome.totask2.util.Authorisation;
 import org.manathome.totask2.util.ProjectNotFoundException;
@@ -57,7 +58,7 @@ public class TaskController {
     
     @Autowired private UserCachingService   userCachingService;
     
-    
+    @Autowired private AnalyticService      analyticService;    
     
     /** currently logged in @see user. */
     @ModelAttribute("user")
@@ -175,7 +176,9 @@ public class TaskController {
         Task savedTask  = this.taskRepository.saveAndFlush(task);
         model.clear();        
         
+        analyticService.logMasterDataChanges("task", savedTask.getId(), savedTask.getName());
         LOG.debug("saved " + savedTask + ", now redirecting.");
+        
         return "redirect:/project/" + savedTask.getProject().getId() + "/tasks";
     }    
     

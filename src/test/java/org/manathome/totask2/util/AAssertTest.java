@@ -37,8 +37,11 @@ public class AAssertTest {
     /** test checkNotNull(null).*/
     @Test
     public void testCheckNotOrEmpty() {
+        String s = "A12341234234X";
         assertThat(AAssert.checkNotNullOrEmpty("filled", "valid"), notNullValue());
+        assertThat(AAssert.checkNotNullOrEmpty(s, "valid"), is(s));
     }
+ 
     
     /** test checkNotNull(null).*/
     @Test(expected = NullPointerException.class)

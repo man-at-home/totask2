@@ -110,7 +110,7 @@ dependencies {
     compile "org.springframework.boot:spring-boot-starter-actuator"
     
     compile "org.hibernate:hibernate-envers:4.3.8.Final"							// orm mapper history building
-//	compile "javax.interceptor:javax.interceptor-api:1.+"							// workaround javadoc exception InterceptorBinding        
+//    compile "javax.interceptor:javax.interceptor-api:1.+"							// workaround javadoc exception InterceptorBinding        
     compile "org.flywaydb:flyway-core:3.2"    										// database migration utility
     
     testCompile "org.seleniumhq.selenium:selenium-firefox-driver:2.45.0"	        // ui tester

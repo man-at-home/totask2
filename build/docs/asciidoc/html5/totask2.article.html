@@ -4,14 +4,14 @@
 <meta charset="UTF-8">
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="generator" content="Asciidoctor 1.5.0">
+<meta name="generator" content="Asciidoctor 1.5.2">
 <meta name="author" content="man-at-home">
-<title>totask2 Entwickler Dokumentation</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic|Noto+Serif:400,400italic,700,700italic|Droid+Sans+Mono:400">
+<title>totask2 Überblick</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400">
 <style>
 /* Asciidoctor default stylesheet | MIT License | http://asciidoctor.org */
 /* Remove the comments around the @import statement below when using this as a custom stylesheet */
-/*@import "https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic|Noto+Serif:400,400italic,700,700italic|Droid+Sans+Mono:400";*/
+/*@import "https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400";*/
 article,aside,details,figcaption,figure,footer,header,hgroup,main,nav,section,summary{display:block}
 audio,canvas,video{display:inline-block}
 audio:not([controls]){display:none;height:0}
@@ -275,8 +275,8 @@ dl dd:last-child,dl dd:last-child>:last-child{margin-bottom:0}
 ol>li p,ul>li p,ul dd,ol dd,.olist .olist,.ulist .ulist,.ulist .olist,.olist .ulist{margin-bottom:.625em}
 ul.unstyled,ol.unnumbered,ul.checklist,ul.none{list-style-type:none}
 ul.unstyled,ol.unnumbered,ul.checklist{margin-left:.625em}
-ul.checklist li>p:first-child>.fa-check-square-o:first-child,ul.checklist li>p:first-child>input[type="checkbox"]:first-child{margin-right:.25em}
-ul.checklist li>p:first-child>input[type="checkbox"]:first-child{position:relative;top:1px}
+ul.checklist li>p:first-child>.fa-square-o:first-child,ul.checklist li>p:first-child>.fa-check-square-o:first-child{width:1em;font-size:.85em}
+ul.checklist li>p:first-child>input[type="checkbox"]:first-child{width:1em;position:relative;top:1px}
 ul.inline{margin:0 auto .625em auto;margin-left:-1.375em;margin-right:0;padding:0;list-style:none;overflow:hidden}
 ul.inline>li{list-style:none;float:left;margin-left:1.375em;display:block}
 ul.inline>li>*{display:block}
@@ -381,7 +381,7 @@ p{margin-bottom:1.25rem}
 *{-webkit-box-shadow:none!important;box-shadow:none!important;text-shadow:none!important}
 a{color:inherit!important;text-decoration:underline!important}
 a.bare,a[href^="#"],a[href^="mailto:"]{text-decoration:none!important}
-a[href^="http:"]:not(.bare):after,a[href^="https:"]:not(.bare):after,a[href^="mailto:"]:not(.bare):after{content:"(" attr(href) ")";display:inline-block;font-size:.875em;padding-left:.25em}
+a[href^="http:"]:not(.bare):after,a[href^="https:"]:not(.bare):after{content:"(" attr(href) ")";display:inline-block;font-size:.875em;padding-left:.25em}
 abbr[title]:after{content:" (" attr(title) ")"}
 pre,blockquote,tr,img{page-break-inside:avoid}
 thead{display:table-header-group}
@@ -409,882 +409,585 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 .hide-for-print{display:none!important}
 .show-for-print{display:inherit!important}}
 </style>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.1.0/css/font-awesome.min.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/styles/github.min.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/highlight.min.js"></script>
-<script>hljs.initHighlightingOnLoad()</script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.2.0/css/font-awesome.min.css">
 </head>
 <body class="article toc2 toc-left">
 <div id="header">
-<h1>totask2 Entwickler Dokumentation</h1>
+<h1>totask2 Überblick</h1>
 <div class="details">
 <span id="author" class="author">man-at-home</span><br>
-<span id="revnumber">version 1.3,</span>
-<span id="revdate">2014-12-02</span>
+<span id="revnumber">version 1.4,</span>
+<span id="revdate">2015-03-07</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#_Überblick">1. Überblick</a></li>
-<li><a href="#_notwendige_umgebung">2. Notwendige Umgebung</a></li>
-<li><a href="#_download">3. Download</a></li>
-<li><a href="#_build_run">4. Build &amp; Run</a></li>
-<li><a href="#_deployment">5. Deployment</a>
+<li><a href="#_die_motivation">1. die Motivation</a></li>
+<li><a href="#_beschreibung">2. Beschreibung</a>
 <ul class="sectlevel2">
-<li><a href="#_für_lokalen_app_server_wildfly">5.1. Für lokalen App Server WildFly</a></li>
-<li><a href="#_für_openshift_cloud">5.2. Für OpenShift (cloud)</a></li>
+<li><a href="#_spec">2.1. Spec</a></li>
 </ul>
 </li>
-<li><a href="#_architektur">6. Architektur</a>
+<li><a href="#_der_software_stack">3. Der Software Stack</a>
 <ul class="sectlevel2">
-<li><a href="#_datenmodell">6.1. Datenmodell</a></li>
-<li><a href="#_code_modell">6.2. Code Modell</a></li>
+<li><a href="#_anforderungen_zum_entwickeln">3.1. Anforderungen zum Entwickeln</a></li>
 </ul>
 </li>
-<li><a href="#_code_beispiele">7. Code-Beispiele</a>
+<li><a href="#_ergebnis">4. Ergebnis</a></li>
+<li><a href="#_entwicklungsumgebung">5. Entwicklungsumgebung</a></li>
+<li><a href="#_qa">6. QA</a></li>
+<li><a href="#_deployment">7. Deployment</a>
 <ul class="sectlevel2">
-<li><a href="#_data_model_jpa">7.1. Data Model (JPA)</a></li>
-<li><a href="#_controller_springmvc">7.2. Controller (SpringMVC)</a></li>
-<li><a href="#_view_templates_thymeleaf">7.3. View Templates (thymeleaf)</a></li>
-<li><a href="#_ajax_javascript">7.4. Ajax / Javascript</a></li>
-<li><a href="#_versionierung_von_daten">7.5. Versionierung von Daten</a></li>
-<li><a href="#_selenium_test">7.6. Selenium Test</a></li>
-<li><a href="#_plantuml_diagramm">7.7. plantUML Diagramm</a></li>
-<li><a href="#_asciidoctor_dokumentation">7.8. asciidoctor Dokumentation</a></li>
-<li><a href="#_flyway_datenbank_migration">7.9. flyway Datenbank Migration</a></li>
-<li><a href="#_gradle_build">7.10. gradle Build</a></li>
-<li><a href="#_newrelic_monitoring">7.11. newRelic Monitoring</a></li>
+<li><a href="#_lokal">7.1. Lokal</a></li>
+<li><a href="#_cloud">7.2. Cloud</a></li>
+</ul>
+</li>
+<li><a href="#_monitoring">8. Monitoring</a></li>
+<li><a href="#_weitere_details">9. weitere Details</a></li>
+<li><a href="#_erfahrungen">10. Erfahrungen</a>
+<ul class="sectlevel2">
+<li><a href="#_positiv">10.1. positiv</a></li>
+<li><a href="#_negativ">10.2. negativ</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 <div id="content">
-<div class="sect1">
-<h2 id="_Überblick">1. Überblick</h2>
+<div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>Das Dokument beschreibt <strong>aus Entwicklersicht</strong> das  Aufsetzen und Weiterentwickeln der Anwendung <strong>totask2</strong>.
-Die Anwendung ist eigentlich nur eine Entschuldigung diverse Bibliotheken und Tools einzusetzen um die
-Ideen dahinter näher beurteilen zu können.</p>
+<p>totask: eine rudimentäre Projektzeiterfassung</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_notwendige_umgebung">2. Notwendige Umgebung</h2>
+<h2 id="_die_motivation">1. die Motivation</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Vorbedingung hierzu:</p>
+<p>totask2 ist eine "Ausrede" um einen wieder einmal willkürlich ausgewählten Software-Stack auszuprobieren.</p>
 </div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_beschreibung">2. Beschreibung</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>totask2 erlaubt eine Erfassung von (Arbeits-) Zeiten zu Projekttasks. Daher verwaltet das Programm
+Entitäten wie Projekt, Task und Arbeitszeit (WorkEntry) und Taskzuordnung zu Usern (TaskAssignment).</p>
+</div>
+<div class="sect2">
+<h3 id="_spec">2.1. Spec</h3>
 <div class="ulist">
 <ul>
 <li>
-<p>Java JDK 8 (oracle) installieren</p>
+<p>Ein Administrator (User) darf Projekte anlegen</p>
 </li>
 <li>
-<p>Gradle download  als Build System    <a href="http://www.gradle.org" class="bare">www.gradle.org</a></p>
+<p>ein Projekt hat einen oder mehrere Projektleiter (User)</p>
 </li>
 <li>
-<p>git installieren zur Versionierung   <a href="http://git-scm.com" class="bare">git-scm.com</a></p>
+<p>Projektleiter könnne Tasks zu Ihren Projekten erfassen</p>
+</li>
+<li>
+<p>jeder Task kann Usern (für einem Zeitraum) zugeordnet werden, in diesem dann Arbeiten zum Task zulässig sind (TaskAssignment)</p>
+</li>
+<li>
+<p>jeder User kann Zeiten wochenweise für Tasks erfassen die ihm im Zeitraum zugeordnet sind</p>
+</li>
+<li>
+<p>die Erfassung erfolgt je Tag und Task in Stunden(bruchteilen) (WorkEntry)</p>
+</li>
+<li>
+<p>die Erfassung kann für die aktuelle und zurückliegende Wochen erfolgen</p>
+</li>
+<li>
+<p>seine erfassten Zeiten kann der User als Excel herunterladen</p>
 </li>
 </ul>
 </div>
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
-</td>
-<td class="content">
-zudem eine IDE (z.B akuelles eclipse) <a href="http://eclipse.org" class="bare">eclipse.org</a>
-</td>
-</tr>
-</table>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_download">3. Download</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Der komplette Quellcode des Projekts lässt sich mit "git clone" aus dem Master Source Repository
-von github holen.</p>
-</div>
-<div class="listingblock">
+<div id="img-useCases" class="imageblock">
 <div class="content">
-<pre>%&gt; git clone https://github.com/man-at-home/totask2.git</pre>
+<img src="images/uml/totask2.design.usecases.png" alt="screenshot.useCases" width="700" height="400">
 </div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_build_run">4. Build &amp; Run</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Compile und Test des Projekts erfolgt mit &#8658; <code>%&gt; gradlew test</code>.</p>
+<div class="title">Figure 1. unterstützte Usecases</div>
 </div>
 <div class="paragraph">
-<p>Dokumentation erstellen (einschließlich diesem Dokument hier) &#8658; <code>%&gt; gradlew allDocs</code>.</p>
-</div>
-<div class="paragraph">
-<p>Run mit InMemory Datenbank h2 &#8658; <code>%&gt; gradlew bootRun</code></p>
-</div>
-<div class="paragraph">
-<p>Run mit persistenter Datenbank (die Daten bleiben zwischen den Runs erhalten) &#8658; <code>%&gt; gradlew bootRun -Dspring.profiles.active=qa</code></p>
-</div>
-<div class="paragraph">
-<p>QA Analyse incl. Tests und CodeCoverage: <code>%&gt; gradlew sonarRunners</code> (parallel muss StartSonar.bat gestartet sein als <a href="http://localhost:9000/" class="bare">localhost:9000/</a>)</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_deployment">5. Deployment</h2>
-<div class="sectionbody">
-<div class="sect2">
-<h3 id="_für_lokalen_app_server_wildfly">5.1. Für lokalen App Server WildFly</h3>
-<div class="ulist">
-<ul>
-<li>
-<p>gradle deployLocal</p>
-</li>
-<li>
-<p>Wildfly starten mit standalone Script.</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>Hint: tomcat dependency muss entfernt sein im gradle build.
-Hint: newrelic Monitoring ist derzeit installiert (Agent wie auf der Homepage beschrieben für Wildlfy installiert).</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_für_openshift_cloud">5.2. Für OpenShift (cloud)</h3>
-<div class="ulist">
-<ul>
-<li>
-<p>generell wird ganz normal .\build.gradle wird verwendet</p>
-</li>
-<li>
-<p>hooks für OpenShift sind folgende shell Scripte:</p>
-<div class="ulist">
-<ul>
-<li>
-<p>.openshift\action_hooks\pre_build (cardridge vorbereiten für build)</p>
-</li>
-<li>
-<p>.openshift\action_hooks\build     (gradle assemble Aufruf)</p>
-</li>
-<li>
-<p>.openshift\action_hooks\deploy    (gradle deployOpenShift Aufruf)</p>
-</li>
-</ul>
-</div>
-</li>
-<li>
-<p>update der Anwendung in der cloud mit git:</p>
-<div class="ulist">
-<ul>
-<li>
-<p><code>git push cloud</code></p>
-</li>
-<li>
-<p>remote: <code>ssh://5<strong><strong></strong>*4@h</strong>**e.rhcloud.com/~/git/host.git/</code></p>
-</li>
-</ul>
-</div>
-</li>
-<li>
-<p>Zugriff/Monitoring</p>
-<div class="ulist">
-<ul>
-<li>
-<p>web:  <a href="http://www.openshift.com" class="bare">www.openshift.com</a></p>
-</li>
-<li>
-<p>ssh:  wie auf openShift Seite zur Anwendung angegeben</p>
-</li>
-<li>
-<p>sftp: <em>hostname</em>.rhcloud.com</p>
-</li>
-<li>
-<p>commandline: rhc Kommandos</p>
-</li>
-</ul>
-</div>
-</li>
-</ul>
-</div>
-<div id="img-sftp" class="imageblock">
-<div class="content">
-<img src="images/totask2.cloud.wildfly.deploy.png" alt="screenshot.sftp" width="500" height="300">
-</div>
-<div class="title">Figure 1. sftp to openShift gear</div>
-</div>
-<div id="img-rhc" class="imageblock">
-<div class="content">
-<img src="images/totask2.cloud.rhc.png" alt="screenshot.sftp" width="500" height="300">
-</div>
-<div class="title">Figure 2. rhc command line openShift</div>
+<p>Hint: obiges Bild nur sichtbar bei lokalem build, nicht auf github.</p>
 </div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_architektur">6. Architektur</h2>
+<h2 id="_der_software_stack">3. Der Software Stack</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Ein kurzer Überblick über die Architektur der Webanwendung totask2.</p>
+<p><a href="http://springmvc.org/" target="_blank">springmvc</a> als serverseitiges Java <em>Web Framework</em>.</p>
+</div>
+<div class="paragraph">
+<p>SpringMVC Web Anwendungen werden natürlich in Java programmiert. Im vorliegenden Fall bereits mit <a href="https://java.com/de/">Java 8</a>
+da ich dabei Closures nutzen wollte. Als Templating Engine für HTML wird dabei <a href="http://www.thymeleaf.org/">thymeleaf</a> verwendet.</p>
+</div>
+<div class="paragraph">
+<p>Logging erfolgt mit <a href="http://logback.qos.ch/">logback/slf4j</a>, optional in die cloud auf <a href="http://loggly.com">loggly.com</a>,</p>
+</div>
+<div class="paragraph">
+<p>Unit Tests mit <a href="http://junit.org/">junit</a>. Der REST Teil wird über <a href="http://swagger.io/">wagger</a> zur Verfügung gestellt,
+alternativ erfolgen Tests der REST Aufrufe über <a href="https://www.getpostman.com/">Postman</a></p>
+</div>
+<div class="paragraph">
+<p><em>Client Seitig</em> benutze ich <a href="http://getbootstrap.com//" target="_blank">bootstrap</a> für css,
+<a href="http://bootstrapvalidator.com/" target="_blank">bootstrapvalidator</a> für einige Client seitige Prüfungen,
+<a href="http://jquery.com/" target="_blank">jquery</a> als JavaScript Library, dazu <a href="http://www.datatables.net/" target="_blank">datatables</a> als Datagrid.
+Ein Chart wird mit <a href="http://www.chartjs.org/" target="_blank">Charts.js</a> clientseitig erstellt,
+ein Gantt Chart mit <a href="https://github.com/thegrubbsian/jquery.ganttView">ganttView</a>.
+Für die kompfortable Auswahl von Usern benutze ich das <a href="http://jqueryui.com/autocomplete/" target="_blank">autocomplete plugin</a>, um
+Suchvorschläge on the fly per REST/json vom Server zu holen.
+Für die UI Zuordnung Projektleiter zu Projekt kommt das Control <a href="http://brianreavis.github.io/selectize.js/">selectize.js</a> zum Einsatz.</p>
+</div>
+<div class="paragraph">
+<p>Für <em>Reporting</em> wird <a href="http://community.jaspersoft.com/project/jasperreports-library" target="_blank">JasperReports</a> genutzt
+um Excel und PDF Auswertungen zu generieren.</p>
+</div>
+<div class="paragraph">
+<p><em>Versionierung</em> ist mit <a href="http://git-scm.com/">git</a> gelöst. Das Repository ist auf <a href="https://github.com/" target="_blank">github</a> gehostet.</p>
+</div>
+<div class="paragraph">
+<p><em>Datenhaltung</em> wird mit der integrierten  <a href="http://www.h2database.com/" target="_blank">h2</a>
+in-Memory Datenbank gelöst, zumindest während der Entwicklung.
+Eine separate qa Datenbank wird mit dem QA Profil angesprochen,
+deren Tabellenstruktur (DDLs) wird mit "Migrations" durch <a href="http://flywaydb.org/" target="_blank">flyway</a> gepflegt.
+Einige Tabellen/Daten sind historisiert, dies wird mit <a href="http://de.slideshare.net/jdegler/hibernate-envers">hibernate-envers</a>
+realisiert.</p>
+</div>
+<div class="paragraph">
+<p>Dieser Artikel und weitere <em>Dokumentation</em> ist mit <a href="http://asciidoctor.org/docs/asciidoc-writers-guide/" target="_blank">asciidoc</a>
+Markup erstellt. Einige Diagramme sind mit <a href="http://plantuml.sourceforge.net/" target="_blank">plantuml</a> erstellt und generiert.
+Ein nettes Gimmick: github kann asciidoc Documente "on the fly" direkt aus dem Repository im Browser als Html
+rendern. Live zu sehen unter <a href="https://github.com/man-at-home/totask2/blob/master/src/docs/totask2.article.asciidoc" class="bare">https://github.com/man-at-home/totask2/blob/master/src/docs/totask2.article.asciidoc</a></p>
+</div>
+<div class="paragraph">
+<p>Für das <em>Build Management</em> nutze ich <a href="http://www.gradle.org/" target="_blank">gradle</a>, mit einigen Plugins wie asciidoctor.
+Diverse Build-Server laufen in der Cloud, auf openshift <a href="http://jenkins-ci.org/">jenkins</a>,
+dazu <a href="https://travis-ci.org/">travis-ci</a>, <a href="https://codeship.com/">codeship</a>, <a href="https://circleci.com">circleci</a>
+sowie <a href="https://app.shippable.com">shippable</a></p>
+</div>
+<div class="paragraph">
+<p>Qualitätsanalyse erfolgt mit diversen Tools die im Build oder in der IDE eingebunden sind: CheckStyle, FindBugs,
+PMD, jDepend, jacoco. Zudem als Analysewerkzeug <a href="http://www.sonarqube.org/">SonarQube</a>.
+Zusätzlich triggert der travis-ci Server eine cloud-basierte Codeprüfung auf an <a href="https://scan.coverity.com/">coverity.com</a>
+Auf veraltete Libraries prüft <a href="https://www.versioneye.com/user/projects/550f49680bdc71c5c903e1d4">versioneye</a>.</p>
+</div>
+<div class="paragraph">
+<p>Experimentell ist <a href="http://www.seleniumhq.org/">selenium</a> als Web Test Tool.</p>
+</div>
+<div class="paragraph">
+<p>Als "echter" Appserver für das Deployment fungiert der <a href="http://www.wildfly.org/">WildFly Application Server</a> von redhat - sowohl lokal installiert als auch in der cloud.</p>
+</div>
+<div class="paragraph">
+<p>Metriken sind mit boot-actuator und mit <a href="https://dropwizard.github.io/metrics">dropwizard metrics</a> bereitgestellt, derzeit als REST Endpoint.
+Optionales weiteres Performance Monitoring erfolgt mit <a href="http://www.newrelic.com/">newrelic</a>. Dazu ist der lokale wildfly Server instrumentiert
+und schickt Informationen an newrelic.</p>
+</div>
+<div class="paragraph">
+<p>Hosting der Anwendung in der cloud erfolgt mit openShift in einer <a href="https://developers.openshift.com/en/wildfly-overview.html">WildFly Cardridge</a>,
+zudem automatisiert (und immer Aktualisiert über den codeship ci-server) auf einen dyno in der heroku cloud.</p>
+</div>
+<div class="paragraph">
+<p>Das Monitoring der bei heroku laufenden Anwendung erfolgt mit <a href="http://monitor.us">monitor.us</a>, die neben Web Charts und Alert E-Mails auch
+android und iphone apps herfür bereitstellen.</p>
+</div>
+<div class="paragraph">
+<p>Ebenfalls zur Überwachung sowie zur Erfassung und Auswertung oben beschriebenen Metriken erfolgt mit circonus.com[Circonus].
+Aktiviert sind zudem <a href="https://uxm.alertsite.com/">AlertSite</a> (mit der Besonderheit der Ausführung von soapUI Tests gegen totask2),
+<a href="http://ruxit.com">ruxit</a>, <a href="https://anturis.com/">anturis</a> und <a href="https://www.pingdom.com/">pingdom</a>, die jeweils die
+Verfügbarkeit der totask2 Webseiten von verschiedenen Standorten weltweit prüfen als weitere Server Überwachung.</p>
+</div>
+<div class="paragraph">
+<p>Weitere Auswertung können mit dem Analytic Provider <a href="http://keen.io">keen.io</a> erfolgen. Dazu ist ein entsprechender Service in totask2
+implementiert, der Kennzahlen an keen.io schicken kann.</p>
+</div>
+<div class="paragraph">
+<p>Als Kommunikation (mit mir selber: "ha ha") generieren Codeänderungen (github) und Blob-Einträge (wordpress) twitter tweets auf
+<a href="https://twitter.com/totask2tweeter">@totask2tweeter</a>, diese werden auch weitergeleitet an einen <a href="http://slack.com">slack</a>
+Chat Account, ebenso wie weitere Informationen (z.B. von den Build Servern).</p>
 </div>
 <div class="sect2">
-<h3 id="_datenmodell">6.1. Datenmodell</h3>
-<div class="paragraph">
-<p>Das Datenmodell der Projektzeiterfassung.</p>
-</div>
-<div id="img-erd" class="imageblock">
-<div class="content">
-<img src="images/uml/totask2.design.datamodel.png" alt="screenshot.erd" width="200" height="100">
-</div>
-<div class="title">Figure 3. Datenmodell</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_code_modell">6.2. Code Modell</h3>
-<div class="paragraph">
-<p>Überblick über die internen Module von totask2.</p>
-</div>
-<div id="img-modules" class="imageblock">
-<div class="content">
-<img src="images/uml/totask2.design.modules.png" alt="screenshot.modules" width="600" height="300">
-</div>
-<div class="title">Figure 4. Modulübersicht</div>
-</div>
-<div class="paragraph">
-<p>Schematischer Ablauf eines Requests (Anfrage einer Seite durch den Browser):</p>
-</div>
-<div id="img-sequence" class="imageblock">
-<div class="content">
-<img src="images/uml/totask2.design.controllers.png" alt="screenshot.sequence" width="600" height="300">
-</div>
-<div class="title">Figure 5. Sequenzdiagramm (Beispielhaft)</div>
+<h3 id="_anforderungen_zum_entwickeln">3.1. Anforderungen zum Entwickeln</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>java8 jdk and runtime</p>
+</li>
+<li>
+<p>git versioning</p>
+</li>
+<li>
+<p>gradle build system</p>
+</li>
+</ul>
 </div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_code_beispiele">7. Code-Beispiele</h2>
+<h2 id="_ergebnis">4. Ergebnis</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Die Code Beispiele werden "on the fly" bei der Dokumentengenerierung hier in das Dokument übernommen,
-sollten also immer aktuell sein.</p>
+<p>hier kurze Blicke auf die laufende Anwendung:</p>
 </div>
-<div class="sect2">
-<h3 id="_data_model_jpa">7.1. Data Model (JPA)</h3>
-<div class="paragraph">
-<p>Die Datenzugriffsschicht mapped Java Domain Objekte mit JPA Annotations (insbl. @Entity) auf relationale
-Datenbanktabellen.</p>
-</div>
-<div class="listingblock">
+<div id="img-startpage" class="imageblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java" data-lang="java">/**
- * a working task of a {@link Project} that needs to be worked on.
- *
- * @author man-at-home
- */
-@Entity                                                     <i class="conum" data-value="1"></i><b>(1)</b>
-@Audited
-@Table(name = "TT_TASK")
-@AuditTable("TT_TASK_HISTORY")
-public class Task {
-
-    @Id                                                     <i class="conum" data-value="2"></i><b>(2)</b>
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "ID")
-    private long     id;
-
-    @Size(min = 2, max = 250)
-    @NotNull
-    @Column(name = "NAME", nullable = false, length = 250)  <i class="conum" data-value="3"></i><b>(3)</b>
-    private String  name;</code></pre>
+<img src="images/totask2.startpage.png" alt="screenshot1" width="600" height="300">
 </div>
+<div class="title">Figure 2. Startseite</div>
 </div>
-<div class="colist arabic">
-<table>
-<tr>
-<td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>Task Klasse wird in die Tabelle tt_task gespeichert</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>Id Attribut entspricht in der Datenbank der Spalte id (primary key)</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>Name Attribut mapped zur Spalte name</td>
-</tr>
-</table>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_controller_springmvc">7.2. Controller (SpringMVC)</h3>
 <div class="paragraph">
-<p>Diese SpringMVC Controller Klasse nimmt Browseranfragen auf bestimmten Urls: (hier project/xx/tasks) entgehen
-und schickt Antworten an den Browser zurück.</p>
+<p>Eine Liste mit allen verwalteten Projekten:</p>
 </div>
-<div class="listingblock">
-<div class="title">Task.java</div>
+<div id="img-projects" class="imageblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java" data-lang="java">/** show all tasks for given project.
- *
- * @param id project.id to show tasks for.
- * */
-@RequestMapping(value = "/project/{id}/tasks", method = RequestMethod.GET)          <i class="conum" data-value="1"></i><b>(1)</b>
-public String tasksForProject(@PathVariable final long id, final Model model) {
-
-    LOG.trace("tasks for project " + id);
-
-    Project project  = projectRepository.findOne(id);
-    List&lt;Task&gt; tasks = taskRepository.findByProjectId(id);                          <i class="conum" data-value="2"></i><b>(2)</b>
-
-    model.addAttribute("tasks", tasks);                                             <i class="conum" data-value="3"></i><b>(3)</b>
-    model.addAttribute("projectId", id);
-    model.addAttribute("isEditAllowed", project.isEditAllowed(getUser()));
-
-
-    LOG.debug("serving " + tasks.size() + " tasks for project " + id);
-    return "tasks";
-}</code></pre>
+<img src="images/totask2.projects.png" alt="screenshot2" width="600" height="300">
 </div>
+<div class="title">Figure 3. Projektübersicht</div>
 </div>
-<div class="colist arabic">
-<table>
-<tr>
-<td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>Zuständig für Browser Anfragen (GET request) mit URL /project/xx/tasks</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>Laden der Tasks zum Projekt aus der Datenbankload</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>Bereitstellen der Tasks für Rendern der HTML Seite im View Template</td>
-</tr>
-</table>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_view_templates_thymeleaf">7.3. View Templates (thymeleaf)</h3>
 <div class="paragraph">
-<p>Markup um HTML Antwort (Übersicht von Tasks) bereitzustellen.</p>
+<p>editierbar das Projekt, inklusive Projektleiterselektion mit Ajax-Control selectize.js</p>
 </div>
-<div class="listingblock">
-<div class="title">tasks.html</div>
+<div id="img-editProject" class="imageblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-html" data-lang="html">--&gt;
-&lt;tr th:each="task : ${tasks}"&gt;    &lt;!-- <i class="conum" data-value="1"></i><b>(1)</b>
-                                  --&gt;
-    &lt;td th:text="${task.id}"&gt;17&lt;/td&gt;
-    &lt;td th:text="${task.name}"&gt;task name&lt;/td&gt;        &lt;!-- <i class="conum" data-value="2"></i><b>(2)</b>
-                                                     --&gt;
-    &lt;td class="dt-left"&gt;
-
-        &lt;a th:href="@{/task/{id}(id=${task.id})}" class="btn btn-default" th:if="${isEditAllowed}"&gt;
-            &lt;span class="glyphicon glyphicon-pencil"&gt;&lt;/span&gt;
-            &lt;span th:text="#{totask2.task.action.edit}"&gt;edit..&lt;/span&gt;            &lt;!-- <i class="conum" data-value="3"></i><b>(3)</b>
-                                                                                  --&gt;
-        &lt;/a&gt;
-        &lt;button class="btn btn-default" name="id" th:value="${task.id}" th:if="${isEditAllowed}"&gt;
-            &lt;span class="glyphicon glyphicon-remove"&gt;&lt;/span&gt;
-            &lt;span th:text="#{totask2.task.action.delete}"&gt;delete&lt;/span&gt;
-        &lt;/button&gt;
-
-    &lt;/td&gt;
-&lt;/tr&gt;
-&lt;!--</code></pre>
+<img src="images/totask2.editProject.png" alt="screenshot3" width="600" height="400">
 </div>
+<div class="title">Figure 4. Projektbearbeitung</div>
 </div>
-<div class="colist arabic">
-<table>
-<tr>
-<td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>Geht über eine List von Tasks (List&lt;Task&gt;)</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>Zeige für einen Task das Attribut "from"</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>Konstanter i18n Text (aus der Datei message.properties)</td>
-</tr>
-</table>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_ajax_javascript">7.4. Ajax / Javascript</h3>
-<div class="sect3">
-<h4 id="_autocomplete">7.4.1. autocomplete</h4>
 <div class="paragraph">
-<p>Ajax Funktion bei der Auswahl von Usern (Suchfunktion) bei der Zuordnung von Tasks:</p>
+<p>die geplante Projektlaufzeit (je Task und Assignment) als Gantt-Diagramm:</p>
+</div>
+<div id="img-ganttProject" class="imageblock">
+<div class="content">
+<img src="images/totask2.project.gantt.png" alt="screenshot3" width="600" height="400">
+</div>
+<div class="title">Figure 5. Projektanzeige als Gantt Chart</div>
+</div>
+<div class="paragraph">
+<p>Die eigentliche Stundenerfassung für "normale" Nutzer:</p>
+</div>
+<div id="img-weekEntry" class="imageblock">
+<div class="content">
+<img src="images/totask2.weekEntry.png" alt="screenshot4" width="600" height="400">
+</div>
+<div class="title">Figure 6. Zeiterfassung</div>
+</div>
+<div class="paragraph">
+<p>Diverse Client Seitige (JavaScript/jquery) Funktionalitäten:</p>
+</div>
+<div id="img-weekEntryClient" class="imageblock">
+<div class="content">
+<img src="images/totask2.weekEntry.clientLogic.png" alt="screenshot5" width="600" height="400">
+</div>
+<div class="title">Figure 7. Zeiterfassung Client Funktionen</div>
+</div>
+<div class="paragraph">
+<p>Eingaben lassen sich als Excel Report herunterladen (Reporting Tool Jasper Reports ist integriert):</p>
+</div>
+<div id="img-weekEntryReporting" class="imageblock">
+<div class="content">
+<img src="images/totask2.weekEntry.reporting.png" alt="screenshot6" width="600" height="400">
+</div>
+<div class="title">Figure 8. Zeiterfassung Reporting</div>
+</div>
+<div class="paragraph">
+<p>Die Zeiteingaben führen "on the fly" zur graphischen Rückmeldung als Balkendiagramm (chart.js):</p>
+</div>
+<div id="img-weekEntryChart" class="imageblock">
+<div class="content">
+<img src="images/totask2.weekEntry.chart.png" alt="screenshot7" width="600" height="400">
+</div>
+<div class="title">Figure 9. Zeiterfassung Chart</div>
+</div>
+<div class="paragraph">
+<p>Die Benutzereingabe nutzt ein "autocomplete" ajax Control von jquery-ui:</p>
 </div>
 <div id="img-editAssignment" class="imageblock">
 <div class="content">
 <img src="images/totask2.editAssignment.autocomplete.png" alt="screenshot8" width="600" height="400">
 </div>
-<div class="title">Figure 6. Zeiterfassung Ajax Autocompletion</div>
+<div class="title">Figure 10. Zeiterfassung Ajax Autocompletion</div>
 </div>
 <div class="paragraph">
-<p>im HTML:</p>
+<p>Login Seite (integriert mit spring-security):</p>
 </div>
-<div class="listingblock">
-<div class="title">editTaskAssignment.html (autocomplete jquery html)</div>
+<div id="img-login" class="imageblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-html" data-lang="html">                --&gt;
-		&lt;input type="hidden" th:field="*{task.id}"/&gt;
-		&lt;input type="hidden" class="userIdRef" th:field="*{user.id}"/&gt;	&lt;!-- <i class="conum" data-value="1"></i><b>(1)</b>
-		--&gt;
-
-		 &lt;div class="form-group"&gt;
-			&lt;label th:for="user" th:text="#{totask2.taskAssignment.user.label}" class="col-sm-2 control-label"&gt;user&lt;/label&gt;
-			&lt;div class="col-sm-10"&gt;
-				&lt;input
-				    type="text"
-				    id="user"
-					class="form-control"
-					placeholder="user"
-					th:title="#{totask2.taskAssignment.user.help}"
-					maxlength="250"
-					th:field="*{user.displayName}"
-					th:errorclass="fieldError"
-					data-bv-notempty="true"
-					data-bv-notempty-message="required field"
-				/&gt;																												&lt;!-- <i class="conum" data-value="2"></i><b>(2)</b>
-				--&gt;
-
-				&lt;span th:if="${#fields.hasErrors('user')}" class="fieldError" th:errors="*{user}"&gt;user is invalid&lt;/span&gt;
-			&lt;/div&gt;
-		&lt;/div&gt;
-
-		&lt;div class="form-group"&gt;
-			&lt;label th:text="#{totask2.taskAssignment.user.name.label}" class="col-sm-2 control-label"&gt;user&lt;/label&gt;
-			&lt;div class="col-sm-10"&gt;
-				&lt;input readonly="readonly" type="text" th:field="*{user.username}" class="readonly form-control userNameRef"/&gt;	&lt;!-- <i class="conum" data-value="3"></i><b>(3)</b>
-				--&gt;
-			&lt;/div&gt;
-		&lt;/div&gt;
-
-&lt;!--</code></pre>
+<img src="images/totask2.login.png" alt="screenshot9" width="600" height="400">
+</div>
+<div class="title">Figure 11. login</div>
 </div>
 </div>
-<div class="colist arabic">
-<table>
-<tr>
-<td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>versteckte Referenz des ausgewählten Users, wird beim Speichern (POST) zum Server gesendet</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>das eigentliche autocomplete Control (jquery)</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>Detailanzeige gerade gewählter User</td>
-</tr>
-</table>
+</div>
+<div class="sect1">
+<h2 id="_entwicklungsumgebung">5. Entwicklungsumgebung</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Einblicke in die Entwicklung von totask2:</p>
+</div>
+<div id="img-desktop" class="imageblock">
+<div class="content">
+<img src="images/totask2.dev.desktop.png" alt="screenshot_DEV_0" width="600" height="400">
+</div>
+<div class="title">Figure 12. desktop developing totask2</div>
 </div>
 <div class="paragraph">
-<p>JavaScript Client Code für autocomplete Funktion:</p>
+<p>eclipse / springIDE</p>
 </div>
-<div class="listingblock">
-<div class="title">editTaskAssignment.html (autocomplete jquery plugin)</div>
+<div id="img-ide" class="imageblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-javascript" data-lang="javascript">$(function() {
-       $( "#user" ).autocomplete({
-         source: "/users",                                            <i class="conum" data-value="1"></i><b>(1)</b>
-         minLength: 2,
-         select: function(event, ui) {
-             if( ui.item ) {
-                 // ( ) ? "hier: " + ui.item.username : "-" );
-                 $(".userIdRef").val( ui.item.id );                <i class="conum" data-value="2"></i><b>(2)</b>
-                 $(".userNameRef").val( ui.item.username );
-             }
-         }
-       });
-     });</code></pre>
+<img src="images/totask2.dev.springIDE.png" alt="screenshot_DEV_0b" width="600" height="400">
 </div>
-</div>
-<div class="colist arabic">
-<table>
-<tr>
-<td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>URL mit REST/JSON Datenquelle für User (konkret: Klasse UserController url /users)</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>JSON Daten der Rückmeldung in Anzeige übernehmen</td>
-</tr>
-</table>
+<div class="title">Figure 13. desktop ide</div>
 </div>
 <div class="paragraph">
-<p>Hier die REST Datenquelle in der UserController Klasse:</p>
+<p>Für die REST Datenquellen stellt swagger-ui einen automatische generierten Client zur Verfügung:</p>
 </div>
-<div class="listingblock">
-<div class="title">UserController.java</div>
+<div id="img-wagger" class="imageblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java" data-lang="java">/** REST API. get all users the fit the given "term". */
-@Secured(Authorisation.ROLE_ADMIN)
-@ApiIgnore
-@RequestMapping(value = "/users", method = RequestMethod.GET)
-public List&lt;User&gt; getUsers(@RequestParam(value = "term", defaultValue = "") final String term) {
-    LOG.debug("/users, term=" + term);
-    List&lt;User&gt; foundUsers = userCachingService.getCachedUsers(term);
-    gaugeService.submit("TOTASK2XX.controller.user.REST.ajaxui.result.count", foundUsers.size());
-    return foundUsers;
-}</code></pre>
+<img src="images/totask2.rest.swagger-ui.png" alt="screenshot_DEV_swagger_0c" width="600" height="400">
 </div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_chart">7.4.2. chart</h4>
-<div class="paragraph">
-<p>Auf der Erfassungsseite für Zeiten wird direkt bei der Eingabe clientseitig ein Chart der Stunden erzeugt:</p>
-</div>
-<div id="img-weekEntryChart" class="imageblock">
-<div class="content">
-<img src="images/totask2.weekEntry.chart.png" alt="screenshotChart" width="600" height="400">
-</div>
-<div class="title">Figure 7. weekEntryChart</div>
+<div class="title">Figure 14. wagger-ui</div>
 </div>
 <div class="paragraph">
-<p>Der Htlm/JavaScript Code hierzu</p>
+<p>PlantUML ermgöglicht das einfache Einbetten von UML Diagrammen in die javadoc-Dokumentation:</p>
 </div>
-<div class="listingblock">
-<div class="title">weekEntry.html (chart data)</div>
+<div id="img-javadoc-plantuml" class="imageblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-javascript" data-lang="javascript">var dailyTotals = new Array(6);
-var weekSum = 0;
-for (i = 0; i &lt;= 6; i++) {
-    var daySum    = sumOneTaskRow('.day_' + i);
-    weekSum      += daySum;
-    dailyTotals[i]= daySum;
-
-    $('#day_' + i + '_total').html(daySum.toFixed(1));
-}
-$('#week_total').html(weekSum.toFixed(1));
-
-return dailyTotals;</code></pre>
+<img src="images/totask2.dev.JavaDoc.png" alt="screenshot_DEV_1" width="600" height="400">
 </div>
+<div class="title">Figure 15. javadoc plantuml Dokumentation</div>
 </div>
-<div class="listingblock">
-<div class="title">weekEntry.html (chart ui)</div>
+<div class="paragraph">
+<p>Den Inhalt der Datenbank H2 kann man mit der mitgelieferten Console einsehen und ändern:</p>
+</div>
+<div id="img-db" class="imageblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-javascript" data-lang="javascript">var chartData = {
-        labels: [ /*[[#{totask2.weekEntry.monday.label}]]*/    "Mon",
-                  /*[[#{totask2.weekEntry.tuesday.label}]]*/   "Tue",
-                  /*[[#{totask2.weekEntry.wednesday.label}]]*/ "Wed",
-                  /*[[#{totask2.weekEntry.thursday.label}]]*/  "Thu",
-                  /*[[#{totask2.weekEntry.friday.label}]]*/    "Fri",
-                  /*[[#{totask2.weekEntry.saturday.label}]]*/  "Sat",
-                  /*[[#{totask2.weekEntry.sunday.label}]]*/    "Sun"
-                ],
-        datasets: [
-            {
-                label: "weekly work",
-                fillColor: "rgba(220,220,220,0.5)",
-                strokeColor: "rgba(220,220,220,0.8)",
-                highlightFill: "rgba(220,220,220,0.75)",
-                highlightStroke: "rgba(220,220,220,1)",
-                data: dailyTotals
-            }
-        ]
-    };
-
-var ctx = $("#weekEntryChart").get(0).getContext("2d");
-weekChart = new Chart(ctx).Bar(
-        chartData,
-        {animationSteps: 20} /* options. */
-        );</code></pre>
+<img src="images/totask2.dev.H2Console.png" alt="screenshot_DEV_2" width="600" height="400">
+</div>
+<div class="title">Figure 16. h2console DB Abfragetool</div>
+</div>
+<div class="paragraph">
+<p>Tests mit junit 4:</p>
+</div>
+<div id="img-junit" class="imageblock">
+<div class="content">
+<img src="images/totask2.dev.junit.png" alt="screenshot_DEV_0" width="600" height="400">
+</div>
+<div class="title">Figure 17. junit</div>
+</div>
+<div class="paragraph">
+<p>experimentelle Selenium Tests:</p>
+</div>
+<div id="img-selenium" class="imageblock">
+<div class="content">
+<img src="images/totask2.dev.seleniumIDE.png" alt="screenshot_DEV_20" width="600" height="400">
+</div>
+<div class="title">Figure 18. selenium ide</div>
+</div>
+<div class="paragraph">
+<p>git Repository und Versionierung:</p>
+</div>
+<div id="img-git" class="imageblock">
+<div class="content">
+<img src="images/totask2.dev.SourceTree.png" alt="screenshot_DEV_20" width="600" height="400">
+</div>
+<div class="title">Figure 19. git SourceTree UI</div>
 </div>
 </div>
+</div>
+<div class="sect1">
+<h2 id="_qa">6. QA</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>diverse qa tools (findBugs, checkstyle, PMD) prüfen den Code statisch, hier als Beispiel checkstyle:</p>
+</div>
+<div id="img-checkstyle" class="imageblock">
+<div class="content">
+<img src="images/totask2.qa.checkstyle.png" alt="screenshot_QA_checkstyle" width="600" height="400">
+</div>
+<div class="title">Figure 20. checkstyle eclipse plugin</div>
+</div>
+<div class="paragraph">
+<p>das Ganze dann auch auswertbar mit Trends in einem SonarQube Server aufbereitet.</p>
+</div>
+<div id="img-sonar" class="imageblock">
+<div class="content">
+<img src="images/totask.qa.sonar.dashboard.png" alt="screenshot_QA_sonar" width="700" height="500">
+</div>
+<div class="title">Figure 21. sonar dashboard</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/totask.qa.sonar.eclipse.png" alt="screenshot_QA_sonarIDE" width="600" height="400">
+</div>
+<div class="title">Figure 22. sonar ide integration</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/totask.qa.sonar.coverage.png" alt="screenshot_QA_sonarCoverate" width="700" height="600">
+</div>
+<div class="title">Figure 23. sonar jacobo test coverage</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/totask2.qa.coverity.png" alt="screenshot_QA_coverity" width="700" height="600">
+</div>
+<div class="title">Figure 24. coverity static analyse in der cloud</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_deployment">7. Deployment</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_lokal">7.1. Lokal</h3>
+<div class="paragraph">
+<p>Neben der einfachsten Ausführung als Stand Alone App hier ein Deployment
+im RedHat WildFly Application Server:</p>
+</div>
+<div id="img-wildfly" class="imageblock">
+<div class="content">
+<img src="images/totask2.dev.wildfly.admin.png" alt="screenshot_EE" width="600" height="400">
+</div>
+<div class="title">Figure 25. lokale Installation im wildfly Container</div>
+</div>
+<div class="paragraph">
+<p>see also: <a href="https://totask2.wordpress.com/2015/02/19/logging-into-the-cloud-loggly-com/" class="bare">https://totask2.wordpress.com/2015/02/19/logging-into-the-cloud-loggly-com/</a></p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_versionierung_von_daten">7.5. Versionierung von Daten</h3>
-<div class="paragraph">
-<p>Einige Stammdaten der Anwendung sind versioniert (sprich: alte Stände werden aufgehoben, historisiert). Dazu
-verwende ich hibernate-envers.</p>
-</div>
-<div class="listingblock">
-<div class="title">Project.java</div>
+<h3 id="_cloud">7.2. Cloud</h3>
+<div id="img-jenkins" class="imageblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java" data-lang="java">@Table(name = "TT_PROJECT")
-@Audited                                    <i class="conum" data-value="1"></i><b>(1)</b>
-@AuditTable("TT_PROJECT_HISTORY")           <i class="conum" data-value="2"></i><b>(2)</b>
-@ApiModel(value = "Project", description = "project to log work on tasks, containing *task*s and being administered by project leads")
-public class Project {
-
-    private static final Logger LOG = LoggerFactory.getLogger(Project.class);
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "ID")
-    private long     id;</code></pre>
+<img src="images/totask2.deploymentpipeline.drawio.png" alt="deployment_CLOUD_1" width="700" height="500">
 </div>
-</div>
-<div class="colist arabic">
-<table>
-<tr>
-<td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>Annotation um das Objekt zu versionieren.</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>Datenbanktabelle für historische Werte.</td>
-</tr>
-</table>
+<div class="title">Figure 26. deploymentpipeline</div>
 </div>
 <div class="paragraph">
-<p>Auf alte Werte kann dann mit der envers API zugegriffen werden:</p>
+<p>Automatisierte Builds mit dem build Server <strong>jenkins</strong> finden in der <em>cloud</em> auf einer openShift Applikation
+(== Runtime Umgebung in der cloud von red hat) statt.
+Der Build-Server holt sich den totask2 Source im master-Branch von github und generiert Dokumentation (alternativ: compile).</p>
 </div>
-<div class="listingblock">
-<div class="title">ProjectHistoryTest.java</div>
+<div id="img-jenkins" class="imageblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java" data-lang="java">LOG.debug("flash back query for project" + projectId);
-
-AuditReader ar = AuditReaderFactory.get(entityManager);
-AuditQuery query = ar.createQuery().forRevisionsOfEntity(
-        Project.class, true, true);
-query.add(new IdentifierEqAuditExpression(projectId, true));
-
-@SuppressWarnings("unchecked")
-List&lt;Project&gt; result = query.getResultList();
-
-result.stream().forEach(
-        p -&gt; LOG.debug("historic project entry: " + p));</code></pre>
+<img src="images/totask2.cloud.jenkins.gearbuild.png" alt="screenshot_CLOUD_1" width="700" height="500">
 </div>
+<div class="title">Figure 27. jenkins on openshift</div>
+</div>
+<div id="img-openShift-logs" class="imageblock">
+<div class="content">
+<img src="images/totask2.cloud.rhc.png" alt="screenshot_CLOUD_2" width="700" height="500">
+</div>
+<div class="title">Figure 28. totask2 running on openshift log tail</div>
+</div>
+<div id="img-codeship2heroku-logs" class="imageblock">
+<div class="content">
+<img src="images/totask2.cloud.codeship2heroku.png" alt="screenshot_CLOUD_HEROKU" width="700" height="500">
+</div>
+<div class="title">Figure 29. totask2 ci-server codeship catches changes on github, builds totask2, deploying result afterwards on heroku dyno.</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_monitoring">8. Monitoring</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Option zur Logauswertung (direct in der cloud).</p>
+</div>
+<div id="img-loggly.com" class="imageblock">
+<div class="content">
+<img src="images/totask2.loggly.viewer.png" alt="screenshot_loggly" width="700" height="500">
+</div>
+<div class="title">Figure 30. totask2 logging into the cloud</div>
 </div>
 <div class="paragraph">
-<p>in der UI:</p>
+<p>lokale Alternative dazu wäre die Kombi aus logstash, elasticsearch und kibana.</p>
 </div>
-<div id="img-projectHistory" class="imageblock">
+<div class="paragraph">
+<p>Monitoring der lokalen Wildfly Instanz mit newrelic.</p>
+</div>
+<div id="img-newrelic.com" class="imageblock">
 <div class="content">
-<img src="images/totask2.project.history.png" alt="screenshot.projectHistory" width="700" height="400">
+<img src="images/totask2.monitor.newrelic.3.png" alt="screenshot_newrelic" width="700" height="500">
 </div>
-<div class="title">Figure 8. ProjectHistory</div>
+<div class="title">Figure 31. totask2 app monitoring into the cloud</div>
+</div>
+<div id="img-monitor-us.com" class="imageblock">
+<div class="content">
+<img src="images/totask2.monitor.monitorus.web.png" alt="screenshot_monitor-us" width="700" height="500">
+</div>
+<div class="title">Figure 32. totask2 app monitoring into the cloud</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_weitere_details">9. weitere Details</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="totask2.developer-manual.html">dev docs</a> and
+<a href="totask2.manual.html">basic user docs</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_erfahrungen">10. Erfahrungen</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Details hoffentlich bald im blog <a href="https://totask2.wordpress.com/" class="bare">https://totask2.wordpress.com/</a></p>
+</div>
+<div class="sect2">
+<h3 id="_positiv">10.1. positiv</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>kein Xml, einfach zu durchschauen,</p>
+</li>
+<li>
+<p>lokale Stand-Alone Entwicklung: nur git und Java notwendig für den Start, der Rest lädt automagisch nach!</p>
+</li>
+<li>
+<p>entwicklerfreundliche Bibliotheken</p>
+</li>
+<li>
+<p>springMVC unterstützt den Test der Controller gut</p>
+</li>
+<li>
+<p>Datenbank und Datenmodell (mit jpa) schlank</p>
+</li>
+<li>
+<p>Komplett Repository, Tracker, Homepage und Test-Server in der (free!) cloud (github und openShift)</p>
+</li>
+</ul>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_selenium_test">7.6. Selenium Test</h3>
+<h3 id="_negativ">10.2. negativ</h3>
 <div class="paragraph">
-<p>Neben Unit Tests mit spring-tests ist auch ein reiner Blackbox test mit Selenium vorbereitet:</p>
+<p>Wo hakt es (noch?)</p>
 </div>
-<div id="img-test" class="imageblock">
-<div class="content">
-<img src="images/totask2.dev.seleniumTest.png" alt="testscript.html" width="500" height="300">
-</div>
-<div class="title">Figure 9. totask2.test.LoginProjectsLogout.selenium.html</div>
-</div>
-<div id="img-test-ide" class="imageblock">
-<div class="content">
-<img src="images/totask2.dev.seleniumIDE.png" alt="screnshot.ide" width="500" height="300">
-</div>
-<div class="title">Figure 10. test-ide</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_plantuml_diagramm">7.7. plantUML Diagramm</h3>
-<div class="paragraph">
-<p>Die hier gezeigten Diagramme sind mit plantUML erzeugt. Der Charm dabei:</p>
-</div>
-<div class="paragraph">
-<p>a) auch das Diagramm ist in Textformat und kann daher gemerged/versioniert werden</p>
-</div>
-<div class="paragraph">
-<p>b) es ist direkt im JavaDoc Kommentar enthalten und dementsprechend auch in der daraus generierten HTML Dokumentation.</p>
-</div>
-<div class="paragraph">
-<p>Diagramm im Quellcode:</p>
-</div>
-<div class="listingblock">
-<div class="title">package-info.java (plantuml documenentation for JavaDoc)</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-java" data-lang="java">package org.manathome.totask2.model;
-
-/*
-*
-@startuml doc-files/totask2.design.datamodel.png
-
-Project         "1" *-- "n" Task : contains
-Project         "n"  -- "n" User            : leads
-Task            "1" *-- "n" TaskAssignment
-TaskAssignment  "1" -- "n"  User : assigned to
-WorkEntry       "n" -- "1"  User
-WorkEntry       "n" -- "1"  Task : worked on
-
-Project   : name
-Task      : name
-
-User      : username
-User      : displayName
-User      : password
-User      : isAdmin : boolean
-
-WorkEntry  : at       : Date
-WorkEntry  : duration : Hours
-
-TaskAssignment : from  : Date
-TaskAssignment : until : Date
-
-
-@enduml
-*/</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>aufbereitet wird daraus:</p>
-</div>
-<div id="img-erd2" class="imageblock">
-<div class="content">
-<img src="images/uml/totask2.design.datamodel.png" alt="screenshot2.erd" width="200" height="100">
-</div>
-<div class="title">Figure 11. Datenmodell2</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_asciidoctor_dokumentation">7.8. asciidoctor Dokumentation</h3>
-<div class="paragraph">
-<p>Die Dokumentation zum Projekt (auch dieses Dokument) ist in "asciidoc" erstellt. Eine Markupsprache spezifisch für
-einfache Dokumentenerstellung. Sie kann in diverse Formate aufbereitet werden (u.a. html, pdf, latex) ist gut les- und
-versionierbar.</p>
-</div>
-<div class="listingblock">
-<div class="title">task2.developer-manual.asciidoc (this documentation)</div>
-<div class="content">
-<pre class="highlightjs highlight"><code>    == Überblick                                                           <i class="conum" data-value="1"></i><b>(1)</b>
-
-    Das Dokument beschreibt *aus Entwicklersicht* das...                   <i class="conum" data-value="2"></i><b>(2)</b>
-    ...
-	include::{resourcedir}/templates/weekEnty.html[tags=developer-manual-chart]</code></pre>
-</div>
-</div>
-<div class="colist arabic">
-<table>
-<tr>
-<td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>Überschrift</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>Text mit teilweise (*) hervorgehobenen Bereichen</td>
-</tr>
-</table>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_flyway_datenbank_migration">7.9. flyway Datenbank Migration</h3>
-<div class="paragraph">
-<p>Die Datenbankstruktur wird im Entwicklungsbetrieb automatisch generiert, für die Test/Produktionsumgebung wird die Struktur
-aber mit Flyway verwaltet. Dieses kleine Tool verwaltet je Datenbank deren aktuellen Releasestand und führt bei Bedarf beim Start der Anwendung notwendige Migrationen am Datenmodell (Upgrade) durch.</p>
-</div>
-<div class="paragraph">
-<p>Aus den Scripten:</p>
-</div>
-<div id="img-flywayscripts" class="imageblock">
-<div class="content">
-<img src="images/totask2.dev.flywayScripts.png" alt="flywayscripts.dir" width="700" height="400">
-</div>
-<div class="title">Figure 12. flyway script directory</div>
-</div>
-<div class="paragraph">
-<p>Und eigener Verwaltungstabellen erkennt Flyway den Stand der Datenbank:</p>
-</div>
-<div class="listingblock">
-<div class="title">console with flyway output/commands</div>
-<div class="content">
-<pre class="highlightjs highlight"><code>	:testClasses
-	:flywayInfo
-	+----------------+----------------------------+---------------------+---------+
-	| Version        | Description                | Installed on        | State   |
-	+----------------+----------------------------+---------------------+---------+
-	| 1              | init totask2 db            | 2014-10-26 02:17:37 | Success |    <i class="conum" data-value="1"></i><b>(1)</b>
-	| 2              | createTestUsersProject.db  | 2014-10-26 02:17:37 | Success |
-	| 3              | alterTableUsers.db         | 2014-10-26 02:17:37 | Success |
-	| 4              | alterTablesVarious.db      |                     | Pending |    <i class="conum" data-value="2"></i><b>(2)</b>
-	| 5              | createHistoryTables.db     |                     | Pending |
-	+----------------+----------------------------+---------------------+---------+
-
-	BUILD SUCCESSFUL
-
-    &gt;gradle flywayMigrate                                                              <i class="conum" data-value="3"></i><b>(3)</b></code></pre>
-</div>
-</div>
-<div class="colist arabic">
-<table>
-<tr>
-<td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>bereits installierte Datenbankscripts</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>noch fehlende Datenbankscripts</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>Kommandozeilenaufruf um Datenbank auf neuesten Stand zu bringen</td>
-</tr>
-</table>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_gradle_build">7.10. gradle Build</h3>
-<div class="paragraph">
-<p>gradle ist ein Groovy basierendes Build System, als Alternative zu den bekannteren Build-Tools maven oder ant zu empfehlen.</p>
-</div>
-<div class="listingblock">
-<div class="title">gradle.build.output</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy" data-lang="groovy">\data\projects\toTask2&gt;gradle --daemon allDocs
-
-	:asciidoctor
-	Converting C:\data\projects\toTask2\src\docs\totask2.article.asciidoc
-	Converting C:\data\projects\toTask2\src\docs\totask2.developer-manual.asciidoc
-	Converting C:\data\projects\toTask2\src\docs\totask2.slides.asciidoc
-	:compileJava UP-TO-DATE
-	:processResources UP-TO-DATE
-	:classes UP-TO-DATE
-	:plantuml
-	:javadoc UP-TO-DATE
-	:copyPlantUMLImages UP-TO-DATE
-	:allDocs
-
-	BUILD SUCCESSFUL
-
-	Total time: 31.077 secs
-\data\projects\toTask2&gt;</code></pre>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_newrelic_monitoring">7.11. newRelic Monitoring</h3>
-<div class="paragraph">
-<p>bei Start des augmented wildFly werden Monitoring Informationen an die newelic Webseite gesendet.</p>
-</div>
-<div class="listingblock">
-<div class="title">console with wildfly start output</div>
-<div class="content">
-<pre class="highlightjs highlight"><code>C:\dev\wildfly\bin&gt;standalone
-	Calling "C:\dev\wildfly\bin\standalone.conf.bat"
-	..
-	Feb 21, 2015 21:33:43 +0100 [6592 1] com.newrelic INFO: Agent is using Logback
-	Feb 21, 2015 21:33:43 +0100 [6592 1] com.newrelic INFO: Loading configuration file "C:\dev\wildfly\newrelic\.\newrelic.yml"
-	..</code></pre>
-</div>
-</div>
-<div id="img-newrelic" class="imageblock">
-<div class="content">
-<img src="images/totask2.monitor.newrelic.1.png" alt="screenshot.newrelic1" width="200" height="100">
-</div>
-<div class="title">Figure 13. monitoringdaten newrelic</div>
+<div class="ulist">
+<ul>
+<li>
+<p>check von html inline JavaScipt mit jshint aufgegeben, gradle Plugin kennt --export option nicht</p>
+</li>
+<li>
+<p>gradle Tests laufen derzeit nicht auf dem Jenkins Cloud Server (Inkompatibilität gradle 2 und openShift?)</p>
+</li>
+<li>
+<p>Deployment auf openShift erfolgt mit sftp, der "empfohlene Weg" über git scheitert bei mir an der notwendigen zusätzlichen gradle Installation (zu wenig disk quota im free plan von openShift hierfür)</p>
+</li>
+<li>
+<p>bekomme asciidoctor-diagram im gradle Build nicht ans laufen, daher mit Umweg (umkopieren der generierten Bilder aus der JavaDoc Erzeugung)</p>
+</li>
+</ul>
 </div>
 </div>
 </div>
@@ -1292,8 +995,8 @@ aber mit Flyway verwaltet. Dieses kleine Tool verwaltet je Datenbank deren aktue
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 1.3<br>
-Last updated 2015-02-21 22:21:24 MEZ
+Version 1.4<br>
+Last updated 2015-03-29 20:47:03 MESZ
 </div>
 </div>
 </body>

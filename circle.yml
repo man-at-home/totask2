@@ -1,0 +1,23 @@
+# --------------------------------------------------------------------
+# circle.yml:  no build on gh-pages!
+
+# @author man-at-home
+# --------------------------------------------------------------------
+
+machine:
+   java:
+      version: oraclejdk8
+
+dependencies:
+   override:
+     - ./gradlew clean
+     
+test:
+   override:
+      - ./gradlew clean
+         
+general:
+   branches:
+      only:
+         - qa_branch
+    

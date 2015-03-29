@@ -6,6 +6,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.manathome.totask2.Application;
 import org.manathome.totask2.SwaggerConfig;
+import org.manathome.totask2.util.Authorisation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -34,7 +35,9 @@ public class UserServiceTest {
         assertNotNull("user not found", u);
         assertNotNull("user name", u.getUsername());
         assertNotNull("user pw", u.getPassword());
-        assertEquals("admin and user role expected, but got " + u, 2, u.getAuthorities().size());        
+        assertTrue("this user should be admin", u.getAuthorities().stream().anyMatch(ga -> ga.getAuthority().equals(Authorisation.ROLE_ADMIN)));
+        assertTrue("this user should be monitor", u.getAuthorities().stream().anyMatch(ga -> ga.getAuthority().equals(Authorisation.ROLE_MONITOR)));           
+        assertTrue("this user should have user-role", u.getAuthorities().stream().anyMatch(ga -> ga.getAuthority().equals(Authorisation.ROLE_USER)));       
     }
-
 }
+

@@ -25,6 +25,9 @@ public class Authorisation {
     /** always "on". */
     public static final String ROLE_USER = "ROLE_USER";
     
+    /** user may access /monitor/health, monitor/metrics.. URLs. */
+    public static final String ROLE_MONITOR = "ROLE_MONITOR";
+    
     /** 
      * user has admin role. 
      * 

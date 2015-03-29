@@ -4,8 +4,12 @@ totask2 releasenotes
 
 basic releasenotes for http://man-at-home.github.io/totask2/
 
+.2015-03-29
+- new circonus monitoring, including gathering of metrics from actuator endpoints (monitor/health, monitor/metrics)
+- new user role "monitor", moved monitoring endpoints below /monitor/ with basic auth
+
 .2015-03-28
-- addes keen.io analytic data logging (https://totask2.wordpress.com/2015/03/28/feeding-analytical-data-into-keen-io/)
+- added keen.io analytic data logging (https://totask2.wordpress.com/2015/03/28/feeding-analytical-data-into-keen-io/)
 
 .2015-03-26
 - added soapUI REST Script (targeted for AlertSite UXM)

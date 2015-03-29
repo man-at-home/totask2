@@ -231,7 +231,7 @@ public class WeekEntryController {
 
             return "redirect:/weekEntry";
 
-        } catch (Exception ex) {
+        } catch (RuntimeException ex) {
             LOG.error(dateString, ex);
             throw ex;
         }

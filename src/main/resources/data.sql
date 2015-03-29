@@ -9,7 +9,7 @@
 insert into tt_user(ID, USER_NAME, DISPLAY_NAME, ACTIVE, VERSION, IS_ADMIN, PASSWORD) values(1, 'admin',           'predefined admin user', true, 1, true , null);
 insert into tt_user(ID, USER_NAME, DISPLAY_NAME, ACTIVE, VERSION, IS_ADMIN, PASSWORD) values(2, 'unit-test-user',  'unit-test user'       , true, 1, false, null);
 insert into tt_user(ID, USER_NAME, DISPLAY_NAME, ACTIVE, VERSION, IS_ADMIN, PASSWORD) values(3, 'unit-test-admin', 'unit-test admin'      , true, 1, true , null);
-
+insert into tt_user(ID, USER_NAME, DISPLAY_NAME, ACTIVE, VERSION, IS_ADMIN, PASSWORD) values(4, 'monitor',         'monitoring user'      , true, 1, false, null);
 
 
 -- totask2 project 1

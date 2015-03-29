@@ -11,7 +11,7 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/** test /health and /metrics endpoints. */
+/** test monitoring /health and /metrics endpoints. */
 public class ActuatorEndpointTest extends ControllerTestBase {
 
     private static final Logger LOG = LoggerFactory.getLogger(ActuatorEndpointTest.class);
@@ -19,10 +19,10 @@ public class ActuatorEndpointTest extends ControllerTestBase {
     @Test
     public void testHealthEndpoint() throws Exception {
 
-        LOG.debug("request /health");
+        LOG.debug("request /monitor/health");
         
-        this.mockMvc.perform(get("/health")
-                .with(user("unit-test-admin").roles("ADMIN"))
+        this.mockMvc.perform(get("/monitor/health")
+                .with(user("monitor").roles("MONITOR"))
                 )
         .andDo(print())  
         .andExpect(status().isOk())
@@ -30,13 +30,14 @@ public class ActuatorEndpointTest extends ControllerTestBase {
         .andReturn();   
     }
     
+    /** remote monitoring endpoint. */
     @Test
     public void testMetricsEndpoint() throws Exception {
 
-        LOG.debug("request /metrics");
+        LOG.debug("request /monitor/metrics");
         
-        this.mockMvc.perform(get("/metrics")
-                .with(user("unit-test-admin").roles("ADMIN"))
+        this.mockMvc.perform(get("/monitor/metrics")
+                .with(user("monitor").roles("MONITOR"))
                 )
         .andDo(print())  
         .andExpect(status().isOk())

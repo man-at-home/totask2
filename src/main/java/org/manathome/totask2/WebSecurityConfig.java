@@ -108,7 +108,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }//static inner class
 
     
-    /** third configuration: using basic authentication for metrics REST. */
+    /** third configuration: using basic authentication for metrics REST based below /monitor. 
+     * 
+     * Extra role "MONITOR" is needed with basic authentication, matches the url given in /application.yml for spring actuator endpointds. 
+     * */
     @Configuration
     @Order(2) 
     public static class MonitoringApiWebSecurityConfigurationAdapter extends WebSecurityConfigurerAdapter {
@@ -121,9 +124,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             LOG.info("metrics/REST-API: enabling security (configure basic auth)");
             
             http
-                .antMatcher("/health")
+                .antMatcher("/monitor/**")
                 .authorizeRequests()
-                .antMatchers("/health").hasRole("ADMIN")
+                .antMatchers("/monitor/**").hasRole("MONITOR")
                 .and()
                 .httpBasic();
             

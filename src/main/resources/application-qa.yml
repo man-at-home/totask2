@@ -25,7 +25,10 @@ spring:
          ddl-auto: none 
          dialect: org.hibernate.dialect.H2Dialect
  
- 
+# move /health and /metrics endpoint to another url base
+management:
+   context-path: /monitor
+   
 # db migration settings enabled
 flyway:
    enabled: true

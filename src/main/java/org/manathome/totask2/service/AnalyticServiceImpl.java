@@ -59,7 +59,7 @@ public class AnalyticServiceImpl implements AnalyticService {
         if (keenClient != null) {
             Map<String, Object> event = new HashMap<String, Object>();
             event.put("entity", entityName);
-            event.put("id", new Long(entityId));
+            event.put("id", Long.valueOf(entityId));
             event.put("name", instanceName);
             keenClient.addEventAsync("masterData", event);
             

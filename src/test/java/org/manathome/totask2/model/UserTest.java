@@ -3,6 +3,7 @@ package org.manathome.totask2.model;
 import static org.junit.Assert.*;
 
 import org.junit.Test;
+import org.manathome.totask2.util.Authorisation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -62,11 +63,32 @@ public class UserTest {
         user.changePasswort("new pw");
 
         user.setAdmin(false);
-        assertEquals("no admin role", 1, user.getAuthorities().size()); // user. no admin
+        assertTrue("no admin role expected", !user.getAuthorities().stream().anyMatch(ga -> ga.getAuthority().equals(Authorisation.ROLE_ADMIN)));
         user.setAdmin(true);
-        assertEquals("admin role", 2, user.getAuthorities().size()); // admin + user
+        assertTrue("admin role expected", user.getAuthorities().stream().anyMatch(ga -> ga.getAuthority().equals(Authorisation.ROLE_ADMIN)));
+        user.setAdmin(false);
+        assertTrue("no admin role expected", !user.getAuthorities().stream().anyMatch(ga -> ga.getAuthority().equals(Authorisation.ROLE_ADMIN)));
         LOG.debug("user: " + user);
     }
+
+    /** no monitoring role. */
+    @Test
+    public void testUserMonitoringRole() {
+        User user = new User();
+        user.setUsername("tmp-adm");
+        user.setDisplayName("test monitoring user transient");
+
+        user.setAdmin(false);
+        assertTrue("no monitoring role expected", !user.getAuthorities().stream().anyMatch(ga -> ga.getAuthority().equals(Authorisation.ROLE_MONITOR)));
+        user.setAdmin(true);
+        assertTrue("monitoring role expected", user.getAuthorities().stream().anyMatch(ga -> ga.getAuthority().equals(Authorisation.ROLE_MONITOR)));
+        user.setAdmin(false);
+        
+        user = new User();
+        user.setUsername("monitor");
+        user.setDisplayName("test implicit monitoring user (by name)");
+        assertTrue("monitoring role expected", user.getAuthorities().stream().anyMatch(ga -> ga.getAuthority().equals(Authorisation.ROLE_MONITOR)));
+    }    
 
     /** test overridden hash and equals. */
     @Test

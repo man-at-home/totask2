@@ -21,8 +21,8 @@ public class InfoController {
     @Autowired private TaskRepository taskRepository;
 
     
-    /** showing actual db contents. */
-    @Secured(Authorisation.ROLE_ADMIN)
+    /** showing actual db content statistics. */
+    @Secured({Authorisation.ROLE_ADMIN, Authorisation.ROLE_MONITOR})
     @RequestMapping("/dbinfo")
     public String dbinfo(final Model model) {
        

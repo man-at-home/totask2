@@ -77,7 +77,7 @@ Diverse Build-Server laufen in der Cloud, auf openshift http://jenkins-ci.org/[j
 dazu https://travis-ci.org/[travis-ci], https://codeship.com/[codeship], https://circleci.com[circleci]
 sowie https://app.shippable.com[shippable]
 
-Qualitätsanalyse erfolgt mit diversen Tools die im build oder in der ide eingebunden sind: CheckStyle, FindBugs, 
+Qualitätsanalyse erfolgt mit diversen Tools die im Build oder in der IDE eingebunden sind: CheckStyle, FindBugs, 
 PMD, jDepend, jacoco. Zudem als Analysewerkzeug http://www.sonarqube.org/[SonarQube].
 Zusätzlich triggert der travis-ci Server eine cloud-basierte Codeprüfung auf an https://scan.coverity.com/[coverity.com]
 Auf veraltete Libraries prüft https://www.versioneye.com/user/projects/550f49680bdc71c5c903e1d4[versioneye].
@@ -86,18 +86,27 @@ Experimentell ist http://www.seleniumhq.org/[selenium] als Web Test Tool.
 
 Als "echter" Appserver für das Deployment fungiert der http://www.wildfly.org/[WildFly Application Server] von redhat - sowohl lokal installiert als auch in der cloud.
 
-Hosting der Anwendung in der cloud erfolgt mit openShift in einer https://developers.openshift.com/en/wildfly-overview.html[WildFly Cardridge],
-zudem automatisiert über den codeship ci-server auf einen dyno in der heroku cloud.
-
 Metriken sind mit boot-actuator und mit https://dropwizard.github.io/metrics[dropwizard metrics] bereitgestellt, derzeit als REST Endpoint. 
-Optionales weiteres Monitoring erfolgt mit http://www.newrelic.com/[newrelic]. Dazu ist der lokale wildfly Server instrumentiert
+Optionales weiteres Performance Monitoring erfolgt mit http://www.newrelic.com/[newrelic]. Dazu ist der lokale wildfly Server instrumentiert
 und schickt Informationen an newrelic.
 
-Monitoring der bei heroku laufenden Anwendung erfolgt mit http://monitor.us[monitor.us], die neben web charts und alert mails auch 
+Hosting der Anwendung in der cloud erfolgt mit openShift in einer https://developers.openshift.com/en/wildfly-overview.html[WildFly Cardridge],
+zudem automatisiert (und immer Aktualisiert über den codeship ci-server) auf einen dyno in der heroku cloud.
+
+Das Monitoring der bei heroku laufenden Anwendung erfolgt mit http://monitor.us[monitor.us], die neben Web Charts und Alert E-Mails auch 
 android und iphone apps herfür bereitstellen.
 
-Als Kommunikation (mit mir selber: "ha ha") generieren Codeänderungen (github) und Blob-Eitnräge (wordpress) twitter tweets auf
-https://twitter.com/totask2tweeter[@totask2tweeter], andere Tools probiere ich gerade (Slack, HipChat).
+Ebenfalls zur Überwachung sowie zur Erfassung und Auswertung oben beschriebenen Metriken erfolgt mit circonus.com[Circonus].
+Aktiviert sind zudem https://uxm.alertsite.com/[AlertSite] (mit der Besonderheit der Ausführung von soapUI Tests gegen totask2), 
+http://ruxit.com[ruxit], https://anturis.com/[anturis] und https://www.pingdom.com/[pingdom], die jeweils die 
+Verfügbarkeit der totask2 Webseiten von verschiedenen Standorten weltweit prüfen als weitere Server Überwachung.
+
+Weitere Auswertung können mit dem Analytic Provider http://keen.io[keen.io] erfolgen. Dazu ist ein entsprechender Service in totask2
+implementiert, der Kennzahlen an keen.io schicken kann.
+
+Als Kommunikation (mit mir selber: "ha ha") generieren Codeänderungen (github) und Blob-Einträge (wordpress) twitter tweets auf
+https://twitter.com/totask2tweeter[@totask2tweeter], diese werden auch weitergeleitet an einen http://slack.com[slack] 
+Chat Account, ebenso wie weitere Informationen (z.B. von den Build Servern).
 
 === Anforderungen zum Entwickeln
 

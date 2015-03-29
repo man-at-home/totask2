@@ -188,12 +188,18 @@ public final class User implements UserDetails {
     public Collection<? extends GrantedAuthority> getAuthorities() {
                 
         ArrayList<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>(); 
+
+        authorities.add(new SimpleGrantedAuthority(Authorisation.ROLE_USER)); // anyone is user
         
         if (this.isAdmin()) {
             GrantedAuthority adminRole = new SimpleGrantedAuthority(Authorisation.ROLE_ADMIN);
             authorities.add(adminRole);
         }
-        authorities.add(new SimpleGrantedAuthority(Authorisation.ROLE_USER));
+        
+        if (this.isAdmin() || (this.getUsername() != null && this.getUsername().startsWith("monitor"))) {
+            GrantedAuthority adminRole = new SimpleGrantedAuthority(Authorisation.ROLE_MONITOR);
+            authorities.add(adminRole);            
+        }
         
         LOG.debug("authorities of user " + this.getDisplayName() + " requested: " + authorities.size());
         return authorities;

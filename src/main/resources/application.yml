@@ -1,12 +1,12 @@
-# totask2 spring configuration
+# totask2 spring configuration (DEVELOPMENT MODE)
 #
+# @see    <a href="http://docs.spring.io/spring-boot/docs/current/reference/html/howto-properties-and-configuration.html"></a>
 # @author man-at-home
-#
 
 app:
    name: totask2
    description: ${app.name} work entry logging (default env)
-   version: v0.0-dev
+   version: v1.0-dev
 
 spring:
    thymeleaf:
@@ -19,6 +19,17 @@ spring:
       show-sql: true   
       hibernate:
          ddl-auto: create-drop
+
+# move /health and /metrics endpoint to another url base
+management:
+   context-path: /monitor
+
+info:
+   app:
+      name: totask2
+      description: demo application (development environment, no persistant data here). 
+      version: dev
+      runtime-environment: heroku development proof of concept
 
 flyway:
    enabled: false

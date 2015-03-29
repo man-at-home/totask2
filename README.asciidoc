@@ -27,3 +27,9 @@ image::src/docs/images/totask2.weekEntry.clientLogic.png[screenshot5, 600, 400]
 * link:src/docs/totask2.manual.asciidoc[basic user documentation]
 * link:src/docs/totask2.article.asciidoc[project overview]
 * link:src/docs/totask2.developer-manual.asciidoc[dev docs]
+
+
+
+[[img-jenkins]]
+.deploymentpipeline
+image::src/docs/images/totask2.deploymentpipeline.drawio.png[deployment_CLOUD, 700, 500]

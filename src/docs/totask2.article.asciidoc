@@ -273,6 +273,11 @@ see also: https://totask2.wordpress.com/2015/02/19/logging-into-the-cloud-loggly
 
 === Cloud
 
+[[img-jenkins]]
+.deploymentpipeline
+image::images/totask2.deploymentpipeline.drawio.png[deployment_CLOUD_1, 700, 500]
+
+
 Automatisierte Builds mit dem build Server *jenkins* finden in der _cloud_ auf einer openShift Applikation 
 (== Runtime Umgebung in der cloud von red hat) statt.
 Der Build-Server holt sich den totask2 Source im master-Branch von github und generiert Dokumentation (alternativ: compile).

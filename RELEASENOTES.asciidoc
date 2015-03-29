@@ -6,6 +6,7 @@ basic releasenotes for http://man-at-home.github.io/totask2/
 
 .2015-03-29
 - new circonus monitoring, including gathering of metrics from actuator endpoints (monitor/health, monitor/metrics)
+- see https://totask2.wordpress.com/2015/03/29/circonus-sampling-actuator-metrics-data-for-charts-and-alerts/
 - new user role "monitor", moved monitoring endpoints below /monitor/ with basic auth
 
 .2015-03-28

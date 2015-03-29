@@ -106,7 +106,9 @@ public final class User implements UserDetails {
     private long version;
     
     /** ctor. */
-    public User() {}
+    public User() {
+        this.userName = ""; // never be null..
+    }
 
     /** internal pk. */
     @ApiModelProperty(value = "unique id of user (PK)")
@@ -196,7 +198,7 @@ public final class User implements UserDetails {
             authorities.add(adminRole);
         }
         
-        if (this.isAdmin() || (this.getUsername() != null && this.getUsername().startsWith("monitor"))) {
+        if (this.isAdmin() || this.getUsername().startsWith("monitor")) {
             GrantedAuthority adminRole = new SimpleGrantedAuthority(Authorisation.ROLE_MONITOR);
             authorities.add(adminRole);            
         }

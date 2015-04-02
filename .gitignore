@@ -16,3 +16,4 @@ gradle.properties
 toTask2.iml
 .idea/
 /local.properties
+/target/

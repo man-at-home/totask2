@@ -339,8 +339,6 @@ Details hoffentlich bald im blog https://totask2.wordpress.com/
 
 Wo hakt es (noch?)
 
-* check von html inline JavaScipt mit jshint aufgegeben, gradle Plugin kennt --export option nicht
-* gradle Tests laufen derzeit nicht auf dem Jenkins Cloud Server (Inkompatibilität gradle 2 und openShift?)
 * Deployment auf openShift erfolgt mit sftp, der "empfohlene Weg" über git scheitert bei mir an der notwendigen zusätzlichen gradle Installation (zu wenig disk quota im free plan von openShift hierfür)
 * bekomme asciidoctor-diagram im gradle Build nicht ans laufen, daher mit Umweg (umkopieren der generierten Bilder aus der JavaDoc Erzeugung)
 

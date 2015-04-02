@@ -4,6 +4,9 @@ totask2 releasenotes
 
 basic releasenotes for http://man-at-home.github.io/totask2/
 
+.2015-04-02
+- refactored deployment to openShift - now "as recommended" with git push and maven (generated openshift.pom.xml file)
+
 .2015-03-29
 - new circonus monitoring, including gathering of metrics from actuator endpoints (monitor/health, monitor/metrics)
 - see https://totask2.wordpress.com/2015/03/29/circonus-sampling-actuator-metrics-data-for-charts-and-alerts/

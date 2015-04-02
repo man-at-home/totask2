@@ -90,8 +90,10 @@ Metriken sind mit boot-actuator und mit https://dropwizard.github.io/metrics[dro
 Optionales weiteres Performance Monitoring erfolgt mit http://www.newrelic.com/[newrelic]. Dazu ist der lokale wildfly Server instrumentiert
 und schickt Informationen an newrelic.
 
-Hosting der Anwendung in der cloud erfolgt mit openShift in einer https://developers.openshift.com/en/wildfly-overview.html[WildFly Cardridge],
-zudem automatisiert (und immer Aktualisiert über den codeship ci-server) auf einen dyno in der heroku cloud.
+Hosting der Anwendung in der cloud erfolgt 
+mit openShift in einer https://developers.openshift.com/en/wildfly-overview.html[WildFly Cardridge]. Deployment dabei mit
+lokalem git push. Zudem erfolgt über github ein deployment(automatisiert über den codeship ci-server) auf einen dyno in der 
+heroku cloud.
 
 Das Monitoring der bei heroku laufenden Anwendung erfolgt mit http://monitor.us[monitor.us], die neben Web Charts und Alert E-Mails auch 
 android und iphone apps herfür bereitstellen.

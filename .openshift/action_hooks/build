@@ -2,6 +2,4 @@
 set -x
  
 cd $OPENSHIFT_REPO_DIR
-export GRADLE_USER_HOME=$OPENSHIFT_DATA_DIR/gradle
-
-./gradlew -s clean deployOpenShift
+mvn package -f openshift.pom.xml -DskipTests=true

@@ -1,6 +1,6 @@
 package org.manathome.totask2.model;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.*; 
 
 import org.junit.Test;
 import org.manathome.totask2.util.Authorisation;
@@ -51,7 +51,7 @@ public class UserTest {
         assertFalse(user.getPassword().equals("xx"));
         String oldpw = user.getPassword();
         user.changePasswort("2342343242");
-        assertNotEquals(oldpw, user.getPassword());
+        assertFalse(oldpw.equals(user.getPassword()));
 
     }
 
@@ -112,7 +112,7 @@ public class UserTest {
 
         userb.setUsername("tst other");
 
-        assertNotEquals(user.hashCode(), userb.hashCode());
+        assertFalse("hashcode should differ", user.hashCode() == userb.hashCode());
         assertTrue(!user.equals(userb));
         assertTrue(!userb.equals(user));
     }

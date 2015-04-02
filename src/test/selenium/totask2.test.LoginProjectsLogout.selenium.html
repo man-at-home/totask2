@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="http://localhost:8080/" />
+<title>totask2.test.LoginProjectsLogout</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">totask2.test.LoginProjectsLogout</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=h1</td>
+	<td>*totask2*</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//a[contains(@href, '/weekEntry')]</td>
+	<td>edit weekly work hours..</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=projects..</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>id=loginForm</td>
+	<td>*sign in*</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>name=username</td>
+	<td>unit-test-user</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>name=password</td>
+	<td>t123456</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=button.btn.btn-primary</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=h1</td>
+	<td>currently defined projects*</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//button[@value='sign out']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=div.container.paper-box</td>
+	<td>*you have been logged out*</td>
+</tr>
+</tbody></table>
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>fragments to be included.</title>
+	
+	<th:block th:fragment="favicon">
+	 	<link rel="shortcut icon" th:href="@{/images/favicon.png}" type="image/png" />
+		<link rel="icon"          th:href="@{/images/favicon.png}" type="image/png" />
+	</th:block>
+</head>
+
+<body>
+  	<h1>favicon</h1>
+  	
+ 	<p>see header</p>
+ 
+	<h1>fragments</h1>
+	
+	<!--  fragments, commonly included in other templates -->
+
+    <div th:fragment="header (pageTitle)">
+    
+     
+    		<div style="float: right;">
+				<form th:action="@{/logout}" method="post">
+					<button type="submit" class="btn btn-sm btn-default" value="sign out" th:title="${#httpServletRequest.remoteUser}">
+						<span class="glyphicon glyphicon-off"></span> <span th:text="#{totask2.logout}">sign out</span>
+					</button>
+				</form>
+			</div>
+			
+			<div class="page-header">
+				<h1 th:text="${pageTitle}">my totask2 application</h1>
+			</div>
+    
+			
+     		<!--  totask2 implementation -->      
+    </div>
+  
+    <footer th:fragment="footer">
+      <hr />
+      &copy; man.at.home (2014)
+      
+      <script 	type="text/javascript" 
+      			src="//js.ruxit.com/jstag/148709fdc4b/ruxitagentjs_2fnqr_1006600380011612.js" 
+      			data-dtconfig="app=2E66CE0CD3E333D8|reportUrl=https://jih81955.live.ruxit.com/beacon|tp=500,50,0|cors=1">
+      </script>
+    </footer>
+  
+  </body>
+  
+</html>

@@ -1,0 +1,31 @@
+# ====================================================================
+# travis.yml: controls ci-server at travis-ci.org
+#             build totask2 and analyse (qa_branch only) with coverity
+#             notification goes to slack
+#
+# @author man-at-home
+# ====================================================================
+
+language: java
+
+jdk:
+  - oraclejdk8
+
+env:
+  global:
+   # The next declaration is the encrypted COVERITY_SCAN_TOKEN, created
+   #   via the "travis encrypt" command using the project repo's public key
+   - secure: "AuLBTQzqjXL+QA6YZHQQdp14a5f1lztZTXo8u6JJZXCfAwXDe9u6bPp6V+28WEnDtzcsq7idp4TRSBnPIG1IxgzELBoVoh0Sjpvjr7MZ01sPa6y1MisKYWGy6eVAxCOkIgfIhBLCio2dnBBsWay4FclyALKSf1EO7V3qJ9aqWGs="
+
+addons:
+  coverity_scan:
+    project:
+      name: "man-at-home/totask2"
+      description: "totask2 project task time logging"
+    notification_email: man.from.home@gmail.com
+    build_command_prepend: "./gradlew clean"
+    build_command:   "./gradlew assemble"
+    branch_pattern: qa_branch
+
+notifications:
+  slack: totask2:4qoHFcqOGzGhSbRQin6qXnIP

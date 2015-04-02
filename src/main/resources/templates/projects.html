@@ -1,0 +1,109 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title th:text="#{totask2.appname}">totask2 projects</title>
+
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />	
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+	<link rel="stylesheet" type="text/css" th:href="@{/css/totask2.css}" />
+	<link rel="stylesheet" type="text/css" th:href="@{/bootstrap/css/bootstrap.min.css}" />
+	<link rel="stylesheet" type="text/css" th:href="@{/bootstrap/css/bootstrap-theme.min.css}" />
+	<link rel="stylesheet" type="text/css" th:href="@{/css/jquery.dataTables.css}" />
+	
+	<link rel="icon" type="image/x-icon" href="/realFavIconIncludedAtRuntime" th:replace="headerFooter :: favicon"/>	
+</head>
+
+<body>
+	<script type="text/javascript" charset="utf8" th:src="@{/js/jquery-1.11.1.js}"></script>
+	<script type="text/javascript" charset="utf8" th:src="@{/js/jquery.dataTables.js}"></script>
+	<script type="text/javascript" charset="utf8" th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+
+	<script type="text/javascript">
+		/*<![CDATA[*/
+
+		$(document).ready(function() {
+			$('#tableProjects').dataTable();
+		});
+
+		/*]]>*/
+	</script>
+
+<div class="container paper-box" style="width: 70%">
+
+	<div th:replace="headerFooter :: header (#{totask2.projects.pageheader})"></div>
+
+	<ul class="nav nav-tabs" role="tablist">
+	  <li><a th:href="@{/}" th:text="#{totask2.nav.home}">home</a></li>
+	  <li class="active"><a href="#" th:text="#{totask2.nav.projects}">projects</a></li>
+	  <li><a th:href="@{/weekEntry}" th:text="#{totask2.nav.weekEntry}">home</a></li>
+	</ul>
+	
+	<span id="flashMessage"  class="alert-warning" th:unless="${#strings.isEmpty(flashMessage)}"  th:text="${flashMessage}">flashMessage</span>
+	
+	<br/>
+
+	<form action="#" th:action="@{/editProject}" method="get">
+		<div style="width: 90%">
+
+			<table id="tableProjects" class="display compact cell-border" style="width:100%">
+				<thead>
+					<tr>
+						<th th:text="#{totask2.project.id.label}" 	class="dt-center">id</th>
+						<th th:text="#{totask2.project.name.label}" class="dt-left">name</th>
+						<th th:text="#{totask2.project.link}" 		class="dt-left">action</th>
+					</tr>
+				</thead>
+
+				<tfoot>
+				<tr>
+					<th />
+					<th />
+					<th />
+				</tr>
+				</tfoot>
+				<tbody> 
+					<tr th:each="project : ${projects}">    												
+						<td class="dt-center"  th:text="${project.id}">17</td>
+						<td th:text="${project.name}" class="dt-left">project name</td>						
+						<td class="dt-left">
+							<a th:href="@{/project/{id}(id=${project.id})}"
+							   th:if="${project.isEditAllowed(user)}" 
+								class="btn btn-default">
+								<span class="glyphicon glyphicon-pencil"></span>
+								<span th:text="#{totask2.project.action.edit}">edit..</span>
+							</a>
+							<a th:href="@{/plan/project/{id}(id=${project.id})}"
+							   th:if="${project.isEditAllowed(user)}" 
+								class="btn btn-default">
+								<span class="glyphicon glyphicon-calendar"></span>
+								<span th:text="#{totask2.project.action.projectPlan}">show plan..</span>
+							</a>							
+						</td>
+					</tr>
+				</tbody>
+
+			</table>
+		</div>
+	</form>
+	
+	<p>
+		<a th:href="@{/project/new}" class="btn btn-default" th:if="${isNewAllowed}">
+			<span class="glyphicon glyphicon-plus"></span>
+			<span th:text="#{totask2.project.action.new}">new..</span>
+		</a>
+		<br /> <br />
+		
+		<a download="excel.of.week.xls" th:href="@{/projects/report/pdf}" class="btn btn-default">
+			<span class="glyphicon glyphicon-save"></span>
+			<span th:text="#{totask2.project.action.pdfReport}">pdf..</span>
+		</a>
+		
+	</p>
+	
+	<div th:replace="headerFooter :: footer"></div>
+	
+</div>	
+</body>
+</html>

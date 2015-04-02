@@ -1,0 +1,344 @@
+= totask2 Überblick
+:numbered: 
+:icons:    font
+:toc:      left
+man-at-home
+v1.4, 2015-03-07
+
+totask: eine rudimentäre Projektzeiterfassung 
+
+== die Motivation
+
+totask2 ist eine "Ausrede" um einen wieder einmal willkürlich ausgewählten Software-Stack auszuprobieren. 
+
+== Beschreibung
+
+totask2 erlaubt eine Erfassung von (Arbeits-) Zeiten zu Projekttasks. Daher verwaltet das Programm
+Entitäten wie Projekt, Task und Arbeitszeit (WorkEntry) und Taskzuordnung zu Usern (TaskAssignment).
+
+
+=== Spec
+
+* Ein Administrator (User) darf Projekte anlegen
+* ein Projekt hat einen oder mehrere Projektleiter (User)
+* Projektleiter könnne Tasks zu Ihren Projekten erfassen
+* jeder Task kann Usern (für einem Zeitraum) zugeordnet werden, in diesem dann Arbeiten zum Task zulässig sind (TaskAssignment)
+* jeder User kann Zeiten wochenweise für Tasks erfassen die ihm im Zeitraum zugeordnet sind
+* die Erfassung erfolgt je Tag und Task in Stunden(bruchteilen) (WorkEntry)
+* die Erfassung kann für die aktuelle und zurückliegende Wochen erfolgen
+* seine erfassten Zeiten kann der User als Excel herunterladen
+
+[[img-useCases]]
+.unterstützte Usecases
+image::images/uml/totask2.design.usecases.png[screenshot.useCases, 700, 400]
+
+Hint: obiges Bild nur sichtbar bei lokalem build, nicht auf github.
+
+== Der Software Stack
+
+http://springmvc.org/[springmvc^] als serverseitiges Java _Web Framework_.
+
+SpringMVC Web Anwendungen werden natürlich in Java programmiert. Im vorliegenden Fall bereits mit https://java.com/de/[Java 8]
+da ich dabei Closures nutzen wollte. Als Templating Engine für HTML wird dabei http://www.thymeleaf.org/[thymeleaf] verwendet. 
+
+Logging erfolgt mit http://logback.qos.ch/[logback/slf4j], optional in die cloud auf http://loggly.com[loggly.com], 
+
+Unit Tests mit http://junit.org/[junit]. Der REST Teil wird über http://swagger.io/[wagger] zur Verfügung gestellt,
+alternativ erfolgen Tests der REST Aufrufe über https://www.getpostman.com/[Postman]
+
+_Client Seitig_ benutze ich http://getbootstrap.com//[bootstrap^] für css, 
+http://bootstrapvalidator.com/[bootstrapvalidator^] für einige Client seitige Prüfungen, 
+http://jquery.com/[jquery^] als JavaScript Library, dazu http://www.datatables.net/[datatables^] als Datagrid.
+Ein Chart wird mit http://www.chartjs.org/[Charts.js^] clientseitig erstellt, 
+ein Gantt Chart mit https://github.com/thegrubbsian/jquery.ganttView[ganttView].
+Für die kompfortable Auswahl von Usern benutze ich das http://jqueryui.com/autocomplete/[autocomplete plugin^], um
+Suchvorschläge on the fly per REST/json vom Server zu holen.
+Für die UI Zuordnung Projektleiter zu Projekt kommt das Control http://brianreavis.github.io/selectize.js/[selectize.js] zum Einsatz.
+
+Für _Reporting_ wird http://community.jaspersoft.com/project/jasperreports-library[JasperReports^] genutzt 
+um Excel und PDF Auswertungen zu generieren.
+
+_Versionierung_ ist mit http://git-scm.com/[git] gelöst. Das Repository ist auf https://github.com/[github^] gehostet.
+ 
+_Datenhaltung_ wird mit der integrierten  http://www.h2database.com/[h2^] 
+in-Memory Datenbank gelöst, zumindest während der Entwicklung. 
+Eine separate qa Datenbank wird mit dem QA Profil angesprochen,
+deren Tabellenstruktur (DDLs) wird mit "Migrations" durch http://flywaydb.org/[flyway^] gepflegt.
+Einige Tabellen/Daten sind historisiert, dies wird mit http://de.slideshare.net/jdegler/hibernate-envers[hibernate-envers] 
+realisiert.
+
+Dieser Artikel und weitere _Dokumentation_ ist mit http://asciidoctor.org/docs/asciidoc-writers-guide/[asciidoc^] 
+Markup erstellt. Einige Diagramme sind mit http://plantuml.sourceforge.net/[plantuml^] erstellt und generiert.
+Ein nettes Gimmick: github kann asciidoc Documente "on the fly" direkt aus dem Repository im Browser als Html
+rendern. Live zu sehen unter https://github.com/man-at-home/totask2/blob/master/src/docs/totask2.article.asciidoc
+
+Für das _Build Management_ nutze ich http://www.gradle.org/[gradle^], mit einigen Plugins wie asciidoctor. 
+Diverse Build-Server laufen in der Cloud, auf openshift http://jenkins-ci.org/[jenkins], 
+dazu https://travis-ci.org/[travis-ci], https://codeship.com/[codeship], https://circleci.com[circleci]
+sowie https://app.shippable.com[shippable]
+
+Qualitätsanalyse erfolgt mit diversen Tools die im Build oder in der IDE eingebunden sind: CheckStyle, FindBugs, 
+PMD, jDepend, jacoco. Zudem als Analysewerkzeug http://www.sonarqube.org/[SonarQube].
+Zusätzlich triggert der travis-ci Server eine cloud-basierte Codeprüfung auf an https://scan.coverity.com/[coverity.com]
+Auf veraltete Libraries prüft https://www.versioneye.com/user/projects/550f49680bdc71c5c903e1d4[versioneye].
+
+Experimentell ist http://www.seleniumhq.org/[selenium] als Web Test Tool.
+
+Als "echter" Appserver für das Deployment fungiert der http://www.wildfly.org/[WildFly Application Server] von redhat - sowohl lokal installiert als auch in der cloud.
+
+Metriken sind mit boot-actuator und mit https://dropwizard.github.io/metrics[dropwizard metrics] bereitgestellt, derzeit als REST Endpoint. 
+Optionales weiteres Performance Monitoring erfolgt mit http://www.newrelic.com/[newrelic]. Dazu ist der lokale wildfly Server instrumentiert
+und schickt Informationen an newrelic.
+
+Hosting der Anwendung in der cloud erfolgt mit openShift in einer https://developers.openshift.com/en/wildfly-overview.html[WildFly Cardridge],
+zudem automatisiert (und immer Aktualisiert über den codeship ci-server) auf einen dyno in der heroku cloud.
+
+Das Monitoring der bei heroku laufenden Anwendung erfolgt mit http://monitor.us[monitor.us], die neben Web Charts und Alert E-Mails auch 
+android und iphone apps herfür bereitstellen.
+
+Ebenfalls zur Überwachung sowie zur Erfassung und Auswertung oben beschriebenen Metriken erfolgt mit circonus.com[Circonus].
+Aktiviert sind zudem https://uxm.alertsite.com/[AlertSite] (mit der Besonderheit der Ausführung von soapUI Tests gegen totask2), 
+http://ruxit.com[ruxit], https://anturis.com/[anturis] und https://www.pingdom.com/[pingdom], die jeweils die 
+Verfügbarkeit der totask2 Webseiten von verschiedenen Standorten weltweit prüfen als weitere Server Überwachung.
+
+Weitere Auswertung können mit dem Analytic Provider http://keen.io[keen.io] erfolgen. Dazu ist ein entsprechender Service in totask2
+implementiert, der Kennzahlen an keen.io schicken kann.
+
+Als Kommunikation (mit mir selber: "ha ha") generieren Codeänderungen (github) und Blob-Einträge (wordpress) twitter tweets auf
+https://twitter.com/totask2tweeter[@totask2tweeter], diese werden auch weitergeleitet an einen http://slack.com[slack] 
+Chat Account, ebenso wie weitere Informationen (z.B. von den Build Servern).
+
+=== Anforderungen zum Entwickeln
+
+* java8 jdk and runtime
+* git versioning
+* gradle build system
+
+
+== Ergebnis
+
+hier kurze Blicke auf die laufende Anwendung:
+
+[[img-startpage]]
+.Startseite
+image::images/totask2.startpage.png[screenshot1, 600, 300]
+
+Eine Liste mit allen verwalteten Projekten: 
+
+[[img-projects]]
+.Projektübersicht
+image::images/totask2.projects.png[screenshot2, 600, 300]
+
+editierbar das Projekt, inklusive Projektleiterselektion mit Ajax-Control selectize.js
+
+[[img-editProject]]
+.Projektbearbeitung
+image::images/totask2.editProject.png[screenshot3, 600, 400]
+
+die geplante Projektlaufzeit (je Task und Assignment) als Gantt-Diagramm:
+
+[[img-ganttProject]]
+.Projektanzeige als Gantt Chart
+image::images/totask2.project.gantt.png[screenshot3, 600, 400]
+
+
+Die eigentliche Stundenerfassung für "normale" Nutzer:
+
+[[img-weekEntry]]
+.Zeiterfassung
+image::images/totask2.weekEntry.png[screenshot4, 600, 400]
+
+Diverse Client Seitige (JavaScript/jquery) Funktionalitäten:
+
+[[img-weekEntryClient]]
+.Zeiterfassung Client Funktionen
+image::images/totask2.weekEntry.clientLogic.png[screenshot5, 600, 400]
+
+Eingaben lassen sich als Excel Report herunterladen (Reporting Tool Jasper Reports ist integriert):
+
+[[img-weekEntryReporting]]
+.Zeiterfassung Reporting
+image::images/totask2.weekEntry.reporting.png[screenshot6, 600, 400]
+
+Die Zeiteingaben führen "on the fly" zur graphischen Rückmeldung als Balkendiagramm (chart.js):
+ 
+[[img-weekEntryChart]]
+.Zeiterfassung Chart
+image::images/totask2.weekEntry.chart.png[screenshot7, 600, 400]
+
+Die Benutzereingabe nutzt ein "autocomplete" ajax Control von jquery-ui:
+
+[[img-editAssignment]]
+.Zeiterfassung Ajax Autocompletion
+image::images/totask2.editAssignment.autocomplete.png[screenshot8, 600, 400]
+
+Login Seite (integriert mit spring-security):
+
+[[img-login]]
+.login
+image::images/totask2.login.png[screenshot9, 600, 400]
+
+
+
+
+== Entwicklungsumgebung
+
+Einblicke in die Entwicklung von totask2:
+
+[[img-desktop]]
+.desktop developing totask2
+image::images/totask2.dev.desktop.png[screenshot_DEV_0, 600, 400]
+
+eclipse / springIDE
+
+[[img-ide]]
+.desktop ide
+image::images/totask2.dev.springIDE.png[screenshot_DEV_0b, 600, 400]
+
+
+Für die REST Datenquellen stellt swagger-ui einen automatische generierten Client zur Verfügung:
+
+[[img-wagger]]
+.wagger-ui
+image::images/totask2.rest.swagger-ui.png[screenshot_DEV_swagger_0c, 600, 400]
+
+
+PlantUML ermgöglicht das einfache Einbetten von UML Diagrammen in die javadoc-Dokumentation:
+
+[[img-javadoc-plantuml]]
+.javadoc plantuml Dokumentation
+image::images/totask2.dev.JavaDoc.png[screenshot_DEV_1, 600, 400]
+
+Den Inhalt der Datenbank H2 kann man mit der mitgelieferten Console einsehen und ändern:
+
+[[img-db]]
+.h2console DB Abfragetool
+image::images/totask2.dev.H2Console.png[screenshot_DEV_2, 600, 400]
+
+
+Tests mit junit 4:
+
+[[img-junit]]
+.junit
+image::images/totask2.dev.junit.png[screenshot_DEV_0, 600, 400]
+
+experimentelle Selenium Tests:
+
+
+[[img-selenium]]
+.selenium ide
+image::images/totask2.dev.seleniumIDE.png[screenshot_DEV_20, 600, 400]
+
+git Repository und Versionierung:
+
+[[img-git]]
+.git SourceTree UI
+image::images/totask2.dev.SourceTree.png[screenshot_DEV_20, 600, 400]
+
+== QA
+
+diverse qa tools (findBugs, checkstyle, PMD) prüfen den Code statisch, hier als Beispiel checkstyle:
+
+[[img-checkstyle]]
+.checkstyle eclipse plugin
+image::images/totask2.qa.checkstyle.png[screenshot_QA_checkstyle, 600, 400]
+
+das Ganze dann auch auswertbar mit Trends in einem SonarQube Server aufbereitet.
+
+[[img-sonar]]
+.sonar dashboard
+image::images/totask.qa.sonar.dashboard.png[screenshot_QA_sonar, 700, 500]
+
+.sonar ide integration
+image::images/totask.qa.sonar.eclipse.png[screenshot_QA_sonarIDE, 600, 400]
+
+.sonar jacobo test coverage
+image::images/totask.qa.sonar.coverage.png[screenshot_QA_sonarCoverate, 700, 600]
+
+.coverity static analyse in der cloud
+image::images/totask2.qa.coverity.png[screenshot_QA_coverity, 700, 600]
+
+== Deployment
+
+=== Lokal
+
+Neben der einfachsten Ausführung als Stand Alone App hier ein Deployment
+im RedHat WildFly Application Server:
+
+[[img-wildfly]]
+.lokale Installation im wildfly Container 
+image::images/totask2.dev.wildfly.admin.png[screenshot_EE, 600, 400]
+
+see also: https://totask2.wordpress.com/2015/02/19/logging-into-the-cloud-loggly-com/
+
+=== Cloud
+
+[[img-jenkins]]
+.deploymentpipeline
+image::images/totask2.deploymentpipeline.drawio.png[deployment_CLOUD_1, 700, 500]
+
+
+Automatisierte Builds mit dem build Server *jenkins* finden in der _cloud_ auf einer openShift Applikation 
+(== Runtime Umgebung in der cloud von red hat) statt.
+Der Build-Server holt sich den totask2 Source im master-Branch von github und generiert Dokumentation (alternativ: compile).
+
+[[img-jenkins]]
+.jenkins on openshift
+image::images/totask2.cloud.jenkins.gearbuild.png[screenshot_CLOUD_1, 700, 500]
+
+
+[[img-openShift-logs]]
+.totask2 running on openshift log tail
+image::images/totask2.cloud.rhc.png[screenshot_CLOUD_2, 700, 500]
+
+
+[[img-codeship2heroku-logs]]
+.totask2 ci-server codeship catches changes on github, builds totask2, deploying result afterwards on heroku dyno.
+image::images/totask2.cloud.codeship2heroku.png[screenshot_CLOUD_HEROKU, 700, 500]
+
+
+== Monitoring
+
+Option zur Logauswertung (direct in der cloud).
+
+[[img-loggly.com]]
+.totask2 logging into the cloud
+image::images/totask2.loggly.viewer.png[screenshot_loggly, 700, 500]
+
+lokale Alternative dazu wäre die Kombi aus logstash, elasticsearch und kibana.
+
+Monitoring der lokalen Wildfly Instanz mit newrelic.
+
+[[img-newrelic.com]]
+.totask2 app monitoring into the cloud
+image::images/totask2.monitor.newrelic.3.png[screenshot_newrelic, 700, 500]
+
+[[img-monitor-us.com]]
+.totask2 app monitoring into the cloud
+image::images/totask2.monitor.monitorus.web.png[screenshot_monitor-us, 700, 500]
+
+== weitere Details
+
+link:totask2.developer-manual.html[dev docs] and
+link:totask2.manual.html[basic user docs]
+
+== Erfahrungen
+
+Details hoffentlich bald im blog https://totask2.wordpress.com/
+
+=== positiv
+
+* kein Xml, einfach zu durchschauen, 
+* lokale Stand-Alone Entwicklung: nur git und Java notwendig für den Start, der Rest lädt automagisch nach!
+* entwicklerfreundliche Bibliotheken
+* springMVC unterstützt den Test der Controller gut
+* Datenbank und Datenmodell (mit jpa) schlank
+* Komplett Repository, Tracker, Homepage und Test-Server in der (free!) cloud (github und openShift)
+
+=== negativ
+
+Wo hakt es (noch?)
+
+* Deployment auf openShift erfolgt mit sftp, der "empfohlene Weg" über git scheitert bei mir an der notwendigen zusätzlichen gradle Installation (zu wenig disk quota im free plan von openShift hierfür)
+* bekomme asciidoctor-diagram im gradle Build nicht ans laufen, daher mit Umweg (umkopieren der generierten Bilder aus der JavaDoc Erzeugung)
+

@@ -1,0 +1,400 @@
+/*
+ * gradle build script for totask2 project.
+ *
+ * uses gradle 2.3 for compile (or provided gradlew script).
+ *
+ * @see     http://man-at-home.github.io/totask2/
+ * @author  man-at-home
+ * @since   2014
+ * @version 2015
+ */
+
+// development
+apply plugin: "java"
+apply plugin: "js"
+apply plugin: "war"
+apply plugin: "eclipse"
+apply plugin: "maven"
+
+apply plugin: "spring-boot"
+
+ 
+// qa
+apply plugin: "checkstyle"
+apply plugin: "findbugs"     
+apply plugin: "jacoco"
+// apply plugin: "cobertura"	// not yet there with java8 it seems, jacoco works though
+apply plugin: "jdepend"
+apply plugin: "pmd"
+apply plugin: "sonar-runner"
+apply plugin: "groovy"
+
+// documentation
+apply plugin: 'project-report'
+apply plugin: "build-dashboard"
+apply plugin: "plantuml"
+apply plugin: "announce"
+apply plugin: "org.asciidoctor.gradle.asciidoctor"
+apply plugin: "org.standardout.versioneye"
+
+// db
+apply plugin: "org.flywaydb.flyway"
+
+
+repositories {
+        maven{ url "http://repo.spring.io/libs-release" }
+
+        mavenLocal()
+        mavenCentral()
+        
+        maven{url "http://jasperreports.sourceforge.net/maven2/"}
+        maven{url "http://jaspersoft.artifactoryonline.com/jaspersoft/third-party-ce-artifacts/"}
+}
+
+buildscript {
+
+   repositories {
+        maven { url "http://repo.spring.io/libs-release" }
+        mavenLocal()
+        mavenCentral()
+        jcenter()
+    }
+    
+    dependencies {
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:1.2.3.RELEASE"  			// spring boot with gradle
+        classpath "org.flywaydb:flyway-gradle-plugin:3.2.1"										// db migration
+	    classpath "org.asciidoctor:asciidoctor-gradle-plugin:1.5.2"								// documentation engine
+	    classpath "be.jlr-home.gradle:plantumlPlugin:0.1.1"	    								// documentation graphing
+        classpath "com.eriwen:gradle-js-plugin:1.12.0"											// javascript build utilities
+        classpath "com.wordnik:swagger-codegen:2.1.2-M1"                                        // optional swagger doc generation
+//      classpath "net.saliman:gradle-cobertura-plugin:2.2.7"                                   // coverage for shippable.com build
+ 		classpath "org.standardout:gradle-versioneye-plugin:1.0.1"								// versioneye gradle analysis
+    }
+}
+
+
+// version             = "1.1"   // not yet, stable jar name to deploy..
+sourceCompatibility = "1.8"
+
+compileJava {
+	targetCompatibility = 1.8
+}
+
+war {
+    archiveName = 'totask2.war'
+}
+
+configurations {
+    compile.exclude group: "org.springframework.boot", module: "spring-boot-starter-tomcat"      // wildfly, undertow, otherwise remove hier and below
+}
+
+dependencies {
+    compile "org.apache.poi:poi:3.11"
+    
+    compile "org.slf4j:slf4j-api:1.7.12"                      // logging api
+    compile "ch.qos.logback:logback-classic:1.1.3"            // logging library
+ // compile "org.logback-extensions:logback-ext-loggly:0.1.2" // log into the cloud, loggly.com
+ // compile "com.papertrailapp:logback-syslog4j:1.0.0"        // log into the cloud, papertrail.com
+    
+    compile "net.sf.jasperreports:jasperreports:6.0.3"  	  // reporting engine (excel, pdf generation)
+    compile "com.h2database:h2:1.4.186"						  // dev database (usable in memory)
+    
+    compile "org.ajar:swagger-spring-mvc-ui:0.4"			  // rest tester ui integrated in web app
+    compile "com.mangofactory:swagger-springmvc:1.0.2"        // newer version on hold cause of scala upgrade dependencies..
+    
+    compile "io.dropwizard.metrics:metrics-core:3.1.1"        // more metric types than spring boot alone
+    compile "io.keen:keen-client-api-java:2.1.1"              // analytic data for keen.io 
+        
+    compile "org.springframework:spring-context:4.1.6.RELEASE"					// spring
+    compile "org.springframework:spring-context-support:4.1.6.RELEASE"
+    
+    compile( "org.springframework.boot:spring-boot-starter-web:1.2.3.RELEASE" ) {			// spring boot
+    	exclude group: "org.springframework.boot", module: "spring-boot-starter-tomcat:1.2.3.RELEASE"
+    }
+    compile "org.springframework.boot:spring-boot-starter-thymeleaf:1.2.3.RELEASE"		// templating engine
+    compile "org.springframework.boot:spring-boot-starter-undertow:1.2.3.RELEASE"		// wildfly/undertow, if not remove here and above
+
+    compile "org.springframework.boot:spring-boot-starter-data-jpa:1.2.3.RELEASE"
+    compile "org.springframework.boot:spring-boot-starter-security:1.2.3.RELEASE"    
+    compile "org.springframework.boot:spring-boot-starter-actuator:1.2.3.RELEASE"
+    
+    compile "org.hibernate:hibernate-envers:4.3.8.Final"							// orm mapper history building
+//    compile "javax.interceptor:javax.interceptor-api:1.+"							// workaround javadoc exception InterceptorBinding        
+    compile "org.flywaydb:flyway-core:3.2.1"  										// database migration utility
+    
+    testCompile "org.seleniumhq.selenium:selenium-firefox-driver:2.45.0"	        // ui tester
+    testCompile "org.springframework.boot:spring-boot-starter-test:1.2.3.RELEASE" 	// helper for unit testing spring boot
+ //   testCompile "org.springframework.security:spring-security-test:4.0.0.M1"
+    testCompile "org.spockframework:spock-spring:1.0-groovy-2.4"					// groovy unit test addone
+ }
+
+
+jdepend {
+	toolVersion = "2.9.1"
+}
+
+jdependMain {
+   reports {
+      xml.enabled  = false
+      text.enabled = true
+   }
+}
+
+jdependTest {
+   reports {
+      xml.enabled  = false  
+      text.enabled = true
+   }
+}
+
+findbugs {
+        toolVersion    = "3.0.1"
+        ignoreFailures = true
+        effort         = "max"
+        reportLevel    = "high"
+}
+
+checkstyle {
+   ignoreFailures = true      
+   toolVersion    = "6.5"    // with java8 support
+}
+
+pmd {
+   ignoreFailures = true
+//	toolVersion = "5.2.3"
+}
+
+
+tasks.withType(FindBugs) {
+    reports {
+        xml.enabled  = false
+        html.enabled = true
+    }
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled      = true
+        csv.enabled      = false
+//        html.destination = "${buildDir}/reports/jacoco"
+    }
+}
+
+// cobertura {
+//   coverageReportDir = file("${buildDir}/reports/cobertura")
+//   coverageFormats = ["xml"]
+// }
+
+// configured for local sonarQube 4.5 installation (defaults)
+sonarRunner {
+    toolVersion = '2.4'
+    sonarProperties {
+        property "sonar.projectName",          "totask2 project time logging"
+        property "sonar.projectKey",           "totask2"
+        property "sonar.jacoco.reportPath",    "${buildDir}/jacoco/test.exec"
+        property "sonar.junit.reportsPath",    "${buildDir}/test-results/"
+        property "sonar.surefire.reportsPath", "${buildDir}/test-results/"
+    }
+}
+
+
+asciidoctor {
+    sourceDir    = new File("${projectDir}/src/docs")
+    outputDir    = new File("${buildDir}/docs/asciidoc")
+    logDocuments = true
+} 
+
+
+flyway {
+    url = "jdbc:h2:totask2.qa.db"  // makes no sense with the dev in memory db.
+    user = 'sa'
+}
+
+javadoc {
+	failOnError         = false
+//    options.overview    = "${projectDir}/src/main/java/overview.html" // relative to source root
+	options.windowTitle = "totask2 api documentation ${version}"	
+    options.links( "http://download.oracle.com/javase/8/docs/api/" )
+    options.addBooleanOption("Xdoclint:none").setValue(true)
+}
+
+// enable spring-boot profiles (dev and qa) in gradle tasks
+project.gradle.projectsEvaluated {
+    applicationDefaultJvmArgs = ["-Dspring.profiles.active=${project.gradle.startParameter.systemPropertiesArgs['spring.profiles.active']}"]
+}
+
+
+javascript.source {
+    dev {
+        js {
+            srcDir "${projectDir}/src/main/webapp/js/totask2"
+            include "*.js"
+        }
+    }
+}
+
+// lint  javascript files
+jshint {
+    tasks.jshint.source = javascript.source.dev.js.files
+    tasks.jshint.dest = file("${buildDir}/jshint.out")
+    tasks.jshint.reporter = 'checkstyle'
+    tasks.jshint.ignoreExitCode=true
+    jshint.options = [bitwise:true]
+    jshint.predef=[
+    	"Ext"	:true, 
+    	'$'		:true			// jquery
+    	]
+}
+
+// generate javascript docs
+jsdoc {
+   tasks.jsdoc.source         = javascript.source.dev.js.files
+   tasks.jsdoc.destinationDir = file("${buildDir}/jsdoc")
+}
+
+announce {  
+  // twitter
+  username = "totask2tweeter"	// currently not active..
+}
+
+versioneye {
+  exclude      "testCompile", "testRuntime" , "buildscript", "rhino", "jdepend", "jacocoAnt", "jacocoAgent", "pmd"
+}
+
+
+// CUSTOM TASKS
+// ============
+
+task copyPlantUMLImages(type: Copy) {
+    description "use diagrams from javadoc in asciidoc articles too"
+    dependsOn    javadoc
+    from fileTree(dir: "${buildDir}/docs/javadoc", include: "**/doc-files/*.png").files
+    into "${buildDir}/docs/asciidoc/images/uml"
+}
+
+// generate all documentation
+task allDocs {
+    description "generation of full documenation for totask2 (asciidoc and javadoc"
+    dependsOn javadoc, asciidoctor, copyPlantUMLImages, projectReport 
+}
+
+
+// create gradlew script configuration
+task wrapper(type: Wrapper) {
+    description "gradle wrapper generation (call if gradle version changes)"
+    gradleVersion = '2.3'
+}
+
+
+task deployLocal(type: Copy) {
+    description "deploy into app server (wildlfy 8.1 currently). start with wildfly/bin/standalone.bat"
+    dependsOn assemble
+    from "${buildDir}/libs"
+    include '*.war'
+    into 'c:/dev/wildfly/standalone/deployments'
+}
+
+// deploy into cloud server (wildlfy cardridge currently)
+task deployOpenShift(type: Copy) {
+    description "deploy into app server (wildlfy 8.1 - called from action_hook/deploy)"
+    dependsOn assemble
+    from "${buildDir}/libs"
+    include '*.war'    
+    into 'deployments'  
+//    rename { String fileName -> "ROOT.war" }  // if you neet the application running as root url /
+}
+
+task writeOpenShiftPom << {
+    description "prepare pom for maven based build targeting openShift deployment"
+    pom {
+        project {
+        	groupId "manathome"
+        	description "totask2 openshift maven pom, generated by gradle"
+        	url "http://man-at-home.github.io/totask2/"
+        	
+        	parent {
+                groupId "org.springframework.boot"
+                artifactId "spring-boot-starter-parent"
+    			version "1.2.3.RELEASE"
+			}
+        	
+        	repositories {
+        		repository {
+        			id   "repo.spring.id"
+        			name "repo.spring.io"
+        			url	 "http://repo.spring.io/libs-release"
+        		}
+        	}
+        	        	
+        	developers {
+                    developer {
+                        id "man-at-home"
+                        name "man at home"
+                    }
+            }                        
+        }
+    }
+    .withXml {
+    	asNode()
+    	.appendNode("build")
+    	.appendNode("plugins")
+    	.appendNode("plugin").with { 
+    		appendNode("groupId", "org.apache.maven.plugins") 
+    		appendNode("artifactId", "maven-compiler-plugin")   
+    		appendNode("version", "3.3")		 
+    		appendNode("configuration").with {
+    			appendNode("source", "1.8")
+    			appendNode("target", "1.8")
+    		}   	
+    	}
+    }
+    .writeTo("$projectDir/openshift.pom.xml")
+}
+
+task localMaven(type:Exec) {
+	description "execute maven locally on my development machine"
+	dependsOn writeOpenShiftPom
+	commandLine "cmd", "/c", "\\dev\\maven\\bin\\mvn", "-f", "$projectDir\\openshift.pom.xml", "compile", "war:war"
+}
+
+task deployLocalMaven(type: Copy) {
+    description "deploy into app server (wildlfy 8.1 currently). start with wildfly/bin/standalone.bat"
+    dependsOn localMaven
+    from "/target"
+    include 'toTask2*.war'
+    into 'c:/dev/wildfly/standalone/deployments'   
+}
+
+task genSwagger(type: JavaExec) {
+    description "generate swagger doc or clients via codgen package and gradle" 
+    // needing buildscript dependency  classpath "com.wordnik:swagger-codegen:2.1.2-M1" (see http://swagger.io)
+    classpath = buildscript.configurations.classpath
+    args      = ["-i", "http://localhost:8080/api-docs/totask2/workentry-rest-api", "-o", "${buildDir}/docs/rest-api", "-l", "android"]
+    main      = "com.wordnik.swagger.codegen.Codegen"
+}
+
+task prepareHerokuSlug(type: Delete) {
+	description "free space before heroku deployment (space issues)"
+	delete 	"${buildDir}/classes", "${buildDir}/distributions", "${buildDir}/libs/toTask2.jar.original", 
+			"${buildDir}/libs/toTask2.war.original", "${buildDir}/libs/totask2.war"
+}
+
+task stage {
+	description "heroku deployment (cloud)"
+	dependsOn assemble, prepareHerokuSlug
+}
+
+
+ 
+test.doLast {  
+//    announce.announce "gradle $it.name done", "twitter"
+    announce.announce "gradle $it.name done", "local"
+}
+ 
+ 
+
+
+// reminder: start h2 console (start-menue) >h2w.bat, connect to jdbc:h2:c:/data/projects/totask2/totask2.qa.db
+// reminder: run qa profile:    >gradlew bootRun -Dspring.profiles.active=qa
+// reminder: run sonar server:  >\dev\sonarqube\bin\windows-x86-32\StartSonar
+// reminder: run local wildFly  >C:\dev\wildfly\bin\standalone.bat

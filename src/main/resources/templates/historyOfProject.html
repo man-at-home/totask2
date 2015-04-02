@@ -1,0 +1,72 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title th:text="#{totask2.appname}">totask2 project history</title>
+
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />	
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+	<link rel="stylesheet" type="text/css" href="../../../css/totask2.css" />
+	<link rel="stylesheet" type="text/css" href="../../../bootstrap/css/bootstrap.min.css" />
+	<link rel="stylesheet" type="text/css" href="../../../bootstrap/css/bootstrap-theme.min.css" />
+	<link rel="stylesheet" type="text/css" href="../../../css/jquery.dataTables.css" />
+	<link rel="icon" type="image/png" href="/realFavIconIncludedAtRuntime" th:replace="headerFooter :: favicon"/>
+
+</head>
+
+<body>
+	<script type="text/javascript" charset="utf8" src="../../../js/jquery-1.11.1.js"></script>
+	<script type="text/javascript" charset="utf8" src="../../../js/jquery.dataTables.js"></script>
+	<script type="text/javascript" charset="utf8" src="../../../bootstrap/js/bootstrap.min.js"></script>
+
+	<script type="text/javascript">
+		/*<![CDATA[*/
+
+		$(document).ready(function() {
+			$('#tableProjectHistory').dataTable();
+		});
+
+		/*]]>*/
+	</script>
+
+<div class="container paper-box" style="width: 70%">
+
+	<div th:replace="headerFooter :: header (#{totask2.project.history.pageheader})"></div>
+	
+	<span id="flashMessage"  class="alert-warning" th:unless="${#strings.isEmpty(flashMessage)}"  th:text="${flashMessage}">flashMessage</span>
+	
+	<br/>
+
+	<div style="width: 90%">
+
+			<table id="tableProjectHistory" class="display compact cell-border" style="width:100%">
+				<thead>
+					<tr>
+						<th th:text="#{totask2.project.history.revision.label}" class="dt-center">revision</th>
+						<th th:text="#{totask2.project.history.name.label}" class="dt-left">name</th>
+					</tr>
+				</thead>
+
+				<tfoot>
+				<tr>
+					<th />
+					<th />
+					<th />
+				</tr>
+				</tfoot>
+				<tbody> 
+					<tr th:each="revision : ${history}">    												
+						<td th:text="${revision.revision}"    class="dt-center">17</td>
+						<td th:text="${revision.entity.name}" class="dt-left">historic project name</td>						
+					</tr>
+				</tbody>
+
+			</table>
+	</div>
+		
+	<div th:replace="headerFooter :: footer"></div>
+	
+</div>	
+</body>
+</html>

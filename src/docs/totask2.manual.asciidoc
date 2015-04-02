@@ -1,0 +1,174 @@
+= totask2 manual
+:numbered: 
+:experimental:  true
+:icons:         font
+:toc:           left
+man-at-home
+v1, 2015-02-27
+
+== intro
+
+totask2: a basic project time trackig web application.
+
+The code for this application is hosted on github, https://github.com/man-at-home/totask2.
+
+== common pages and functionality
+
+=== login
+
+With the exception of the <<startpage>>, all pages require a prior login. 
+Trying to access those pages without prior login will show the <<login>> page.
+
+[[login]]
+.totask2 login
+image::images/screens/totask2.login.png[screenshot, 700, 500]
+
+Login with userid and password.
+
+=== logout 
+
+Logout buttons btn:["sign-out"] are shown on each page (upper right).
+
+=== startpage
+
+Start page gives access to <<projects>> pages (for admin and project leads) 
+and the main entry page <<weekEntry>> (for all users).
+
+[[startpage]]
+.start page
+image::images/screens/totask2.landingpage.png[screenshot, 700, 500]
+
+=== tabular display (grid)
+
+Tabular data on (<<projects>>, <<tasks>>, <<assignments>>, <<weekEntry>>) is 
+
+* sortable (column headers), 
+* pageable (below right),
+* and searchable (upper right).
+
+=== navigation
+
+At the top of most pages links to other pages are shown for navigation between pages.
+
+== managing projects and tasks
+
+Admins are allowed to edit all project data here. 
+Project leads are allowed to edit only their own projects.
+
+=== projects
+
+Showing a list of all known projects
+
+[[projects]]
+.projects
+image::images/screens/totask2.projects.png[screenshot, 700, 500]
+
+Possible actions:
+
+* add btn:[new..] <<project>>
+* show <<project>> details (given sufficient access rights) with btn:[edit..] 
+* print the shown list as pdf btn:[pdf-report..]
+* delete a project
+* show <<project-chart>> btn:[show plan]
+
+Showing project detail data
+Editing of name, and removing/adding users as project leads is possible.
+The project leads field is search enhanced (suggestions for users are made)
+
+[[project]]
+.project
+image::images/screens/totask2.editProject.png[screenshot, 700, 500]
+
+Possible actions:
+
+* change name or list of project leads btn:[save]
+* show <<tasks>> for project           btn:[manage tasks..]
+* show <<project-history>>             btn:[history..]
+* show <<project-chart>>               btn:[show plan]
+
+
+Showing gant chart for all tasks of given project
+
+[[project-chart]]
+.project chart
+image::images/screens/totask2.projectChart.png[screenshot, 700, 500]
+
+Showing history of changes for given project
+
+[[project-history]]
+.project history
+image::images/screens/totask2.projectHistory.png[screenshot, 700, 500]
+
+=== tasks
+
+Showing all tasks belonging to given <<project>>.
+
+[[tasks]]
+.tasks
+image::images/screens/totask2.tasks.png[screenshot, 700, 500]
+
+Possible actions:
+
+* show <<task>> details              btn:[edit..]
+* create new <<task>> for project    btn:[new..]
+* delete task                        btn:[delete]
+
+Showing task data.
+
+[[task]]
+.task
+image::images/screens/totask2.editTask.png[screenshot, 700, 500]
+
+Possible actions:
+
+* change name of task                             btn:[save]
+* show all <<assignments>> of users to given task btn:[user assignments]
+
+
+=== task assignments
+
+Showing all assignments of user to given <<task>>.
+
+[[assignments]]
+.assignments
+image::images/screens/totask2.taskAssignments.png[screenshot, 700, 500]
+
+Show all assignments of user to given task.
+
+Possible actions:
+
+* add new user to task, as new (assignment)        btn:[assign new user to task..]
+* show <<ssignment>> for a user to given task      btn:[edit..]
+* delete assignment                                btn:[delete]
+
+Show a specific user assignment to a task.
+The user field is a search enhanced entry field, after typing part of a user data suggestions are made.
+
+[[assignment]]
+.task assignment
+image::images/screens/totask.editTaskAsignment.png[screenshot, 700, 500]
+
+Possible actions:
+
+* change assigned user and duration for this assignment. btn:[save]
+
+== editing worktime
+
+Showing all work done for selected week and current user. 
+Tasks with a valid assignment for user can be edited (working hours entry).
+Sums per day and per week and task are recalulated on data entry, as is the chart below, showing worked hours per day.
+
+[[weekEntry]]
+.totask2 work time entry
+image::images/screens/totask2.weekEntry.png[screenshot, 700, 500]
+
+Possible actions:
+
+* edit working hours on project tasks (7 days a week for each task if assignment allows) btn:[save this week]
+* change week of display btn:[<] and btn:[>] 
+* download excel spreadsheet data of displayed week
+
+== Further reading
+
+blogging about the development of totask2: https://totask2.wordpress.com
+a short description article about totsk2:  http://man-at-home.github.io/totask2/build/docs/asciidoc/totask2.article.html

@@ -1,0 +1,98 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title th:text="#{totask2.appname}">totask2 project pant plan</title>
+
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />	
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />	
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+	<link rel="stylesheet" type="text/css" th:href="@{/css/totask2.css}" />
+	<link rel="stylesheet" type="text/css" th:href="@{/bootstrap/css/bootstrap.min.css}" />
+	<link rel="stylesheet" type="text/css" th:href="@{/bootstrap/css/bootstrap-theme.min.css}" />
+	<link rel="stylesheet" type="text/css" th:href="@{/css/jquery-ui.min.css}" />
+	<link rel="stylesheet" type="text/css" th:href="@{/css/reset.css}" />
+
+	<link rel="stylesheet" type="text/css" th:href="@{/css/jquery.ganttView.css}" />
+	
+	<link rel="icon" type="image/png" href="/realFavIconIncludedAtRuntime" th:replace="headerFooter :: favicon"/>
+</head>
+<body>
+
+
+	<script type="text/javascript" charset="utf8" th:src="@{/js/jquery-1.11.1.js}"></script>
+
+	<script type="text/javascript" charset="utf8" th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+	<script type="text/javascript" charset="utf8" th:src="@{/js/jquery-ui.min.js}"></script>
+
+	<script type="text/javascript" charset="utf8" th:src="@{/js/date.js}"></script>
+	<script type="text/javascript" charset="utf8" th:src="@{/js/jquery.ganttView.js}"></script>
+
+
+<div class="container paper-box" style="width:70%">
+
+	<div th:replace="headerFooter :: header ( #{totask2.projectplan.pageheader} )"></div>
+
+	<ul class="nav nav-tabs" role="tablist">
+	  <li><a th:href="@{/}" th:text="#{totask2.nav.home}">home</a></li>
+	  <li><a th:href="@{/project/} + (${project} ? ${project.id} : '' )" th:text="#{totask2.nav.project}">project</a></li>
+	  <li><a th:href="@{/weekEntry}" th:text="#{totask2.nav.weekEntry}">week entry</a></li>
+	</ul>	
+
+	<span id="flashMessage"  class="alert-warning" th:unless="${#strings.isEmpty(flashMessage)}"  th:text="${flashMessage}">flashMessage</span>	
+	<br/>
+
+	<p>
+		<div id="ganttChart"></div>
+	</p>
+
+	<br/><br/>
+	<div id="eventMessage"></div>
+
+
+	<script type="text/javascript" th:inline="javascript">
+
+		/*<![CDATA[*/
+
+		$(document).ready(function() {
+
+			var projectId = /*[[${project.id}]]*/  "1";
+  			var projectGanttDataURL = "/REST/plan/project/" + projectId;
+			renderGantt(projectGanttDataURL);
+		});
+
+        /** get task data and render gantt. */
+        function renderGantt( restUrl )
+        {
+			$("#ganttChart").ganttView(
+			{ 
+				dataUrl:    restUrl, 
+				slideWidth: 650,
+				behavior: 
+				{
+					onClick: function (data) 
+					{ 
+						var msg = "You clicked on an event: { start: " + data.start.toString("M/d/yyyy") + ", end: " + data.end.toString("M/d/yyyy") + " }";
+						$("#eventMessage").text(msg);
+					},
+					onResize: function (data) 
+					{ 
+						var msg = "You resized an event: { start: " + data.start.toString("M/d/yyyy") + ", end: " + data.end.toString("M/d/yyyy") + " }";
+						$("#eventMessage").text(msg);
+					},
+					onDrag: function (data) 
+					{ 
+						var msg = "You dragged an event: { start: " + data.start.toString("M/d/yyyy") + ", end: " + data.end.toString("M/d/yyyy") + " }";
+						$("#eventMessage").text(msg);
+					}
+				}
+			});			
+		}
+
+		/*]]>*/
+	</script>
+
+</div>
+
+</body>
+</html>

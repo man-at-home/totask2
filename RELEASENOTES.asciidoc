@@ -1,0 +1,160 @@
+totask2 releasenotes
+====================
+:Author: man-at-home
+
+basic releasenotes for http://man-at-home.github.io/totask2/
+
+.2015-03-29
+- new circonus monitoring, including gathering of metrics from actuator endpoints (monitor/health, monitor/metrics)
+- see https://totask2.wordpress.com/2015/03/29/circonus-sampling-actuator-metrics-data-for-charts-and-alerts/
+- new user role "monitor", moved monitoring endpoints below /monitor/ with basic auth
+
+.2015-03-28
+- added keen.io analytic data logging (https://totask2.wordpress.com/2015/03/28/feeding-analytical-data-into-keen-io/)
+
+.2015-03-26
+- added soapUI REST Script (targeted for AlertSite UXM)
+- added AlertSite UXM monitoring on heroku hosted totask2 (see https://totask2.wordpress.com/2015/03/26/alertsite-uxm-monitoring-for-totask2/)
+
+.2015-03-25
+- added anturis web and web transaktion monitoring on heroku hosted totask2
+- added ruxit client side tracking on heroku hosted totask2 (see https://totask2.wordpress.com/2015/03/25/ruxit-monitoring-included-in-heroku-hosted-totask2/)
+
+.2015-03-22
+- added circleci ci-server building qa_branch (including reports as artifacts), see https://totask2.wordpress.com/2015/03/23/circleci-build-server-added-qa_branch/
+
+.2015-03-21
+- monitoring (non invasive) with monitor.us, see https://totask2.wordpress.com/2015/03/21/free-basic-monitoring-with-monitor-us-web-app/
+- logging to papertrail.com (not impressed), using another logback-appender, transmitting as syslog with tls.
+- dependency version update check with versioneye https://totask2.wordpress.com/2015/03/21/track-dependency-versions-with-versioneye/
+
+.2015-03-20
+- deploy to heroku, see https://totask2.wordpress.com/2015/03/20/second-runtime-use-heroku-as-cloud-container-for-totask2/
+- deployment is done with the second ci-server on codeship.
+
+.2015-03-19
+
+- use travis-ci.org build in the cloud
+- use coverty qa checks in the cloud (triggered by travis, see https://totask2.wordpress.com/2015/03/19/coverity-added-to-the-mix/)
+- use codeship as secondary ci server int the cloud (see https://totask2.wordpress.com/2015/03/19/totask2-builds-now-on-codeship-com-too/)
+
+.2015-03-18
+- postman rest test (see https://totask2.wordpress.com/2015/03/17/testing-your-spring-boot-rest-services-tooling/)
+
+.2015-03-14
+- upgrade swagger api to 1.0
+
+.2015-03-13
+- more test coverage
+- hamcrest usage in junit tests
+
+.2015-03-10
+- added custom health indicator shown on /health endpoint
+
+.2015-03-09
+- basic authentication for rest api, see https://totask2.wordpress.com/2015/03/09/spring-boot-basic-authentication-side-by-side-with-form-login/
+
+.2015-03-07
+- added spock test example, see https://totask2.wordpress.com/2015/03/07/adding-spock-to-junit-mix/
+- guava inspired checkNotNull introduced.
+
+.2015-03-06
+- enhanced metrics with dropwizard https://totask2.wordpress.com/2015/03/06/dropwizard-metrics-integriert-in-spring-boot-fur-mehr-optionen/
+
+.2015-03-5
+- enhance logback logging output (user/session) %M{log.user} via custom ServletFilter (see http://logback.qos.ch/manual/mdc.html)
+
+.2015-02-28
+- added new workEntry REST Endpoint
+- upgraded spring to 4.1.5.RELEASE and spring-boot to 1.2.2
+
+.2015-02-27
+- added basic user manual (totask2.manual.asciidoc)
+
+.2015-02-22
+- some href url fixes
+- removing editing buttons on new entities ui.
+
+.2015-02-21
+- log analysis with logstash, elasticsearch and kibana https://totask2.wordpress.com/2015/02/25/alternative-fur-loggly-com-logstash-elasticsearch-und-kibana/
+
+.2015-02-20
+- integrated newrelic into wildfly (see https://totask2.wordpress.com/2015/02/21/integrating-newrelic-monitoring-into-totask2-demo/ )
+
+.2015-02-19
+- added optional cloud logging (loggly.com, see https://totask2.wordpress.com/2015/02/19/logging-into-the-cloud-loggly-com/ )
+- upgraded gradle to 2.3
+- fixed test (changed test data)
+
+.2015-02-07
+- non editable days for task in week (therefore enable assignments with only part of a week)
+
+.2014-12-15
+- upgrade to spring-boot 1.2
+- upgrade other libraries
+- added js gradle plugin
+- jshint task
+- start extracting javascript from weekEntry.html template
+
+.2014-12-06
+- removed/fixed several sonarCube qa markers
+- favicon created
+- package rename
+
+.2014-12-05
+- sonarCube qa metrics https://totask2.wordpress.com/2015/02/21/sonarcube-qa-statistics-for-totask2-recap/
+
+.2014-11-30
+- created wildfly cardridge on openshift for cloud deployment
+- tidy up javadoc warnings
+
+.2014-11-29
+- cgi server on openShift (jenkins), gradle wrapper
+- deployment wildfly 8.1 locally
+
+.2014-11-28
+- github homepage (gh-pages) on http://man-at-home.github.io/totask2/
+
+.2014-11-27
+- asciidoc documents refreshed
+
+.2014-11-22
+- versioning with hibernate-envers
+
+.2014-11-16
+- selenium test
+
+.2014-11-15
+- gantt diagramm for projects
+- project leads for projects
+
+.2014-11-03
+- task assignment (new entity)
+- autocompletion for users
+
+.2014-10-13
+- flyway migrations
+- qa environment
+
+.2014-10-12
+- spring-security (in-memory face at the moment)
+
+.2014-10-11
+- chart.js bar chart
+
+.2014-10-08
+- bootstrapvalidator
+
+.2014-10-03
+- build upgraded to gradle 2.1
+- ingegrated findbugs
+- upgraded spring to 4.1.1
+- upgraded spring-boot to 1.1.7
+- added this file (releasnotes)
+	
+.2014-09-xx
+- jasper reports integration
+	
+.2014-09-xx
+- datatables integration
+	

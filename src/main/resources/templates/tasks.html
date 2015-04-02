@@ -1,0 +1,108 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>   
+	<title th:text="#{totask2.appname}">totask2 project tasks</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />	
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<link rel="stylesheet" type="text/css" th:href="@{/css/totask2.css}" />
+	<link rel="stylesheet" type="text/css" th:href="@{/bootstrap/css/bootstrap.min.css}" />
+	<link rel="stylesheet" type="text/css" th:href="@{/bootstrap/css/bootstrap-theme.min.css}" />
+	<link rel="stylesheet" type="text/css" th:href="@{/css/jquery.dataTables.css}" />
+
+	<link rel="icon" type="image/x-icon" href="/realFavIconIncludedAtRuntime" th:replace="headerFooter :: favicon"/>	
+</head>
+<body>
+	<script type="text/javascript" charset="utf8" th:src="@{/js/jquery-1.11.1.js}"></script>
+	<script type="text/javascript" charset="utf8" th:src="@{/js/jquery.dataTables.js}"></script>
+	<script type="text/javascript" charset="utf8" th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+
+	<script type="text/javascript">
+		/*<![CDATA[*/
+
+		$(document).ready(function() {
+			$('#tableTasks').dataTable();
+		});
+
+		/*]]>*/
+	</script>
+
+<div class="container paper-box" style="width:70%">
+
+	<div th:replace="headerFooter :: header ( #{totask2.tasks.pageheader} )"></div>
+
+
+	<ul class="nav nav-tabs" role="tablist">
+	  <li><a th:href="@{/}" th:text="#{totask2.nav.home}">home</a></li>
+	  <li><a th:href="@{/project/} + ${projectId}" th:text="#{totask2.nav.project}">project</a></li>
+	  <li><a th:href="@{/weekEntry}" th:text="#{totask2.nav.weekEntry}">week entry</a></li>
+	</ul>
+
+	<span id="flashMessage"  class="alert-warning" th:unless="${#strings.isEmpty(flashMessage)}"  th:text="${flashMessage}">flashMessage</span>
+
+	<div style="width: 80%">
+	
+	<form action="#" th:action="@{/task/delete}" method="post">
+	
+	<br />
+	
+		<table id="tableTasks" class="display compact cell-border">
+			<thead>
+				<tr>
+					<th th:text="#{totask2.task.id.label}">id</th>
+					<th th:text="#{totask2.task.name.label}">name</th>
+					<th th:text="#{totask2.task.link}" class="dt-left"/>
+				</tr>  
+			</thead>
+			<tfoot>
+				<tr>
+					<th /><th /><th />
+				</tr>
+			</tfoot>				
+
+			<tbody>
+
+<!--
+// tag::developer-manual-view[]
+                -->
+                <tr th:each="task : ${tasks}">	<!-- // <1> 
+                                                  -->
+					<td th:text="${task.id}">17</td>
+					<td th:text="${task.name}">task name</td>		<!-- // <2>  
+					                                                 -->
+					<td class="dt-left">
+					
+						<a th:href="@{/task/{id}(id=${task.id})}" class="btn btn-default" th:if="${isEditAllowed}">
+							<span class="glyphicon glyphicon-pencil"></span>
+							<span th:text="#{totask2.task.action.edit}">edit..</span>			<!-- // <3> 
+																								  -->
+						</a>
+						<button class="btn btn-default" name="id" th:value="${task.id}" th:if="${isEditAllowed}">
+							<span class="glyphicon glyphicon-remove"></span>
+							<span th:text="#{totask2.task.action.delete}">delete</span>
+						</button>						
+					
+					</td>
+				</tr>
+				<!--
+// end::developer-manual-view[]
+-->
+			</tbody>
+		</table>
+	</form>
+	
+	</div>
+	
+	<p> 
+		<a th:href="@{/project/{id}/task/new(id=${projectId})}" class="btn btn-default" th:if="${isEditAllowed}">
+			<span class="glyphicon glyphicon-plus"></span>
+			<span th:text="#{totask2.task.action.new}">new..</span>
+		</a>
+	</p>
+	
+	
+	<div th:replace="headerFooter :: footer"></div>
+
+</div>	
+</body>
+</html>

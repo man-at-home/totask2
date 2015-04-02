@@ -1,0 +1,32 @@
+# --------------------------------------------------------------------
+# circle.yml:  build configuration for ci-server at circleci.com
+#              build and test totask2 project on github with gradle
+#
+# @see    https://totask2.wordpress.com/2015/03/23/circleci-build-server-added-qa_branch/
+# @author man-at-home
+# @since  2015-03-23
+# --------------------------------------------------------------------
+
+machine:
+   java:
+      version: oraclejdk8
+
+dependencies:
+   override:
+     - ./gradlew dependencies
+     
+test:
+   override:
+      - ./gradlew check jacocoTestReport
+   post:
+      - cp -R build/reports/*      $CIRCLE_ARTIFACTS
+      - mkdir -p $CIRCLE_TEST_REPORTS/junit/
+      - find . -type f -regex ".*/build/test-results/.*xml" -exec cp {} $CIRCLE_TEST_REPORTS/junit/ \;      
+         
+general:
+   branches:
+      only:
+         - qa_branch
+   artifacts:
+      - "build/screenshots" # relative to the build directory     
+    

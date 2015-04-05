@@ -1,5 +1,6 @@
 # --------------------------------------------------------------------
 # shippable.yml:  build configuration for ci-server at shippable.com
+#                 qa_branch only.
 #                 build and test totask2 project on github with gradle
 # 
 # @see    https://totask2.wordpress.com/2015/03/22/shippable-ci-server-added-to-the-mix/
@@ -23,9 +24,13 @@ before_script:
    - java -version
    - mkdir -p shippable/testresults
 #  - mkdir -p shippable/codecoverage
-	
+
 install:
    - ./gradlew clean assemble
+
+branches:
+   only:
+      - qa_branch
 
 script:
    - ./gradlew check 
@@ -34,8 +39,10 @@ script:
 after_script:
     - cp -r build/test-results/* shippable/testresults/
 #	- cp -r build/reports/cobertura/* shippable/codecoverage/
-	
+
 notifications:
     email:
         recipients:
             - man.from.home@gmail.com
+         on_success: always
+         on_failure: always

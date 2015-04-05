@@ -103,6 +103,7 @@ dependencies {
     compile "com.mangofactory:swagger-springmvc:1.0.2"        // newer version on hold cause of scala upgrade dependencies..
     
     compile "io.dropwizard.metrics:metrics-core:3.1.1"        // more metric types than spring boot alone
+    compile "org.coursera:metrics-datadog:1.0.6"              // report metrics to datadoghq.com    
     compile "io.keen:keen-client-api-java:2.1.1"              // analytic data for keen.io 
         
     compile "org.springframework:spring-context:4.1.6.RELEASE"					// spring

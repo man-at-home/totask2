@@ -1,6 +1,5 @@
 package org.manathome.totask2;
 
-
 import org.manathome.totask2.controller.AppController;
 import org.manathome.totask2.service.UserCachingService;
 import org.manathome.totask2.util.LoggingFilter;
@@ -22,11 +21,8 @@ import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 
-
 import java.text.SimpleDateFormat;
-
 import javax.servlet.Filter;
-
 import com.mangofactory.swagger.plugin.EnableSwagger;
 
 import io.keen.client.java.JavaKeenClientBuilder;
@@ -53,6 +49,7 @@ public class Application  extends WebMvcConfigurerAdapter  {
     private static final Logger LOG = LoggerFactory.getLogger(Application.class);
 
     @Autowired private Environment env;   
+    @Autowired private com.codahale.metrics.MetricRegistry metricRegistry;
     
     /** security: show where the login page is. */
     @Override
@@ -115,4 +112,5 @@ public class Application  extends WebMvcConfigurerAdapter  {
         LOG.info("creating keen sink: " + client.getDefaultProject());
         return client;
     }
+    
 }

@@ -75,13 +75,13 @@ public class WeekEntryController {
     @Autowired
     private WeekEntryService weekEntryService;
 
-    private final Histogram tasksPerWeekHistogramm;
+    private final Histogram tasksPerWeekHistogram;
     private final Timer weekEntryGetResponseTimer;
 
     /** ctor. */
     @Autowired
     public WeekEntryController(final MetricRegistry metricRegistry) {
-        this.tasksPerWeekHistogramm = metricRegistry
+        this.tasksPerWeekHistogram = metricRegistry
                 .histogram("TOTASK2XX.controller.weekEntry.TaskInWeek.hist");
         this.weekEntryGetResponseTimer = metricRegistry
                 .timer("TOTASK2XX.controller.weekEntry.request.get.timed");
@@ -113,8 +113,8 @@ public class WeekEntryController {
             List<TaskInWeek> tiw = getWeek(dt);
             model.addAttribute("tasksInWeek", tiw);
 
-            if (tasksPerWeekHistogramm != null) {
-                tasksPerWeekHistogramm.update(tiw.size());
+            if (tasksPerWeekHistogram != null) {
+                tasksPerWeekHistogram.update(tiw.size());
             }
         } catch (Exception ex) {
             LOG.error("error getting week data", ex);

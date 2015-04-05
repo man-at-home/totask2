@@ -4,6 +4,9 @@ totask2 releasenotes
 
 basic releasenotes for http://man-at-home.github.io/totask2/
 
+.2015-04-04
+- datadog monitoring including my own custom metrics https://totask2.wordpress.com/2015/04/05/datadog-now-with-my-own-custom-metrics/
+
 .2015-04-02
 - refactored deployment to openShift - now "as recommended" with git push and maven (generated openshift.pom.xml file)
 

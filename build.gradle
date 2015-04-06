@@ -73,7 +73,6 @@ buildscript {
 }
 
 
-// version             = "1.1"   // not yet, stable jar name to deploy..
 sourceCompatibility = "1.8"
 
 compileJava {
@@ -418,3 +417,5 @@ test.doLast {
 // reminder: run qa profile:    >gradlew bootRun -Dspring.profiles.active=qa
 // reminder: run sonar server:  >\dev\sonarqube\bin\windows-x86-32\StartSonar
 // reminder: run local wildFly  >C:\dev\wildfly\bin\standalone.bat
+// reminder: generate+wildfly maven for openshift: >gradlew deployLocalMaven
+

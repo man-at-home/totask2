@@ -83,7 +83,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         /** use basic authentication for /APP/REST URLs. */
         protected void configure(HttpSecurity http) throws Exception {
             
-            LOG.info("WEB/REST-API: enabling security (configure basic auth)");
+            LOG.info("APP/REST REST Api: enabling security (configure basic auth)");
             
             http
                 .antMatcher("/APP/REST/**")
@@ -100,7 +100,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         protected void configure(AuthenticationManagerBuilder auth)
                 throws Exception {
             
-            LOG.debug("WEB/REST-API: configuring userDetailsService " + userDetailsServiceImpl);
+            LOG.debug("APP/REST REST Api: configuring userDetailsService " + userDetailsServiceImpl);
             auth.userDetailsService(userDetailsServiceImpl)
                 .passwordEncoder(User.getPasswordEncoder())
                 ;
@@ -121,7 +121,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         /** use basic authentication for /APP/REST URLs. */
         protected void configure(HttpSecurity http) throws Exception {
             
-            LOG.info("metrics/REST-API: enabling security (configure basic auth)");
+            LOG.info("MONITOR/ REST Api: enabling security (configure basic auth)");
             
             http
                 .antMatcher("/monitor/**")
@@ -138,7 +138,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         protected void configure(AuthenticationManagerBuilder auth)
                 throws Exception {
             
-            LOG.debug("metrics/REST-API: configuring userDetailsService " + userDetailsServiceImpl);
+            LOG.debug("MONITOR/ REST Api: configuring userDetailsService " + userDetailsServiceImpl);
             auth.userDetailsService(userDetailsServiceImpl)
                 .passwordEncoder(User.getPasswordEncoder())
                 ;

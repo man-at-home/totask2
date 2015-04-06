@@ -3,6 +3,7 @@ package org.manathome.totask2;
 import org.manathome.totask2.controller.AppController;
 import org.manathome.totask2.service.UserCachingService;
 import org.manathome.totask2.util.LoggingFilter;
+import org.manathome.totask2.util.Totask2Constants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,8 +22,11 @@ import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 
+
 import java.text.SimpleDateFormat;
+
 import javax.servlet.Filter;
+
 import com.mangofactory.swagger.plugin.EnableSwagger;
 
 import io.keen.client.java.JavaKeenClientBuilder;
@@ -101,8 +105,8 @@ public class Application  extends WebMvcConfigurerAdapter  {
     public KeenClient  getKeenClient() {
         
         /** access to environment variables. with keen.io keys. */
-        String pkey = env.getProperty("KEEN_PROJECT_ID");
-        String wkey = env.getProperty("KEEN_WRITE_KEY");
+        String pkey = env.getProperty(Totask2Constants.ENV_KEEN_PROJECT_ID);
+        String wkey = env.getProperty(Totask2Constants.ENV_KEEN_WRITE_KEY);
 
         if (pkey == null || wkey == null || pkey.length() == 0 || wkey.length() == 0) {
             LOG.error("keenClient: KEEN_PROJECT_ID or KEEN_WRITE_KEY not set, no analytical data will be gathered.");

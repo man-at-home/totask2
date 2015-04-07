@@ -74,41 +74,49 @@ rendern. Live zu sehen unter https://github.com/man-at-home/totask2/blob/master/
 
 Für das _Build Management_ nutze ich http://www.gradle.org/[gradle^], mit einigen Plugins wie asciidoctor. 
 Diverse Build-Server laufen in der Cloud, auf openshift http://jenkins-ci.org/[jenkins], 
-dazu https://travis-ci.org/[travis-ci], https://codeship.com/[codeship], https://circleci.com[circleci]
+dazu https://travis-ci.org/[travis-ci], https://codeship.com/[codeship], 
+https://circleci.com[circleci], http://snap-ci.com[snap-ci], 
 sowie https://app.shippable.com[shippable]
 
 Qualitätsanalyse erfolgt mit diversen Tools die im Build oder in der IDE eingebunden sind: CheckStyle, FindBugs, 
-PMD, jDepend, jacoco. Zudem als Analysewerkzeug http://www.sonarqube.org/[SonarQube].
+PMD, jDepend, jacoco. Zudem als Analysewerkzeug http://www.sonarqube.org/[SonarQube]. Redundant finden sich die 
+Test Code Coverage Werte auch auf http://coveralls.io[coveralls.io] in der cloud.
+
 Zusätzlich triggert der travis-ci Server eine cloud-basierte Codeprüfung auf an https://scan.coverity.com/[coverity.com]
 Auf veraltete Libraries prüft https://www.versioneye.com/user/projects/550f49680bdc71c5c903e1d4[versioneye].
 
 Experimentell ist http://www.seleniumhq.org/[selenium] als Web Test Tool.
 
-Als "echter" Appserver für das Deployment fungiert der http://www.wildfly.org/[WildFly Application Server] von redhat - sowohl lokal installiert als auch in der cloud.
+Als "echter" Appserver für das Deployment fungiert der http://www.wildfly.org/[WildFly Application Server] 
+von redhat - sowohl lokal installiert als auch in der cloud.
 
-Metriken sind mit boot-actuator und mit https://dropwizard.github.io/metrics[dropwizard metrics] bereitgestellt, derzeit als REST Endpoint. 
-Optionales weiteres Performance Monitoring erfolgt mit http://www.newrelic.com/[newrelic]. Dazu ist der lokale wildfly Server instrumentiert
-und schickt Informationen an newrelic.
+Metriken sind mit boot-actuator und mit https://dropwizard.github.io/metrics[dropwizard metrics] bereitgestellt, 
+derzeit als REST Endpoint. 
+Optionales weiteres Performance Monitoring erfolgt mit http://www.newrelic.com/[newrelic]. 
+Dazu ist der lokale wildfly Server instrumentiert und schickt Informationen an newrelic.
 
 Hosting der Anwendung in der cloud erfolgt 
 mit openShift in einer https://developers.openshift.com/en/wildfly-overview.html[WildFly Cardridge]. Deployment dabei mit
 lokalem git push. Zudem erfolgt über github ein deployment(automatisiert über den codeship ci-server) auf einen dyno in der 
 heroku cloud.
 
-Das Monitoring der bei heroku laufenden Anwendung erfolgt mit http://monitor.us[monitor.us], die neben Web Charts und Alert E-Mails auch 
-android und iphone apps herfür bereitstellen.
+Das Monitoring der bei heroku laufenden Anwendung erfolgt mit http://monitor.us[monitor.us], 
+die neben Web Charts und Alert E-Mails auch android und iphone apps herfür bereitstellen.
 
-Ebenfalls zur Überwachung sowie zur Erfassung und Auswertung oben beschriebenen Metriken erfolgt mit circonus.com[Circonus].
+Ebenfalls Überwachung sowie zur Erfassung und Auswertung oben beschriebenen Metriken erfolgt mit circonus.com[Circonus] 
+und http://datadoghq.com[datadog].
+
 Aktiviert sind zudem https://uxm.alertsite.com/[AlertSite] (mit der Besonderheit der Ausführung von soapUI Tests gegen totask2), 
 http://ruxit.com[ruxit], https://anturis.com/[anturis] und https://www.pingdom.com/[pingdom], die jeweils die 
 Verfügbarkeit der totask2 Webseiten von verschiedenen Standorten weltweit prüfen als weitere Server Überwachung.
 
-Weitere Auswertung können mit dem Analytic Provider http://keen.io[keen.io] erfolgen. Dazu ist ein entsprechender Service in totask2
-implementiert, der Kennzahlen an keen.io schicken kann.
+Weitere Auswertung können mit dem Analytic Provider http://keen.io[keen.io] erfolgen. 
+Dazu ist ein entsprechender Service in totask2 implementiert, der Kennzahlen an keen.io schicken kann.
 
-Als Kommunikation (mit mir selber: "ha ha") generieren Codeänderungen (github) und Blob-Einträge (wordpress) twitter tweets auf
-https://twitter.com/totask2tweeter[@totask2tweeter], diese werden auch weitergeleitet an einen http://slack.com[slack] 
-Chat Account, ebenso wie weitere Informationen (z.B. von den Build Servern).
+Als Kommunikation (mit mir selber: "ha ha") generieren Codeänderungen (github) und Blob-Einträge (wordpress) 
+twitter tweets auf https://twitter.com/totask2tweeter[@totask2tweeter], 
+diese werden auch weitergeleitet an einen http://slack.com[slack] Chat Account, 
+ebenso wie weitere Informationen (z.B. von den Build Servern).
 
 === Anforderungen zum Entwickeln
 
@@ -337,10 +345,10 @@ Details hoffentlich bald im blog https://totask2.wordpress.com/
 * Datenbank und Datenmodell (mit jpa) schlank
 * Komplett Repository, Tracker, Homepage und Test-Server in der (free!) cloud (github und openShift)
 
+
 === negativ
 
 Wo hakt es (noch?)
 
-* Deployment auf openShift erfolgt mit sftp, der "empfohlene Weg" über git scheitert bei mir an der notwendigen zusätzlichen gradle Installation (zu wenig disk quota im free plan von openShift hierfür)
 * bekomme asciidoctor-diagram im gradle Build nicht ans laufen, daher mit Umweg (umkopieren der generierten Bilder aus der JavaDoc Erzeugung)
 

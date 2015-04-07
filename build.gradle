@@ -28,6 +28,7 @@ apply plugin: "jdepend"
 apply plugin: "pmd"
 apply plugin: "sonar-runner"
 apply plugin: "groovy"
+apply plugin: "com.github.kt3k.coveralls"
 
 // documentation
 apply plugin: 'project-report'
@@ -54,21 +55,22 @@ repositories {
 buildscript {
 
    repositories {
-        maven { url "http://repo.spring.io/libs-release" }
         mavenLocal()
         mavenCentral()
+        maven { url "http://repo.spring.io/libs-release" }
         jcenter()
     }
     
     dependencies {
         classpath "org.springframework.boot:spring-boot-gradle-plugin:1.2.3.RELEASE"  			// spring boot with gradle
         classpath "org.flywaydb:flyway-gradle-plugin:3.2.1"										// db migration
-	    classpath "org.asciidoctor:asciidoctor-gradle-plugin:1.5.2"								// documentation engine
-	    classpath "be.jlr-home.gradle:plantumlPlugin:0.1.1"	    								// documentation graphing
+        classpath "org.asciidoctor:asciidoctor-gradle-plugin:1.5.2"								// documentation engine
+        classpath "be.jlr-home.gradle:plantumlPlugin:0.1.1"	    								// documentation graphing
         classpath "com.eriwen:gradle-js-plugin:1.12.0"											// javascript build utilities
         classpath "com.wordnik:swagger-codegen:2.1.2-M1"                                        // optional swagger doc generation
 //      classpath "net.saliman:gradle-cobertura-plugin:2.2.7"                                   // coverage for shippable.com build
- 		classpath "org.standardout:gradle-versioneye-plugin:1.0.1"								// versioneye gradle analysis
+        classpath "org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.3.1"
+        classpath "org.standardout:gradle-versioneye-plugin:1.0.1"								// versioneye gradle analysis
     }
 }
 
@@ -119,12 +121,12 @@ dependencies {
     compile "org.springframework.boot:spring-boot-starter-actuator:1.2.3.RELEASE"
     
     compile "org.hibernate:hibernate-envers:4.3.8.Final"							// orm mapper history building
-//    compile "javax.interceptor:javax.interceptor-api:1.+"							// workaround javadoc exception InterceptorBinding        
+//  compile "javax.interceptor:javax.interceptor-api:1.+"							// workaround javadoc exception InterceptorBinding        
     compile "org.flywaydb:flyway-core:3.2.1"  										// database migration utility
     
     testCompile "org.seleniumhq.selenium:selenium-firefox-driver:2.45.0"	        // ui tester
     testCompile "org.springframework.boot:spring-boot-starter-test:1.2.3.RELEASE" 	// helper for unit testing spring boot
- //   testCompile "org.springframework.security:spring-security-test:4.0.0.M1"
+ // testCompile "org.springframework.security:spring-security-test:4.0.0.M1"
     testCompile "org.spockframework:spock-spring:1.0-groovy-2.4"					// groovy unit test addone
  }
 
@@ -174,7 +176,8 @@ tasks.withType(FindBugs) {
 
 jacocoTestReport {
     reports {
-        xml.enabled      = true
+        xml.enabled      = true    // required for sonar&coveralls
+        html.enabled     = true
         csv.enabled      = false
 //        html.destination = "${buildDir}/reports/jacoco"
     }
@@ -212,7 +215,7 @@ flyway {
 
 javadoc {
 	failOnError         = false
-//    options.overview    = "${projectDir}/src/main/java/overview.html" // relative to source root
+//  options.overview    = "${projectDir}/src/main/java/overview.html" // relative to source root
 	options.windowTitle = "totask2 api documentation ${version}"	
     options.links( "http://download.oracle.com/javase/8/docs/api/" )
     options.addBooleanOption("Xdoclint:none").setValue(true)
@@ -264,6 +267,18 @@ versioneye {
 
 // CUSTOM TASKS
 // ============
+
+task printEnv {
+    println "coveralls.."
+    println "Dies ist das coveralls repo: $System.env.COVERALLS_REPO_TOKEN"
+    println "Dies ist temp: $System.env.TEMP"
+}
+
+tasks.coveralls {
+    description "calculate code coverage on coveralls.io"
+    dependsOn printEnv, check, jacocoTestReport
+    // onlyIf { isCI }
+}
 
 task copyPlantUMLImages(type: Copy) {
     description "use diagrams from javadoc in asciidoc articles too"

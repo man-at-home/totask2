@@ -109,7 +109,6 @@ public class DataDogReporterInitializer implements InitializingBean {
         
          metricRegistry.counter("TOTASK2XX.datadog.reporter.init.count").inc();         
          LOG.info("metrics reporting will go to " + statsdHost + ":" + statsdPort + " via udpTransport");
-         return;
     }
     
 }

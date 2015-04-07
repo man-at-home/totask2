@@ -4,6 +4,9 @@ totask2 releasenotes
 
 basic releasenotes for http://man-at-home.github.io/totask2/
 
+.2015-04-07
+- coveralls code coverage, see https://totask2.wordpress.com/2015/04/07/coveralls-visible-code-coverage-on-totask2-source/
+
 .2015-04-04
 - datadog monitoring including my own custom metrics https://totask2.wordpress.com/2015/04/05/datadog-now-with-my-own-custom-metrics/
 

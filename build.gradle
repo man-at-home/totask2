@@ -43,13 +43,14 @@ apply plugin: "org.flywaydb.flyway"
 
 
 repositories {
-        maven{ url "http://repo.spring.io/libs-release" }
-
         mavenLocal()
         mavenCentral()
         
+        maven{url "http://repo.spring.io/libs-release" }
         maven{url "http://jasperreports.sourceforge.net/maven2/"}
         maven{url "http://jaspersoft.artifactoryonline.com/jaspersoft/third-party-ce-artifacts/"}
+        maven{url "http://gradle.artifactoryonline.com/gradle/libs/"}
+        jcenter()
 }
 
 buildscript {

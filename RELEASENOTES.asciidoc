@@ -4,6 +4,10 @@ totask2 releasenotes
 
 basic releasenotes for http://man-at-home.github.io/totask2/
 
+.2015-04-11
+- local build on linux (ubuntu image on virtual box)
+- docker.io image created und pushed for totask2 app
+
 .2015-04-07
 - coveralls code coverage, see https://totask2.wordpress.com/2015/04/07/coveralls-visible-code-coverage-on-totask2-source/
 

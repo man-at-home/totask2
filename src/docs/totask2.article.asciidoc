@@ -96,9 +96,11 @@ Optionales weiteres Performance Monitoring erfolgt mit http://www.newrelic.com/[
 Dazu ist der lokale wildfly Server instrumentiert und schickt Informationen an newrelic.
 
 Hosting der Anwendung in der cloud erfolgt 
-mit openShift in einer https://developers.openshift.com/en/wildfly-overview.html[WildFly Cardridge]. Deployment dabei mit
+mit *openShift* in einer https://developers.openshift.com/en/wildfly-overview.html[WildFly Cardridge]. Deployment dabei mit
 lokalem git push. Zudem erfolgt über github ein deployment(automatisiert über den codeship ci-server) auf einen dyno in der 
-heroku cloud.
+*heroku* cloud.
+
+Zudem wird im build auch ein http://docker.io[docker] image erstellt und periodisch im docker registry bereitgestellt.
 
 Das Monitoring der bei heroku laufenden Anwendung erfolgt mit http://monitor.us[monitor.us], 
 die neben Web Charts und Alert E-Mails auch android und iphone apps herfür bereitstellen.

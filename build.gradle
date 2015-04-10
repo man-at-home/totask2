@@ -15,6 +15,7 @@ apply plugin: "js"
 apply plugin: "war"
 apply plugin: "eclipse"
 apply plugin: "maven"
+apply plugin: "docker"
 
 apply plugin: "spring-boot"
 
@@ -67,12 +68,13 @@ buildscript {
         classpath "org.flywaydb:flyway-gradle-plugin:3.2.1"										// db migration
         classpath "org.asciidoctor:asciidoctor-gradle-plugin:1.5.2"								// documentation engine
         classpath "be.jlr-home.gradle:plantumlPlugin:0.1.1"	    								// documentation graphing
-        classpath "com.eriwen:gradle-js-plugin:1.12.0"											// javascript build utilities
+        classpath "com.eriwen:gradle-js-plugin:1.12.0"							     // javascript build utilities
         classpath "com.wordnik:swagger-codegen:2.1.2-M1"                                        // optional swagger doc generation
 //      classpath "net.saliman:gradle-cobertura-plugin:2.2.7"                                   // coverage for shippable.com build
         classpath "org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.3.1"
-        classpath "org.standardout:gradle-versioneye-plugin:1.0.1"								// versioneye gradle analysis
-    }
+        classpath "org.standardout:gradle-versioneye-plugin:1.0.1"			    // versioneye gradle analysis
+        classpath "se.transmode.gradle:gradle-docker:1.2"                                          // docker container creation
+   }
 }
 
 
@@ -265,6 +267,8 @@ versioneye {
   exclude      "testCompile", "testRuntime" , "buildscript", "rhino", "jdepend", "jacocoAnt", "jacocoAgent", "pmd"
 }
 
+group = "manathome"   // group for docker image!
+
 
 // CUSTOM TASKS
 // ============
@@ -295,10 +299,25 @@ task allDocs {
 }
 
 
-// create gradlew script configuration
 task wrapper(type: Wrapper) {
     description "gradle wrapper generation (call if gradle version changes)"
     gradleVersion = '2.3'
+}
+
+task buildDocker(type: Docker) {
+   description "build docker container for totask2"
+   dependsOn  build
+   push  false
+   applicationName="totask2"
+   tagVersion="1"
+   
+   dockerfile = file("src/main/docker/Dockerfile")
+   doFirst {
+       copy {
+          from jar
+          into stageDir
+      }
+   }
 }
 
 

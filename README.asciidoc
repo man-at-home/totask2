@@ -18,8 +18,9 @@ image:https://circleci.com/gh/man-at-home/totask2/tree/qa_branch.svg?style=svg["
 
 See
 
-* github page on http://man-at-home.github.io/totask2/ and 
-* blog on https://totask2.wordpress.com/.
+* intro at github page on http://man-at-home.github.io/totask2/ 
+* blog on https://totask2.wordpress.com/and
+* planning on https://huboard.com/man-at-home/totask2#/
 
 
 image::src/docs/images/totask2.weekEntry.clientLogic.png[screenshot5, 600, 400]

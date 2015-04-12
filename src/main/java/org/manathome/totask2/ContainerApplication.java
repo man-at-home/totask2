@@ -23,7 +23,7 @@ public class ContainerApplication extends SpringBootServletInitializer {
     
     private static final Logger LOG = LoggerFactory.getLogger(ContainerApplication.class);
 
-    /** start standalone. */
+    /** start stand alone. */
     public static void main(String[] args) {
         LOG.info("starting application (ContainerApplciation)");
         

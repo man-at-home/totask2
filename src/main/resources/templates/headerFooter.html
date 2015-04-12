@@ -20,10 +20,10 @@
 	<!--  fragments, commonly included in other templates -->
 
     <div th:fragment="header (pageTitle)">
-    
-     
+ 
     		<div style="float: right;">
 				<form th:action="@{/logout}" method="post">
+	    			(<span th:text="${environmentMode}"></span>)   		
 					<button type="submit" class="btn btn-sm btn-default" value="sign out" th:title="${#httpServletRequest.remoteUser}">
 						<span class="glyphicon glyphicon-off"></span> <span th:text="#{totask2.logout}">sign out</span>
 					</button>
@@ -42,10 +42,25 @@
       <hr />
       &copy; man.at.home (2014)
       
-      <script 	type="text/javascript" 
+      		<!-- monitoring with ruxit: -->
+      
+            <script th:if="${isEnvironmentHeroku}" type="text/javascript" 
       			src="//js.ruxit.com/jstag/148709fdc4b/ruxitagentjs_2fnqr_1006600380011612.js" 
       			data-dtconfig="app=2E66CE0CD3E333D8|reportUrl=https://jih81955.live.ruxit.com/beacon|tp=500,50,0|cors=1">
-      </script>
+      		</script>  
+      		
+      		<script th:if="${isEnvironmentLocal}" type="text/javascript"
+      			src="//js.ruxit.com/jstag/148709fdc4b/ruxitagentjs_2fnqr_10067150320023820.js" 
+      			data-dtconfig="app=FD0F0350A80D1566|reportUrl=https://jih81955.live.ruxit.com/beacon|tp=500,50,0|cors=1">
+      		</script>  
+      		
+      		<script th:if="${isEnvironmentOpenshift}" type="text/javascript" 
+      			src="//js.ruxit.com/jstag/148709fdc4b/ruxitagentjs_2fnqr_10067150320023820.js" 
+      			data-dtconfig="app=A4A47998BD352D39|reportUrl=https://jih81955.live.ruxit.com/beacon|tp=500,50,0|cors=1">
+      		</script>
+      		
+      		<!--  end monitoring scripts -->
+     
     </footer>
   
   </body>

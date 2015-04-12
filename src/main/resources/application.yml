@@ -5,7 +5,7 @@
 
 app:
    name: totask2
-   description: ${app.name} work entry logging (default env)
+   description: ${app.name} work entry logging
    version: v1.0-dev
 
 spring:

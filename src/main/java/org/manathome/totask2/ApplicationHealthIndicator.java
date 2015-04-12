@@ -34,6 +34,7 @@ public class ApplicationHealthIndicator extends AbstractHealthIndicator {
         LOG.trace("doHealthCheck");
         
         builder.withDetail("projectsInDatabase", projectRepository.count());
+        builder.withDetail("Environment.TOTASK2_MODE", env.getProperty(Totask2Constants.ENV_TOTASK2_MODE, "UNKNOWN"));
         builder.withDetail("Environment.DOGSTATSD_PORT", env.getProperty(Totask2Constants.ENV_OPENSHIFT_DATADOG_DOGSTATSD_PORT, "not set"));
         builder.withDetail("Environment.KEEN_PROJECT", env.getProperty(Totask2Constants.ENV_KEEN_PROJECT_ID, "not set"));
         builder.up();  // database query on projects was run, thats enough for this check.

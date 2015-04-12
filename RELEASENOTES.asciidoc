@@ -4,9 +4,14 @@ totask2 releasenotes
 
 basic releasenotes for http://man-at-home.github.io/totask2/
 
+.2015-04-12
+- introducing environment variables for ruxit monitoring (and keen)
+
 .2015-04-11
 - local build on linux (ubuntu image on virtual box)
 - docker.io image created und pushed for totask2 app
+- used koding.com ide to verify (run) totask2 docker image. https://totask2.wordpress.com/2015/04/11/testing-totask2-docker-image-with-koding-com/
+- switching task management to huboard
 
 .2015-04-07
 - coveralls code coverage, see https://totask2.wordpress.com/2015/04/07/coveralls-visible-code-coverage-on-totask2-source/

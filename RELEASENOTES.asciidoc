@@ -4,6 +4,10 @@ totask2 releasenotes
 
 basic releasenotes for http://man-at-home.github.io/totask2/
 
+.2015-04-18
+- adding waffle.io connection for agile issue management
+- codacy for cloud based javascript and css quality checks
+
 .2015-04-12
 - introducing environment variables for ruxit monitoring (and keen)
 

@@ -17,35 +17,46 @@
 
 
 	<div class="container">
-	<div class="paper-box">
 
 		<div th:replace="headerFooter :: header (${name})"></div>
 
- 		<span th:text="${description}"></span>
- 		<span th:text="${version}">current version 1</span>
- 
-		<span id="flashMessage" class="alert-warning" th:unless="${#strings.isEmpty(flashMessage)}" th:text="${flashMessage}">flashMessage</span>
+		<div class="row">
+			<div class="col-xs-12">
+	 			<span th:text="${description}"></span>
+	 			<span th:text="${version}">current version 1</span>
+	 			<br /><br />
+	 		</div>
+ 		</div>
+ 		
+		<div class="row">
+		<div class="col-xs-12">
+			<span id="flashMessage" class="alert-warning" th:unless="${#strings.isEmpty(flashMessage)}" th:text="${flashMessage}">flashMessage</span>
+		</div>
+ 		</div>
 
-		<ul class="nav nav-pills nav-stacked">
-			<li>
-				<a href="/projects" class="btn btn-default btn-lg active" th:href="@{/projects}"> 
-				<span class="glyphicon glyphicon-tasks"></span> 
-				<span th:text="#{totask2.index.projects.link}">projects</span>
-				</a>
-			</li>
-			<li>&nbsp;</li>
-			<li>
-				<a href="/weekEntry" class="btn btn-primary btn-lg active" role="button" th:href="@{/weekEntry}"> 
-					<span class="glyphicon glyphicon-pencil"></span> 
-					<span th:text="#{totask2.index.weekEntry.link}">data entry for week..</span>
-				</a>
-			</li>
-		</ul>
+		<div class="row">
+			<div class="col-xs-12">
+			<ul class="nav nav-pills nav-stacked">
+				<li>
+					<a href="/projects" class="btn btn-default btn-lg active" th:href="@{/projects}"> 
+					<span class="glyphicon glyphicon-tasks"></span> 
+					<span th:text="#{totask2.index.projects.link}">projects</span>
+					</a>
+				</li>
+				<li>&nbsp;</li>
+				<li>
+					<a href="/weekEntry" class="btn btn-primary btn-lg active" role="button" th:href="@{/weekEntry}"> 
+						<span class="glyphicon glyphicon-pencil"></span> 
+						<span th:text="#{totask2.index.weekEntry.link}">data entry for week..</span>
+					</a>
+				</li>
+			</ul>
+			</div>
+ 		</div>
 
 
 		<div th:replace="headerFooter :: footer"></div>
 
-	</div>
 	</div>
 
 

@@ -21,26 +21,35 @@
 
     <div th:fragment="header (pageTitle)">
  
-    		<div style="float: right;">
+ 			<div class="row">
+			
+    		<div class="col-xs-12 col-sm-push-9 col-sm-3">
+    			<div  style="float: right;">
 				<form th:action="@{/logout}" method="post">
 	    			(<span th:text="${environmentMode}"></span>)   		
 					<button type="submit" class="btn btn-sm btn-default" value="sign out" th:title="${#httpServletRequest.remoteUser}">
 						<span class="glyphicon glyphicon-off"></span> <span th:text="#{totask2.logout}">sign out</span>
 					</button>
 				</form>
+				</div>
 			</div>
-			
-			<div class="page-header">
+
+			<div class="col-xs-12 col-sm-9">
 				<h1 th:text="${pageTitle}">my totask2 application</h1>
 			</div>
-    
+			
+			
+			</div>
+    	
 			
      		<!--  totask2 implementation -->      
     </div>
   
     <footer th:fragment="footer">
+    <div class="row">
+    <div class="col-xs-12">
       <hr />
-      &copy; man.at.home (2014)
+      &copy; man.at.home (2014,2015)
       
       		<!-- monitoring with ruxit: -->
       
@@ -60,7 +69,8 @@
       		</script>
       		
       		<!--  end monitoring scripts -->
-     
+    </div> 
+    </div>
     </footer>
   
   </body>

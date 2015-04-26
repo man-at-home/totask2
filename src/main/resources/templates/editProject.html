@@ -42,10 +42,10 @@
 
 	<div th:replace="headerFooter :: header (#{totask2.project.pageheader})"></div>
 	
-	<ul class="nav nav-tabs" role="tablist">
-	  <li><a th:href="@{/}" th:text="#{totask2.nav.home}">home</a></li>
-	  <li><a th:href="@{/projects}" th:text="#{totask2.nav.projects}">projects</a></li>
-	  <li><a th:href="@{/weekEntry}" th:text="#{totask2.nav.weekEntry}">home</a></li>
+	<ul class="nav nav-tabs">
+	  <li role="presentations"><a th:href="@{/}" th:text="#{totask2.nav.home}">home</a></li>
+	  <li role="presentations"><a th:href="@{/projects}" th:text="#{totask2.nav.projects}">projects</a></li>
+	  <li role="presentations"><a th:href="@{/weekEntry}" th:text="#{totask2.nav.weekEntry}">home</a></li>
 	</ul>	
 	
 	<span id="flashMessage"  class="alert-warning" th:unless="${#strings.isEmpty(flashMessage)}"  th:text="${flashMessage}">flashMessage</span>
@@ -121,17 +121,17 @@
 		<div class="col-sm-offset-2 col-sm-10">
 			<br/>
 			<a th:href="@{/project/{id}/tasks(id=${project.id})}"  
-				class="btn btn-default"  
+				class="btn btn-default btn-sm"  
 				th:if="${project.id}"
 				th:text="#{totask2.project.action.tasks}">tasks..</a>
 
 			<a th:href="@{/plan/project/{id}(id=${project.id})}"   
-				class="btn btn-default"  
+				class="btn btn-default  btn-xs"  
 				th:if="${project.id}"
 				th:text="#{totask2.project.action.projectPlan}">show plan</a>
 
 			<a th:href="@{/project/{id}/history(id=${project.id})}" 
-				class="btn btn-default" 
+				class="btn btn-default  btn-xs" 
 				target="_blank" 
 				th:if="${project.id}"
 				th:text="#{totask2.project.action.projectHistory}">show history..</a>

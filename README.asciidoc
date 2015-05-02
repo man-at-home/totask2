@@ -16,11 +16,13 @@ image:https://coveralls.io/repos/man-at-home/totask2/badge.svg?branch=master["Co
 
 image:https://circleci.com/gh/man-at-home/totask2/tree/qa_branch.svg?style=svg["Circle CI", link="https://circleci.com/gh/man-at-home/totask2/tree/qa_branch"]
 
+image:http://img.shields.io/badge/tech-stack-0690fa.svg?style=flat["stackshare", link="http://stackshare.io/man-at-home/spring-boot-java8-web-with-lots-of-qa"]
+
 See
 
 * intro at github page on http://man-at-home.github.io/totask2/ 
 * blog on https://totask2.wordpress.com/and
-* planning on https://huboard.com/man-at-home/totask2#/
+* planning on https://waffle.io/man-at-home/totask2
 
 
 image::src/docs/images/totask2.weekEntry.clientLogic.png[screenshot5, 600, 400]

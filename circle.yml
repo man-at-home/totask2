@@ -14,19 +14,19 @@ machine:
 dependencies:
    override:
      - ./gradlew dependencies
-     
+
 test:
    override:
       - ./gradlew check jacocoTestReport
    post:
       - cp -R build/reports/*      $CIRCLE_ARTIFACTS
       - mkdir -p $CIRCLE_TEST_REPORTS/junit/
-      - find . -type f -regex ".*/build/test-results/.*xml" -exec cp {} $CIRCLE_TEST_REPORTS/junit/ \;      
-         
+      - find . -type f -regex ".*/build/test-results/.*xml" -exec cp {} $CIRCLE_TEST_REPORTS/junit/ \;
+      - bash <(curl -s https://codecov.io/bash)
+
 general:
    branches:
       only:
          - qa_branch
    artifacts:
       - "build/screenshots" # relative to the build directory     
-    

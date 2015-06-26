@@ -251,11 +251,16 @@ public class WeekEntryController {
         LOG.trace("getProjectsReport(" + reportFormat + ", " + dateString + ")");
         LocalDate dt = LocalDate.parse(dateString);
 
-        return reportGenerator
+        try {
+            return reportGenerator
                 .createReportModelView(
                         "weekEntryReport.jrxml",
                         reportFormat == null || reportFormat.contains("pdf") ? ReportOutputFormat.pdf
                                 : ReportOutputFormat.excel, getWeek(dt));
+        } catch (Exception ex) {
+           LOG.error("Report Generatio Error for " + dateString, ex);
+           throw ex;
+        }
     }
 
 }// class

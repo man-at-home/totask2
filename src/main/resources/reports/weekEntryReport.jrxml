@@ -19,25 +19,25 @@
 		<fieldDescription><![CDATA[duration]]></fieldDescription>
 	</field>
 	<field name="day0_duration" class="java.lang.Float">
-		<fieldDescription><![CDATA[dailyEntries[0].duration]]></fieldDescription>
+		<fieldDescription><![CDATA[dailyEntry[0].duration]]></fieldDescription>
 	</field>
 	<field name="day1_duration" class="java.lang.Float">
-		<fieldDescription><![CDATA[dailyEntries[1].duration]]></fieldDescription>
+		<fieldDescription><![CDATA[dailyEntry[1].duration]]></fieldDescription>
 	</field>
 	<field name="day2_duration" class="java.lang.Float">
-		<fieldDescription><![CDATA[dailyEntries[2].duration]]></fieldDescription>
+		<fieldDescription><![CDATA[dailyEntry[2].duration]]></fieldDescription>
 	</field>
 	<field name="day3_duration" class="java.lang.Float">
-		<fieldDescription><![CDATA[dailyEntries[3].duration]]></fieldDescription>
+		<fieldDescription><![CDATA[dailyEntry[3].duration]]></fieldDescription>
 	</field>
 	<field name="day4_duration" class="java.lang.Float">
-		<fieldDescription><![CDATA[dailyEntries[4].duration]]></fieldDescription>
+		<fieldDescription><![CDATA[dailyEntry[4].duration]]></fieldDescription>
 	</field>
 	<field name="day5_duration" class="java.lang.Float">
-		<fieldDescription><![CDATA[dailyEntries[5].duration]]></fieldDescription>
+		<fieldDescription><![CDATA[dailyEntry[5].duration]]></fieldDescription>
 	</field>
 	<field name="day6_duration" class="java.lang.Float">
-		<fieldDescription><![CDATA[dailyEntries[6].duration]]></fieldDescription>
+		<fieldDescription><![CDATA[dailyEntry[6].duration]]></fieldDescription>
 	</field>
 	
 	

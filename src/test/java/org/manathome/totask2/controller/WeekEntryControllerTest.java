@@ -11,6 +11,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.test.web.servlet.MvcResult;
 
+import java.time.LocalDate;
+
 /**
  * testing basic spring mvc WeekEntryController.
  * 
@@ -43,5 +45,29 @@ public class WeekEntryControllerTest extends ControllerTestBase {
         
         LOG.debug("response:" + result.getResponse().getContentAsString().replaceAll("\\r|\\n", ""));
     }
+    
+    /** 
+     * testing GET /weekEntry. /weekEntry/report/excel/(date)
+     * 
+     * @see WeekEntryController#weekEntry(org.springframework.ui.Model) under test.
+     * @see https://github.com/man-at-home/totask2/issues/34
+     * @since 2015-06-26
+     */
+    @Test
+    public void testCurrentWeekEntryExcelReport() throws Exception {
+        
+        LocalDate dt = LocalDate.now();
+        LOG.debug("request /weekEntry/report/excel/" + dt.toString());
+        
+        MvcResult result =
+        this.mockMvc.perform(get("/weekEntry/report/excel/" + dt.toString())
+                .with(user("unit-test-user").roles("USER"))                
+                )
+        .andExpect(status().isOk())
+        .andExpect(content().contentTypeCompatibleWith("application/vnd.ms-excel"))      
+        .andReturn();
+        
+        LOG.debug("response:" + result.getResponse().getContentLength() + " bytes as excel report");
+    }    
         
 }

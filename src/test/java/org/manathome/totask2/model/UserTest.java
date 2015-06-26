@@ -107,7 +107,7 @@ public class UserTest {
         assertTrue(user.equals(userb));
         assertTrue(userb.equals(user));
 
-        assertTrue(!user.equals("no user"));
+        assertTrue(!((Object) user).equals((Object) "no user"));
         assertTrue(!user.equals(null));
 
         userb.setUsername("tst other");

@@ -1,7 +1,7 @@
 /*
  * gradle build script for totask2 project.
  *
- * uses gradle 2.3 for compile (or provided gradlew script).
+ * uses gradle 2.4 for compile (or provided gradlew script).
  *
  * @see     http://man-at-home.github.io/totask2/
  * @author  man-at-home
@@ -93,35 +93,35 @@ configurations {
 }
 
 dependencies {
-    compile "org.apache.poi:poi:3.11"
+    compile "org.apache.poi:poi:3.12"
     
     compile "org.slf4j:slf4j-api:1.7.12"                      // logging api
     compile "ch.qos.logback:logback-classic:1.1.3"            // logging library
  // compile "org.logback-extensions:logback-ext-loggly:0.1.2" // log into the cloud, loggly.com
  // compile "com.papertrailapp:logback-syslog4j:1.0.0"        // log into the cloud, papertrail.com
     
-    compile "net.sf.jasperreports:jasperreports:6.0.3"  	  // reporting engine (excel, pdf generation)
-    compile "com.h2database:h2:1.4.186"						  // dev database (usable in memory)
+    compile "net.sf.jasperreports:jasperreports:6.1.0"  	  // reporting engine (excel, pdf generation)
+    compile "com.h2database:h2:1.4.187"						  // dev database (usable in memory)
     
     compile "org.ajar:swagger-spring-mvc-ui:0.4"			  // rest tester ui integrated in web app
     compile "com.mangofactory:swagger-springmvc:1.0.2"        // newer version on hold cause of scala upgrade dependencies..
     
-    compile "io.dropwizard.metrics:metrics-core:3.1.1"        // more metric types than spring boot alone
-    compile "org.coursera:metrics-datadog:1.0.6"              // report metrics to datadoghq.com    
+    compile "io.dropwizard.metrics:metrics-core:3.1.2"        // more metric types than spring boot alone
+    compile "org.coursera:metrics-datadog:1.1.1"              // report metrics to datadoghq.com    
     compile "io.keen:keen-client-api-java:2.1.1"              // analytic data for keen.io 
         
     compile "org.springframework:spring-context:4.1.6.RELEASE"					// spring
     compile "org.springframework:spring-context-support:4.1.6.RELEASE"
     
-    compile( "org.springframework.boot:spring-boot-starter-web:1.2.3.RELEASE" ) {			// spring boot
-    	exclude group: "org.springframework.boot", module: "spring-boot-starter-tomcat:1.2.3.RELEASE"
+    compile( "org.springframework.boot:spring-boot-starter-web:1.2.4.RELEASE" ) {			// spring boot
+    	exclude group: "org.springframework.boot", module: "spring-boot-starter-tomcat:1.2.4.RELEASE"
     }
-    compile "org.springframework.boot:spring-boot-starter-thymeleaf:1.2.3.RELEASE"		// templating engine
-    compile "org.springframework.boot:spring-boot-starter-undertow:1.2.3.RELEASE"		// wildfly/undertow, if not remove here and above
+    compile "org.springframework.boot:spring-boot-starter-thymeleaf:1.2.4.RELEASE"		// templating engine
+    compile "org.springframework.boot:spring-boot-starter-undertow:1.2.4.RELEASE"		// wildfly/undertow, if not remove here and above
 
-    compile "org.springframework.boot:spring-boot-starter-data-jpa:1.2.3.RELEASE"
-    compile "org.springframework.boot:spring-boot-starter-security:1.2.3.RELEASE"    
-    compile "org.springframework.boot:spring-boot-starter-actuator:1.2.3.RELEASE"
+    compile "org.springframework.boot:spring-boot-starter-data-jpa:1.2.4.RELEASE"
+    compile "org.springframework.boot:spring-boot-starter-security:1.2.4.RELEASE"    
+    compile "org.springframework.boot:spring-boot-starter-actuator:1.2.4.RELEASE"
     
     compile "org.hibernate:hibernate-envers:4.3.8.Final"							// orm mapper history building
  // compile "javax.interceptor:javax.interceptor-api:3.+"							// workaround javadoc exception InterceptorBinding        
@@ -161,7 +161,7 @@ findbugs {
 
 checkstyle {
    ignoreFailures = true      
-   toolVersion    = "6.5"    // with java8 support
+   toolVersion    = "6.7"    // with java8 support
 }
 
 pmd {
@@ -301,7 +301,7 @@ task allDocs {
 
 task wrapper(type: Wrapper) {
     description "gradle wrapper generation (call if gradle version changes)"
-    gradleVersion = '2.3'
+    gradleVersion = '2.4'
 }
 
 task buildDocker(type: Docker) {

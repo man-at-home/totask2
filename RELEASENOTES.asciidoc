@@ -4,6 +4,11 @@ totask2 releasenotes
 
 basic releasenotes for http://man-at-home.github.io/totask2/
 
+.2015-06-26
+- fix bug #24 excel report
+- upgrade libraries
+- upgrade gradle wrapper to 2.4
+
 .2015-04-18
 - adding waffle.io connection for agile issue management
 - codacy for cloud based javascript and css quality checks

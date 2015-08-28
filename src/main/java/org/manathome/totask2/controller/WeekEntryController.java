@@ -6,7 +6,6 @@ import org.manathome.totask2.model.TaskInWeek;
 import org.manathome.totask2.model.User;
 import org.manathome.totask2.model.UserRepository;
 import org.manathome.totask2.model.WorkEntry;
-import org.manathome.totask2.model.WorkEntryRepository;
 import org.manathome.totask2.service.ReportGenerator;
 import org.manathome.totask2.service.ReportGenerator.ReportOutputFormat;
 import org.manathome.totask2.service.UserDetailsServiceImpl;
@@ -59,10 +58,6 @@ public class WeekEntryController {
 
     private static final Logger LOG = LoggerFactory
             .getLogger(WeekEntryController.class);
-
-    /** work entry repository. */
-    @Autowired
-    private WorkEntryRepository workEntryRepository;
 
     /** user. */
     @Autowired

@@ -4,6 +4,9 @@ totask2 releasenotes
 
 basic releasenotes for http://man-at-home.github.io/totask2/
 
+.2015-08-28
+- schema2doc plugin integrated in build
+
 .2015-06-26
 - fix bug #24 excel report
 - upgrade libraries

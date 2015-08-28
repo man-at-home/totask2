@@ -13,11 +13,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import org.junit.Test;
 import org.manathome.totask2.model.WorkEntryTransfer;
-import org.manathome.totask2.service.UserCachingService;
 import org.manathome.totask2.util.LocalDateConverter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MvcResult;
 
@@ -39,8 +37,6 @@ public class WorkEntryControllerTest extends ControllerTestBase {
 
     private static final Logger LOG = LoggerFactory.getLogger(WorkEntryControllerTest.class);    
 
-    @Autowired private UserCachingService       userCachingService;
-       
     /** testing APP/REST/workEntries/{day}. */
     @Test
     public void testRestWorkEntriesForUser() throws Exception {

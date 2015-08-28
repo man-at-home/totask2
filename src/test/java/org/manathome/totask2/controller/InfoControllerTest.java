@@ -35,9 +35,6 @@ public class InfoControllerTest {
     private static final Logger LOG = LoggerFactory.getLogger(InfoControllerTest.class);
 
     @Autowired
-    private InfoController infoController;
-
-    @Autowired
     private WebApplicationContext wac;
     
     @Autowired

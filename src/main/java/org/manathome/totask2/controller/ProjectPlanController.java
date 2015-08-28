@@ -4,7 +4,6 @@ import org.manathome.totask2.model.Project;
 import org.manathome.totask2.model.ProjectRepository;
 import org.manathome.totask2.service.ProjectPlanData;
 import org.manathome.totask2.service.ProjectPlanDataService;
-import org.manathome.totask2.service.UserCachingService;
 import org.manathome.totask2.util.ProjectNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,7 +38,7 @@ public class ProjectPlanController {
  
 
     @Autowired private ProjectRepository    projectRepository;    
-    @Autowired private UserCachingService   userCachingService;
+ //   @Autowired private UserCachingService   userCachingService;
     @Autowired private ProjectPlanDataService projectPlanDataService;
 
     /** 

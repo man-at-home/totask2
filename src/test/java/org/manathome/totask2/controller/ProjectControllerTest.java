@@ -29,7 +29,7 @@ public class ProjectControllerTest extends ControllerTestBase {
 
     private static final Logger LOG = LoggerFactory.getLogger(ProjectControllerTest.class);
 
-    @Autowired private ProjectController projectController;       
+//    @Autowired private ProjectController projectController;       
 
     @Autowired private ProjectRepository projectRepository;
 

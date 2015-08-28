@@ -53,7 +53,7 @@ public class Application  extends WebMvcConfigurerAdapter  {
     private static final Logger LOG = LoggerFactory.getLogger(Application.class);
 
     @Autowired private Environment env;   
-    @Autowired private com.codahale.metrics.MetricRegistry metricRegistry;
+ //   @Autowired private com.codahale.metrics.MetricRegistry metricRegistry;
     
     /** security: show where the login page is. */
     @Override

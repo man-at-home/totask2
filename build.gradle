@@ -53,7 +53,6 @@ repositories {
         maven{url "http://jasperreports.sourceforge.net/maven2/"}
         maven{url "http://jaspersoft.artifactoryonline.com/jaspersoft/third-party-ce-artifacts/"}
         maven{url "http://gradle.artifactoryonline.com/gradle/libs/"}
-        maven{url "https://dl.bintray.com/man-at-home/maven"}	// hosting for schema2doc binary
         
         jcenter()
 }
@@ -64,6 +63,7 @@ buildscript {
         mavenLocal()
         mavenCentral()
         maven { url "http://repo.spring.io/libs-release" }
+        maven { url "http://dl.bintray.com/man-at-home/maven/" }	// hosting for schema2doc binaries and plugin
         jcenter()
     }
     
